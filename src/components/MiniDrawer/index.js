@@ -97,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerOpen: {
     width: drawerWidth,
+    borderRight:"0px",
     background: HighlightColor,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,

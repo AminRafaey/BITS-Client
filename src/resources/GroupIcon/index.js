@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { default as II } from './icon.svg';
+import { default as GI } from './icon.svg';
 import PropTypes from 'prop-types';
 import { HighlightColor } from '../../components/constants/theme';
 import { styled, Box } from '@material-ui/core';
@@ -7,11 +7,12 @@ const IconWrapper = styled(Box)({
   cursor: 'pointer',
 });
 
-function InboxIcon(props) {
+function GroupIcon(props) {
   const [color, setColor] = useState(props.color);
   return (
     <IconWrapper>
-      <II
+      {' '}
+      <GI
         color={color}
         onMouseOver={() => setColor(HighlightColor)}
         onMouseLeave={() => setColor(props.color)}
@@ -19,12 +20,12 @@ function InboxIcon(props) {
     </IconWrapper>
   );
 }
-InboxIcon.defaultProps = {
+GroupIcon.defaultProps = {
   color: '#CCCCCC',
 };
 
-InboxIcon.propTypes = {
+GroupIcon.propTypes = {
   color: PropTypes.string,
 };
 
-export default InboxIcon;
+export default GroupIcon;

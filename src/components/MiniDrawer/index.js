@@ -14,12 +14,11 @@ import {
   useTheme,
   IconButton,
   ListItem,
-  ListItemIcon,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { DrawerItem } from '../../components';
 
 import { HighlightColor } from '../constants/theme';
 import profilePlaceholder from '../../public/images/profile-placeholder.png';
@@ -46,22 +45,15 @@ const OptionTyp = styled(Typography)({
   color: '#FFFFFF',
   fontSize: 14,
 });
-const ArrowIconParentWrapper = styled(Box)({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'flex-end',
-});
-
-const ArrowIconWrapper = styled(Box)({});
 const AppBarListWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
 });
-const StyledListItemIcon = withStyles({
-  root: {
-    minWidth: 33,
-  },
-})(ListItemIcon);
+const UserNameWrapper = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  paddingTop: 16,
+});
 
 const StyledToolbar = withStyles({
   root: {
@@ -208,21 +200,14 @@ export default function MiniDrawer() {
               }}
             />
           </ImageWrapper>
+          <UserNameWrapper>
+            <OptionTyp>Muhammad Amin</OptionTyp>
+          </UserNameWrapper>
         </div>
 
         <List>
           {optionsList.map((option, index) => (
-            <ListItem key={index}>
-              <StyledListItemIcon>{option.icon}</StyledListItemIcon>
-              <OptionTyp>{option.title}</OptionTyp>
-              <ArrowIconParentWrapper>
-                {' '}
-                <ArrowIconWrapper>
-                  {' '}
-                  <ArrowBackIosIcon style={{ color: '#ffff', height: 11 }} />
-                </ArrowIconWrapper>
-              </ArrowIconParentWrapper>
-            </ListItem>
+            <DrawerItem option={option} key={index} />
           ))}
         </List>
       </Drawer>

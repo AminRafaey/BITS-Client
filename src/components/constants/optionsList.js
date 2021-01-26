@@ -10,28 +10,38 @@ export const optionsList = [
   {
     title: 'Send Message',
     icon: <ChatIcon style={{ color: '#FFFF' }} />,
+    menuArr: [
+      { title: 'Send Sms' },
+      { title: 'Send from Address book' },
+      { title: 'Manage Schedule' },
+    ],
   },
   {
     title: 'Inbox',
     icon: <InboxIcon style={{ color: '#FFFF' }} />,
+    menuArr: [],
   },
   {
     title: 'Templates',
     icon: <AssignmentIcon style={{ color: '#FFFF' }} />,
+    menuArr: [{ title: 'Manage' }, { title: 'Add' }],
   },
   {
     title: 'Contact Management',
     icon: <PermContactCalendarIcon style={{ color: '#FFFF' }} />,
+    menuArr: [{ title: 'Manage' }, { title: 'Add' }],
   },
   ,
   {
     title: 'Group Management',
     icon: <GroupIcon style={{ color: '#FFFF' }} />,
+    menuArr: [{ title: 'Manage' }, { title: 'Add' }],
   },
   ,
   {
     title: 'Logs',
     icon: <ReportIcon style={{ color: '#FFFF' }} />,
+    menuArr: [],
   },
 ];
 

@@ -23,10 +23,15 @@ import { DrawerItem } from '../../components';
 import { HighlightColor } from '../constants/theme';
 import profilePlaceholder from '../../public/images/profile-placeholder.png';
 import { optionsList, appBarList } from '../constants/optionsList';
-import { Home } from '../../components';
+import { Home, QuickSend } from '../../components';
 const drawerWidth = 280;
 const HomePageWrapper = styled(Box)({
   padding: '260px 30px 0px 30px',
+  background: '#E9EEF5',
+  height: '100%',
+});
+const QuickSendWrapper = styled(Box)({
+  padding: '100px 30px 0px 30px',
   background: '#E9EEF5',
   height: '100%',
 });
@@ -97,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerOpen: {
     width: drawerWidth,
-    borderRight:"0px",
+    borderRight: '0px',
     background: HighlightColor,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -219,9 +224,14 @@ export default function MiniDrawer() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <HomePageWrapper>
-          <Home />
-        </HomePageWrapper>
+        {
+          //   <HomePageWrapper>
+          //   <Home />
+          // </HomePageWrapper>
+        }
+        <QuickSendWrapper>
+          <QuickSend />
+        </QuickSendWrapper>
       </main>
     </div>
   );

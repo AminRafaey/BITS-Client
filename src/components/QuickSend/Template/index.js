@@ -7,6 +7,7 @@ import {
   Typography,
   withStyles,
   Box,
+  Grid,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import match from 'autosuggest-highlight/match';
@@ -45,6 +46,9 @@ const BrowseWrapper = styled(Box)({
   width: 'fit-content',
   background: '#ffff',
   borderRadius: 5,
+  '&:hover': {
+    background: HoverColor,
+  },
 });
 const BrowseTyp = styled(Typography)({
   color: 'rgba(0, 0, 0, 0.85)',
@@ -71,13 +75,11 @@ const StyledFormControlLabel = withStyles({
 const StyledRadio = withStyles({
   root: {
     color: '#ffff',
-    '&$checked': {
-      color: 'aqua',
-    },
   },
+  checked: {},
 })(Radio);
 
-export default function TextArea() {
+export default function Template() {
   const [textAreaVal, setTextAreaVal] = useState('');
 
   const [open, setOpen] = useState(false);
@@ -176,25 +178,29 @@ export default function TextArea() {
           )}
         />
       </AutocompleteWrapper>
-      <TextAreaWrapper>
-        <textarea
-          style={{
-            width: '600px',
-            minHeight: '160px',
-            resize: 'none',
-            borderRadius: '42px',
-            border: `0px solid #ffff`,
-            padding: '1.5rem',
-            outlineWidth: '0px',
-          }}
-          value={textAreaVal}
-          id="templateTextArea"
-          placeholder="Type your message here..."
-          onChange={(e) => {
-            setTextAreaVal(e.target.value);
-          }}
-        />
-      </TextAreaWrapper>
+      <Grid container>
+        <Grid item xs={7}>
+          <TextAreaWrapper>
+            <textarea
+              style={{
+                width: '100%',
+                minHeight: '160px',
+                resize: 'none',
+                borderRadius: '42px',
+                border: `0px solid #ffff`,
+                padding: '1.5rem',
+                outlineWidth: '0px',
+              }}
+              value={textAreaVal}
+              id="templateTextArea"
+              placeholder="Type your message here..."
+              onChange={(e) => {
+                setTextAreaVal(e.target.value);
+              }}
+            />
+          </TextAreaWrapper>
+        </Grid>
+      </Grid>
       <RadioParentWrapper>
         <LabelTyp>Attachment</LabelTyp>
         <RadioGroupWrapper>

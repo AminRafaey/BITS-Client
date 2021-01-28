@@ -33,7 +33,7 @@ const HomePageWrapper = styled(Box)({
 const QuickSendWrapper = styled(Box)({
   padding: '100px 30px 0px 30px',
   background: '#E9EEF5',
-  height: '100%',
+  minHeight: '200vh',
 });
 const ImageWrapper = styled(Box)({
   display: 'flex',

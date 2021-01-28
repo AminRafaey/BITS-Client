@@ -26,14 +26,14 @@ import { optionsList, appBarList } from '../constants/optionsList';
 import { Home, QuickSend } from '../../components';
 const drawerWidth = 280;
 const HomePageWrapper = styled(Box)({
-  padding: '260px 30px 0px 30px',
+  padding: '260px 60px 0px 60px',
   background: '#E9EEF5',
   height: '100%',
 });
 const QuickSendWrapper = styled(Box)({
-  padding: '100px 30px 0px 30px',
+  padding: '100px 50px 0px 50px',
   background: '#E9EEF5',
-  minHeight: '200vh',
+  minHeight: '150vh',
 });
 const ImageWrapper = styled(Box)({
   display: 'flex',

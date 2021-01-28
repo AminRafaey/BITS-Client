@@ -4,7 +4,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { styled, Typography, withStyles, Box } from '@material-ui/core';
-import { ListOption } from '../../../components';
+import { ListOption, FileOption } from '../../../components';
 
 const LabelTyp = styled(Typography)({
   display: 'inline',
@@ -62,7 +62,7 @@ function OptionSelection(props) {
           </FormControl>
         </RadioGroupWrapper>
       </RadioParentWrapper>
-      <ListOption />
+      {true ? <ListOption /> : <FileOption />}
     </div>
   );
 }

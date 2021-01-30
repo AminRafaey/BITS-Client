@@ -23,10 +23,15 @@ import { DrawerItem } from '../../components';
 import { HighlightColor } from '../constants/theme';
 import profilePlaceholder from '../../public/images/profile-placeholder.png';
 import { optionsList, appBarList } from '../constants/optionsList';
-import { Home, QuickSend } from '../../components';
+import { Home, QuickSend, AddressBookTable } from '../../components';
 const drawerWidth = 280;
+const AddressBookWrapper = styled(Box)({
+  padding: '100px 50px 0px 50px',
+  background: '#E9EEF5',
+  height: '100%',
+});
 const HomePageWrapper = styled(Box)({
-  padding: '260px 60px 0px 60px',
+  padding: '260px 50px 0px 50px',
   background: '#E9EEF5',
   height: '100%',
 });
@@ -229,9 +234,15 @@ export default function MiniDrawer() {
           //   <Home />
           // </HomePageWrapper>
         }
-        <QuickSendWrapper>
-          <QuickSend />
-        </QuickSendWrapper>
+        {
+          //   <QuickSendWrapper>
+          //   <QuickSend />
+          // </QuickSendWrapper>
+        }
+        <AddressBookWrapper>
+          {' '}
+          <AddressBookTable />
+        </AddressBookWrapper>
       </main>
     </div>
   );

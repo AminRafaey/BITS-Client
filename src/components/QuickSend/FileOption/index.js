@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  styled,
-  Typography,
-  Box,
-  Grid,
-} from '@material-ui/core';
+import { styled, Typography, Box, Grid } from '@material-ui/core';
 import { HoverColor, LinkColor } from '../../constants/theme';
 
 const ChooseFileWrapper = styled(Box)({

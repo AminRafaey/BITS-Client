@@ -13,10 +13,10 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { keywords } from '../../../Static/Keyword';
-import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import { Radio } from '../../HOC';
 
 const NoOptionTyp = styled(Typography)({
   cursor: 'pointer',
@@ -72,12 +72,6 @@ const StyledFormControlLabel = withStyles({
     color: 'rgba(0, 0, 0, 0.85)',
   },
 })(FormControlLabel);
-const StyledRadio = withStyles({
-  root: {
-    color: '#ffff',
-  },
-  checked: {},
-})(Radio);
 
 export default function Template() {
   const [textAreaVal, setTextAreaVal] = useState('');
@@ -213,17 +207,17 @@ export default function Template() {
             >
               <StyledFormControlLabel
                 value="image"
-                control={<StyledRadio color="primary" />}
+                control={<Radio color="primary" />}
                 label="Image"
               />
               <StyledFormControlLabel
                 value="video"
-                control={<StyledRadio color="primary" />}
+                control={<Radio color="primary" />}
                 label="Video"
               />
               <StyledFormControlLabel
                 value="pdf"
-                control={<StyledRadio color="primary" />}
+                control={<Radio color="primary" />}
                 label="Pdf"
               />
             </RadioGroup>

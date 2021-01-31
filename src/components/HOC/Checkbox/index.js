@@ -11,7 +11,9 @@ const StyledMuiCheckbox = withStyles({
   },
 })(MuiCheckbox);
 
-export const Checkbox = (props) => {
+const Checkbox = (props) => {
   const { ...other } = props;
   return <StyledMuiCheckbox {...other} />;
 };
+
+export default Checkbox;

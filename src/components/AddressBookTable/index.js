@@ -13,14 +13,14 @@ import {
   styled,
   Box,
 } from '@material-ui/core';
-import { Checkbox as MuiCheckbox } from '../HOC/Checkbox';
+import { Checkbox } from '../HOC';
 import Toolbar from './Toolbar';
 import TableHead from './TableHead';
 import profilePlaceholder from '../../public/images/profile-placeholder.png';
 import { addressBook } from '../../Static/AddressBook';
 import { CheckIcon, CheckAllIcon } from '../../resources';
 import { LinkColor } from '../constants/theme';
-import { CampaignMultiSelect, Template } from '..';
+import { CampaignMultiSelect, Template } from '../../components';
 const ItemTyp = styled(Typography)({
   fontSize: 14,
   display: 'inline',
@@ -153,7 +153,7 @@ export default function AddressBookTable() {
                       key={row.mobileNumber}
                     >
                       <TableCell padding="checkbox">
-                        <MuiCheckbox checked={isItemSelected} />
+                        <Checkbox checked={isItemSelected} />
                       </TableCell>
                       <TableCell padding="none" align="left">
                         {row.profile ? (

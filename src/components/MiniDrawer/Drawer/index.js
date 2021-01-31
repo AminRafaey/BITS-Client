@@ -101,15 +101,17 @@ export default function Drawer(props) {
       <div>
         <CompanyNameWrapper>
           <CompanyNameTyp>BITS</CompanyNameTyp>
-          <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </div>
+          {
+            //   <div className={classes.toolbar}>
+            //   <IconButton onClick={handleDrawerClose}>
+            //     {theme.direction === 'rtl' ? (
+            //       <ChevronRightIcon />
+            //     ) : (
+            //       <ChevronLeftIcon />
+            //     )}
+            //   </IconButton>
+            // </div>
+          }
         </CompanyNameWrapper>
         <ImageWrapper>
           <img

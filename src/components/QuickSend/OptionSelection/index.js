@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Radio from '@material-ui/core/Radio';
+
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { styled, Typography, withStyles, Box } from '@material-ui/core';
 import { ListOption, FileOption } from '../../../components';
-
+import { Radio } from '../../HOC';
 const LabelTyp = styled(Typography)({
   display: 'inline',
   color: 'rgba(0, 0, 0, 0.85)',
@@ -29,12 +29,7 @@ const StyledFormControlLabel = withStyles({
     marginRight: 12,
   },
 })(FormControlLabel);
-const StyledRadio = withStyles({
-  root: {
-    color: '#ffff',
-  },
-  checked: {},
-})(Radio);
+
 function OptionSelection(props) {
   const [SelectedOption, setSelectedOption] = useState('List');
   return (
@@ -52,7 +47,7 @@ function OptionSelection(props) {
               <StyledFormControlLabel
                 value="List"
                 control={
-                  <StyledRadio
+                  <Radio
                     color="primary"
                     checked={SelectedOption === 'List'}
                     onChange={(e) => {
@@ -66,7 +61,7 @@ function OptionSelection(props) {
                 value="File"
                 checked={SelectedOption === 'File'}
                 control={
-                  <StyledRadio
+                  <Radio
                     color="primary"
                     onChange={(e) => {
                       e.target.checked && setSelectedOption('File');

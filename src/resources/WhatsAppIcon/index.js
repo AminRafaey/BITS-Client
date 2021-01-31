@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { default as WI } from './icon.svg';
+
 import PropTypes from 'prop-types';
-import { HighlightColor } from '../../components/constants/theme';
+import { default as WI } from './icon.svg';
 import { styled, Box } from '@material-ui/core';
+import {
+  HighlightColor,
+  WhatsAppIconColor,
+} from '../../components/constants/theme';
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
 });
@@ -21,7 +25,7 @@ function WhatsAppIcon(props) {
   );
 }
 WhatsAppIcon.defaultProps = {
-  color: '#4AC959',
+  color: WhatsAppIconColor,
 };
 
 WhatsAppIcon.propTypes = {

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Menu } from '../../../components';
 import {
   withStyles,
   Box,
@@ -8,8 +10,8 @@ import {
   ListItem,
 } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { Menu } from '../../../components';
-import { HoverColor } from '../../constants/theme';
+import { HoverColor, HeadingColor } from '../../constants/theme';
+
 const ArrowIconParentWrapper = styled(Box)({
   width: '100%',
   display: 'flex',
@@ -27,14 +29,14 @@ const ListItemWrapper = styled(Box)({
   position: 'relative',
   pointerEvents: 'none',
   '&:hover': {
-    background: '#ffff',
+    background: HeadingColor,
   },
 });
 const DrawerItemWrapper = styled(Box)({
   cursor: 'pointer',
 });
 const OptionTyp = styled(Typography)({
-  color: '#FFFFFF',
+  color: HeadingColor,
   fontSize: 14,
 });
 const StyledListItemIcon = withStyles({
@@ -78,5 +80,7 @@ function DrawerItem(props) {
     </DrawerItemWrapper>
   );
 }
-
+DrawerItem.propTypes = {
+  option: PropTypes.object.isRequired,
+};
 export default DrawerItem;

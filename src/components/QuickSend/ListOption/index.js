@@ -1,47 +1,59 @@
 import React, { useState } from 'react';
-import { HoverColor } from '../../constants/theme';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
+import { HoverColor, HeadingColor } from '../../constants/theme';
 
+const textAreaStyle = {
+  width: '100%',
+  minHeight: '160px',
+  resize: 'none',
+  borderRadius: '42px',
+  border: `0px solid #ffff`,
+  padding: '1.5rem',
+  outlineWidth: '0px',
+};
 const TextAreaWrapper = styled(Box)({});
-const SendWrapper = styled(Box)({
+export const SendWrapper = styled(Box)({
   marginLeft: '49px',
   marginTop: '5px',
   width: 'fit-content',
-  background: '#ffff',
+  background: HeadingColor,
   borderRadius: 5,
   cursor: 'pointer',
   '&:hover': {
     background: HoverColor,
   },
 });
-const ScheduleWrapper = styled(Box)({
+export const ScheduleWrapper = styled(Box)({
   marginLeft: '49px',
   marginTop: '5px',
   width: 'fit-content',
-  background: '#ffff',
+  background: HeadingColor,
   borderRadius: 5,
   cursor: 'pointer',
   '&:hover': {
     background: HoverColor,
   },
 });
-const SendTyp = styled(Typography)({
-  color: 'rgba(0, 0, 0, 0.85)',
+export const SendTyp = styled(Typography)({
   fontSize: 14,
   padding: '0px 20px 0px 20px',
+  '&:hover': {
+    color: HeadingColor,
+  },
 });
-const ScheduleTyp = styled(Typography)({
-  color: 'rgba(0, 0, 0, 0.85)',
+export const ScheduleTyp = styled(Typography)({
   fontSize: 14,
   padding: '0px 20px 0px 20px',
+  '&:hover': {
+    color: HeadingColor,
+  },
 });
 
 const FormatTyp = styled(Typography)({
-  color: 'rgba(0, 0, 0, 0.85)',
   fontSize: 14,
 });
 
-const ButtonWrapper = styled(Box)({
+export const ButtonWrapper = styled(Box)({
   display: 'flex',
   paddingTop: 20,
 });
@@ -54,15 +66,7 @@ export default function ListOption() {
         <Grid item xs={7}>
           <TextAreaWrapper>
             <textarea
-              style={{
-                width: '100%',
-                minHeight: '160px',
-                resize: 'none',
-                borderRadius: '42px',
-                border: `0px solid #ffff`,
-                padding: '1.5rem',
-                outlineWidth: '0px',
-              }}
+              style={textAreaStyle}
               value={textAreaVal}
               id="templateTextArea"
               placeholder="Valid Format 923348035644,923174343123"

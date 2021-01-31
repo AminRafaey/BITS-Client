@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { default as II } from './icon.svg';
 import PropTypes from 'prop-types';
-import { HighlightColor } from '../../components/constants/theme';
+import { default as II } from './icon.svg';
 import { styled, Box } from '@material-ui/core';
+import {
+  HighlightColor,
+  HomeIconDefaultColor,
+} from '../../components/constants/theme';
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
 });
@@ -20,7 +23,7 @@ function InboxIcon(props) {
   );
 }
 InboxIcon.defaultProps = {
-  color: '#CCCCCC',
+  color: HomeIconDefaultColor,
 };
 
 InboxIcon.propTypes = {

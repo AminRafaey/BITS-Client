@@ -1,6 +1,11 @@
-import React from 'react';
-
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from 'react';
+import { Checkbox } from '../HOC';
+import Toolbar from './Toolbar';
+import TableHead from './TableHead';
+import profilePlaceholder from '../../public/images/profile-placeholder.png';
+import { addressBook } from '../../Static/AddressBook';
+import { CampaignMultiSelect, Template } from '../../components';
+import { CheckIcon, CheckAllIcon } from '../../resources';
 import {
   Table,
   TableBody,
@@ -12,15 +17,10 @@ import {
   Typography,
   styled,
   Box,
+  makeStyles,
 } from '@material-ui/core';
-import { Checkbox } from '../HOC';
-import Toolbar from './Toolbar';
-import TableHead from './TableHead';
-import profilePlaceholder from '../../public/images/profile-placeholder.png';
-import { addressBook } from '../../Static/AddressBook';
-import { CheckIcon, CheckAllIcon } from '../../resources';
 import { LinkColor } from '../constants/theme';
-import { CampaignMultiSelect, Template } from '../../components';
+
 const ItemTyp = styled(Typography)({
   fontSize: 14,
   display: 'inline',
@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 export default function AddressBookTable() {
   const classes = useStyles();
 
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {

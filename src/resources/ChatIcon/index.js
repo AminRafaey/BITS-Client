@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { default as CI } from './icon.svg';
 import PropTypes from 'prop-types';
-import { HighlightColor } from '../../components/constants/theme';
+import { default as CI } from './icon.svg';
 import { styled, Box } from '@material-ui/core';
+import {
+  HighlightColor,
+  HomeIconDefaultColor,
+} from '../../components/constants/theme';
+
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
 });
@@ -21,7 +25,7 @@ function ChatIcon(props) {
   );
 }
 ChatIcon.defaultProps = {
-  color: '#CCCCCC',
+  color: HomeIconDefaultColor,
 };
 
 ChatIcon.propTypes = {

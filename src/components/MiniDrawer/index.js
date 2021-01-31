@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Box, styled, CssBaseline, makeStyles } from '@material-ui/core';
-
 import { AddressBookTable, Home, QuickSend } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
-const drawerWidth = 280;
+
 const AddressBookWrapper = styled(Box)({
   padding: '100px 50px 0px 50px',
   background: '#E9EEF5',
@@ -20,10 +19,6 @@ const QuickSendWrapper = styled(Box)({
   padding: '100px 50px 0px 50px',
   background: '#E9EEF5',
   minHeight: '150vh',
-});
-const ImageWrapper = styled(Box)({
-  display: 'flex',
-  justifyContent: 'center',
 });
 
 const useStyles = makeStyles((theme) => ({

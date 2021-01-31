@@ -11,9 +11,9 @@ export const optionsList = [
     title: 'Send Message',
     icon: <ChatIcon style={{ color: '#FFFF' }} />,
     menuArr: [
-      { title: 'Send Sms' },
-      { title: 'Send from Address book' },
-      { title: 'Manage Schedule' },
+      { title: 'Send Sms', link: 'sendSms' },
+      { title: 'Send from Address book', link: 'sendFromAddressBook' },
+      { title: 'Manage Schedule', link: 'manageSchedule' },
     ],
   },
   {
@@ -24,18 +24,27 @@ export const optionsList = [
   {
     title: 'Templates',
     icon: <AssignmentIcon style={{ color: '#FFFF' }} />,
-    menuArr: [{ title: 'Manage' }, { title: 'Add' }],
+    menuArr: [
+      { title: 'Manage', link: 'manageTemplate' },
+      { title: 'Add', link: 'addTemplate' },
+    ],
   },
   {
     title: 'Contact Management',
     icon: <PermContactCalendarIcon style={{ color: '#FFFF' }} />,
-    menuArr: [{ title: 'Manage' }, { title: 'Add' }],
+    menuArr: [
+      { title: 'Manage', link: 'manageContacts' },
+      { title: 'Add', link: 'addContacts' },
+    ],
   },
   ,
   {
     title: 'Group Management',
     icon: <GroupIcon style={{ color: '#FFFF' }} />,
-    menuArr: [{ title: 'Manage' }, { title: 'Add' }],
+    menuArr: [
+      { title: 'Manage', link: 'manageGroups' },
+      { title: 'Add', link: 'addGroups' },
+    ],
   },
   ,
   {

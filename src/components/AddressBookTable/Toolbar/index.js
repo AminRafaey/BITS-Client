@@ -13,8 +13,8 @@ import {
   HoverColor,
   HeadingColor,
   BackgroundColor,
-} from '../../../constants/theme';
-import { WhatsAppIcon } from '../../../../resources';
+} from '../../constants/theme';
+import { WhatsAppIcon } from '../../../resources';
 
 const ItemTyp = styled(Typography)({
   color: '#FFFFFF',

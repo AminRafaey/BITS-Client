@@ -13,13 +13,14 @@ import {
   styled,
   Box,
 } from '@material-ui/core';
-import { Checkbox as MuiCheckbox } from '../../HOC/Checkbox';
+import { Checkbox as MuiCheckbox } from '../HOC/Checkbox';
 import Toolbar from './Toolbar';
 import TableHead from './TableHead';
-import profilePlaceholder from '../../../public/images/profile-placeholder.png';
-import { addressBook } from '../../../Static/AddressBook';
-import { CheckIcon, CheckAllIcon } from '../../../resources';
-import { LinkColor } from '../../constants/theme';
+import profilePlaceholder from '../../public/images/profile-placeholder.png';
+import { addressBook } from '../../Static/AddressBook';
+import { CheckIcon, CheckAllIcon } from '../../resources';
+import { LinkColor } from '../constants/theme';
+import { CampaignMultiSelect, Template } from '..';
 const ItemTyp = styled(Typography)({
   fontSize: 14,
   display: 'inline',
@@ -29,6 +30,11 @@ const IconWrapper = styled(Box)({
   display: 'inline',
   paddingRight: 3,
 });
+const CampaignSelectWrapper = styled(Box)({
+  display: 'flex',
+  justifyContent: 'flex-end',
+});
+const TemplateWrapper = styled(Box)({});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,6 +120,12 @@ export default function AddressBookTable() {
   };
   return (
     <div className={classes.root}>
+      <CampaignSelectWrapper>
+        <CampaignMultiSelect />
+      </CampaignSelectWrapper>
+      <TemplateWrapper>
+        <Template />
+      </TemplateWrapper>
       <Toolbar numSelected={selected.length} />
       <Paper className={classes.paper}>
         <TableContainer>

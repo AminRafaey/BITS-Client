@@ -4,22 +4,7 @@ import {
   Template,
   OptionSelection,
 } from '../../components';
-import {
-  withStyles,
-  Box,
-  styled,
-  Drawer,
-  AppBar,
-  Toolbar,
-  List,
-  CssBaseline,
-  Typography,
-  makeStyles,
-  useTheme,
-  IconButton,
-  ListItem,
-  Grid,
-} from '@material-ui/core';
+import { Box, styled } from '@material-ui/core';
 
 const CampaignSelectWrapper = styled(Box)({
   display: 'flex',

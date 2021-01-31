@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -36,6 +36,7 @@ const StyledRadio = withStyles({
   checked: {},
 })(Radio);
 function OptionSelection(props) {
+  const [SelectedOption, setSelectedOption] = useState('List');
   return (
     <div>
       <RadioParentWrapper>
@@ -50,19 +51,35 @@ function OptionSelection(props) {
             >
               <StyledFormControlLabel
                 value="List"
-                control={<StyledRadio color="primary" checked={true} />}
+                control={
+                  <StyledRadio
+                    color="primary"
+                    checked={SelectedOption === 'List'}
+                    onChange={(e) => {
+                      e.target.checked && setSelectedOption('List');
+                    }}
+                  />
+                }
                 label="List"
               />
               <StyledFormControlLabel
                 value="File"
-                control={<StyledRadio color="primary" />}
+                checked={SelectedOption === 'File'}
+                control={
+                  <StyledRadio
+                    color="primary"
+                    onChange={(e) => {
+                      e.target.checked && setSelectedOption('File');
+                    }}
+                  />
+                }
                 label="File"
               />
             </RadioGroup>
           </FormControl>
         </RadioGroupWrapper>
       </RadioParentWrapper>
-      {true ? <ListOption /> : <FileOption />}
+      {SelectedOption === 'List' ? <ListOption /> : <FileOption />}
     </div>
   );
 }

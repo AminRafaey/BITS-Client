@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Box, styled, CssBaseline, makeStyles } from '@material-ui/core';
 
-import { AddressBookTable } from '../../components';
+import { AddressBookTable, Home, QuickSend } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 const drawerWidth = 280;
@@ -51,27 +52,34 @@ export default function MiniDrawer() {
   };
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
-      <Drawer open={open} handleDrawerClose={handleDrawerClose} />
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {
-          //   <HomePageWrapper>
-          //   <Home />
-          // </HomePageWrapper>
-        }
-        {
-          //   <QuickSendWrapper>
-          //   <QuickSend />
-          // </QuickSendWrapper>
-        }
-        <AddressBookWrapper>
-          {' '}
-          <AddressBookTable />
-        </AddressBookWrapper>
-      </main>
-    </div>
+    <Router>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
+        <Drawer open={open} handleDrawerClose={handleDrawerClose} />
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+
+          <Switch>
+            <Route path="/sendSms">
+              <QuickSendWrapper>
+                <QuickSend />
+              </QuickSendWrapper>
+            </Route>
+            <Route path="/sendFromAddressBook">
+              <AddressBookWrapper>
+                {' '}
+                <AddressBookTable />
+              </AddressBookWrapper>
+            </Route>
+            <Route path="/">
+              <HomePageWrapper>
+                <Home />
+              </HomePageWrapper>
+            </Route>
+          </Switch>
+        </main>
+      </div>
+    </Router>
   );
 }

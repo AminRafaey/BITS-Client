@@ -7,7 +7,7 @@ import {
   Typography,
   styled,
 } from '@material-ui/core';
-import { Checkbox as MuiCheckbox } from '../../../HOC/Checkbox';
+import { Checkbox as MuiCheckbox } from '../../HOC/Checkbox';
 
 const ItemTyp = styled(Typography)({
   fontSize: 16,

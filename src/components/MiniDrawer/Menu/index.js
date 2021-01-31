@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Box,
   styled,
@@ -8,7 +9,7 @@ import {
   Paper,
 } from '@material-ui/core';
 
-import { HighlightColor, HoverColor } from '../../constants/theme';
+import { HoverColor } from '../../constants/theme';
 const OptionTyp = styled(Typography)({
   fontSize: 12,
 });
@@ -36,11 +37,13 @@ function Menu(props) {
       <List style={{ width: '100px' }}>
         <Paper elevation={24}>
           {menuArr.map((m, index) => (
-            <ListItemWrapper key={index}>
-              <ListItem>
-                <OptionTyp>{m.title}</OptionTyp>
-              </ListItem>
-            </ListItemWrapper>
+            <Link to={m.link} key={index} style={{ textDecoration: 'none' }}>
+              <ListItemWrapper>
+                <ListItem>
+                  <OptionTyp>{m.title}</OptionTyp>
+                </ListItem>
+              </ListItemWrapper>
+            </Link>
           ))}
         </Paper>
       </List>

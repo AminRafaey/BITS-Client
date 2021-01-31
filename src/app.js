@@ -3,7 +3,6 @@ import { ThemeProvider } from '@material-ui/styles';
 import { theme } from './theme';
 import { MiniDrawer } from './components';
 
-import { TypeArea } from './components';
 function App() {
   return (
     <ThemeProvider theme={theme}>

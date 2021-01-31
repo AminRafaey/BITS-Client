@@ -8,6 +8,7 @@ import {
   Tooltip,
   makeStyles,
   styled,
+  Box,
 } from '@material-ui/core';
 import {
   HoverColor,
@@ -16,6 +17,9 @@ import {
 } from '../../constants/theme';
 import { WhatsAppIcon } from '../../../resources';
 
+const ToolbarWrapper = styled(Box)({
+  marginTop: 6,
+});
 const ItemTyp = styled(Typography)({
   color: '#FFFFFF',
   fontSize: 14,
@@ -24,6 +28,7 @@ const ItemTyp = styled(Typography)({
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: BackgroundColor,
+    height: '58px',
   },
   highlight: {
     color: HeadingColor,
@@ -39,23 +44,25 @@ export default function Toolbar(props) {
   const { numSelected } = props;
 
   return (
-    <MuiToolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      {numSelected > 0 && (
-        <ItemTyp className={classes.title}>{numSelected} selected</ItemTyp>
-      )}
+    <ToolbarWrapper>
+      <MuiToolbar
+        className={clsx(classes.root, {
+          [classes.highlight]: numSelected > 0,
+        })}
+      >
+        {numSelected > 0 && (
+          <ItemTyp className={classes.title}>{numSelected} selected</ItemTyp>
+        )}
 
-      {numSelected > 0 && (
-        <Tooltip title="Send WhatsApp">
-          <IconButton aria-label="Send WhatsApp">
-            <WhatsAppIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </MuiToolbar>
+        {numSelected > 0 && (
+          <Tooltip title="Send WhatsApp">
+            <IconButton aria-label="Send WhatsApp">
+              <WhatsAppIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+      </MuiToolbar>
+    </ToolbarWrapper>
   );
 }
 

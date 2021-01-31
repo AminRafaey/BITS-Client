@@ -7,7 +7,7 @@ import {
   Typography,
   styled,
 } from '@material-ui/core';
-import { Checkbox as MuiCheckbox } from '../../HOC/Checkbox';
+import { Checkbox } from '../../HOC';
 
 const ItemTyp = styled(Typography)({
   fontSize: 16,
@@ -30,7 +30,7 @@ export default function TableHead(props) {
     <MuiTableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <MuiCheckbox
+          <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}

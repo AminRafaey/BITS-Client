@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { appBarList } from '../../constants/optionsList';
 import {
   withStyles,
   Box,
@@ -14,13 +15,12 @@ import {
   ListItem,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import { HeadingColor } from '../../constants/theme';
 
-import { HighlightColor } from '../../constants/theme';
-import { appBarList } from '../../constants/optionsList';
 const drawerWidth = 280;
 
 const OptionTyp = styled(Typography)({
-  color: '#FFFFFF',
+  color: HeadingColor,
   fontSize: 14,
 });
 const AppBarListWrapper = styled(Box)({

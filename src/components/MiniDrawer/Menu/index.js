@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {
   Box,
   styled,
@@ -8,8 +9,7 @@ import {
   ListItem,
   Paper,
 } from '@material-ui/core';
-
-import { HoverColor } from '../../constants/theme';
+import { HoverColor, HeadingColor } from '../../constants/theme';
 const OptionTyp = styled(Typography)({
   fontSize: 12,
 });
@@ -26,7 +26,7 @@ const ListItemWrapper = styled(Box)({
   cursor: 'pointer',
   '&:hover': {
     background: HoverColor,
-    color: '#ffff',
+    color: HeadingColor,
   },
   whiteSpace: 'normal',
 });
@@ -51,4 +51,7 @@ function Menu(props) {
   );
 }
 
+Menu.propTypes = {
+  menuArr: PropTypes.array.isRequired,
+};
 export default Menu;

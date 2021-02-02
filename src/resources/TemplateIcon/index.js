@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { default as TI } from './icon.svg';
+
 import PropTypes from 'prop-types';
-import { HighlightColor } from '../../components/constants/theme';
+import { default as TI } from './icon.svg';
+
 import { styled, Box } from '@material-ui/core';
+import {
+  HighlightColor,
+  HomeIconDefaultColor,
+} from '../../components/constants/theme';
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
 });
@@ -21,7 +26,7 @@ function TemplateIcon(props) {
   );
 }
 TemplateIcon.defaultProps = {
-  color: '#CCCCCC',
+  color: HomeIconDefaultColor,
 };
 
 TemplateIcon.propTypes = {

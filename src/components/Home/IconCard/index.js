@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { styled, Box, Grid, Typography } from '@material-ui/core';
+
 const CardWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
@@ -8,7 +10,6 @@ const CardWrapper = styled(Box)({
 });
 const TitleTyp = styled(Typography)({
   fontSize: 14,
-  color: '#2F4050',
 });
 function IconCard(props) {
   const { item } = props;
@@ -21,5 +22,9 @@ function IconCard(props) {
     </Grid>
   );
 }
+
+IconCard.propTypes = {
+  item: PropTypes.object.isRequired,
+};
 
 export default IconCard;

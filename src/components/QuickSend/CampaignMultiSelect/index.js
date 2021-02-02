@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { templates } from '../../../Static/Template';
+import match from 'autosuggest-highlight/match';
+import parse from 'autosuggest-highlight/parse';
+
 import {
   TextField,
   CircularProgress,
@@ -7,10 +11,8 @@ import {
   withStyles,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { templates } from '../../../Static/Template';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import { HoverColor } from '../../constants/theme';
+
+import { HoverColor, HeadingColor } from '../../constants/theme';
 const NoOptionTyp = styled(Typography)({
   cursor: 'pointer',
   color: 'rgba(0, 0, 0, 0.85)',
@@ -22,7 +24,7 @@ const StyledAutoComplete = withStyles({
       width: 200,
     },
     '& .MuiInputBase-root': {
-      background: '#ffff',
+      background: HeadingColor,
     },
   },
 })(Autocomplete);

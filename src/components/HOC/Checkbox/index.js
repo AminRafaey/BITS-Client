@@ -1,6 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { Checkbox as MuiCheckbox } from '@material-ui/core';
+import { withStyles, Checkbox as MuiCheckbox } from '@material-ui/core';
 import { HoverColor } from '../../constants/theme';
 
 const StyledMuiCheckbox = withStyles({

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Checkbox } from '../../HOC';
+import { headCells } from '../../constants/ColumnName';
 import {
   TableHead as MuiTableHead,
   TableRow,
@@ -7,21 +9,10 @@ import {
   Typography,
   styled,
 } from '@material-ui/core';
-import { Checkbox } from '../../HOC';
 
 const ItemTyp = styled(Typography)({
   fontSize: 16,
 });
-
-const headCells = [
-  {
-    label: 'Profile',
-  },
-  { label: 'Mobile Number' },
-  { label: 'Last interaction' },
-  { label: 'Lead Source' },
-  { label: 'Lead label' },
-];
 
 export default function TableHead(props) {
   const { onSelectAllClick, numSelected, rowCount } = props;
@@ -53,7 +44,7 @@ export default function TableHead(props) {
 }
 
 TableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
+  onSelectAllClick: PropTypes.func.isRequired,
   numSelected: PropTypes.number.isRequired,
   rowCount: PropTypes.number.isRequired,
 };

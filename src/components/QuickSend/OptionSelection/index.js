@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
-
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import { styled, Typography, withStyles, Box } from '@material-ui/core';
 import { ListOption, FileOption } from '../../../components';
 import { Radio } from '../../HOC';
+
+import {
+  styled,
+  Typography,
+  withStyles,
+  Box,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+} from '@material-ui/core';
+
 const LabelTyp = styled(Typography)({
   display: 'inline',
-  color: 'rgba(0, 0, 0, 0.85)',
   paddingLeft: 52,
   paddingRight: 72,
   fontSize: 14,
@@ -25,12 +30,11 @@ const RadioParentWrapper = styled(Box)({
 const StyledFormControlLabel = withStyles({
   label: {
     fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.85)',
     marginRight: 12,
   },
 })(FormControlLabel);
 
-function OptionSelection(props) {
+function OptionSelection() {
   const [SelectedOption, setSelectedOption] = useState('List');
   return (
     <div>

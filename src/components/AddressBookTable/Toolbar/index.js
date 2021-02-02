@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { WhatsAppIcon } from '../../../resources';
 import {
   Toolbar as MuiToolbar,
   Typography,
@@ -15,20 +16,19 @@ import {
   HeadingColor,
   BackgroundColor,
 } from '../../constants/theme';
-import { WhatsAppIcon } from '../../../resources';
 
 const ToolbarWrapper = styled(Box)({
   marginTop: 6,
 });
 const ItemTyp = styled(Typography)({
-  color: '#FFFFFF',
+  color: HeadingColor,
   fontSize: 14,
 });
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: BackgroundColor,
-    height: '58px',
+    height: 58,
   },
   highlight: {
     color: HeadingColor,

@@ -1,10 +1,10 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { Radio as MuiRadio } from '@material-ui/core';
+import { withStyles, Radio as MuiRadio } from '@material-ui/core';
+import { HeadingColor } from '../../constants/theme';
 
 const StyledRadio = withStyles({
   root: {
-    color: '#ffff',
+    color: HeadingColor,
   },
   checked: {},
 })(MuiRadio);

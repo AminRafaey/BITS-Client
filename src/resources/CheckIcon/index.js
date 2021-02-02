@@ -1,8 +1,8 @@
 import React from 'react';
-import { default as CI } from './icon.svg';
 import PropTypes from 'prop-types';
-import { DelieverStatusColor } from '../../components/constants/theme';
+import { default as CI } from './icon.svg';
 import { styled, Box, Tooltip } from '@material-ui/core';
+import { DelieverStatusColor } from '../../components/constants/theme';
 
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
@@ -10,10 +10,11 @@ const IconWrapper = styled(Box)({
 });
 
 function CheckIcon(props) {
+  const { fill } = props;
   return (
     <Tooltip title={'Sent'}>
       <IconWrapper>
-        <CI fill={props.fill} />
+        <CI fill={fill} />
       </IconWrapper>
     </Tooltip>
   );

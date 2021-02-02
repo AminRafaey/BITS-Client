@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { HoverColor } from '../../constants/theme';
+import match from 'autosuggest-highlight/match';
+import parse from 'autosuggest-highlight/parse';
+import { keywords } from '../../../Static/Keyword';
+import { Radio } from '../../HOC';
 import {
   TextField,
   CircularProgress,
@@ -8,23 +11,27 @@ import {
   withStyles,
   Box,
   Grid,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import { keywords } from '../../../Static/Keyword';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import { Radio } from '../../HOC';
+import { HoverColor, HeadingColor } from '../../constants/theme';
 
+const textAreaStyle = {
+  width: '100%',
+  minHeight: '160px',
+  resize: 'none',
+  borderRadius: '42px',
+  border: `0px solid #ffff`,
+  padding: '1.5rem',
+  outlineWidth: '0px',
+};
 const NoOptionTyp = styled(Typography)({
   cursor: 'pointer',
-  color: 'rgba(0, 0, 0, 0.85)',
 });
 const LabelTyp = styled(Typography)({
   display: 'inline',
-  color: 'rgba(0, 0, 0, 0.85)',
   paddingLeft: 52,
   paddingRight: 55,
   fontSize: 14,
@@ -44,16 +51,19 @@ const BrowseWrapper = styled(Box)({
   marginLeft: '49px',
   marginTop: '5px',
   width: 'fit-content',
-  background: '#ffff',
+  background: HeadingColor,
   borderRadius: 5,
   '&:hover': {
     background: HoverColor,
   },
 });
 const BrowseTyp = styled(Typography)({
-  color: 'rgba(0, 0, 0, 0.85)',
   fontSize: 14,
   padding: '2px 4px 2px 4px',
+  color: 'rgb(0, 0,0.85)',
+  '&:hover': {
+    color: HeadingColor,
+  },
 });
 const StyledAutoComplete = withStyles({
   root: {
@@ -62,14 +72,13 @@ const StyledAutoComplete = withStyles({
       width: 200,
     },
     '& .MuiInputBase-root': {
-      background: '#ffff',
+      background: HeadingColor,
     },
   },
 })(Autocomplete);
 const StyledFormControlLabel = withStyles({
   label: {
     fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.85)',
   },
 })(FormControlLabel);
 
@@ -176,15 +185,7 @@ export default function Template() {
         <Grid item xs={7}>
           <TextAreaWrapper>
             <textarea
-              style={{
-                width: '100%',
-                minHeight: '160px',
-                resize: 'none',
-                borderRadius: '42px',
-                border: `0px solid #ffff`,
-                padding: '1.5rem',
-                outlineWidth: '0px',
-              }}
+              style={textAreaStyle}
               value={textAreaVal}
               id="templateTextArea"
               placeholder="Type your message here..."

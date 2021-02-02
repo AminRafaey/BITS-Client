@@ -1,9 +1,20 @@
 import React from 'react';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
-import { HoverColor, LinkColor } from '../../constants/theme';
-
+import {
+  HoverColor,
+  LinkColor,
+  HeadingColor,
+  DarkBackgroundColor,
+} from '../../constants/theme';
+import {
+  ButtonWrapper,
+  SendTyp,
+  SendWrapper,
+  ScheduleWrapper,
+  ScheduleTyp,
+} from '../ListOption';
 const ChooseFileWrapper = styled(Box)({
-  background: '#cfd8dc',
+  background: DarkBackgroundColor,
   width: '100%',
   height: '60px',
   display: 'flex',
@@ -14,7 +25,7 @@ const ChooseFileWrapper = styled(Box)({
 const BrowseWrapper = styled(Box)({
   marginLeft: '49px',
   width: 'fit-content',
-  background: '#ffff',
+  background: HeadingColor,
   '&:hover': {
     background: HoverColor,
   },
@@ -23,9 +34,11 @@ const BrowseTyp = styled(Typography)({
   color: 'rgba(0, 0, 0, 0.85)',
   fontSize: 14,
   padding: '2px 4px 2px 4px',
+  '&:hover': {
+    color: HeadingColor,
+  },
 });
 const FileNameTyp = styled(Typography)({
-  color: 'rgba(0, 0, 0, 0.85)',
   fontSize: 14,
   paddingLeft: 20,
 });
@@ -43,7 +56,8 @@ const DownloadWrapper = styled(Box)({
   alignItems: 'center',
   marginTop: 15,
 });
-function FileOption(props) {
+
+function FileOption() {
   return (
     <Grid container>
       <Grid item xs={5}>
@@ -72,6 +86,18 @@ function FileOption(props) {
         <DownloadWrapper>
           <DownloadTyp>Download Sample File</DownloadTyp>
         </DownloadWrapper>
+      </Grid>
+      <Grid xs={4} />
+      <Grid item xs={4} />
+      <Grid item xs={4}>
+        <ButtonWrapper>
+          <SendWrapper>
+            <SendTyp> {'Send'}</SendTyp>
+          </SendWrapper>
+          <ScheduleWrapper>
+            <ScheduleTyp> {'Schedule'}</ScheduleTyp>
+          </ScheduleWrapper>
+        </ButtonWrapper>
       </Grid>
     </Grid>
   );

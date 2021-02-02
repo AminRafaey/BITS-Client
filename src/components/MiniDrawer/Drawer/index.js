@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { DrawerItem } from '../../../components';
+import profilePlaceholder from '../../../public/images/profile-placeholder.png';
+import { optionsList } from '../../constants/optionsList';
 import {
   Box,
   styled,
@@ -13,11 +16,8 @@ import {
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { DrawerItem } from '../../../components';
 
-import { HighlightColor } from '../../constants/theme';
-import profilePlaceholder from '../../../public/images/profile-placeholder.png';
-import { optionsList } from '../../constants/optionsList';
+import { HighlightColor, HeadingColor } from '../../constants/theme';
 
 const drawerWidth = 280;
 
@@ -33,11 +33,11 @@ const CompanyNameWrapper = styled(Box)({
 
 const CompanyNameTyp = styled(Typography)({
   fontSize: '3rem',
-  color: '#FFFFFF',
+  color: HeadingColor,
 });
 
 const OptionTyp = styled(Typography)({
-  color: '#FFFFFF',
+  color: HeadingColor,
   fontSize: 14,
 });
 

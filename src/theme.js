@@ -16,34 +16,6 @@ export const theme = createMuiTheme({
         },
       },
     },
-    MuiTabs: {
-      vertical: {
-        '& .MuiButtonBase-root': {
-          maxWidth: 'inherit',
-          border: '1px solid #E3E8EE',
-          textTransform: 'capitalize',
-          borderTop: 'none',
-          textAlign: 'left',
-          '&:first-child:not(.Mui-selected) ': {
-            borderTop: '1px solid #E3E8EE',
-          },
-        },
-        '& .Mui-selected': {
-          background: 'white',
-          border: '1px solid white',
-          borderColor: 'white #e8eef5',
-          borderBottom: '1px solid #E3E8EE',
-          borderRight: 'none',
-        },
-        '& .MuiTab-wrapper': {
-          alignItems: 'baseline',
-          fontFamily: 'Medium',
-          fontSize: 15,
-          paddingTop: 10,
-          paddingBottom: 10,
-        },
-      },
-    },
   },
   typography: {
     fontFamily: 'Regular',

@@ -7,3 +7,4 @@ export { default as LogIcon } from './LogIcon';
 export { default as WhatsAppIcon } from './WhatsAppIcon';
 export { default as CheckIcon } from './CheckIcon';
 export { default as CheckAllIcon } from './CheckAll';
+export { default as ChatTailIcon } from './ChatTailIcon';

@@ -11,7 +11,7 @@ const InboxWrapper = styled(Box)({
 function Inbox(props) {
   return (
     <InboxWrapper>
-      <Grid container>
+      <Grid container spacing={0}>
         <Grid item xs={3}>
           <ChatBox />
         </Grid>

@@ -10,15 +10,15 @@ const InfoWrapper = styled(Box)({
   overflowY: 'scroll',
   top: '0',
   bottom: '0',
-  minHeight: '200vh',
-  background: 'aqua',
 });
 
 function Info(props) {
   return (
-    <InfoWrapper>
+    <InfoWrapper className="scrollElement">
       <About />
       <LabelArea />
+      <Notes />
+      <Notes />
       <Notes />
     </InfoWrapper>
   );

@@ -13,7 +13,7 @@ const ChatsWrapper = styled(Box)({
 
 function ChatBox(props) {
   return (
-    <ChatsWrapper>
+    <ChatsWrapper className="scrollElement">
       <Paper>
         {chats.map((c, index) => (
           <Chat

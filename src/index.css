@@ -38,7 +38,6 @@
 
 #Chat-Box-Styled-Scroll::-webkit-scrollbar {
   width: 6px;
-  background-color: #f5f5f5;
 }
 
 #Chat-Box-Styled-Scroll::-webkit-scrollbar-thumb {

@@ -7,30 +7,28 @@ import {
   HeadingColor,
   HomeIconDefaultColor,
   HighlightColor,
-  HoverColor,
 } from '../../../constants/theme';
 const textAreaStyle = {
-  minHeight: '100px',
   resize: 'none',
   border: `0px solid #ffff`,
-
   outlineWidth: '0px',
   width: '100%',
+  height: '100%',
 };
 
 const TypingAreaWrapper = styled(Box)({
-  position: 'fixed',
-  bottom: 0,
-  zIndex: 1,
   background: HeadingColor,
   border: `1px solid ${HomeIconDefaultColor}`,
   marginBottom: 5,
+  width: '99%',
+  height: '90%',
 });
 
 const TextAreaWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   padding: '0px 10px',
+  height: 'calc(100% - 77px)',
 });
 
 const TemplateSelectWrapper = styled(Box)({
@@ -45,6 +43,7 @@ const FotterWrapper = styled(Box)({
   alignItems: 'center',
   padding: '5px 10px',
   borderTop: `1px solid ${HomeIconDefaultColor}`,
+  marginTop: 4,
 });
 
 const SendWrapper = styled(Box)({
@@ -54,13 +53,7 @@ function TypingArea(props) {
   const { typingAreaWidth } = props;
   const [textAreaVal, setTextAreaVal] = useState('');
   return (
-    <TypingAreaWrapper
-      style={{
-        ...(typingAreaWidth > 0
-          ? { width: typingAreaWidth }
-          : { visibility: 'hidden' }),
-      }}
-    >
+    <TypingAreaWrapper>
       <TemplateSelectWrapper>
         <TemplateSelect />
       </TemplateSelectWrapper>

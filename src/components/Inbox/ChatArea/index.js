@@ -3,18 +3,25 @@ import PropTypes from 'prop-types';
 import Reciever from './Reciever';
 import Sender from './Sender';
 import TypingArea from './TypingArea';
-import { styled, Box, Grid } from '@material-ui/core';
+import { styled, Box } from '@material-ui/core';
 
 const ChatAreaWrapper = styled(Box)({
   position: 'fixed',
-  overflowY: 'scroll',
   top: '0',
   bottom: '0',
-  padding: '0px 15px 0px 33px',
+  display: 'flex',
+  flexDirection: 'column',
 });
 
-const EmptyWrapper = styled(Box)({
-  height: 150,
+const TypingAreaWrapper = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  height: '30%',
+});
+const ChatsWrapper = styled(Box)({
+  overflowY: 'scroll',
+  padding: '0px 15px 0px 33px',
+  height: '70%',
 });
 
 function ChatArea(props) {
@@ -27,21 +34,24 @@ function ChatArea(props) {
     );
   }, []);
   return (
-    <ChatAreaWrapper id="Chat-Box-Styled-Scroll" ref={textAreaRef}>
-      <TypingArea typingAreaWidth={typingAreaWidth} />
-      <Reciever />
-      <Reciever />
-      <Sender />
-      <Reciever />
-      <Reciever />
-      <Sender />
-      <Reciever />
-      <Reciever />
-      <Sender />
-      <Reciever />
-      <Reciever />
-      <Sender />
-      <EmptyWrapper />
+    <ChatAreaWrapper ref={textAreaRef}>
+      <ChatsWrapper id="Chat-Box-Styled-Scroll">
+        <Reciever />
+        <Reciever />
+        <Sender />
+        <Reciever />
+        <Reciever />
+        <Sender />
+        <Reciever />
+        <Reciever />
+        <Sender />
+        <Reciever />
+        <Reciever />
+        <Sender />
+      </ChatsWrapper>
+      <TypingAreaWrapper>
+        <TypingArea typingAreaWidth={typingAreaWidth} />
+      </TypingAreaWrapper>
     </ChatAreaWrapper>
   );
 }

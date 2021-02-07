@@ -1,16 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Chip, Box, styled, Typography, Avatar } from '@material-ui/core';
-import {
-  LinkColor,
-  HeadingColor,
-  HoverColor,
-  HomeIconDefaultColor,
-  BackgroundColor,
-  LightTextColor,
-} from '../../../constants/theme';
-import { ChatTailIcon } from '../../../../resources';
-import AddIcon from '@material-ui/icons/Add';
+import { Box, styled, Typography } from '@material-ui/core';
+import { HighlightColor, HoverColor } from '../../../constants/theme';
 
 const MessageWrapper = styled(Box)({
   display: 'flex',
@@ -21,19 +11,20 @@ const MessageWrapper = styled(Box)({
 const ChatTopWrapper = styled(Box)({
   width: '40%',
   display: 'flex',
-  padding: '10px',
+  padding: '20px',
 });
 
 const MessageBoxWrapper = styled(Box)({
   padding: '6px 10px',
   borderRadius: '6px 0px 6px 6px',
-  background: 'rgba(100, 170, 0, .1)',
+  background: HoverColor,
   fontSize: 12,
+  position: 'relative',
 });
 
 const DateTyp = styled(Typography)({
   float: 'right',
-  color: LightTextColor,
+  color: HighlightColor,
   fontSize: 10,
   marginTop: 2,
   paddingRight: '10px',
@@ -43,12 +34,11 @@ function Sender(props) {
   return (
     <MessageWrapper>
       <ChatTopWrapper>
-        <MessageBoxWrapper>
+        <MessageBoxWrapper className="S_tri-right S_left-top">
           Hello, how are you my man Hello, how are you my man Hello, how are you
           my man Hello, how are you my man
           <DateTyp>27-09-2021</DateTyp>
         </MessageBoxWrapper>
-        <ChatTailIcon color={'rgba(100, 170, 0, .1)'} rotate={true} />
       </ChatTopWrapper>
     </MessageWrapper>
   );

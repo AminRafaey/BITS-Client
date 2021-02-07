@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Chip, Box, styled, Typography, Avatar } from '@material-ui/core';
+import { Chip, Box, styled, Typography } from '@material-ui/core';
 import {
   LinkColor,
-  HeadingColor,
-  HoverColor,
   HomeIconDefaultColor,
   BackgroundColor,
   LightTextColor,

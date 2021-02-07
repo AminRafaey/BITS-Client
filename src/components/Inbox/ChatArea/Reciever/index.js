@@ -1,33 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Chip, Box, styled, Typography, Avatar } from '@material-ui/core';
-import {
-  LinkColor,
-  HeadingColor,
-  HoverColor,
-  HomeIconDefaultColor,
-  BackgroundColor,
-  LightTextColor,
-} from '../../../constants/theme';
-import { ChatTailIcon } from '../../../../resources';
-import AddIcon from '@material-ui/icons/Add';
+import { Box, styled, Typography } from '@material-ui/core';
+import { HomeIconDefaultColor, LightTextColor } from '../../../constants/theme';
 
 const MessageWrapper = styled(Box)({
-  display: 'flex',
-  justifyContent: 'flex-start',
   width: '40%',
 });
 
 const ChatTopWrapper = styled(Box)({
   display: 'flex',
-  padding: '10px',
+  padding: '20px',
 });
 
 const MessageBoxWrapper = styled(Box)({
   padding: '6px 10px',
   borderRadius: '0px 6px 6px 6px',
-  background: 'rgba(100, 170, 0, .1)',
+  background: HomeIconDefaultColor,
   fontSize: 12,
+  position: 'relative',
 });
 
 const DateTyp = styled(Typography)({
@@ -42,8 +32,7 @@ function Reciever(props) {
   return (
     <MessageWrapper>
       <ChatTopWrapper>
-        <ChatTailIcon color={'rgba(100, 170, 0, .1)'} />
-        <MessageBoxWrapper>
+        <MessageBoxWrapper className="tri-right left-top">
           Hello, how are you my man Hello, how are you my man Hello, how are you
           my man Hello, how are you my man
           <DateTyp>27-09-2021</DateTyp>

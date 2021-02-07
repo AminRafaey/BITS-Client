@@ -1,17 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { styled, Box, Typography } from '@material-ui/core';
-import { LightTextColor } from '../../../constants/theme';
+import {
+  LightTextColor,
+  BackgroundColor,
+  HoverColor,
+  HomeIconDefaultColor,
+} from '../../../constants/theme';
 import { Badge } from '../../../HOC';
 
 const ChatWrapper = styled(Box)({
   width: 300,
   height: 60,
-  background: 'aliceBlue',
+  background: BackgroundColor,
   display: 'flex',
+  cursor: 'pointer',
+  borderBottom: `1px ${HomeIconDefaultColor} solid`,
+  '&:hover': {
+    background: HoverColor,
+  },
 });
 const NameTyp = styled(Typography)({
-  fontSize: 16,
+  fontSize: 14,
   fontWeight: 600,
 });
 const LastMessageTyp = styled(Typography)({
@@ -22,8 +32,9 @@ const LastMessageTyp = styled(Typography)({
   overflow: 'hidden',
   whiteSpace: 'nowrap',
 });
-const DateWrapper = styled(Typography)({
-  fontSize: 13,
+
+const DateTyp = styled(Typography)({
+  fontSize: 11,
   color: LightTextColor,
   fontWeight: 100,
 });
@@ -49,16 +60,16 @@ const ContentWrapper = styled(Box)({
 function Chat(props) {
   const { name, date, message, unreadCount } = props;
   return (
-    <ChatWrapper>
+    <ChatWrapper className="chat-Wrapper">
       <LeftWrapper>
         <Badge badgeContent={unreadCount} color="primary" />
       </LeftWrapper>
       <ContentWrapper>
         <NameWrapper>
-          <NameTyp>{name}</NameTyp>
-          <DateWrapper>{date}</DateWrapper>
+          <NameTyp className="chat">{name}</NameTyp>
+          <DateTyp className="chat">{date}</DateTyp>
         </NameWrapper>
-        <LastMessageTyp>{message}</LastMessageTyp>
+        <LastMessageTyp className="chat">{message}</LastMessageTyp>
       </ContentWrapper>
       <RightWrapper></RightWrapper>
     </ChatWrapper>

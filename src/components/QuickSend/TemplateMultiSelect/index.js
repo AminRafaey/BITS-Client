@@ -19,7 +19,6 @@ const NoOptionTyp = styled(Typography)({
 });
 const StyledAutoComplete = withStyles({
   root: {
-    margin: '8px',
     '& .MuiFormControl-root': {
       width: 200,
     },
@@ -28,7 +27,7 @@ const StyledAutoComplete = withStyles({
     },
   },
 })(Autocomplete);
-export default function Asynchronous() {
+export default function TemplateMultiSelect() {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [textFieldVal, setTextFieldVal] = useState('');

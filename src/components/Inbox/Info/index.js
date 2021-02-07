@@ -14,7 +14,7 @@ const InfoWrapper = styled(Box)({
 
 function Info(props) {
   return (
-    <InfoWrapper className="scrollElement">
+    <InfoWrapper id="Chat-Box-Styled-Scroll">
       <About />
       <LabelArea />
       <Notes />

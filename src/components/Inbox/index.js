@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ChatBox from './ChatBox';
 import ChatArea from './ChatArea';
 import Info from './Info';
-import { Box, styled, Typography, Grid } from '@material-ui/core';
+import { Box, styled, Grid } from '@material-ui/core';
 
 const InboxWrapper = styled(Box)({
   display: 'flex',

@@ -4,7 +4,7 @@ import Toolbar from './Toolbar';
 import TableHead from './TableHead';
 import profilePlaceholder from '../../public/images/profile-placeholder.png';
 import { addressBook } from '../../Static/AddressBook';
-import { CampaignMultiSelect, Template } from '../../components';
+import { TemplateMultiSelect, Template } from '../../components';
 import { CheckIcon, CheckAllIcon } from '../../resources';
 import {
   Table,
@@ -121,7 +121,7 @@ export default function AddressBookTable() {
   return (
     <div className={classes.root}>
       <CampaignSelectWrapper>
-        <CampaignMultiSelect />
+        <TemplateMultiSelect />
       </CampaignSelectWrapper>
       <TemplateWrapper>
         <Template />

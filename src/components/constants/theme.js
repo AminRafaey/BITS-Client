@@ -5,6 +5,6 @@ export const LinkColor = '#76b9fd';
 export const BackgroundColor = '#E9EEF5';
 export const DelieverStatusColor = '#ACB9BF';
 export const DarkBackgroundColor = '#cfd8dc';
-export const HomeIconDefaultColor = '#CCCCCC';
+export const HomeIconDefaultColor = '#e0e0e0';
 export const WhatsAppIconColor = '#4AC959';
 export const LightTextColor = '#666697';

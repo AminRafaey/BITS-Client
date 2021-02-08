@@ -19,7 +19,7 @@ const textAreaStyle = {
 const TypingAreaWrapper = styled(Box)({
   background: HeadingColor,
   border: `1px solid ${HomeIconDefaultColor}`,
-  marginBottom: 5,
+  marginRight: 6,
   width: '99%',
   height: '90%',
 });
@@ -50,7 +50,6 @@ const SendWrapper = styled(Box)({
   cursor: 'pointer',
 });
 function TypingArea(props) {
-  const { typingAreaWidth } = props;
   const [textAreaVal, setTextAreaVal] = useState('');
   return (
     <TypingAreaWrapper>

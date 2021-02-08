@@ -3,7 +3,11 @@ import React from 'react';
 import { Box, styled, TextField, withStyles } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
-import { HeadingColor } from '../../../constants/theme';
+import {
+  HeadingColor,
+  HighlightColor,
+  HomeIconDefaultColor,
+} from '../../../constants/theme';
 
 const SearchInputWrapper = styled(Box)({
   marginTop: 8,
@@ -11,7 +15,7 @@ const SearchInputWrapper = styled(Box)({
   display: 'flex',
   height: 40,
   borderRadius: 22,
-  width: 'fit-content',
+  width: '90%',
   background: HeadingColor,
   paddingRight: 12,
 });
@@ -20,11 +24,12 @@ const IconWrapper = styled(Box)({
   height: '100%',
   display: 'flex',
   alignItems: 'center',
+  marginLeft: 5,
 });
 const StyledAutoComplete = withStyles({
   root: {
+    width: '100%',
     '& .MuiFormControl-root': {
-      width: 230,
       marginTop: 0,
       marginBottom: 0,
       '& .MuiInputBase-root .MuiOutlinedInput-notchedOutline': {
@@ -40,7 +45,7 @@ export default function SearchInput() {
   return (
     <SearchInputWrapper>
       <IconWrapper>
-        <SearchIcon />
+        <SearchIcon style={{ color: HomeIconDefaultColor }} />
       </IconWrapper>
       <StyledAutoComplete
         freeSolo

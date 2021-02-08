@@ -69,9 +69,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
+    width: 50,
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
+      width: 50,
     },
   },
   toolbar: {
@@ -98,7 +98,7 @@ export default function Drawer(props) {
         }),
       }}
     >
-      <div>
+      <div style={{ ...(!open && { display: 'none' }) }}>
         <CompanyNameWrapper>
           <CompanyNameTyp>BITS</CompanyNameTyp>
           {
@@ -120,7 +120,6 @@ export default function Drawer(props) {
             style={{
               width: 180,
               borderRadius: '50%',
-              ...(!open && { display: 'none' }),
             }}
           />
         </ImageWrapper>

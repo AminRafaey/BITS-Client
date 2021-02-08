@@ -6,10 +6,8 @@ import { chats } from '../../../Static/Chats';
 import { BackgroundColor } from '../../constants/theme';
 import SearchInput from './SearchInput';
 const ChatsWrapper = styled(Box)({
-  position: 'fixed',
+  maxHeight: '100vh',
   overflowY: 'scroll',
-  top: '0',
-  bottom: '0',
 });
 
 const SearchInputWrapper = styled(Box)({

@@ -10,7 +10,6 @@ import {
 import { Badge } from '../../../HOC';
 
 const ChatWrapper = styled(Box)({
-  width: 300,
   height: 60,
   background: BackgroundColor,
   display: 'flex',
@@ -25,7 +24,7 @@ const NameTyp = styled(Typography)({
   fontWeight: 600,
 });
 const LastMessageTyp = styled(Typography)({
-  fontSize: 13,
+  fontSize: 12,
   color: LightTextColor,
   fontWeight: 100,
   textOverflow: 'ellipsis',
@@ -34,7 +33,7 @@ const LastMessageTyp = styled(Typography)({
 });
 
 const DateTyp = styled(Typography)({
-  fontSize: 11,
+  fontSize: 10,
   color: LightTextColor,
   fontWeight: 100,
 });

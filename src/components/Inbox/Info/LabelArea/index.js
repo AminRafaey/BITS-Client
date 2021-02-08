@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Chip, Box, styled, Typography } from '@material-ui/core';
+import { Chip, Box, styled, Typography, withStyles } from '@material-ui/core';
 import {
   LinkColor,
   HomeIconDefaultColor,
@@ -9,7 +9,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 
 const LabelAreaWrapper = styled(Box)({
-  padding: '5px 15px 0px 15px',
+  padding: '5px 15px 0px 5px',
   background: BackgroundColor,
 });
 const LabelWrapper = styled(Box)({
@@ -18,12 +18,12 @@ const LabelWrapper = styled(Box)({
   paddingBottom: 12,
 });
 const LabelTyp = styled(Typography)({
-  fontSize: 16,
+  fontSize: 14,
   fontWeight: 600,
 });
 
 const ManageLabelTyp = styled(Typography)({
-  fontSize: 14,
+  fontSize: 12,
   color: LinkColor,
 });
 
@@ -33,7 +33,7 @@ const CircleWrapper = styled(Box)({
   borderRadius: '50%',
 });
 const SuggestTyp = styled(Typography)({
-  fontSize: 14,
+  fontSize: 12,
   paddingBottom: 12,
 });
 const ChipWrapper = styled(Box)({
@@ -44,6 +44,11 @@ const EmptyWrapper = styled(Box)({
   height: 2,
   background: HomeIconDefaultColor,
 });
+const StyledChip = withStyles({
+  label: {
+    fontSize: 12,
+  },
+})(Chip);
 function LabelArea(props) {
   return (
     <LabelAreaWrapper>
@@ -53,7 +58,8 @@ function LabelArea(props) {
       </LabelWrapper>
       <ChipWrapper>
         {' '}
-        <Chip
+        <StyledChip
+          size="small"
           avatar={<CircleWrapper style={{ background: '#4A7F0F' }} />}
           label="New Customer"
           onDelete={() => {}}
@@ -61,7 +67,8 @@ function LabelArea(props) {
         />
       </ChipWrapper>
       <ChipWrapper>
-        <Chip
+        <StyledChip
+          size="small"
           avatar={<AddIcon />}
           label="Add Label"
           onDelete={() => {}}
@@ -71,7 +78,8 @@ function LabelArea(props) {
       <SuggestTyp>Suggested Labels</SuggestTyp>
       <ChipWrapper>
         {' '}
-        <Chip
+        <StyledChip
+          size="small"
           avatar={<CircleWrapper style={{ background: '#FF6377' }} />}
           label="Important"
           onDelete={() => {}}
@@ -79,7 +87,8 @@ function LabelArea(props) {
         />
       </ChipWrapper>
       <ChipWrapper>
-        <Chip
+        <StyledChip
+          size="small"
           avatar={<CircleWrapper style={{ background: '#3A79E7' }} />}
           label="New Customer"
           onDelete={() => {}}

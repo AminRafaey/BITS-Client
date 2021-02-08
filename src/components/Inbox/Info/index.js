@@ -6,15 +6,13 @@ import Notes from './Notes';
 import { styled, Box } from '@material-ui/core';
 
 const InfoWrapper = styled(Box)({
-  position: 'fixed',
+  maxHeight: '100vh',
   overflowY: 'scroll',
-  top: '0',
-  bottom: '0',
 });
 
 function Info(props) {
   return (
-    <InfoWrapper id="Chat-Box-Styled-Scroll">
+    <InfoWrapper className="scrollElement">
       <About />
       <LabelArea />
       <Notes />

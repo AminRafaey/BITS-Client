@@ -18,8 +18,8 @@
   position: absolute;
   width: 0;
   height: 0;
-  left: 247px;
-  right: auto;
+  right: -13px;
+  left: auto;
   top: 0px;
   bottom: auto;
   border: 15px solid;
@@ -42,5 +42,5 @@
 
 #Chat-Box-Styled-Scroll::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #e0e0e0;
+  background-color: #ededed;
 }

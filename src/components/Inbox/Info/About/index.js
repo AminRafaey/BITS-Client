@@ -12,17 +12,23 @@ import {
   HoverColor,
   HomeIconDefaultColor,
   BackgroundColor,
+  HighlightColor,
 } from '../../../constants/theme';
+const iconStyling = {
+  width: 17,
+  height: 17,
+  color: HomeIconDefaultColor,
+};
 const globalTypStyle = {
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-  fontSize: 14,
+  fontSize: 12,
   fontWeight: 400,
-  paddingLeft: 12,
+  paddingLeft: 6,
 };
 const AboutWrapper = styled(Box)({
-  padding: '5px 0px 0px 15px',
+  padding: '5px 0px 0px 5px',
   background: BackgroundColor,
 });
 const ProfileWrapper = styled(Box)({
@@ -32,11 +38,12 @@ const ProfileWrapper = styled(Box)({
   paddingBottom: 12,
 });
 const NameTyp = styled(Typography)({
-  fontSize: 16,
+  fontSize: 14,
   fontWeight: 600,
 });
 const FlexWrapper = styled(Box)({
   display: 'flex',
+  alignItems: 'center',
   paddingBottom: 12,
 });
 const EmailTyp = styled(Typography)({
@@ -64,7 +71,7 @@ const EditWrapper = styled(Box)({
 });
 const EditTyp = styled(Typography)({
   color: 'rgba(0, 0, 0, 0.85)',
-  fontSize: 14,
+  fontSize: 13,
   '&:hover': {
     color: HeadingColor,
   },
@@ -91,20 +98,20 @@ function About(props) {
         <NameTyp>Amin</NameTyp>
       </ProfileWrapper>
       <FlexWrapper>
-        <EmailIcon />
+        <EmailIcon style={{ ...iconStyling }} />
         <EmailTyp>aminrafaey543@gmail.com</EmailTyp>
       </FlexWrapper>
       <FlexWrapper>
         {' '}
-        <PhoneIcon />
+        <PhoneIcon style={{ ...iconStyling }} />
         <InfoTyp>03348035644</InfoTyp>
       </FlexWrapper>
       <FlexWrapper>
-        <LinkIcon />
+        <LinkIcon style={{ ...iconStyling }} />
         <InfoTyp>Customer since: 24-05-14</InfoTyp>
       </FlexWrapper>
       <FlexWrapper>
-        <LocationOnIcon />
+        <LocationOnIcon style={{ ...iconStyling }} />
         <InfoTyp>Shad Bagh</InfoTyp>
       </FlexWrapper>
       <EditOuterWrapper>

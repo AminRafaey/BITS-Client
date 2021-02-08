@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChatBox from './ChatBox';
 import ChatArea from './ChatArea';
@@ -7,8 +7,13 @@ import { Box, styled, Grid } from '@material-ui/core';
 
 const InboxWrapper = styled(Box)({
   display: 'flex',
+  width: '100%',
 });
 function Inbox(props) {
+  const { setOpen } = props;
+  useEffect(() => {
+    setOpen(false);
+  }, []);
   return (
     <InboxWrapper>
       <Grid container spacing={0}>

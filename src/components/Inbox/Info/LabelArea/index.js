@@ -39,11 +39,7 @@ const SuggestTyp = styled(Typography)({
 const ChipWrapper = styled(Box)({
   paddingBottom: 12,
 });
-const EmptyWrapper = styled(Box)({
-  width: '100%',
-  height: 2,
-  background: HomeIconDefaultColor,
-});
+
 const StyledChip = withStyles({
   label: {
     fontSize: 12,
@@ -95,7 +91,6 @@ function LabelArea(props) {
           variant="outlined"
         />
       </ChipWrapper>
-      <EmptyWrapper />
     </LabelAreaWrapper>
   );
 }

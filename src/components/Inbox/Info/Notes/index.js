@@ -33,12 +33,6 @@ const ManageNoteTyp = styled(Typography)({
   color: LinkColor,
 });
 
-const EmptyWrapper = styled(Box)({
-  width: '100%',
-  height: 2,
-  background: HomeIconDefaultColor,
-});
-
 const NoteInfoTyp = styled(Typography)({
   ...globalTyp,
 });
@@ -51,6 +45,7 @@ const ButtonTyp = styled(Typography)({
 });
 const NoteContentTyp = styled(Typography)({
   fontSize: 12,
+  paddingBottom: 12,
 });
 function Notes(props) {
   return (
@@ -66,7 +61,6 @@ function Notes(props) {
       <NoteContentTyp>
         This customer is very important, PLease take care of him
       </NoteContentTyp>
-      <EmptyWrapper />
     </LabelAreaWrapper>
   );
 }

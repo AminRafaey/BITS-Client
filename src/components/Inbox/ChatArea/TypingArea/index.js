@@ -7,6 +7,7 @@ import {
   HeadingColor,
   HomeIconDefaultColor,
   HighlightColor,
+  GrayColor,
 } from '../../../constants/theme';
 const textAreaStyle = {
   resize: 'none',
@@ -14,11 +15,12 @@ const textAreaStyle = {
   outlineWidth: '0px',
   width: '100%',
   height: '100%',
+  fontSize: 12,
 };
 
 const TypingAreaWrapper = styled(Box)({
   background: HeadingColor,
-  border: `1px solid ${HomeIconDefaultColor}`,
+  border: `1px solid ${GrayColor}`,
   marginRight: 6,
   width: '99%',
   height: '90%',
@@ -42,7 +44,7 @@ const FotterWrapper = styled(Box)({
   justifyContent: 'flex-end',
   alignItems: 'center',
   padding: '5px 10px',
-  borderTop: `1px solid ${HomeIconDefaultColor}`,
+  borderTop: `1px solid ${GrayColor}`,
   marginTop: 4,
 });
 
@@ -70,7 +72,7 @@ function TypingArea(props) {
       <FotterWrapper>
         {' '}
         <SendWrapper>
-          <SendIcon style={{ color: HighlightColor }} />
+          <SendIcon style={{}} />
         </SendWrapper>
       </FotterWrapper>
     </TypingAreaWrapper>

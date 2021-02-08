@@ -17,7 +17,6 @@ import {
 const iconStyling = {
   width: 17,
   height: 17,
-  color: HomeIconDefaultColor,
 };
 const globalTypStyle = {
   textOverflow: 'ellipsis',
@@ -57,6 +56,7 @@ const InfoTyp = styled(Typography)({
 const EditOuterWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
+  paddingBottom: 12,
 });
 const EditWrapper = styled(Box)({
   display: 'flex',
@@ -76,12 +76,7 @@ const EditTyp = styled(Typography)({
     color: HeadingColor,
   },
 });
-const EmptyWrapper = styled(Box)({
-  width: '100%',
-  height: 2,
-  background: HomeIconDefaultColor,
-  marginTop: 12,
-});
+
 function About(props) {
   return (
     <AboutWrapper>
@@ -120,7 +115,6 @@ function About(props) {
           <EditTyp> Edit</EditTyp>
         </EditWrapper>
       </EditOuterWrapper>
-      <EmptyWrapper />
     </AboutWrapper>
   );
 }

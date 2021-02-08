@@ -8,12 +8,14 @@ import { styled, Box } from '@material-ui/core';
 const ChatAreaWrapper = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
+  background: '#ffff',
 });
 
 const TypingAreaWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   height: '30vh',
+  background: '#ffff',
 });
 const ChatsWrapper = styled(Box)({
   overflowY: 'scroll',

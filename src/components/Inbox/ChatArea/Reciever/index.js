@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, styled, Typography } from '@material-ui/core';
-import { HomeIconDefaultColor, LightTextColor } from '../../../constants/theme';
+import {
+  HomeIconDefaultColor,
+  LightTextColor,
+  GrayColor,
+} from '../../../constants/theme';
 
 const MessageWrapper = styled(Box)({
   width: '40%',
@@ -15,7 +19,7 @@ const ChatTopWrapper = styled(Box)({
 const MessageBoxWrapper = styled(Box)({
   padding: '6px 10px',
   borderRadius: '0px 6px 6px 6px',
-  background: HomeIconDefaultColor,
+  background: GrayColor,
   fontSize: 12,
   position: 'relative',
 });

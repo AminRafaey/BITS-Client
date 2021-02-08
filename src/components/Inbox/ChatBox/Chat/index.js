@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { styled, Box, Typography } from '@material-ui/core';
+import { styled, Box, Typography, withStyles } from '@material-ui/core';
 import {
   LightTextColor,
   BackgroundColor,
@@ -10,7 +10,7 @@ import {
 import { Badge } from '../../../HOC';
 
 const ChatWrapper = styled(Box)({
-  height: 60,
+  height: 55,
   background: BackgroundColor,
   display: 'flex',
   cursor: 'pointer',
@@ -41,6 +41,7 @@ const NameWrapper = styled(Box)({
   width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
 });
 const LeftWrapper = styled(Box)({
   width: '10%',
@@ -55,7 +56,9 @@ const RightWrapper = styled(Box)({
 const ContentWrapper = styled(Box)({
   width: '85%',
   height: '100%',
+  paddingLeft: 4,
 });
+
 function Chat(props) {
   const { name, date, message, unreadCount } = props;
   return (

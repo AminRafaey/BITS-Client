@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { styled, Box, Typography, withStyles } from '@material-ui/core';
+import { styled, Box, Typography } from '@material-ui/core';
 import {
   LightTextColor,
   BackgroundColor,
@@ -20,11 +20,11 @@ const ChatWrapper = styled(Box)({
   },
 });
 const NameTyp = styled(Typography)({
-  fontSize: 14,
+  fontSize: 15,
   fontWeight: 600,
 });
 const LastMessageTyp = styled(Typography)({
-  fontSize: 12,
+  fontSize: 13,
   color: LightTextColor,
   fontWeight: 100,
   textOverflow: 'ellipsis',
@@ -33,7 +33,7 @@ const LastMessageTyp = styled(Typography)({
 });
 
 const DateTyp = styled(Typography)({
-  fontSize: 10,
+  fontSize: 11,
   color: LightTextColor,
   fontWeight: 100,
 });

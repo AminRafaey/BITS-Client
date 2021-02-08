@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Menu } from '../../../components';
 import {
   withStyles,
@@ -27,9 +28,8 @@ const MenuWrapper = styled(Box)({
 });
 const ListItemWrapper = styled(Box)({
   position: 'relative',
-  pointerEvents: 'none',
   '&:hover': {
-    background: HeadingColor,
+    background: HoverColor,
   },
 });
 const DrawerItemWrapper = styled(Box)({
@@ -45,7 +45,7 @@ const StyledListItemIcon = withStyles({
   },
 })(ListItemIcon);
 function DrawerItem(props) {
-  const { option } = props;
+  const { option, open, handleDrawerClose } = props;
   const [showMenu, setShowMenu] = useState(false);
   return (
     <DrawerItemWrapper
@@ -55,23 +55,29 @@ function DrawerItem(props) {
         ...(showMenu && { background: HoverColor }),
       }}
     >
-      <ListItemWrapper>
-        <ListItem>
-          <StyledListItemIcon>{option.icon}</StyledListItemIcon>
-          <OptionTyp>{option.title}</OptionTyp>
-          <ArrowIconParentWrapper>
-            {' '}
-            <ArrowIconWrapper
-              style={{
-                ...(showMenu && { transform: 'rotate(270deg)' }),
-              }}
-            >
+      <Link to={option.defaultPath} style={{ textDecoration: 'none' }}>
+        <ListItemWrapper
+          style={{
+            ...(open && option.menuArr.length > 0 && { pointerEvents: 'none' }),
+          }}
+        >
+          <ListItem>
+            <StyledListItemIcon>{option.icon}</StyledListItemIcon>
+            <OptionTyp>{option.title}</OptionTyp>
+            <ArrowIconParentWrapper>
               {' '}
-              <ArrowBackIosIcon style={{ color: '#ffff', height: 11 }} />
-            </ArrowIconWrapper>
-          </ArrowIconParentWrapper>
-        </ListItem>
-      </ListItemWrapper>
+              <ArrowIconWrapper
+                style={{
+                  ...(showMenu && { transform: 'rotate(270deg)' }),
+                }}
+              >
+                {' '}
+                <ArrowBackIosIcon style={{ color: '#ffff', height: 11 }} />
+              </ArrowIconWrapper>
+            </ArrowIconParentWrapper>
+          </ListItem>
+        </ListItemWrapper>
+      </Link>
       {showMenu && (
         <MenuWrapper>
           <Menu menuArr={option.menuArr} />

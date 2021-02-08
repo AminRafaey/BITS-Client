@@ -18,12 +18,12 @@ const LabelWrapper = styled(Box)({
   paddingBottom: 12,
 });
 const LabelTyp = styled(Typography)({
-  fontSize: 14,
+  fontSize: 15,
   fontWeight: 600,
 });
 
 const ManageLabelTyp = styled(Typography)({
-  fontSize: 12,
+  fontSize: 13,
   color: LinkColor,
 });
 
@@ -33,7 +33,7 @@ const CircleWrapper = styled(Box)({
   borderRadius: '50%',
 });
 const SuggestTyp = styled(Typography)({
-  fontSize: 12,
+  fontSize: 13,
   paddingBottom: 12,
 });
 const ChipWrapper = styled(Box)({
@@ -42,7 +42,7 @@ const ChipWrapper = styled(Box)({
 
 const StyledChip = withStyles({
   label: {
-    fontSize: 12,
+    fontSize: 13,
   },
 })(Chip);
 function LabelArea(props) {

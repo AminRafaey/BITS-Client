@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, styled, Typography } from '@material-ui/core';
-import {
-  HomeIconDefaultColor,
-  LightTextColor,
-  GrayColor,
-} from '../../../constants/theme';
+import { LightTextColor, GrayColor } from '../../../constants/theme';
 
 const MessageWrapper = styled(Box)({
   width: '40%',
@@ -20,14 +16,14 @@ const MessageBoxWrapper = styled(Box)({
   padding: '6px 10px',
   borderRadius: '0px 6px 6px 6px',
   background: GrayColor,
-  fontSize: 12,
+  fontSize: 13,
   position: 'relative',
 });
 
 const DateTyp = styled(Typography)({
   float: 'right',
   color: LightTextColor,
-  fontSize: 10,
+  fontSize: 11,
   marginTop: 2,
   paddingRight: '10px',
 });

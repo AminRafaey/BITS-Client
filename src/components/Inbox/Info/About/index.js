@@ -22,7 +22,7 @@ const globalTypStyle = {
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-  fontSize: 12,
+  fontSize: 13,
   fontWeight: 400,
   paddingLeft: 6,
 };
@@ -37,7 +37,7 @@ const ProfileWrapper = styled(Box)({
   paddingBottom: 12,
 });
 const NameTyp = styled(Typography)({
-  fontSize: 14,
+  fontSize: 15,
   fontWeight: 600,
 });
 const FlexWrapper = styled(Box)({

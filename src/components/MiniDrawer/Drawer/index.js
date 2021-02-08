@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { useLocation } from 'react-router-dom';
 import { DrawerItem } from '../../../components';
 import profilePlaceholder from '../../../public/images/profile-placeholder.png';
 import { optionsList } from '../../constants/optionsList';
@@ -80,9 +81,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Drawer(props) {
-  const { open, handleDrawerClose } = props;
+  const { open, handleDrawerOpen } = props;
   const classes = useStyles();
+  const { pathname } = useLocation();
   const theme = useTheme();
+
+  useEffect(() => {
+    if (!open) {
+      pathname !== '/inbox' && handleDrawerOpen();
+    }
+  }, [pathname]);
 
   return (
     <MuiDrawer
@@ -130,7 +138,7 @@ export default function Drawer(props) {
 
       <List>
         {optionsList.map((option, index) => (
-          <DrawerItem option={option} key={index} />
+          <DrawerItem option={option} key={index} open={open} />
         ))}
       </List>
     </MuiDrawer>
@@ -139,5 +147,5 @@ export default function Drawer(props) {
 
 Drawer.propTypes = {
   open: PropTypes.bool.isRequired,
-  handleDrawerClose: PropTypes.func.isRequired,
+  handleDrawerOpen: PropTypes.func.isRequired,
 };

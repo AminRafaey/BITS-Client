@@ -18,14 +18,14 @@ const MessageBoxWrapper = styled(Box)({
   padding: '6px 10px',
   borderRadius: '6px 0px 6px 6px',
   background: HoverColor,
-  fontSize: 12,
+  fontSize: 13,
   position: 'relative',
 });
 
 const DateTyp = styled(Typography)({
   float: 'right',
   color: HighlightColor,
-  fontSize: 10,
+  fontSize: 11,
   marginTop: 2,
   paddingRight: '10px',
 });

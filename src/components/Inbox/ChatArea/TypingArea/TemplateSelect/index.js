@@ -20,12 +20,12 @@ const NoOptionTyp = styled(Typography)({
 const StyledAutoComplete = withStyles({
   root: {
     '& .MuiFormControl-root': {
-      width: 125,
+      width: 130,
       '& .MuiInputBase-root .MuiOutlinedInput-notchedOutline': {
         border: 'none',
       },
       '& .MuiFormLabel-root': {
-        fontSize: 12,
+        fontSize: 13,
       },
     },
     '& .MuiInputBase-root': {

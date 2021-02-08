@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MiniDrawer() {
   const classes = useStyles();
+
   const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -59,7 +60,7 @@ export default function MiniDrawer() {
       <div className={classes.root}>
         <CssBaseline />
         {open && <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />}
-        <Drawer open={open} handleDrawerClose={handleDrawerClose} />
+        <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
           <Switch>
             <Route path="/sendSms">
@@ -73,7 +74,7 @@ export default function MiniDrawer() {
                 <AddressBookTable />
               </AddressBookWrapper>
             </Route>
-            <Route path="/manageTemplate">
+            <Route path="/inbox">
               <InboxWrapper>
                 {' '}
                 <Inbox setOpen={setOpen} />

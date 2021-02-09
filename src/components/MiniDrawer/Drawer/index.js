@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
+import HomeIcon from '@material-ui/icons/Home';
 import { HighlightColor, HeadingColor, GrayColor } from '../../constants/theme';
 
 const drawerWidth = 280;
@@ -117,35 +117,47 @@ export default function Drawer(props) {
         }),
       }}
     >
-      <div style={{ ...(!open && { display: 'none' }) }}>
-        <CompanyNameWrapper>
-          <CompanyNameTyp>BITS</CompanyNameTyp>
-          {
-            //   <div className={classes.toolbar}>
-            //   <IconButton onClick={handleDrawerClose}>
-            //     {theme.direction === 'rtl' ? (
-            //       <ChevronRightIcon />
-            //     ) : (
-            //       <ChevronLeftIcon />
-            //     )}
-            //   </IconButton>
-            // </div>
-          }
-        </CompanyNameWrapper>
-        <ImageWrapper>
-          <img
-            src={profilePlaceholder}
-            alt="Avatar"
-            style={{
-              width: 180,
-              borderRadius: '50%',
-            }}
-          />
-        </ImageWrapper>
-        <UserNameWrapper>
-          <OptionTyp>Muhammad Amin</OptionTyp>
-        </UserNameWrapper>
-      </div>
+      {open ? (
+        <div>
+          <CompanyNameWrapper>
+            <CompanyNameTyp>BITS</CompanyNameTyp>
+            {
+              //   <div className={classes.toolbar}>
+              //   <IconButton onClick={handleDrawerClose}>
+              //     {theme.direction === 'rtl' ? (
+              //       <ChevronRightIcon />
+              //     ) : (
+              //       <ChevronLeftIcon />
+              //     )}
+              //   </IconButton>
+              // </div>
+            }
+          </CompanyNameWrapper>
+          <ImageWrapper>
+            <img
+              src={profilePlaceholder}
+              alt="Avatar"
+              style={{
+                width: 180,
+                borderRadius: '50%',
+              }}
+            />
+          </ImageWrapper>
+          <UserNameWrapper>
+            <OptionTyp>Muhammad Amin</OptionTyp>
+          </UserNameWrapper>
+        </div>
+      ) : (
+        <DrawerItem
+          option={{
+            title: 'Home',
+            icon: <HomeIcon style={{ color: '#FFFF' }} />,
+            menuArr: [],
+            defaultPath: '/',
+          }}
+          open={open}
+        />
+      )}
 
       <List>
         {optionsList.map((option, index) => (

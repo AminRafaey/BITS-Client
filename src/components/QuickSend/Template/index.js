@@ -57,14 +57,7 @@ const BrowseWrapper = styled(Box)({
     background: HoverColor,
   },
 });
-const BrowseTyp = styled(Typography)({
-  fontSize: 14,
-  padding: '2px 4px 2px 4px',
-  color: 'rgb(0, 0,0.85)',
-  '&:hover': {
-    color: HeadingColor,
-  },
-});
+
 const StyledAutoComplete = withStyles({
   root: {
     margin: '8px',

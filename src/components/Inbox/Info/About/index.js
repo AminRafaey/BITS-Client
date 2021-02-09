@@ -11,9 +11,7 @@ import {
   LinkColor,
   HeadingColor,
   HoverColor,
-  HomeIconDefaultColor,
   BackgroundColor,
-  HighlightColor,
 } from '../../../constants/theme';
 const iconStyling = {
   width: 17,
@@ -68,13 +66,6 @@ const EditWrapper = styled(Box)({
   background: HeadingColor,
   '&:hover': {
     background: HoverColor,
-  },
-});
-const EditTyp = styled(Typography)({
-  color: 'rgba(0, 0, 0, 0.85)',
-  fontSize: 14,
-  '&:hover': {
-    color: HeadingColor,
   },
 });
 

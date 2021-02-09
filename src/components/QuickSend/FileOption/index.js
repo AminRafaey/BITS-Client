@@ -1,18 +1,8 @@
 import React from 'react';
+import { Button } from '../../HOC';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
-import {
-  HoverColor,
-  LinkColor,
-  HeadingColor,
-  DarkBackgroundColor,
-} from '../../constants/theme';
-import {
-  ButtonWrapper,
-  SendTyp,
-  SendWrapper,
-  ScheduleWrapper,
-  ScheduleTyp,
-} from '../ListOption';
+import { LinkColor, DarkBackgroundColor } from '../../constants/theme';
+import { ButtonWrapper, SendWrapper, ScheduleWrapper } from '../ListOption';
 const ChooseFileWrapper = styled(Box)({
   background: DarkBackgroundColor,
   width: '100%',
@@ -25,19 +15,8 @@ const ChooseFileWrapper = styled(Box)({
 const BrowseWrapper = styled(Box)({
   marginLeft: '49px',
   width: 'fit-content',
-  background: HeadingColor,
-  '&:hover': {
-    background: HoverColor,
-  },
 });
-const BrowseTyp = styled(Typography)({
-  color: 'rgba(0, 0, 0, 0.85)',
-  fontSize: 14,
-  padding: '2px 4px 2px 4px',
-  '&:hover': {
-    color: HeadingColor,
-  },
-});
+
 const FileNameTyp = styled(Typography)({
   fontSize: 14,
   paddingLeft: 20,
@@ -76,7 +55,7 @@ function FileOption() {
               htmlFor="media"
               style={{ color: 'white', cursor: 'pointer' }}
             >
-              <BrowseTyp> {'Browse ' + 'image'}</BrowseTyp>
+              <Button> {'Browse ' + 'image'}</Button>
             </label>
           </BrowseWrapper>
           <FileNameTyp>No File Choosen</FileNameTyp>
@@ -87,15 +66,15 @@ function FileOption() {
           <DownloadTyp>Download Sample File</DownloadTyp>
         </DownloadWrapper>
       </Grid>
-      <Grid xs={4} />
+      <Grid item xs={4} />
       <Grid item xs={4} />
       <Grid item xs={4}>
         <ButtonWrapper>
           <SendWrapper>
-            <SendTyp> {'Send'}</SendTyp>
+            <Button> {'Send'}</Button>
           </SendWrapper>
           <ScheduleWrapper>
-            <ScheduleTyp> {'Schedule'}</ScheduleTyp>
+            <Button> {'Schedule'}</Button>
           </ScheduleWrapper>
         </ButtonWrapper>
       </Grid>

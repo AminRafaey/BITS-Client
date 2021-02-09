@@ -1,12 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Chip, Box, styled, Typography, withStyles } from '@material-ui/core';
-import {
-  LinkColor,
-  HomeIconDefaultColor,
-  BackgroundColor,
-} from '../../../constants/theme';
 import AddIcon from '@material-ui/icons/Add';
+import { LinkColor, BackgroundColor } from '../../../constants/theme';
 
 const LabelAreaWrapper = styled(Box)({
   padding: '5px 15px 0px 5px',

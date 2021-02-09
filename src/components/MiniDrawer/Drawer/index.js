@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { DrawerItem } from '../../../components';
 import profilePlaceholder from '../../../public/images/profile-placeholder.png';
 import { optionsList, singleOptionList } from '../../constants/optionsList';
@@ -120,7 +120,12 @@ export default function Drawer(props) {
       {open ? (
         <div>
           <CompanyNameWrapper>
-            <CompanyNameTyp>BITS</CompanyNameTyp>
+            <Link
+              to={'/'}
+              style={{ textDecoration: 'none', cursor: 'pointer' }}
+            >
+              <CompanyNameTyp>BITS</CompanyNameTyp>
+            </Link>
             {
               //   <div className={classes.toolbar}>
               //   <IconButton onClick={handleDrawerClose}>

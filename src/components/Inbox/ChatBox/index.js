@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Paper, styled, Box } from '@material-ui/core';
 import Chat from './Chat';
 import { chats } from '../../../Static/Chats';
-import { BackgroundColor } from '../../constants/theme';
 import SearchInput from './SearchInput';
+import { Paper, styled, Box } from '@material-ui/core';
+
+import { BackgroundColor } from '../../constants/theme';
+
 const ChatsWrapper = styled(Box)({
   maxHeight: '100vh',
   overflowY: 'scroll',

@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { styled, Box } from '@material-ui/core';
 import TemplateSelect from './TemplateSelect';
+import { styled, Box } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import {
-  HeadingColor,
-  HomeIconDefaultColor,
-  HighlightColor,
-  GrayColor,
-} from '../../../constants/theme';
+import { HeadingColor, GrayColor } from '../../../constants/theme';
 const textAreaStyle = {
   resize: 'none',
   border: `0px solid #ffff`,

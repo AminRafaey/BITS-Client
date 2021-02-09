@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { templates } from '../../../../../Static/Template';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-
+import { templates } from '../../../../../Static/Template';
 import {
   TextField,
   CircularProgress,

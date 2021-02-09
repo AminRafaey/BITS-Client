@@ -64,17 +64,19 @@ function DrawerItem(props) {
           <ListItem>
             <StyledListItemIcon>{option.icon}</StyledListItemIcon>
             <OptionTyp>{option.title}</OptionTyp>
-            <ArrowIconParentWrapper>
-              {' '}
-              <ArrowIconWrapper
-                style={{
-                  ...(showMenu && { transform: 'rotate(270deg)' }),
-                }}
-              >
+            {option.menuArr.length > 0 && (
+              <ArrowIconParentWrapper>
                 {' '}
-                <ArrowBackIosIcon style={{ color: '#ffff', height: 11 }} />
-              </ArrowIconWrapper>
-            </ArrowIconParentWrapper>
+                <ArrowIconWrapper
+                  style={{
+                    ...(showMenu && { transform: 'rotate(270deg)' }),
+                  }}
+                >
+                  {' '}
+                  <ArrowBackIosIcon style={{ color: '#ffff', height: 11 }} />
+                </ArrowIconWrapper>
+              </ArrowIconParentWrapper>
+            )}
           </ListItem>
         </ListItemWrapper>
       </Link>

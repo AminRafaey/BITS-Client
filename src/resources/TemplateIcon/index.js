@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { default as TI } from './icon.svg';
 
 import { styled, Box } from '@material-ui/core';
-import { HighlightColor, HoverColor } from '../../components/constants/theme';
+import {
+  HomeIconDefaultColor,
+  HoverColor,
+} from '../../components/constants/theme';
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
 });
@@ -23,7 +26,7 @@ function TemplateIcon(props) {
   );
 }
 TemplateIcon.defaultProps = {
-  color: HighlightColor,
+  color: HomeIconDefaultColor,
 };
 
 TemplateIcon.propTypes = {

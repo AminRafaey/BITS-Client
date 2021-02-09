@@ -5,6 +5,7 @@ import LabelArea from './LabelArea';
 import Notes from './Notes';
 import { styled, Box } from '@material-ui/core';
 import { HomeIconDefaultColor } from '../../constants/theme';
+
 const InfoWrapper = styled(Box)({
   maxHeight: '100vh',
   overflowY: 'scroll',

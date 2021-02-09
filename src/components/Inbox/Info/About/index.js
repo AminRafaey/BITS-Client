@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import profile from '../../../../public/images/amin.jpg';
+import { Button } from '../../../HOC';
 import { styled, Box, Typography } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -112,7 +113,7 @@ function About(props) {
       <EditOuterWrapper>
         {' '}
         <EditWrapper>
-          <EditTyp> Edit</EditTyp>
+          <Button>Edit</Button>
         </EditWrapper>
       </EditOuterWrapper>
     </AboutWrapper>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { keywords } from '../../../Static/Keyword';
-import { Radio } from '../../HOC';
+import { Radio, Button } from '../../HOC';
 import {
   TextField,
   CircularProgress,
@@ -236,9 +236,10 @@ export default function Template() {
         />
 
         <label htmlFor="media" style={{ color: 'white', cursor: 'pointer' }}>
-          <BrowseTyp> {'Browse ' + 'image'}</BrowseTyp>
+          <Button>{'Browse ' + 'image'}</Button>
         </label>
       </BrowseWrapper>
     </React.Fragment>
   );
 }
+//<BrowseTyp> {'Browse ' + 'image'}</BrowseTyp>

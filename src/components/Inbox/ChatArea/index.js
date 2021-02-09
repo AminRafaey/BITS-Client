@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Reciever from './Reciever';
 import Sender from './Sender';

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { styled, Typography, Box, Grid } from '@material-ui/core';
-import { HoverColor, HeadingColor } from '../../constants/theme';
 import { Button } from '../../HOC';
+import { styled, Typography, Box, Grid } from '@material-ui/core';
 const textAreaStyle = {
   width: '100%',
   minHeight: '160px',
@@ -21,20 +20,6 @@ export const ScheduleWrapper = styled(Box)({
   marginLeft: '49px',
   marginTop: '5px',
   width: 'fit-content',
-});
-export const SendTyp = styled(Typography)({
-  fontSize: 14,
-  padding: '0px 20px 0px 20px',
-  '&:hover': {
-    color: HeadingColor,
-  },
-});
-export const ScheduleTyp = styled(Typography)({
-  fontSize: 14,
-  padding: '0px 20px 0px 20px',
-  '&:hover': {
-    color: HeadingColor,
-  },
 });
 
 const FormatTyp = styled(Typography)({

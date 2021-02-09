@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Chip, Box, styled, Typography } from '@material-ui/core';
+import { Box, styled, Typography } from '@material-ui/core';
 import {
   LinkColor,
-  HomeIconDefaultColor,
   BackgroundColor,
   LightTextColor,
 } from '../../../constants/theme';
-import AddIcon from '@material-ui/icons/Add';
 
 const globalTyp = {
   display: 'inline',

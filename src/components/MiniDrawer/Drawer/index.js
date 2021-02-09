@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { DrawerItem } from '../../../components';
 import profilePlaceholder from '../../../public/images/profile-placeholder.png';
 import { optionsList, singleOptionList } from '../../constants/optionsList';
@@ -14,11 +14,8 @@ import {
   makeStyles,
   useTheme,
   Divider,
-  IconButton,
   withStyles,
 } from '@material-ui/core';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import HomeIcon from '@material-ui/icons/Home';
 import { HighlightColor, HeadingColor, GrayColor } from '../../constants/theme';
 
@@ -120,18 +117,12 @@ export default function Drawer(props) {
       {open ? (
         <div>
           <CompanyNameWrapper>
-            <CompanyNameTyp>BITS</CompanyNameTyp>
-            {
-              //   <div className={classes.toolbar}>
-              //   <IconButton onClick={handleDrawerClose}>
-              //     {theme.direction === 'rtl' ? (
-              //       <ChevronRightIcon />
-              //     ) : (
-              //       <ChevronLeftIcon />
-              //     )}
-              //   </IconButton>
-              // </div>
-            }
+            <Link
+              to={'/'}
+              style={{ textDecoration: 'none', cursor: 'pointer' }}
+            >
+              <CompanyNameTyp>BITS</CompanyNameTyp>
+            </Link>
           </CompanyNameWrapper>
           <ImageWrapper>
             <img

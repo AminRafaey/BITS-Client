@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { templates } from '../../../../../Static/Template';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-
+import { templates } from '../../../../../Static/Template';
 import {
   TextField,
   CircularProgress,
@@ -20,7 +19,7 @@ const NoOptionTyp = styled(Typography)({
 const StyledAutoComplete = withStyles({
   root: {
     '& .MuiFormControl-root': {
-      width: 130,
+      width: 140,
       '& .MuiInputBase-root .MuiOutlinedInput-notchedOutline': {
         border: 'none',
       },

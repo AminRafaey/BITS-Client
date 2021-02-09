@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Badge } from '../../../HOC';
 import { styled, Box, Typography } from '@material-ui/core';
 import {
   LightTextColor,
@@ -7,8 +8,6 @@ import {
   HoverColor,
   HomeIconDefaultColor,
 } from '../../../constants/theme';
-import { Badge } from '../../../HOC';
-
 const ChatWrapper = styled(Box)({
   height: 62,
   background: BackgroundColor,

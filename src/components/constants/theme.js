@@ -7,3 +7,5 @@ export const DelieverStatusColor = '#ACB9BF';
 export const DarkBackgroundColor = '#cfd8dc';
 export const HomeIconDefaultColor = '#CCCCCC';
 export const WhatsAppIconColor = '#4AC959';
+export const LightTextColor = '#666697';
+export const GrayColor = '#EDEDED';

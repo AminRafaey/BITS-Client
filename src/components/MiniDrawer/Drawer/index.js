@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
+import { useLocation } from 'react-router-dom';
 import { DrawerItem } from '../../../components';
 import profilePlaceholder from '../../../public/images/profile-placeholder.png';
-import { optionsList } from '../../constants/optionsList';
+import { optionsList, singleOptionList } from '../../constants/optionsList';
 import {
   Box,
   styled,
@@ -12,18 +13,24 @@ import {
   Typography,
   makeStyles,
   useTheme,
+  Divider,
   IconButton,
+  withStyles,
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
-import { HighlightColor, HeadingColor } from '../../constants/theme';
+import HomeIcon from '@material-ui/icons/Home';
+import { HighlightColor, HeadingColor, GrayColor } from '../../constants/theme';
 
 const drawerWidth = 280;
 
 const ImageWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
+});
+
+const DividerWrapper = styled(Box)({
+  padding: '18px 0px',
 });
 
 const CompanyNameWrapper = styled(Box)({
@@ -46,6 +53,11 @@ const UserNameWrapper = styled(Box)({
   justifyContent: 'center',
   paddingTop: 16,
 });
+const StyledDivider = withStyles({
+  root: {
+    background: GrayColor,
+  },
+})(Divider);
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -69,9 +81,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
+    width: 50,
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
+      width: 50,
     },
   },
   toolbar: {
@@ -80,9 +92,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Drawer(props) {
-  const { open, handleDrawerClose } = props;
+  const { open, handleDrawerOpen } = props;
   const classes = useStyles();
+  const { pathname } = useLocation();
   const theme = useTheme();
+
+  useEffect(() => {
+    if (!open) {
+      pathname !== '/inbox' && handleDrawerOpen();
+    }
+  }, [pathname]);
 
   return (
     <MuiDrawer
@@ -98,40 +117,59 @@ export default function Drawer(props) {
         }),
       }}
     >
-      <div>
-        <CompanyNameWrapper>
-          <CompanyNameTyp>BITS</CompanyNameTyp>
-          {
-            //   <div className={classes.toolbar}>
-            //   <IconButton onClick={handleDrawerClose}>
-            //     {theme.direction === 'rtl' ? (
-            //       <ChevronRightIcon />
-            //     ) : (
-            //       <ChevronLeftIcon />
-            //     )}
-            //   </IconButton>
-            // </div>
-          }
-        </CompanyNameWrapper>
-        <ImageWrapper>
-          <img
-            src={profilePlaceholder}
-            alt="Avatar"
-            style={{
-              width: 180,
-              borderRadius: '50%',
-              ...(!open && { display: 'none' }),
-            }}
-          />
-        </ImageWrapper>
-        <UserNameWrapper>
-          <OptionTyp>Muhammad Amin</OptionTyp>
-        </UserNameWrapper>
-      </div>
+      {open ? (
+        <div>
+          <CompanyNameWrapper>
+            <CompanyNameTyp>BITS</CompanyNameTyp>
+            {
+              //   <div className={classes.toolbar}>
+              //   <IconButton onClick={handleDrawerClose}>
+              //     {theme.direction === 'rtl' ? (
+              //       <ChevronRightIcon />
+              //     ) : (
+              //       <ChevronLeftIcon />
+              //     )}
+              //   </IconButton>
+              // </div>
+            }
+          </CompanyNameWrapper>
+          <ImageWrapper>
+            <img
+              src={profilePlaceholder}
+              alt="Avatar"
+              style={{
+                width: 180,
+                borderRadius: '50%',
+              }}
+            />
+          </ImageWrapper>
+          <UserNameWrapper>
+            <OptionTyp>Muhammad Amin</OptionTyp>
+          </UserNameWrapper>
+        </div>
+      ) : (
+        <DrawerItem
+          option={{
+            title: 'Home',
+            icon: <HomeIcon style={{ color: '#FFFF' }} />,
+            menuArr: [],
+            defaultPath: '/',
+          }}
+          open={open}
+        />
+      )}
 
       <List>
         {optionsList.map((option, index) => (
-          <DrawerItem option={option} key={index} />
+          <DrawerItem option={option} key={index} open={open} />
+        ))}
+        <DividerWrapper>
+          {' '}
+          <StyledDivider />{' '}
+        </DividerWrapper>
+
+        {singleOptionList.map((option, index) => (
+          <DrawerItem option={option} key={index} open={open} />
         ))}
       </List>
     </MuiDrawer>
@@ -140,5 +178,5 @@ export default function Drawer(props) {
 
 Drawer.propTypes = {
   open: PropTypes.bool.isRequired,
-  handleDrawerClose: PropTypes.func.isRequired,
+  handleDrawerOpen: PropTypes.func.isRequired,
 };

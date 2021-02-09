@@ -15,12 +15,9 @@ export const optionsList = [
       { title: 'Send from Address book', link: 'sendFromAddressBook' },
       { title: 'Manage Schedule', link: 'manageSchedule' },
     ],
+    defaultPath: 'sendSms',
   },
-  {
-    title: 'Inbox',
-    icon: <InboxIcon style={{ color: '#FFFF' }} />,
-    menuArr: [],
-  },
+
   {
     title: 'Templates',
     icon: <AssignmentIcon style={{ color: '#FFFF' }} />,
@@ -28,6 +25,7 @@ export const optionsList = [
       { title: 'Manage', link: 'manageTemplate' },
       { title: 'Add', link: 'addTemplate' },
     ],
+    defaultPath: 'manageTemplate',
   },
   {
     title: 'Contact Management',
@@ -36,6 +34,7 @@ export const optionsList = [
       { title: 'Manage', link: 'manageContacts' },
       { title: 'Add', link: 'addContacts' },
     ],
+    defaultPath: 'manageContacts',
   },
   ,
   {
@@ -45,12 +44,23 @@ export const optionsList = [
       { title: 'Manage', link: 'manageGroups' },
       { title: 'Add', link: 'addGroups' },
     ],
+    defaultPath: 'manageGroups',
   },
-  ,
+];
+
+export const singleOptionList = [
+  {
+    title: 'Inbox',
+    icon: <InboxIcon style={{ color: '#FFFF' }} />,
+    menuArr: [],
+    defaultPath: 'inbox',
+  },
+
   {
     title: 'Logs',
     icon: <ReportIcon style={{ color: '#FFFF' }} />,
     menuArr: [],
+    defaultPath: 'logs',
   },
 ];
 

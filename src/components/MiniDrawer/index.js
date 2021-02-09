@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useLocation,
+} from 'react-router-dom';
 import { Box, styled, CssBaseline, makeStyles } from '@material-ui/core';
-import { AddressBookTable, Home, QuickSend } from '../../components';
+import { AddressBookTable, Home, QuickSend, Inbox } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 
@@ -20,7 +25,11 @@ const QuickSendWrapper = styled(Box)({
   background: '#E9EEF5',
   minHeight: '150vh',
 });
-
+const InboxWrapper = styled(Box)({
+  padding: '0px 0px 0px 0px',
+  height: '100%',
+  width: '100%',
+});
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -36,8 +45,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MiniDrawer() {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
 
+  const [open, setOpen] = useState(true);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -50,11 +59,9 @@ export default function MiniDrawer() {
     <Router>
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />
-        <Drawer open={open} handleDrawerClose={handleDrawerClose} />
+        {open && <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />}
+        <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
-          <div className={classes.toolbar} />
-
           <Switch>
             <Route path="/sendSms">
               <QuickSendWrapper>
@@ -66,6 +73,12 @@ export default function MiniDrawer() {
                 {' '}
                 <AddressBookTable />
               </AddressBookWrapper>
+            </Route>
+            <Route path="/inbox">
+              <InboxWrapper>
+                {' '}
+                <Inbox setOpen={setOpen} />
+              </InboxWrapper>
             </Route>
             <Route path="/">
               <HomePageWrapper>

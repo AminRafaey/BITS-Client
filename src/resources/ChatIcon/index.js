@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { default as CI } from './icon.svg';
 import { styled, Box } from '@material-ui/core';
 import {
-  HighlightColor,
   HomeIconDefaultColor,
+  HoverColor,
 } from '../../components/constants/theme';
 
 const IconWrapper = styled(Box)({
@@ -18,7 +18,7 @@ function ChatIcon(props) {
       {' '}
       <CI
         color={color}
-        onMouseOver={() => setColor(HighlightColor)}
+        onMouseOver={() => setColor(HoverColor)}
         onMouseLeave={() => setColor(props.color)}
       />
     </IconWrapper>

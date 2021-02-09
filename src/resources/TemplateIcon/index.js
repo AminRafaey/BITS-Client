@@ -5,8 +5,8 @@ import { default as TI } from './icon.svg';
 
 import { styled, Box } from '@material-ui/core';
 import {
-  HighlightColor,
   HomeIconDefaultColor,
+  HoverColor,
 } from '../../components/constants/theme';
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
@@ -19,7 +19,7 @@ function TemplateIcon(props) {
       {' '}
       <TI
         color={color}
-        onMouseOver={() => setColor(HighlightColor)}
+        onMouseOver={() => setColor(HoverColor)}
         onMouseLeave={() => setColor(props.color)}
       />
     </IconWrapper>

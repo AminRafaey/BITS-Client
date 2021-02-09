@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { default as LI } from './icon.svg';
 import { styled, Box } from '@material-ui/core';
 import {
-  HighlightColor,
   HomeIconDefaultColor,
+  HoverColor,
 } from '../../components/constants/theme';
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
@@ -17,7 +17,7 @@ function LogIcon(props) {
       {' '}
       <LI
         color={color}
-        onMouseOver={() => setColor(HighlightColor)}
+        onMouseOver={() => setColor(HoverColor)}
         onMouseLeave={() => setColor(props.color)}
       />
     </IconWrapper>

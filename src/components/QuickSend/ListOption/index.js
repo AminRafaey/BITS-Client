@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
 import { HoverColor, HeadingColor } from '../../constants/theme';
-
+import { Button } from '../../HOC';
 const textAreaStyle = {
   width: '100%',
   minHeight: '160px',
@@ -13,26 +13,14 @@ const textAreaStyle = {
 };
 const TextAreaWrapper = styled(Box)({});
 export const SendWrapper = styled(Box)({
-  marginLeft: '49px',
+  marginLeft: '4px',
   marginTop: '5px',
   width: 'fit-content',
-  background: HeadingColor,
-  borderRadius: 5,
-  cursor: 'pointer',
-  '&:hover': {
-    background: HoverColor,
-  },
 });
 export const ScheduleWrapper = styled(Box)({
   marginLeft: '49px',
   marginTop: '5px',
   width: 'fit-content',
-  background: HeadingColor,
-  borderRadius: 5,
-  cursor: 'pointer',
-  '&:hover': {
-    background: HoverColor,
-  },
 });
 export const SendTyp = styled(Typography)({
   fontSize: 14,
@@ -88,10 +76,10 @@ export default function ListOption() {
         <Grid item xs={4}>
           <ButtonWrapper>
             <SendWrapper>
-              <SendTyp> {'Send'}</SendTyp>
+              <Button> {'Send'}</Button>
             </SendWrapper>
             <ScheduleWrapper>
-              <ScheduleTyp> {'Schedule'}</ScheduleTyp>
+              <Button> {'Schedule'}</Button>
             </ScheduleWrapper>
           </ButtonWrapper>
         </Grid>

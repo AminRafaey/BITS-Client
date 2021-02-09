@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { templates } from '../../../Static/Template';
+import { templates } from '../../../../../Static/Template';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 
@@ -12,23 +12,28 @@ import {
 } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { HoverColor, HeadingColor } from '../../constants/theme';
+import { HoverColor, HeadingColor } from '../../../../constants/theme';
 const NoOptionTyp = styled(Typography)({
   cursor: 'pointer',
   color: 'rgba(0, 0, 0, 0.85)',
 });
 const StyledAutoComplete = withStyles({
   root: {
-    margin: '8px',
     '& .MuiFormControl-root': {
-      width: 200,
+      width: 130,
+      '& .MuiInputBase-root .MuiOutlinedInput-notchedOutline': {
+        border: 'none',
+      },
+      '& .MuiFormLabel-root': {
+        fontSize: 14,
+      },
     },
     '& .MuiInputBase-root': {
       background: HeadingColor,
     },
   },
 })(Autocomplete);
-export default function Asynchronous() {
+export default function TemplateSelect() {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [textFieldVal, setTextFieldVal] = useState('');

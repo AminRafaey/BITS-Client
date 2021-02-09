@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  CampaignMultiSelect,
+  TemplateMultiSelect,
   Template,
   OptionSelection,
 } from '../../components';
@@ -18,7 +18,7 @@ function QuickSend(props) {
   return (
     <div>
       <CampaignSelectWrapper>
-        <CampaignMultiSelect />
+        <TemplateMultiSelect />
       </CampaignSelectWrapper>
       <TemplateWrapper>
         <Template />

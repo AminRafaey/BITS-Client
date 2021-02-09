@@ -22,7 +22,7 @@ const globalTypStyle = {
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-  fontSize: 13,
+  fontSize: 14,
   fontWeight: 400,
   paddingLeft: 6,
 };
@@ -71,7 +71,7 @@ const EditWrapper = styled(Box)({
 });
 const EditTyp = styled(Typography)({
   color: 'rgba(0, 0, 0, 0.85)',
-  fontSize: 13,
+  fontSize: 14,
   '&:hover': {
     color: HeadingColor,
   },

@@ -11,7 +11,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 const globalTyp = {
   display: 'inline',
-  fontSize: 11,
+  fontSize: 12,
   color: LightTextColor,
 };
 const LabelAreaWrapper = styled(Box)({
@@ -29,7 +29,7 @@ const NoteTyp = styled(Typography)({
 });
 
 const ManageNoteTyp = styled(Typography)({
-  fontSize: 13,
+  fontSize: 14,
   color: LinkColor,
 });
 
@@ -44,7 +44,7 @@ const ButtonTyp = styled(Typography)({
   },
 });
 const NoteContentTyp = styled(Typography)({
-  fontSize: 13,
+  fontSize: 14,
   paddingBottom: 12,
 });
 function Notes(props) {

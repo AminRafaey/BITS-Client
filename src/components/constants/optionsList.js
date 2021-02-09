@@ -17,12 +17,7 @@ export const optionsList = [
     ],
     defaultPath: 'sendSms',
   },
-  {
-    title: 'Inbox',
-    icon: <InboxIcon style={{ color: '#FFFF' }} />,
-    menuArr: [],
-    defaultPath: 'inbox',
-  },
+
   {
     title: 'Templates',
     icon: <AssignmentIcon style={{ color: '#FFFF' }} />,
@@ -51,7 +46,16 @@ export const optionsList = [
     ],
     defaultPath: 'manageGroups',
   },
-  ,
+];
+
+export const singleOptionList = [
+  {
+    title: 'Inbox',
+    icon: <InboxIcon style={{ color: '#FFFF' }} />,
+    menuArr: [],
+    defaultPath: 'inbox',
+  },
+
   {
     title: 'Logs',
     icon: <ReportIcon style={{ color: '#FFFF' }} />,

@@ -25,7 +25,7 @@ const StyledAutoComplete = withStyles({
         border: 'none',
       },
       '& .MuiFormLabel-root': {
-        fontSize: 13,
+        fontSize: 14,
       },
     },
     '& .MuiInputBase-root': {

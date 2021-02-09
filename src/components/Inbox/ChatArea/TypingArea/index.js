@@ -15,7 +15,7 @@ const textAreaStyle = {
   outlineWidth: '0px',
   width: '100%',
   height: '100%',
-  fontSize: 13,
+  fontSize: 14,
 };
 
 const TypingAreaWrapper = styled(Box)({

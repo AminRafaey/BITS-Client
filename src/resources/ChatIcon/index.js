@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { default as CI } from './icon.svg';
 import { styled, Box } from '@material-ui/core';
-import {
-  HighlightColor,
-  HomeIconDefaultColor,
-} from '../../components/constants/theme';
+import { HighlightColor, HoverColor } from '../../components/constants/theme';
 
 const IconWrapper = styled(Box)({
   cursor: 'pointer',
@@ -18,14 +15,14 @@ function ChatIcon(props) {
       {' '}
       <CI
         color={color}
-        onMouseOver={() => setColor(HighlightColor)}
+        onMouseOver={() => setColor(HoverColor)}
         onMouseLeave={() => setColor(props.color)}
       />
     </IconWrapper>
   );
 }
 ChatIcon.defaultProps = {
-  color: HomeIconDefaultColor,
+  color: HighlightColor,
 };
 
 ChatIcon.propTypes = {

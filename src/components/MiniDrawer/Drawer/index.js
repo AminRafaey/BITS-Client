@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import { useLocation } from 'react-router-dom';
 import { DrawerItem } from '../../../components';
 import profilePlaceholder from '../../../public/images/profile-placeholder.png';
-import { optionsList } from '../../constants/optionsList';
+import { optionsList, singleOptionList } from '../../constants/optionsList';
 import {
   Box,
   styled,
@@ -13,18 +13,24 @@ import {
   Typography,
   makeStyles,
   useTheme,
+  Divider,
   IconButton,
+  withStyles,
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import { HighlightColor, HeadingColor } from '../../constants/theme';
+import { HighlightColor, HeadingColor, GrayColor } from '../../constants/theme';
 
 const drawerWidth = 280;
 
 const ImageWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
+});
+
+const DividerWrapper = styled(Box)({
+  padding: '18px 0px',
 });
 
 const CompanyNameWrapper = styled(Box)({
@@ -47,6 +53,11 @@ const UserNameWrapper = styled(Box)({
   justifyContent: 'center',
   paddingTop: 16,
 });
+const StyledDivider = withStyles({
+  root: {
+    background: GrayColor,
+  },
+})(Divider);
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -138,6 +149,14 @@ export default function Drawer(props) {
 
       <List>
         {optionsList.map((option, index) => (
+          <DrawerItem option={option} key={index} open={open} />
+        ))}
+        <DividerWrapper>
+          {' '}
+          <StyledDivider />{' '}
+        </DividerWrapper>
+
+        {singleOptionList.map((option, index) => (
           <DrawerItem option={option} key={index} open={open} />
         ))}
       </List>

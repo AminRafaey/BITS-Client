@@ -51,9 +51,7 @@ export function getKeyWords(user) {
 
 export const handleMediaChange = (e, setMedia, setMediaError, type, size) => {
   const files = e.target.files;
-  console.log(files[0]);
   const errors = validateFile(files, { limit: 1, type: type, size: size });
-  console.log('=> Profile validation Error => ', errors);
   if (!errors) {
     setMedia(files[0]);
     setMediaError('');

@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  useLocation,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Box, styled, CssBaseline, makeStyles } from '@material-ui/core';
 import { AddressBookTable, Home, QuickSend, Inbox } from '../../components';
 import AppBar from './AppBar';

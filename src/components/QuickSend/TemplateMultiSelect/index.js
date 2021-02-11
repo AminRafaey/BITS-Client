@@ -33,11 +33,6 @@ export default function TemplateMultiSelect(props) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [textFieldVal, setTextFieldVal] = useState('');
-  const [selectedOption, setSelectedOption] = useState({
-    title: 'Sale',
-    id: 1,
-    content: 'Hey __name__, We are now offering 20% sale on winters products',
-  });
   const loading = open && options.length === 0;
 
   useEffect(() => {

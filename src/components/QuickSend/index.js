@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   TemplateMultiSelect,
   Template,
@@ -15,13 +15,20 @@ const OptionSelectionWrapper = styled(Box)({
   marginTop: 40,
 });
 function QuickSend(props) {
+  const [message, setMessage] = useState('');
+  const [selectedTemplate, setSelectedTemplate] = useState({});
+
+  useEffect(() => {
+    Object.entries(selectedTemplate).length > 0 &&
+      setMessage(selectedTemplate.content);
+  }, [selectedTemplate]);
   return (
     <div>
       <CampaignSelectWrapper>
-        <TemplateMultiSelect />
+        <TemplateMultiSelect setSelectedTemplate={setSelectedTemplate} />
       </CampaignSelectWrapper>
       <TemplateWrapper>
-        <Template />
+        <Template message={message} setMessage={setMessage} />
       </TemplateWrapper>
       <OptionSelectionWrapper>
         {' '}

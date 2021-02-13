@@ -17,22 +17,33 @@ const OptionSelectionWrapper = styled(Box)({
 function QuickSend(props) {
   const [message, setMessage] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState({});
-
+  const [selectedMedia, setSelectedMedia] = useState({});
+  const [contantList, setContactList] = useState([]);
   useEffect(() => {
     Object.entries(selectedTemplate).length > 0 &&
       setMessage(selectedTemplate.content);
   }, [selectedTemplate]);
+
   return (
     <div>
       <CampaignSelectWrapper>
         <TemplateMultiSelect setSelectedTemplate={setSelectedTemplate} />
       </CampaignSelectWrapper>
       <TemplateWrapper>
-        <Template message={message} setMessage={setMessage} />
+        <Template
+          message={message}
+          setMessage={setMessage}
+          setSelectedMedia={setSelectedMedia}
+        />
       </TemplateWrapper>
       <OptionSelectionWrapper>
         {' '}
-        <OptionSelection />{' '}
+        <OptionSelection
+          setContactList={setContactList}
+          contantList={contantList}
+          selectedMedia={selectedMedia}
+          message={message}
+        />{' '}
       </OptionSelectionWrapper>
     </div>
   );

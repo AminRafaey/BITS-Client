@@ -17,7 +17,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import HomeIcon from '@material-ui/icons/Home';
-import { HighlightColor, HeadingColor, GrayColor } from '../../constants/theme';
+import { HeadingColor, GrayColor, primaryColor } from '../../constants/theme';
 
 const drawerWidth = 280;
 
@@ -65,14 +65,14 @@ const useStyles = makeStyles((theme) => ({
   drawerOpen: {
     width: drawerWidth,
     borderRight: '0px',
-    background: HighlightColor,
+    background: primaryColor,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   drawerClose: {
-    background: HighlightColor,
+    background: primaryColor,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,

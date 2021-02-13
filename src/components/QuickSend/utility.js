@@ -49,11 +49,18 @@ export function getKeyWords(user) {
   return Object.keys(user);
 }
 
-export const handleMediaChange = (e, setMedia, setMediaError, type, size) => {
+export const handleMediaChange = (
+  e,
+  setMedia,
+  selectedMediaType,
+  setMediaError,
+  type,
+  size
+) => {
   const files = e.target.files;
   const errors = validateFile(files, { limit: 1, type: type, size: size });
   if (!errors) {
-    setMedia(files[0]);
+    setMedia({ file: files[0], type: selectedMediaType });
     setMediaError('');
   } else {
     setMediaError(errors.limit + errors.type + errors.size);

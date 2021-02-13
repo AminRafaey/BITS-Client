@@ -10,6 +10,8 @@ Note:
 for single file check files parameter should be [file];
 */
 
+import { optionsList } from '../constants/optionsList';
+
 export default function validateFile(files, options) {
   const errors = { limit: '', type: '', size: '' };
   maxSelectFile(files, options, errors);
@@ -71,8 +73,9 @@ const checkFileSize = (files, options, errors) => {
 
   for (let i = 0; i < files.length; i++) {
     if (files[i].size / 1000 > options.size) {
+      options.size === 16999 && (options.size = 17);
       errors.size =
-        'Files greater than ' + options.size + ' KB are not allowed';
+        'Files greater than ' + options.size + ' MB are not allowed';
       break;
     }
   }

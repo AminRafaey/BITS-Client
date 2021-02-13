@@ -13,7 +13,11 @@ import {
   FormControl,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import { HoverColor, HeadingColor } from '../../constants/theme';
+import {
+  HoverColor,
+  HeadingColor,
+  HighlightColor,
+} from '../../constants/theme';
 
 const textAreaStyle = {
   width: '100%',
@@ -44,7 +48,7 @@ const BrowseWrapper = styled(Box)({
   marginLeft: '49px',
   marginTop: '5px',
   width: 'fit-content',
-  background: HeadingColor,
+  background: HighlightColor,
   borderRadius: 5,
   '&:hover': {
     background: HoverColor,
@@ -52,11 +56,11 @@ const BrowseWrapper = styled(Box)({
 });
 
 const BrowseTyp = styled(Typography)({
-  color: 'rgba(0, 0, 0, 0.85)',
+  color: HeadingColor,
   fontSize: 14,
   padding: '4px 16px 4px',
 });
-const MediaErorTyp = styled(Typography)({
+const MediaErorWrapper = styled(Box)({
   paddingLeft: '49px',
   paddingTop: '15px',
   fontSize: 14,
@@ -74,10 +78,9 @@ const StyledAlert = withStyles({
   },
 })(Alert);
 export default function Template(props) {
-  const { message, setMessage } = props;
+  const { message, setMessage, setSelectedMedia } = props;
   const templateTextAreaRef = createRef();
   const [selectedMediaType, setSelectedMediaType] = useState('image');
-  const [selectedMedia, setSelectedMedia] = useState('');
   const [mediaError, setMediaError] = useState('');
   return (
     <React.Fragment>
@@ -139,6 +142,7 @@ export default function Template(props) {
             handleMediaChange(
               e,
               setSelectedMedia,
+              selectedMediaType,
               setMediaError,
               selectedMediaType,
               16999
@@ -165,9 +169,9 @@ export default function Template(props) {
       <Grid container>
         <Grid item xs={7}>
           {mediaError && (
-            <MediaErorTyp>
+            <MediaErorWrapper>
               <StyledAlert severity="error">{mediaError}</StyledAlert>
-            </MediaErorTyp>
+            </MediaErorWrapper>
           )}
         </Grid>
       </Grid>

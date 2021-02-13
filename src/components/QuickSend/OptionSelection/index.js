@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { ListOption, FileOption } from '../../../components';
 import { Radio } from '../../HOC';
 
@@ -34,7 +35,8 @@ const StyledFormControlLabel = withStyles({
   },
 })(FormControlLabel);
 
-function OptionSelection() {
+function OptionSelection(props) {
+  const { setContactList, contantList, selectedMedia, message } = props;
   const [SelectedOption, setSelectedOption] = useState('List');
   return (
     <div>
@@ -78,9 +80,23 @@ function OptionSelection() {
           </FormControl>
         </RadioGroupWrapper>
       </RadioParentWrapper>
-      {SelectedOption === 'List' ? <ListOption /> : <FileOption />}
+      {SelectedOption === 'List' ? (
+        <ListOption
+          setContactList={setContactList}
+          contantList={contantList}
+          selectedMedia={selectedMedia}
+          message={message}
+        />
+      ) : (
+        <FileOption />
+      )}
     </div>
   );
 }
-
+OptionSelection.propTypes = {
+  setContactList: PropTypes.func.isRequired,
+  contantList: PropTypes.array.isRequired,
+  selectedMedia: PropTypes.object.isRequired,
+  message: PropTypes.string.isRequired,
+};
 export default OptionSelection;

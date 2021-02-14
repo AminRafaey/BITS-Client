@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   IconButton,
   Typography,
-  Button,
   Dialog,
   Zoom,
   withStyles,
@@ -67,10 +66,6 @@ const DialogTitle = withStyles(styles)((props) => {
 export default function Modal(props) {
   const { open, setOpen } = props;
 
-  const handleClickOpen = () => () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -114,3 +109,8 @@ export default function Modal(props) {
     </Dialog>
   );
 }
+
+Modal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+};

@@ -29,8 +29,6 @@ const AppBarListWrapper = styled(Box)({
   justifyContent: 'flex-end',
 });
 
-const ConnectIconWrapper = styled(Box)({});
-
 const StyledToolbar = withStyles({
   root: {
     display: 'flex',

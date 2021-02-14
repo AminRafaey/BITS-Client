@@ -92,7 +92,6 @@ export default function Drawer(props) {
   const { open, handleDrawerOpen } = props;
   const classes = useStyles();
   const { pathname } = useLocation();
-  const theme = useTheme();
 
   useEffect(() => {
     if (!open) {

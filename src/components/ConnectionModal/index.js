@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from './Modal';
 
@@ -10,6 +10,9 @@ function ConnectionModal(props) {
     </div>
   );
 }
-ConnectionModal.propTypes = {};
+ConnectionModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func.isRequired,
+};
 
 export default ConnectionModal;

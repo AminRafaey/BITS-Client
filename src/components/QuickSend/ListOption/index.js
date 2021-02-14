@@ -33,7 +33,6 @@ export const ButtonWrapper = styled(Box)({
 });
 export default function ListOption(props) {
   const { setContactList, contantList, selectedMedia, message } = props;
-  const [textAreaVal, setTextAreaVal] = useState('');
 
   return (
     <React.Fragment>

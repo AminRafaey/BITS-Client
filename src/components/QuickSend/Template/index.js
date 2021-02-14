@@ -17,6 +17,7 @@ import {
   HoverColor,
   HeadingColor,
   HighlightColor,
+  ErrorAlert,
 } from '../../constants/theme';
 
 const textAreaStyle = {
@@ -73,8 +74,7 @@ const StyledFormControlLabel = withStyles({
 
 const StyledAlert = withStyles({
   standardError: {
-    background:
-      'linear-gradient(to right top, #ffcccc, #ffc6c6, #ffc0c0, #ffb9b9, #ffb3b3)',
+    background: ErrorAlert,
   },
 })(Alert);
 export default function Template(props) {

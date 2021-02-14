@@ -46,10 +46,6 @@ export default function MiniDrawer() {
     setOpen(true);
   };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Router>
       <div className={classes.root}>

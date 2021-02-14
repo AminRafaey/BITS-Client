@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { appBarList } from '../../constants/optionsList';
+import { ConnectIcon } from '../../../resources';
 import {
   withStyles,
   Box,
@@ -10,12 +11,12 @@ import {
   Toolbar,
   Typography,
   makeStyles,
-  useTheme,
   IconButton,
   ListItem,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { HeadingColor } from '../../constants/theme';
+import { HeadingColor, primaryColor } from '../../constants/theme';
+import { ConnectionModal } from '../../../components';
 
 const drawerWidth = 280;
 
@@ -32,6 +33,7 @@ const StyledToolbar = withStyles({
   root: {
     display: 'flex',
     justifyContent: 'flex-end',
+    background: primaryColor,
   },
 })(Toolbar);
 
@@ -61,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 export default function AppBar(props) {
   const { open, handleDrawerOpen } = props;
   const classes = useStyles();
+  const [openModal, setOpenModal] = useState(false);
 
   return (
     <MuiAppBar
@@ -88,6 +91,10 @@ export default function AppBar(props) {
             </ListItem>
           ))}
         </AppBarListWrapper>
+        <div onClick={() => setOpenModal(true)}>
+          <ConnectIcon />
+        </div>
+        <ConnectionModal open={openModal} setOpen={setOpenModal} />
       </StyledToolbar>
     </MuiAppBar>
   );

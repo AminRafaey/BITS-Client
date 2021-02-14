@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { templates } from '../../../Static/Template';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -27,15 +28,11 @@ const StyledAutoComplete = withStyles({
     },
   },
 })(Autocomplete);
-export default function TemplateMultiSelect() {
+export default function TemplateMultiSelect(props) {
+  const { setSelectedTemplate } = props;
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [textFieldVal, setTextFieldVal] = useState('');
-  const [selectedOption, setSelectedOption] = useState({
-    title: 'Sale',
-    id: 1,
-    content: 'Hey __name__, We are now offering 20% sale on winters products',
-  });
   const loading = open && options.length === 0;
 
   useEffect(() => {
@@ -52,7 +49,6 @@ export default function TemplateMultiSelect() {
 
   return (
     <StyledAutoComplete
-      closeIcon={false}
       autoHighlight
       openOnFocus
       open={open}
@@ -62,9 +58,7 @@ export default function TemplateMultiSelect() {
       onClose={() => {
         setOpen(false);
       }}
-      value={selectedOption}
       size="small"
-      getOptionSelected={(option, value) => option.title === value.title}
       getOptionLabel={(option) => option.title}
       options={options}
       loading={loading}
@@ -96,13 +90,8 @@ export default function TemplateMultiSelect() {
           + Add {textFieldVal}
         </NoOptionTyp>
       }
-      onChange={(e, allValues, type, value) => {
-        setSelectedOption(value.option);
-        setTextFieldVal(value.option.title);
-      }}
-      inputValue={textFieldVal}
-      onInputChange={(event, newInputValue, reason) => {
-        setTextFieldVal(reason === 'input' ? newInputValue : textFieldVal);
+      onChange={(e, value) => {
+        setSelectedTemplate(value ? value : {});
       }}
       renderInput={(params) => (
         <TextField
@@ -125,3 +114,7 @@ export default function TemplateMultiSelect() {
     />
   );
 }
+
+TemplateMultiSelect.propTypes = {
+  setSelectedTemplate: PropTypes.func.isRequired,
+};

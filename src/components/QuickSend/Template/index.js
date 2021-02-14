@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import { keywords } from '../../../Static/Keyword';
-import { Radio, Button } from '../../HOC';
+import React, { createRef, useState } from 'react';
+import KeywordSelect from './KeywordSelect';
+import { Radio } from '../../HOC';
+import { handleMediaChange } from '../utility';
 import {
-  TextField,
-  CircularProgress,
   styled,
   Typography,
   withStyles,
@@ -15,8 +12,13 @@ import {
   FormControlLabel,
   FormControl,
 } from '@material-ui/core';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import { HoverColor, HeadingColor } from '../../constants/theme';
+import Alert from '@material-ui/lab/Alert';
+import {
+  HoverColor,
+  HeadingColor,
+  HighlightColor,
+  ErrorAlert,
+} from '../../constants/theme';
 
 const textAreaStyle = {
   width: '100%',
@@ -27,18 +29,14 @@ const textAreaStyle = {
   padding: '1.5rem',
   outlineWidth: '0px',
 };
-const NoOptionTyp = styled(Typography)({
-  cursor: 'pointer',
-});
+
 const LabelTyp = styled(Typography)({
   display: 'inline',
   paddingLeft: 52,
   paddingRight: 55,
   fontSize: 14,
 });
-const AutocompleteWrapper = styled(Box)({
-  marginLeft: 36,
-});
+
 const RadioGroupWrapper = styled(Box)({
   display: 'inline',
 });
@@ -51,139 +49,55 @@ const BrowseWrapper = styled(Box)({
   marginLeft: '49px',
   marginTop: '5px',
   width: 'fit-content',
-  background: HeadingColor,
+  background: HighlightColor,
   borderRadius: 5,
   '&:hover': {
     background: HoverColor,
   },
 });
 
-const StyledAutoComplete = withStyles({
-  root: {
-    margin: '8px',
-    '& .MuiFormControl-root': {
-      width: 200,
-    },
-    '& .MuiInputBase-root': {
-      background: HeadingColor,
-    },
-  },
-})(Autocomplete);
+const BrowseTyp = styled(Typography)({
+  color: HeadingColor,
+  fontSize: 14,
+  padding: '4px 16px 4px',
+});
+const MediaErorWrapper = styled(Box)({
+  paddingLeft: '49px',
+  paddingTop: '15px',
+  fontSize: 14,
+});
 const StyledFormControlLabel = withStyles({
   label: {
     fontSize: 14,
   },
 })(FormControlLabel);
 
-export default function Template() {
-  const [textAreaVal, setTextAreaVal] = useState('');
-
-  const [open, setOpen] = useState(false);
-  const [options, setOptions] = useState([]);
-  const [textFieldVal, setTextFieldVal] = useState('');
-  const [selectedOption, setSelectedOption] = useState({
-    id: 2,
-    title: 'Mobile Number',
-  });
-  const loading = open && options.length === 0;
-
-  useEffect(() => {
-    if (!loading) {
-      return undefined;
-    }
-
-    (async () => {
-      if (true) {
-        setOptions(keywords);
-      }
-    })();
-  }, [loading]);
+const StyledAlert = withStyles({
+  standardError: {
+    background: ErrorAlert,
+  },
+})(Alert);
+export default function Template(props) {
+  const { message, setMessage, setSelectedMedia } = props;
+  const templateTextAreaRef = createRef();
+  const [selectedMediaType, setSelectedMediaType] = useState('image');
+  const [mediaError, setMediaError] = useState('');
   return (
     <React.Fragment>
-      <AutocompleteWrapper>
-        <StyledAutoComplete
-          closeIcon={false}
-          autoHighlight
-          openOnFocus
-          open={open}
-          onOpen={() => {
-            setOpen(true);
-          }}
-          onClose={() => {
-            setOpen(false);
-          }}
-          value={selectedOption}
-          size="small"
-          getOptionSelected={(option, value) => option.title === value.title}
-          getOptionLabel={(option) => option.title}
-          options={options}
-          loading={loading}
-          renderOption={(option, { selected, inputValue }) => {
-            const matches = match(option.title, inputValue);
-            const parts = parse(option.title, matches);
-
-            return (
-              <div>
-                {parts.map((part, index) => {
-                  return (
-                    <span
-                      key={index}
-                      style={{ ...(part.highlight && { color: HoverColor }) }}
-                    >
-                      {part.text}
-                    </span>
-                  );
-                })}
-              </div>
-            );
-          }}
-          noOptionsText={
-            <NoOptionTyp
-              onMouseDown={() => {
-                setTextFieldVal('');
-              }}
-            >
-              + Add {textFieldVal}
-            </NoOptionTyp>
-          }
-          onChange={(e, allValues, type, value) => {
-            setSelectedOption(value.option);
-            setTextFieldVal(value.option.title);
-          }}
-          inputValue={textFieldVal}
-          onInputChange={(event, newInputValue, reason) => {
-            setTextFieldVal(reason === 'input' ? newInputValue : textFieldVal);
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Insert Keyword"
-              variant="outlined"
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: (
-                  <React.Fragment>
-                    {loading ? (
-                      <CircularProgress color="inherit" size={20} />
-                    ) : null}
-                    {params.InputProps.endAdornment}
-                  </React.Fragment>
-                ),
-              }}
-            />
-          )}
-        />
-      </AutocompleteWrapper>
+      <KeywordSelect
+        setMessage={setMessage}
+        templateTextAreaRef={templateTextAreaRef}
+      />
       <Grid container>
         <Grid item xs={7}>
           <TextAreaWrapper>
             <textarea
               style={textAreaStyle}
-              value={textAreaVal}
-              id="templateTextArea"
+              value={message}
+              ref={templateTextAreaRef}
               placeholder="Type your message here..."
               onChange={(e) => {
-                setTextAreaVal(e.target.value);
+                setMessage(e.target.value);
               }}
             />
           </TextAreaWrapper>
@@ -197,11 +111,12 @@ export default function Template() {
               row
               aria-label="position"
               name="position"
-              defaultValue="top"
+              onChange={(e) => setSelectedMediaType(e.target.value)}
+              value={selectedMediaType}
             >
               <StyledFormControlLabel
                 value="image"
-                control={<Radio color="primary" />}
+                control={<Radio color="primary" default />}
                 label="Image"
               />
               <StyledFormControlLabel
@@ -223,16 +138,43 @@ export default function Template() {
           name="file"
           type="file"
           id="media"
-          onChange={(e) => console.log(e)}
+          onChange={(e) =>
+            handleMediaChange(
+              e,
+              setSelectedMedia,
+              selectedMediaType,
+              setMediaError,
+              selectedMediaType,
+              16999
+            )
+          }
           style={{ display: 'none' }}
-          accept={'.png,.jpg,.jpeg'}
+          accept={
+            selectedMediaType === 'image'
+              ? '.png,.jpg,.jpeg'
+              : selectedMediaType === 'video'
+              ? '.mpeg,.mp4,.quicktime,.webm,.3gpp,.3gpp2,.3gpp-tt,.H261,.H263,.H263-1998,.H263-2000,.H264'
+              : '.pdf'
+          }
         />
 
         <label htmlFor="media" style={{ color: 'white', cursor: 'pointer' }}>
-          <Button>{'Browse ' + 'image'}</Button>
+          <BrowseTyp>
+            {'Browse ' +
+              selectedMediaType.charAt(0).toUpperCase() +
+              selectedMediaType.slice(1)}
+          </BrowseTyp>
         </label>
       </BrowseWrapper>
+      <Grid container>
+        <Grid item xs={7}>
+          {mediaError && (
+            <MediaErorWrapper>
+              <StyledAlert severity="error">{mediaError}</StyledAlert>
+            </MediaErorWrapper>
+          )}
+        </Grid>
+      </Grid>
     </React.Fragment>
   );
 }
-//<BrowseTyp> {'Browse ' + 'image'}</BrowseTyp>

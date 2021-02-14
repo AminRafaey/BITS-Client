@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button } from '../../HOC';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
 const textAreaStyle = {
@@ -30,8 +31,8 @@ export const ButtonWrapper = styled(Box)({
   display: 'flex',
   paddingTop: 20,
 });
-export default function ListOption() {
-  const [textAreaVal, setTextAreaVal] = useState('');
+export default function ListOption(props) {
+  const { setContactList, contantList, selectedMedia, message } = props;
 
   return (
     <React.Fragment>
@@ -40,11 +41,13 @@ export default function ListOption() {
           <TextAreaWrapper>
             <textarea
               style={textAreaStyle}
-              value={textAreaVal}
-              id="templateTextArea"
               placeholder="Valid Format 923348035644,923174343123"
-              onChange={(e) => {
-                setTextAreaVal(e.target.value);
+              onBlur={(e) => {
+                setContactList(
+                  e.target.value
+                    .split(',')
+                    .filter((n) => n.match(/^(92)\d{10}$/))
+                );
               }}
             />
           </TextAreaWrapper>
@@ -72,3 +75,10 @@ export default function ListOption() {
     </React.Fragment>
   );
 }
+
+ListOption.propTypes = {
+  setContactList: PropTypes.func.isRequired,
+  contantList: PropTypes.array.isRequired,
+  selectedMedia: PropTypes.object.isRequired,
+  message: PropTypes.string.isRequired,
+};

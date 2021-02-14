@@ -1,5 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import { HighlightColor } from './components/constants/theme';
+import { HighlightColor, HoverColor } from './components/constants/theme';
 
 export const theme = createMuiTheme({
   overrides: {
@@ -46,7 +46,7 @@ export const theme = createMuiTheme({
       main: HighlightColor,
     },
     secondary: {
-      main: '#FFFFFF',
+      main: HoverColor,
     },
   },
 });

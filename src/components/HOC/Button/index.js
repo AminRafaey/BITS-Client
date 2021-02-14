@@ -1,15 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles, Button as MuiButton } from '@material-ui/core';
-import { HoverColor, HeadingColor } from '../../constants/theme';
+import {
+  HoverColor,
+  HeadingColor,
+  HighlightColor,
+} from '../../constants/theme';
 
 const StyledButton = withStyles({
   root: {
-    background: HeadingColor,
+    background: HighlightColor,
     padding: '2px 4px',
   },
   label: {
     fontSize: 14,
+    color: HeadingColor,
     textTransform: 'none',
   },
   contained: {

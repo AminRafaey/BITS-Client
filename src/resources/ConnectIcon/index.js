@@ -21,17 +21,17 @@ function ConnectIcon(props) {
       arrow
       interactive
       TransitionComponent={Fade}
-      title={`Click to ${status}`}
+      title={`Click to ${status ? 'disconnect' : 'connect'}`}
     >
       <IconWrapper>
-        <CI fill={status === 'connect' ? Connected : NotConnected} />
+        <CI fill={status ? Connected : NotConnected} />
       </IconWrapper>
     </StyledToolTip>
   );
 }
 
 ConnectIcon.defaultProps = {
-  status: 'disconnect',
+  status: false,
 };
 
 ConnectIcon.propTypes = {

@@ -1,6 +1,6 @@
 import config from '../../config.json';
 import axios from 'axios';
-const endPointApi = `${config.baseUrl}connect`;
+const endPointApi = `${config.baseUrl}send`;
 
 export async function sendTextMesage(mobileNumbers, message) {
   try {

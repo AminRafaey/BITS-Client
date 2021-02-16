@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import Modal from './Modal';
 
 function ConnectionModal(props) {
-  const { open, setOpen } = props;
+  const { openModal, setOpenModal } = props;
   return (
     <div>
-      <Modal open={open} setOpen={setOpen} />
+      <Modal openModal={openModal} setOpenModal={setOpenModal} />
     </div>
   );
 }
 ConnectionModal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
+  openModal: PropTypes.bool.isRequired,
+  setOpenModal: PropTypes.func.isRequired,
 };
 
 export default ConnectionModal;

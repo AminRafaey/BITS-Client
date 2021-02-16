@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../HOC';
+import { sendTextMesage } from '../../../api/send';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
 const textAreaStyle = {
   width: '100%',
@@ -64,7 +65,10 @@ export default function ListOption(props) {
         <Grid item xs={4}>
           <ButtonWrapper>
             <SendWrapper>
-              <Button> {'Send'}</Button>
+              <Button onClick={() => sendTextMesage(contantList, message)}>
+                {' '}
+                {'Send'}
+              </Button>
             </SendWrapper>
             <ScheduleWrapper>
               <Button> {'Schedule'}</Button>

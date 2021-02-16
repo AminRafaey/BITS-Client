@@ -5,6 +5,8 @@ const ConnectStatusDispatch = React.createContext(null);
 
 function ConnectStatusReducer(state, action) {
   switch (action.type) {
+    case 'UPDATE_STATUS':
+      return action.payload.status;
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -49,4 +51,12 @@ export {
   ConnectStatusProvider,
   useConnectStatusState,
   useConnectStatusDispatch,
+  updateStatus,
 };
+
+function updateStatus(dispatch, data) {
+  dispatch({
+    type: 'UPDATE_STATUS',
+    payload: data,
+  });
+}

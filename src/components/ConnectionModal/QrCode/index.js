@@ -12,7 +12,7 @@ const QrCode = (props) => {
         if (error) console.error(error);
       });
     }
-    converter();
+    qrString && converter();
   }, [qrString]);
 
   return (

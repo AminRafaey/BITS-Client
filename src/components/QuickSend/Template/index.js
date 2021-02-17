@@ -104,6 +104,7 @@ export default function Template(props) {
               onChange={(e) => {
                 setTextAreaVal(e.target.value);
               }}
+              onBlur={(e) => setMessage(e.target.value)}
             />
           </TextAreaWrapper>
         </Grid>

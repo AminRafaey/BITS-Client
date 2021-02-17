@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Checkbox } from '../HOC';
 import Toolbar from './Toolbar';
 import TableHead from './TableHead';
@@ -6,6 +6,12 @@ import profilePlaceholder from '../../public/images/profile-placeholder.png';
 import { addressBook } from '../../Static/AddressBook';
 import { TemplateMultiSelect, Template } from '../../components';
 import { CheckIcon, CheckAllIcon } from '../../resources';
+import {
+  useAddressBookState,
+  useAddressBookDispatch,
+  handleSelectedStatus,
+  handleMultipleSelectedStatus,
+} from '../../Context/AddressBook';
 import {
   Table,
   TableBody,
@@ -50,38 +56,32 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddressBookTable() {
   const classes = useStyles();
-
-  const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [message, setMessage] = useState('');
+  const [selectedTemplate, setSelectedTemplate] = useState({});
+  const [selectedMedia, setSelectedMedia] = useState({});
+  const addressBookState = useAddressBookState();
+  const addressBookDispatch = useAddressBookDispatch();
+
+  useEffect(() => {
+    Object.entries(selectedTemplate).length > 0 &&
+      setMessage(selectedTemplate.content);
+  }, [selectedTemplate]);
 
   const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = addressBook.map((n) => n.mobileNumber);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
+    handleMultipleSelectedStatus(addressBookDispatch, {
+      selected: event.target.checked,
+      startingIndex: page * rowsPerPage,
+      endingIndex: page * rowsPerPage + rowsPerPage,
+    });
   };
 
-  const handleClick = (event, mobileNumber) => {
-    const selectedIndex = selected.indexOf(mobileNumber);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, mobileNumber);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
+  const handleClick = (event, _id) => {
+    handleSelectedStatus(addressBookDispatch, {
+      selected: event.target.checked,
+      _id: _id,
+    });
   };
 
   const handleChangePage = (event, newPage) => {
@@ -93,40 +93,48 @@ export default function AddressBookTable() {
     setPage(0);
   };
 
-  const isSelected = (mobileNumber) => selected.indexOf(mobileNumber) !== -1;
-
   const emptyRows =
     rowsPerPage -
     Math.min(rowsPerPage, addressBook.length - page * rowsPerPage);
+
   const getMyStatusIcon = (status) => {
-    if (status === 'read')
-      return (
-        <IconWrapper>
-          <CheckAllIcon fill={LinkColor} />
-        </IconWrapper>
-      );
-    else if (status === 'delieverd')
-      return (
-        <IconWrapper>
-          <CheckAllIcon />
-        </IconWrapper>
-      );
-    else
-      return (
-        <IconWrapper>
-          <CheckIcon />
-        </IconWrapper>
-      );
+    switch (status) {
+      case 'read':
+        return (
+          <IconWrapper>
+            <CheckAllIcon fill={LinkColor} />
+          </IconWrapper>
+        );
+      case 'delieverd':
+        return (
+          <IconWrapper>
+            <CheckAllIcon />
+          </IconWrapper>
+        );
+      default:
+        return (
+          <IconWrapper>
+            <CheckIcon />
+          </IconWrapper>
+        );
+    }
   };
   return (
     <div className={classes.root}>
       <CampaignSelectWrapper>
-        <TemplateMultiSelect />
+        <TemplateMultiSelect setSelectedTemplate={setSelectedTemplate} />
       </CampaignSelectWrapper>
       <TemplateWrapper>
-        <Template />
+        <Template
+          message={message}
+          setMessage={setMessage}
+          setSelectedMedia={setSelectedMedia}
+        />
       </TemplateWrapper>
-      <Toolbar numSelected={selected.length} />
+      <Toolbar
+        numSelected={addressBookState.filter((a) => a.selected).length}
+        message={message}
+      />
       <Paper className={classes.paper}>
         <TableContainer>
           <Table
@@ -137,23 +145,21 @@ export default function AddressBookTable() {
           >
             <TableHead
               classes={classes}
-              numSelected={selected.length}
               onSelectAllClick={handleSelectAllClick}
-              rowCount={addressBook.length}
+              page={page}
+              rowsPerPage={rowsPerPage}
             />
             <TableBody>
-              {addressBook
+              {addressBookState
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.mobileNumber);
                   return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.mobileNumber)}
-                      key={row.mobileNumber}
-                    >
+                    <TableRow hover key={row._id}>
                       <TableCell padding="checkbox">
-                        <Checkbox checked={isItemSelected} />
+                        <Checkbox
+                          checked={row.selected ? true : false}
+                          onChange={(event) => handleClick(event, row._id)}
+                        />
                       </TableCell>
                       <TableCell padding="none" align="left">
                         {row.profile ? (

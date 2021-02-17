@@ -1,5 +1,5 @@
 export const headCells = [
-  { label: 'Profile' },
+  { label: '' },
   { label: 'Mobile Number' },
   { label: 'Last interaction' },
   { label: 'Lead Source' },

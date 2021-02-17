@@ -1,4 +1,4 @@
-import React, { createRef, useState } from 'react';
+import React, { createRef, useState, useEffect } from 'react';
 import KeywordSelect from './KeywordSelect';
 import { Radio } from '../../HOC';
 import { handleMediaChange } from '../utility';
@@ -79,9 +79,14 @@ const StyledAlert = withStyles({
 })(Alert);
 export default function Template(props) {
   const { message, setMessage, setSelectedMedia } = props;
+  const [textAreaVal, setTextAreaVal] = useState('');
+  const [mediaError, setMediaError] = useState('');
   const templateTextAreaRef = createRef();
   const [selectedMediaType, setSelectedMediaType] = useState('image');
-  const [mediaError, setMediaError] = useState('');
+
+  useEffect(() => {
+    setTextAreaVal(message);
+  }, [message]);
   return (
     <React.Fragment>
       <KeywordSelect
@@ -93,12 +98,13 @@ export default function Template(props) {
           <TextAreaWrapper>
             <textarea
               style={textAreaStyle}
-              value={message}
+              value={textAreaVal}
               ref={templateTextAreaRef}
               placeholder="Type your message here..."
               onChange={(e) => {
-                setMessage(e.target.value);
+                setTextAreaVal(e.target.value);
               }}
+              onBlur={(e) => setMessage(e.target.value)}
             />
           </TextAreaWrapper>
         </Grid>

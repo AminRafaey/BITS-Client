@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { templates } from '../../../Static/Template';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
-
+import {
+  useTemplateState,
+  useTemplateDispatch,
+  loadTemplates,
+} from '../../../Context/Template';
+import { getTemplates } from '../../../api/template';
 import {
   TextField,
   CircularProgress,
@@ -33,19 +37,26 @@ export default function TemplateMultiSelect(props) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [textFieldVal, setTextFieldVal] = useState('');
+  const templateState = useTemplateState();
+  const templateDispatch = useTemplateDispatch();
   const loading = open && options.length === 0;
 
   useEffect(() => {
     if (!loading) {
       return undefined;
     }
-
-    (async () => {
-      if (true) {
-        setOptions(templates);
-      }
-    })();
+    if (templateState.length < 1) {
+      getTemplates()
+        .then((res) => loadTemplates(templateDispatch, { templates: res }))
+        .catch((err) => alert(err));
+    }
   }, [loading]);
+
+  useEffect(() => {
+    if (templateState && templateState.length > 0 && options.length < 1) {
+      setOptions(templateState);
+    }
+  }, [templateState]);
 
   return (
     <StyledAutoComplete

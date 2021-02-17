@@ -4,7 +4,11 @@ import clsx from 'clsx';
 import { appBarList } from '../../constants/optionsList';
 import { ConnectIcon } from '../../../resources';
 import { ConnectionModal } from '../../../components';
-import { useConnectStatusState } from '../../../Context/ConnectStatus';
+import {
+  useConnectStatusState,
+  useConnectStatusDispatch,
+  updateStatus,
+} from '../../../Context/ConnectStatus';
 import {
   withStyles,
   Box,
@@ -66,7 +70,15 @@ export default function AppBar(props) {
   const classes = useStyles();
   const [openModal, setOpenModal] = useState(false);
   const connectStatusState = useConnectStatusState();
+  const connectStatusDispatch = useConnectStatusDispatch();
 
+  const handleConnectIconClick = () => {
+    !connectStatusState && setOpenModal(true);
+    connectStatusState &&
+      updateStatus(connectStatusDispatch, {
+        status: false,
+      });
+  };
   return (
     <MuiAppBar
       position="fixed"
@@ -93,10 +105,10 @@ export default function AppBar(props) {
             </ListItem>
           ))}
         </AppBarListWrapper>
-        <div onClick={() => setOpenModal(true)}>
+        <div onClick={() => handleConnectIconClick()}>
           <ConnectIcon status={connectStatusState} />
         </div>
-        <ConnectionModal open={openModal} setOpen={setOpenModal} />
+        <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
       </StyledToolbar>
     </MuiAppBar>
   );

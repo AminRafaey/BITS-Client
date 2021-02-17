@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import QrCode from '../QrCode';
+import {
+  useConnectStatusDispatch,
+  updateStatus,
+} from '../../../Context/ConnectStatus';
+import { getQrCode } from '../../../api/connection';
 import {
   IconButton,
   Typography,
@@ -13,7 +19,6 @@ import {
 } from '@material-ui/core';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
-import QrCode from '../QrCode';
 
 const ContentWrapper = styled(Box)({
   padding: '35px 0px 0px 50px',
@@ -64,10 +69,25 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 export default function Modal(props) {
-  const { open, setOpen } = props;
+  const { openModal, setOpenModal } = props;
+  const [open, setOpen] = useState(false);
+  const [qrString, setQrString] = useState('');
+  const connectStatusDispatch = useConnectStatusDispatch();
+
+  useEffect(() => {
+    openModal && getQrCode(setQrString, setOpen, handleAfterScan);
+  }, [openModal]);
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleAfterScan = (status) => {
+    setOpen(false);
+    setOpenModal(false);
+    updateStatus(connectStatusDispatch, {
+      status: status,
+    });
   };
 
   return (
@@ -101,7 +121,7 @@ export default function Modal(props) {
           </Grid>
           <Grid item xs={4}>
             <QrCodeWrapper>
-              <QrCode />
+              <QrCode qrString={qrString} />
             </QrCodeWrapper>
           </Grid>
         </Grid>
@@ -111,6 +131,6 @@ export default function Modal(props) {
 }
 
 Modal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  setOpen: PropTypes.func.isRequired,
+  openModal: PropTypes.bool.isRequired,
+  setOpenModal: PropTypes.func.isRequired,
 };

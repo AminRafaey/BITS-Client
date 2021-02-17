@@ -35,7 +35,7 @@ ConnectIcon.defaultProps = {
 };
 
 ConnectIcon.propTypes = {
-  status: PropTypes.string,
+  status: PropTypes.bool,
 };
 
 export default ConnectIcon;

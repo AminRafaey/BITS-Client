@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { WhatsAppIcon } from '../../../resources';
+import { useAddressBookState } from '../../../Context/AddressBook';
+import { sendTextMesage } from '../../../api/send';
 import {
   Toolbar as MuiToolbar,
   Typography,
@@ -10,6 +12,7 @@ import {
   makeStyles,
   styled,
   Box,
+  Fade,
 } from '@material-ui/core';
 import {
   HoverColor,
@@ -41,8 +44,8 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 export default function Toolbar(props) {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
-
+  const { numSelected, message } = props;
+  const addressBookState = useAddressBookState();
   return (
     <ToolbarWrapper>
       <MuiToolbar
@@ -55,8 +58,24 @@ export default function Toolbar(props) {
         )}
 
         {numSelected > 0 && (
-          <Tooltip title="Send WhatsApp">
-            <IconButton aria-label="Send WhatsApp">
+          <Tooltip
+            title="Send WhatsApp"
+            placement={'top'}
+            arrow
+            interactive
+            TransitionComponent={Fade}
+          >
+            <IconButton
+              aria-label="Send WhatsApp"
+              onClick={() =>
+                sendTextMesage(
+                  addressBookState
+                    .filter((a) => a.selected)
+                    .map((a) => a.mobileNumber),
+                  message
+                )
+              }
+            >
               <WhatsAppIcon />
             </IconButton>
           </Tooltip>
@@ -68,4 +87,5 @@ export default function Toolbar(props) {
 
 Toolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  message: PropTypes.string.isRequired,
 };

@@ -10,10 +10,8 @@ import {
   Box,
   styled,
   Drawer as MuiDrawer,
-  List,
   Typography,
   makeStyles,
-  useTheme,
   Divider,
   withStyles,
 } from '@material-ui/core';
@@ -160,7 +158,7 @@ export default function Drawer(props) {
         </DividerWrapper>
 
         {singleOptionList.map((option, index) => (
-          <SingleOptionItem option={option} key={index} open={open} />
+          <SingleOptionItem option={option} key={index} />
         ))}
       </div>
     </MuiDrawer>

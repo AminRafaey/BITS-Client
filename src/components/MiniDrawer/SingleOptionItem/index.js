@@ -16,9 +16,7 @@ const ListItemWrapper = styled(Box)({
     background: HoverColor,
   },
 });
-const DrawerItemWrapper = styled(Box)({
-  cursor: 'pointer',
-});
+
 const OptionTyp = styled(Typography)({
   color: HeadingColor,
   fontSize: 14,
@@ -33,16 +31,14 @@ function SingleOptionItem(props) {
   const { option } = props;
 
   return (
-    <DrawerItemWrapper>
-      <Link to={option.defaultPath} style={{ textDecoration: 'none' }}>
-        <ListItemWrapper>
-          <ListItem>
-            <StyledListItemIcon>{option.icon}</StyledListItemIcon>
-            <OptionTyp>{option.title}</OptionTyp>
-          </ListItem>
-        </ListItemWrapper>
-      </Link>
-    </DrawerItemWrapper>
+    <Link to={option.defaultPath} style={{ textDecoration: 'none' }}>
+      <ListItemWrapper>
+        <ListItem>
+          <StyledListItemIcon>{option.icon}</StyledListItemIcon>
+          <OptionTyp>{option.title}</OptionTyp>
+        </ListItem>
+      </ListItemWrapper>
+    </Link>
   );
 }
 SingleOptionItem.propTypes = {

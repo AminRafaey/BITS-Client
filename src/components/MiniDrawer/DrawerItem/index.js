@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Accordion, AccordionSummary, AccordionDetails } from '../../HOC';
 import {
   withStyles,
@@ -51,7 +51,13 @@ const StyledListItem = withStyles({
 function DrawerItem(props) {
   const { option, open } = props;
   const [expanded, setExpanded] = useState(false);
+  const { pathname } = useLocation();
+
   const TagName = open ? Box : Link;
+
+  useEffect(() => {
+    pathname === '/inbox' && setExpanded(false);
+  }, [pathname]);
 
   return (
     <Accordion expanded={expanded}>

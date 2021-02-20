@@ -8,6 +8,9 @@ const StyledMuiAccordionSummary = withStyles({
     '&.Mui-expanded': {
       minHeight: `initial !important`,
     },
+    '& .MuiAccordionSummary-content.Mui-expanded': {
+      margin: '0 !important',
+    },
   },
   content: {
     margin: 0,

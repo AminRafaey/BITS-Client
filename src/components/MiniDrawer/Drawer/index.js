@@ -113,7 +113,7 @@ export default function Drawer(props) {
       }}
     >
       {open ? (
-        <div>
+        <React.Fragment>
           <CompanyNameWrapper>
             <Link
               to={'/'}
@@ -135,7 +135,7 @@ export default function Drawer(props) {
           <UserNameWrapper>
             <OptionTyp>Muhammad Amin</OptionTyp>
           </UserNameWrapper>
-        </div>
+        </React.Fragment>
       ) : (
         <DrawerItem
           option={{

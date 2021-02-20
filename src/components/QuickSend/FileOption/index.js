@@ -3,23 +3,27 @@ import { Button } from '../../HOC';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
 import { LinkColor, DarkBackgroundColor } from '../../constants/theme';
 import { ButtonWrapper, SendWrapper, ScheduleWrapper } from '../ListOption';
-const ChooseFileWrapper = styled(Box)({
+export const ChooseFileWrapper = styled(Box)({
   background: DarkBackgroundColor,
-  width: '100%',
   height: '60px',
   display: 'flex',
   alignItems: 'center',
   marginTop: 15,
+  marginLeft: 52,
 });
 
-const BrowseWrapper = styled(Box)({
-  marginLeft: '49px',
-  width: 'fit-content',
+export const BrowseWrapper = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
 });
 
-const FileNameTyp = styled(Typography)({
+export const FileNameTyp = styled(Typography)({
   fontSize: 14,
-  paddingLeft: 20,
+  paddingTop: 4,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
 });
 const DownloadTyp = styled(Typography)({
   color: LinkColor,
@@ -41,24 +45,30 @@ function FileOption() {
     <Grid container>
       <Grid item xs={5}>
         <ChooseFileWrapper>
-          <BrowseWrapper>
-            <input
-              name="file"
-              type="file"
-              id="media"
-              onChange={(e) => console.log(e)}
-              style={{ display: 'none' }}
-              accept={'.png,.jpg,.jpeg'}
-            />
+          <Grid container>
+            <Grid item xs={5}>
+              <BrowseWrapper>
+                <input
+                  name="file"
+                  type="file"
+                  id="media"
+                  onChange={(e) => console.log(e)}
+                  style={{ display: 'none' }}
+                  accept={'.png,.jpg,.jpeg'}
+                />
 
-            <label
-              htmlFor="media"
-              style={{ color: 'white', cursor: 'pointer' }}
-            >
-              <Button> {'Browse ' + 'image'}</Button>
-            </label>
-          </BrowseWrapper>
-          <FileNameTyp>No File Choosen</FileNameTyp>
+                <label
+                  htmlFor="media"
+                  style={{ color: 'white', cursor: 'pointer' }}
+                >
+                  <Button> {'Browse ' + 'image'}</Button>
+                </label>
+              </BrowseWrapper>
+            </Grid>
+            <Grid item xs={5}>
+              <FileNameTyp>No File Choosen</FileNameTyp>
+            </Grid>
+          </Grid>
         </ChooseFileWrapper>
       </Grid>
       <Grid item xs={3}>

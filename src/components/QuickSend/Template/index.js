@@ -87,6 +87,7 @@ export default function Template(props) {
   useEffect(() => {
     setTextAreaVal(message);
   }, [message]);
+
   return (
     <React.Fragment>
       <KeywordSelect

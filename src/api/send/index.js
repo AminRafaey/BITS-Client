@@ -19,3 +19,26 @@ export async function sendTextMesage(mobileNumbers, message) {
     }
   }
 }
+
+export async function sendMedia(data) {
+  try {
+    const res = await axios.post(
+      endPointApi + '/' + data.get('mediaType'),
+      data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    return res.data;
+  } catch (ex) {
+    if (!ex.response) {
+      alert('Please check your internet connection');
+      return {};
+    } else {
+      alert('Server Error!');
+      return {};
+    }
+  }
+}

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../HOC';
-import { sendTextMesage } from '../../../api/send';
+import { sendTextMesage, sendMedia } from '../../../api/send';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
 const textAreaStyle = {
   width: '100%',
@@ -35,6 +35,17 @@ export const ButtonWrapper = styled(Box)({
 export default function ListOption(props) {
   const { setContactList, contantList, selectedMedia, message } = props;
 
+  const handleSend = () => {
+    if (selectedMedia.file === undefined) sendTextMesage(contantList, message);
+    else if (selectedMedia.file) {
+      const formData = new FormData();
+      formData.append('mobileNumbers', JSON.stringify(contantList));
+      formData.append('message', message);
+      formData.append('file', selectedMedia.file);
+      formData.append('mediaType', selectedMedia.type);
+      sendMedia(formData);
+    }
+  };
   return (
     <React.Fragment>
       <Grid container>
@@ -65,10 +76,7 @@ export default function ListOption(props) {
         <Grid item xs={4}>
           <ButtonWrapper>
             <SendWrapper>
-              <Button onClick={() => sendTextMesage(contantList, message)}>
-                {' '}
-                {'Send'}
-              </Button>
+              <Button onClick={() => handleSend()}> {'Send'}</Button>
             </SendWrapper>
             <ScheduleWrapper>
               <Button> {'Schedule'}</Button>

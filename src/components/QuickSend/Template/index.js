@@ -1,6 +1,7 @@
 import React, { createRef, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import KeywordSelect from './KeywordSelect';
-import { Radio } from '../../HOC';
+import { Radio, Button } from '../../HOC';
 import { handleMediaChange } from '../utility';
 import {
   styled,
@@ -13,13 +14,8 @@ import {
   FormControl,
 } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import {
-  HoverColor,
-  HeadingColor,
-  HighlightColor,
-  ErrorAlert,
-} from '../../constants/theme';
-
+import { ErrorAlert } from '../../constants/theme';
+import { ChooseFileWrapper, FileNameTyp, BrowseWrapper } from '../FileOption';
 const textAreaStyle = {
   width: '100%',
   minHeight: '160px',
@@ -45,22 +41,7 @@ const RadioParentWrapper = styled(Box)({
   alignItems: 'center',
 });
 const TextAreaWrapper = styled(Box)({});
-const BrowseWrapper = styled(Box)({
-  marginLeft: '49px',
-  marginTop: '5px',
-  width: 'fit-content',
-  background: HighlightColor,
-  borderRadius: 5,
-  '&:hover': {
-    background: HoverColor,
-  },
-});
 
-const BrowseTyp = styled(Typography)({
-  color: HeadingColor,
-  fontSize: 14,
-  padding: '4px 16px 4px',
-});
 const MediaErorWrapper = styled(Box)({
   paddingLeft: '49px',
   paddingTop: '15px',
@@ -78,12 +59,11 @@ const StyledAlert = withStyles({
   },
 })(Alert);
 export default function Template(props) {
-  const { message, setMessage, setSelectedMedia } = props;
+  const { message, setMessage, selectedMedia, setSelectedMedia } = props;
   const [textAreaVal, setTextAreaVal] = useState('');
   const [mediaError, setMediaError] = useState('');
   const templateTextAreaRef = createRef();
   const [selectedMediaType, setSelectedMediaType] = useState('image');
-
   useEffect(() => {
     setTextAreaVal(message);
   }, [message]);
@@ -139,40 +119,59 @@ export default function Template(props) {
           </FormControl>
         </RadioGroupWrapper>
       </RadioParentWrapper>
-      <BrowseWrapper>
-        <input
-          name="file"
-          type="file"
-          id="media"
-          onChange={(e) =>
-            handleMediaChange(
-              e,
-              setSelectedMedia,
-              selectedMediaType,
-              setMediaError,
-              selectedMediaType,
-              16999
-            )
-          }
-          style={{ display: 'none' }}
-          accept={
-            selectedMediaType === 'image'
-              ? '.png,.jpg,.jpeg'
-              : selectedMediaType === 'video'
-              ? '.mpeg,.mp4,.quicktime,.webm,.3gpp,.3gpp2,.3gpp-tt,.H261,.H263,.H263-1998,.H263-2000,.H264'
-              : '.pdf'
-          }
-        />
-
-        <label htmlFor="media" style={{ color: 'white', cursor: 'pointer' }}>
-          <BrowseTyp>
-            {'Browse ' +
-              selectedMediaType.charAt(0).toUpperCase() +
-              selectedMediaType.slice(1)}
-          </BrowseTyp>
-        </label>
-      </BrowseWrapper>
       <Grid container>
+        <Grid item xs={5}>
+          <ChooseFileWrapper>
+            <Grid container>
+              <Grid item xs={5}>
+                <BrowseWrapper>
+                  <input
+                    name="file"
+                    type="file"
+                    id="media"
+                    onChange={(e) =>
+                      handleMediaChange(
+                        e,
+                        setSelectedMedia,
+                        selectedMediaType,
+                        setMediaError,
+                        selectedMediaType,
+                        16999
+                      )
+                    }
+                    style={{ display: 'none' }}
+                    accept={
+                      selectedMediaType === 'image'
+                        ? '.png,.jpg,.jpeg'
+                        : selectedMediaType === 'video'
+                        ? '.mpeg,.mp4,.quicktime,.webm,.3gpp,.3gpp2,.3gpp-tt,.H261,.H263,.H263-1998,.H263-2000,.H264'
+                        : '.pdf'
+                    }
+                  />
+
+                  <Button>
+                    <label
+                      htmlFor="media"
+                      style={{ color: 'white', cursor: 'pointer' }}
+                    >
+                      {'Browse ' +
+                        selectedMediaType.charAt(0).toUpperCase() +
+                        selectedMediaType.slice(1)}
+                    </label>
+                  </Button>
+                </BrowseWrapper>
+              </Grid>
+              <Grid item xs={7}>
+                <FileNameTyp>
+                  {selectedMedia.file
+                    ? selectedMedia.file.name
+                    : 'No File Choosen'}
+                </FileNameTyp>
+              </Grid>
+            </Grid>
+          </ChooseFileWrapper>
+        </Grid>
+
         <Grid item xs={7}>
           {mediaError && (
             <MediaErorWrapper>
@@ -184,3 +183,10 @@ export default function Template(props) {
     </React.Fragment>
   );
 }
+
+Template.propTypes = {
+  message: PropTypes.string.isRequired,
+  setMessage: PropTypes.func.isRequired,
+  selectedMedia: PropTypes.object.isRequired,
+  setSelectedMedia: PropTypes.func.isRequired,
+};

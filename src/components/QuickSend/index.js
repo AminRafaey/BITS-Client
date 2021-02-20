@@ -20,6 +20,7 @@ function QuickSend(props) {
   const [selectedTemplate, setSelectedTemplate] = useState({});
   const [selectedMedia, setSelectedMedia] = useState({});
   const [contantList, setContactList] = useState([]);
+
   useEffect(() => {
     Object.entries(selectedTemplate).length > 0 &&
       setMessage(selectedTemplate.content);
@@ -35,6 +36,7 @@ function QuickSend(props) {
           message={message}
           setMessage={setMessage}
           setSelectedMedia={setSelectedMedia}
+          selectedMedia={selectedMedia}
         />
       </TemplateWrapper>
       <OptionSelectionWrapper>

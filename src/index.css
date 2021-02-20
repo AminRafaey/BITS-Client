@@ -23,7 +23,7 @@
   top: 0px;
   bottom: auto;
   border: 15px solid;
-  border-color: #607d8b transparent transparent transparent;
+  border-color: #78909c transparent transparent transparent;
 }
 
 /*Scrolling desiging and its visibility*/
@@ -43,4 +43,8 @@
 #Chat-Box-Styled-Scroll::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #ededed;
+}
+
+.MuiDrawer-paper::-webkit-scrollbar {
+  display: none;
 }

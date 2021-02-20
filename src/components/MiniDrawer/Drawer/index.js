@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useLocation, Link } from 'react-router-dom';
 import { DrawerItem } from '../../../components';
+import SingleOptionItem from '../SingleOptionItem';
 import profilePlaceholder from '../../../public/images/profile-placeholder.png';
 import { optionsList, singleOptionList } from '../../constants/optionsList';
 import {
   Box,
   styled,
   Drawer as MuiDrawer,
-  List,
   Typography,
   makeStyles,
-  useTheme,
   Divider,
   withStyles,
 } from '@material-ui/core';
@@ -114,7 +113,7 @@ export default function Drawer(props) {
       }}
     >
       {open ? (
-        <div>
+        <React.Fragment>
           <CompanyNameWrapper>
             <Link
               to={'/'}
@@ -136,7 +135,7 @@ export default function Drawer(props) {
           <UserNameWrapper>
             <OptionTyp>Muhammad Amin</OptionTyp>
           </UserNameWrapper>
-        </div>
+        </React.Fragment>
       ) : (
         <DrawerItem
           option={{
@@ -149,7 +148,7 @@ export default function Drawer(props) {
         />
       )}
 
-      <List>
+      <div>
         {optionsList.map((option, index) => (
           <DrawerItem option={option} key={index} open={open} />
         ))}
@@ -159,9 +158,9 @@ export default function Drawer(props) {
         </DividerWrapper>
 
         {singleOptionList.map((option, index) => (
-          <DrawerItem option={option} key={index} open={open} />
+          <SingleOptionItem option={option} key={index} />
         ))}
-      </List>
+      </div>
     </MuiDrawer>
   );
 }

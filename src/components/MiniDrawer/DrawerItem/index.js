@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { Menu } from '../../../components';
+import { Link, useLocation } from 'react-router-dom';
+import { Accordion, AccordionSummary, AccordionDetails } from '../../HOC';
 import {
   withStyles,
   Box,
@@ -11,7 +11,11 @@ import {
   ListItem,
 } from '@material-ui/core';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import { HoverColor, HeadingColor } from '../../constants/theme';
+import {
+  HoverColor,
+  HeadingColor,
+  DarkHoverColor,
+} from '../../constants/theme';
 
 const ArrowIconParentWrapper = styled(Box)({
   width: '100%',
@@ -21,47 +25,49 @@ const ArrowIconParentWrapper = styled(Box)({
 
 const ArrowIconWrapper = styled(Box)({});
 
-const MenuWrapper = styled(Box)({
-  position: 'absolute',
-  marginLeft: 137,
-  marginTop: -18,
-});
 const ListItemWrapper = styled(Box)({
-  position: 'relative',
+  background: DarkHoverColor,
   '&:hover': {
     background: HoverColor,
   },
 });
-const DrawerItemWrapper = styled(Box)({
-  cursor: 'pointer',
-});
+
 const OptionTyp = styled(Typography)({
   color: HeadingColor,
   fontSize: 14,
 });
+
 const StyledListItemIcon = withStyles({
   root: {
     minWidth: 33,
   },
 })(ListItemIcon);
+
+const StyledListItem = withStyles({
+  root: {
+    paddingLeft: 48,
+  },
+})(ListItem);
 function DrawerItem(props) {
-  const { option, open, handleDrawerClose } = props;
-  const [showMenu, setShowMenu] = useState(false);
+  const { option, open } = props;
+  const [expanded, setExpanded] = useState(false);
+  const { pathname } = useLocation();
+
+  const TagName = open ? Box : Link;
+
+  useEffect(() => {
+    pathname === '/inbox' && setExpanded(false);
+  }, [pathname]);
+
   return (
-    <DrawerItemWrapper
-      onMouseOver={() => setShowMenu(true)}
-      onMouseLeave={() => setShowMenu(false)}
-      style={{
-        ...(showMenu && { background: HoverColor }),
-      }}
-    >
-      <Link to={option.defaultPath} style={{ textDecoration: 'none' }}>
-        <ListItemWrapper
-          style={{
-            ...(open && option.menuArr.length > 0 && { pointerEvents: 'none' }),
-          }}
+    <Accordion expanded={expanded}>
+      <AccordionSummary>
+        <TagName
+          to={open ? '/' : option.defaultPath}
+          width={'100%'}
+          style={{ textDecoration: 'none' }}
         >
-          <ListItem>
+          <ListItem onClick={() => setExpanded(!expanded)}>
             <StyledListItemIcon>{option.icon}</StyledListItemIcon>
             <OptionTyp>{option.title}</OptionTyp>
             {option.menuArr.length > 0 && (
@@ -69,7 +75,7 @@ function DrawerItem(props) {
                 {' '}
                 <ArrowIconWrapper
                   style={{
-                    ...(showMenu && { transform: 'rotate(270deg)' }),
+                    ...(expanded && { transform: 'rotate(270deg)' }),
                   }}
                 >
                   {' '}
@@ -78,17 +84,29 @@ function DrawerItem(props) {
               </ArrowIconParentWrapper>
             )}
           </ListItem>
-        </ListItemWrapper>
-      </Link>
-      {showMenu && (
-        <MenuWrapper>
-          <Menu menuArr={option.menuArr} />
-        </MenuWrapper>
-      )}
-    </DrawerItemWrapper>
+        </TagName>
+      </AccordionSummary>
+
+      {option.menuArr.map((m, index) => (
+        <AccordionDetails key={index}>
+          <Link
+            to={m.link}
+            key={index}
+            style={{ textDecoration: 'none', width: '100%' }}
+          >
+            <ListItemWrapper>
+              <StyledListItem>
+                <OptionTyp>{m.title}</OptionTyp>
+              </StyledListItem>
+            </ListItemWrapper>
+          </Link>
+        </AccordionDetails>
+      ))}
+    </Accordion>
   );
 }
 DrawerItem.propTypes = {
   option: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
 };
 export default DrawerItem;

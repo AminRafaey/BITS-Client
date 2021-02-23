@@ -1,7 +1,7 @@
 import config from '../../config.json';
 const endPointApi = `${config.baseUrl}contact`;
 
-export async function getContacts() {
+export async function getChats(loadChatsInContext) {
   try {
     const events = new EventSource(endPointApi);
     events.onmessage = (event) => {
@@ -15,8 +15,9 @@ export async function getContacts() {
           events.close();
         }
         if (parsedData.data !== 'success' && parsedData.data !== 'failure') {
-          console.log(parsedData);
           events.close();
+          console.log(parsedData);
+          loadChatsInContext(parsedData.chats);
         }
       }
       eventHandle(event);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Badge } from '../../../HOC';
+import { calculateTimeInFormat } from '../../utility';
 import { styled, Box, Typography } from '@material-ui/core';
 import {
   LightTextColor,
@@ -19,11 +20,11 @@ const ChatWrapper = styled(Box)({
   },
 });
 const NameTyp = styled(Typography)({
-  fontSize: 15,
-  fontWeight: 600,
+  fontSize: 14,
+  fontWeight: 500,
 });
 const LastMessageTyp = styled(Typography)({
-  fontSize: 14,
+  fontSize: 13,
   color: LightTextColor,
   fontWeight: 100,
   textOverflow: 'ellipsis',
@@ -60,6 +61,7 @@ const ContentWrapper = styled(Box)({
 
 function Chat(props) {
   const { name, date, message, unreadCount } = props;
+
   return (
     <ChatWrapper className="chat-Wrapper">
       <LeftWrapper>
@@ -68,7 +70,7 @@ function Chat(props) {
       <ContentWrapper>
         <NameWrapper>
           <NameTyp className="chat">{name}</NameTyp>
-          <DateTyp className="chat">{date}</DateTyp>
+          <DateTyp className="chat">{calculateTimeInFormat(date)}</DateTyp>
         </NameWrapper>
         <LastMessageTyp className="chat">{message}</LastMessageTyp>
       </ContentWrapper>

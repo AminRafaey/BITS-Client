@@ -5,6 +5,7 @@ import { MiniDrawer } from './components';
 import { ConnectStatusProvider } from './Context/ConnectStatus';
 import { TemplateProvider } from './Context/Template';
 import { AddressBookProvider } from './Context/AddressBook';
+import { ChatProvider } from './Context/Chat';
 import { addressBook } from './Static/AddressBook';
 function App() {
   return (
@@ -12,7 +13,9 @@ function App() {
       <ConnectStatusProvider>
         <TemplateProvider template={[]}>
           <AddressBookProvider addressBook={addressBook}>
-            <MiniDrawer />
+            <ChatProvider>
+              <MiniDrawer />
+            </ChatProvider>
           </AddressBookProvider>
         </TemplateProvider>
       </ConnectStatusProvider>

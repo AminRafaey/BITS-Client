@@ -8,7 +8,7 @@ import {
   useChatDispatch,
   loadChats,
 } from '../../../Context/Chat';
-import { getChats } from '../../../api/chat';
+import { getChats, getChatOfSingleUser } from '../../../api/chat';
 import { Paper, styled, Box } from '@material-ui/core';
 
 import { BackgroundColor } from '../../constants/theme';
@@ -35,7 +35,8 @@ function ChatBox(props) {
 
   useEffect(() => {
     (async () => {
-      getChats(loadChatsInContext);
+      //getChats(loadChatsInContext);
+      getChatOfSingleUser();
     })();
   }, []);
 

@@ -4,7 +4,7 @@ const endPointApi = `${config.baseUrl}send`;
 
 export async function sendTextMesage(mobileNumbers, message, socket) {
   try {
-    socket.emit('sendTextMessage', { mobileNumbers: mobileNumbers, message });
+    socket.emit('send-text-message', { mobileNumbers: mobileNumbers, message });
   } catch (err) {
     alert('Server Error!');
     return {};
@@ -13,18 +13,14 @@ export async function sendTextMesage(mobileNumbers, message, socket) {
 
 export async function sendMedia(data, socket, tryNo = 1) {
   try {
-    const res = await axios.post(
-      endPointApi + '/' + data.get('mediaType'),
-      data,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-    );
+    const res = await axios.post(endPointApi, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
     if (res.status === 200) {
       tryNo = 3;
-      socket.emit(`send${data.get('mediaType')}`, {
+      socket.emit(`send-${data.get('mediaType')}`, {
         mobileNumbers: data.get('mobileNumbers'),
         message: data.get('message'),
         mediaPath: res.data.field.data,

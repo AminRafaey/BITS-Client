@@ -83,18 +83,18 @@ export default function Modal(props) {
 
   useEffect(() => {
     if (openModal) {
-      socket.emit('getQr', {});
+      socket.emit('get-qr', {});
     }
   }, [openModal]);
 
   useEffect(() => {
-    socket.on('noQr', () =>
+    socket.on('no-qr', () =>
       alert('Make sure you have an active internet connection on server')
     );
-    socket.on('getQr', (res) => {
+    socket.on('get-qr', (res) => {
       setQrString(res);
     });
-    socket.on('connection_status', (res) => {
+    socket.on('connection-status', (res) => {
       res === 'success' ? handleAfterScan(true) : handleAfterScan(false);
     });
     socket.on('contacts-received', (res) => {

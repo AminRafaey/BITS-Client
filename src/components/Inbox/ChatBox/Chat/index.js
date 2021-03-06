@@ -81,7 +81,7 @@ function Chat(props) {
 
 Chat.propTypes = {
   name: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  date: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
   unreadCount: PropTypes.number.isRequired,
 };

@@ -10,13 +10,18 @@ export const calculateTimeInFormat = (date) => {
     .toLocaleString()
     .split(',')[0]
     .split('/');
-  if (convertedDateInFormat[0] != month + 1) {
+  if (parseInt(convertedDateInFormat[0]) != parseInt(month + 1)) {
     return new Date(date * 1000).toLocaleString().split(',')[0];
-  } else if (convertedDateInFormat[1] != day) {
+  } else if (parseInt(convertedDateInFormat[1]) != parseInt(day)) {
     return new Date(date * 1000).toLocaleString().split(',')[0];
-  } else if (convertedDateInFormat[2] != year) {
+  } else if (parseInt(convertedDateInFormat[2]) != parseInt(year)) {
     return new Date(date * 1000).toLocaleString().split(',')[0];
   }
+  // return new Date('1970-01-01T' + convertedTimeInFormat.trim() + 'Z')
+  // .toLocaleTimeString({},
+  //   {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
+  // );
+
   const lastPart = convertedTimeInFormat.split(':')[2].split(' ')[1];
   return (
     convertedTimeInFormat.split(':')[0] +

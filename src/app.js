@@ -6,19 +6,23 @@ import { ConnectStatusProvider } from './Context/ConnectStatus';
 import { TemplateProvider } from './Context/Template';
 import { AddressBookProvider } from './Context/AddressBook';
 import { ChatProvider } from './Context/Chat';
+import { SocketProvider } from './Context/Socket';
 import { addressBook } from './Static/AddressBook';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <ConnectStatusProvider>
-        <TemplateProvider template={[]}>
-          <AddressBookProvider addressBook={addressBook}>
-            <ChatProvider>
-              <MiniDrawer />
-            </ChatProvider>
-          </AddressBookProvider>
-        </TemplateProvider>
-      </ConnectStatusProvider>
+      <SocketProvider>
+        <ConnectStatusProvider>
+          <TemplateProvider template={[]}>
+            <AddressBookProvider addressBook={addressBook}>
+              <ChatProvider>
+                <MiniDrawer />
+              </ChatProvider>
+            </AddressBookProvider>
+          </TemplateProvider>
+        </ConnectStatusProvider>
+      </SocketProvider>
     </ThemeProvider>
   );
 }

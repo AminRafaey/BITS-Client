@@ -128,6 +128,7 @@ export default function AddressBookTable() {
         <Template
           message={message}
           setMessage={setMessage}
+          selectedMedia={selectedMedia}
           setSelectedMedia={setSelectedMedia}
         />
       </TemplateWrapper>

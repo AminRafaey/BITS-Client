@@ -1,7 +1,7 @@
 import React from 'react';
 import stateCloner from '../components/utility/StateCloner';
 
-const AddressBookState = React.createContext(null);
+const AddressBookState = React.createContext([]);
 const AddressBookDispatch = React.createContext(null);
 
 function AddressBookReducer(state, action) {

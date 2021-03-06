@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../HOC';
+import { useSocketState } from '../../../Context/Socket';
 import { sendTextMesage, sendMedia } from '../../../api/send';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
 const textAreaStyle = {
@@ -34,16 +35,18 @@ export const ButtonWrapper = styled(Box)({
 });
 export default function ListOption(props) {
   const { setContactList, contantList, selectedMedia, message } = props;
+  const socket = useSocketState();
 
   const handleSend = () => {
-    if (selectedMedia.file === undefined) sendTextMesage(contantList, message);
-    else if (selectedMedia.file) {
+    if (selectedMedia.file === undefined) {
+      sendTextMesage(contantList, message, socket);
+    } else if (selectedMedia.file) {
       const formData = new FormData();
       formData.append('mobileNumbers', JSON.stringify(contantList));
       formData.append('message', message);
       formData.append('file', selectedMedia.file);
       formData.append('mediaType', selectedMedia.type);
-      sendMedia(formData);
+      sendMedia(formData, socket);
     }
   };
   return (

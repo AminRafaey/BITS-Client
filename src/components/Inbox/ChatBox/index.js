@@ -1,14 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Chat from './Chat';
-import { chats } from '../../../Static/Chats';
 import SearchInput from './SearchInput';
-import {
-  useChatState,
-  useChatDispatch,
-  loadChats,
-} from '../../../Context/Chat';
-import { getChats, getChatOfSingleUser } from '../../../api/chat';
+import { useChatState } from '../../../Context/Chat';
 import { Paper, styled, Box } from '@material-ui/core';
 
 import { BackgroundColor } from '../../constants/theme';
@@ -26,19 +20,6 @@ const SearchInputWrapper = styled(Box)({
 
 function ChatBox(props) {
   const chatState = useChatState();
-  const chatDispatch = useChatDispatch();
-  const loadChatsInContext = (chats) => {
-    loadChats(chatDispatch, {
-      chats: chats,
-    });
-  };
-
-  useEffect(() => {
-    (async () => {
-      //getChats(loadChatsInContext);
-      getChatOfSingleUser();
-    })();
-  }, []);
 
   const getMessage = (c, index) => {
     if (c['messages'][index]['messageStubType']) {
@@ -49,7 +30,6 @@ function ChatBox(props) {
       if (index !== 0) {
         return getMessage(c, index - 1);
       } else {
-        console.log(c);
         return 'Nothing';
       }
     }

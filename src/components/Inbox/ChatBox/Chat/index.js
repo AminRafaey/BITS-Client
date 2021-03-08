@@ -60,19 +60,19 @@ const ContentWrapper = styled(Box)({
 });
 
 function Chat(props) {
-  const { name, date, message, unreadCount } = props;
+  const { jid, name, date, message, unreadCount, setCurrentChatJid } = props;
 
   return (
-    <ChatWrapper className="chat-Wrapper">
+    <ChatWrapper onClick={() => setCurrentChatJid(jid)}>
       <LeftWrapper>
         <Badge badgeContent={unreadCount} color="primary" />
       </LeftWrapper>
       <ContentWrapper>
         <NameWrapper>
-          <NameTyp className="chat">{name}</NameTyp>
-          <DateTyp className="chat">{calculateTimeInFormat(date)}</DateTyp>
+          <NameTyp>{name}</NameTyp>
+          <DateTyp>{calculateTimeInFormat(date)}</DateTyp>
         </NameWrapper>
-        <LastMessageTyp className="chat">{message}</LastMessageTyp>
+        <LastMessageTyp>{message}</LastMessageTyp>
       </ContentWrapper>
       <RightWrapper></RightWrapper>
     </ChatWrapper>
@@ -84,5 +84,7 @@ Chat.propTypes = {
   date: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
   unreadCount: PropTypes.number.isRequired,
+  jid: PropTypes.string.isRequired,
+  setCurrentChatJid: PropTypes.func.isRequired,
 };
 export default Chat;

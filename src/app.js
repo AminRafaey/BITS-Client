@@ -7,6 +7,7 @@ import { TemplateProvider } from './Context/Template';
 import { AddressBookProvider } from './Context/AddressBook';
 import { ChatProvider } from './Context/Chat';
 import { SocketProvider } from './Context/Socket';
+import { chat } from './Static/Chat';
 import { addressBook } from './Static/AddressBook';
 
 function App() {

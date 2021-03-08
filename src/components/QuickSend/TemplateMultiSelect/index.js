@@ -22,6 +22,22 @@ const NoOptionTyp = styled(Typography)({
   cursor: 'pointer',
   color: 'rgba(0, 0, 0, 0.85)',
 });
+const StyledInboxAutoComplete = withStyles({
+  root: {
+    '& .MuiFormControl-root': {
+      width: 160,
+      '& .MuiInputBase-root .MuiOutlinedInput-notchedOutline': {
+        border: 'none',
+      },
+      '& .MuiFormLabel-root': {
+        fontSize: 14,
+      },
+    },
+    '& .MuiInputBase-root': {
+      background: HeadingColor,
+    },
+  },
+})(Autocomplete);
 const StyledAutoComplete = withStyles({
   root: {
     '& .MuiFormControl-root': {
@@ -33,7 +49,7 @@ const StyledAutoComplete = withStyles({
   },
 })(Autocomplete);
 export default function TemplateMultiSelect(props) {
-  const { setSelectedTemplate } = props;
+  const { setSelectedTemplate, type } = props;
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [textFieldVal, setTextFieldVal] = useState('');
@@ -41,6 +57,8 @@ export default function TemplateMultiSelect(props) {
   const templateDispatch = useTemplateDispatch();
   const loading = open && options.length === 0;
 
+  const TagName =
+    type && type === 'inbox' ? StyledInboxAutoComplete : StyledAutoComplete;
   useEffect(() => {
     if (!loading) {
       return undefined;
@@ -59,7 +77,7 @@ export default function TemplateMultiSelect(props) {
   }, [templateState]);
 
   return (
-    <StyledAutoComplete
+    <TagName
       autoHighlight
       openOnFocus
       open={open}
@@ -128,4 +146,5 @@ export default function TemplateMultiSelect(props) {
 
 TemplateMultiSelect.propTypes = {
   setSelectedTemplate: PropTypes.func.isRequired,
+  type: PropTypes.string,
 };

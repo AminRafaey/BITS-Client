@@ -36,11 +36,11 @@
   color: #ffff;
 }
 
-#Chat-Box-Styled-Scroll::-webkit-scrollbar {
-  width: 6px;
+.Chat-Box-Styled-Scroll::-webkit-scrollbar {
+  width: 2px;
 }
 
-#Chat-Box-Styled-Scroll::-webkit-scrollbar-thumb {
+.Chat-Box-Styled-Scroll::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #ededed;
 }

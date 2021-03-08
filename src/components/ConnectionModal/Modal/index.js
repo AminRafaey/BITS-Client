@@ -100,7 +100,6 @@ export default function Modal(props) {
     socket.on('contacts-received', (res) => {
       console.log(res);
     });
-
     socket.on('chats-received', (res) => {
       if (chatState.length < 1) {
         loadChats(chatDispatch, {

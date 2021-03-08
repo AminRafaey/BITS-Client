@@ -5,9 +5,21 @@ const ChatState = React.createContext(null);
 const ChatDispatch = React.createContext(null);
 
 function ChatReducer(state, action) {
+  const cloneState = stateCloner(state);
+  const { messages, jid } = action.payload;
+  console.log(messages, jid);
   switch (action.type) {
     case 'LOAD_CHATS':
       return [...stateCloner(action.payload.chats)];
+    case 'ADD_MESSAGES':
+      const index = cloneState.findIndex((c) => c.jid === jid);
+      index !== -1 &&
+        (cloneState[index]['messages'] = [
+          ...cloneState[index]['messages'],
+          ...messages.reverse(),
+        ]);
+      console.log(cloneState);
+      return [...cloneState];
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -42,11 +54,18 @@ function useChatDispatch() {
   return context;
 }
 
-export { ChatProvider, useChatState, useChatDispatch, loadChats };
+export { ChatProvider, useChatState, useChatDispatch, loadChats, addMessages };
 
 function loadChats(dispatch, data) {
   dispatch({
     type: 'LOAD_CHATS',
+    payload: data,
+  });
+}
+
+function addMessages(dispatch, data) {
+  dispatch({
+    type: 'ADD_MESSAGES',
     payload: data,
   });
 }

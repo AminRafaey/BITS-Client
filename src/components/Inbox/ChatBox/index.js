@@ -19,6 +19,7 @@ const SearchInputWrapper = styled(Box)({
 });
 
 function ChatBox(props) {
+  const { setCurrentChatJid } = props;
   const chatState = useChatState();
 
   const getMessage = (c, index) => {
@@ -35,7 +36,7 @@ function ChatBox(props) {
     }
   };
   return (
-    <ChatsWrapper id="Chat-Box-Styled-Scroll">
+    <ChatsWrapper className="Chat-Box-Styled-Scroll">
       <SearchInputWrapper>
         <SearchInput />
       </SearchInputWrapper>
@@ -48,8 +49,10 @@ function ChatBox(props) {
                 key={index}
                 name={c.name ? c.name : c.jid.split('@')[0]}
                 date={c.t}
-                message={'hey'} //getMessage(c, c['messages'].length - 1)
-                unreadCount={0}
+                message={'Hello, How are you'} //getMessage(c, c['messages'].length - 1)
+                unreadCount={c.count}
+                setCurrentChatJid={setCurrentChatJid}
+                jid={c.jid}
               />
             );
           })}
@@ -58,5 +61,7 @@ function ChatBox(props) {
   );
 }
 
-ChatBox.propTypes = {};
+ChatBox.propTypes = {
+  setCurrentChatJid: PropTypes.func.isRequired,
+};
 export default ChatBox;

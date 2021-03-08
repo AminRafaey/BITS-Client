@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ChatBox from './ChatBox';
 import ChatArea from './ChatArea';
@@ -11,6 +11,8 @@ const InboxWrapper = styled(Box)({
 });
 function Inbox(props) {
   const { setOpen } = props;
+  const [currentChatJid, setCurrentChatJid] = useState('');
+
   useEffect(() => {
     setOpen(false);
   }, []);
@@ -18,18 +20,24 @@ function Inbox(props) {
     <InboxWrapper>
       <Grid container spacing={0}>
         <Grid item xs={3}>
-          <ChatBox />
+          <ChatBox setCurrentChatJid={setCurrentChatJid} />
         </Grid>
-        <Grid item xs={7}>
-          <ChatArea />
-        </Grid>
-        <Grid item xs={2}>
-          <Info />
-        </Grid>
+        {currentChatJid && (
+          <React.Fragment>
+            <Grid item xs={7}>
+              <ChatArea currentChatJid={currentChatJid} />
+            </Grid>
+            <Grid item xs={2}>
+              <Info />
+            </Grid>
+          </React.Fragment>
+        )}
       </Grid>
     </InboxWrapper>
   );
 }
 
-Inbox.propTypes = {};
+Inbox.propTypes = {
+  setOpen: PropTypes.func.isRequired,
+};
 export default Inbox;

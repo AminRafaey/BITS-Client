@@ -10,7 +10,7 @@ import {
   addMessages,
 } from '../../../Context/Chat';
 import { useSocketState } from '../../../Context/Socket';
-import { styled, Box } from '@material-ui/core';
+import { styled, Box, CircularProgress } from '@material-ui/core';
 
 const ChatAreaWrapper = styled(Box)({
   display: 'flex',
@@ -28,9 +28,15 @@ const ChatsWrapper = styled(Box)({
   overflow: 'auto',
   display: 'flex',
   flexDirection: 'column-reverse',
-
   padding: '0px 5px 0px 5px',
-  maxHeight: '70vh',
+  height: '70vh',
+});
+
+const LoadingWrapper = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '70vh',
 });
 
 function ChatArea(props) {
@@ -44,7 +50,6 @@ function ChatArea(props) {
 
   useEffect(() => {
     socket.on('get-contact-messages', (res) => {
-      console.log(res);
       addMessages(chatDispatch, {
         jid: res.jid,
         messages: res.messages.messages,
@@ -70,7 +75,11 @@ function ChatArea(props) {
           }
           next={fetchMoreData}
           hasMore={true}
-          loader={<h4>Loading...</h4>}
+          loader={
+            <LoadingWrapper>
+              <CircularProgress />
+            </LoadingWrapper>
+          }
           style={{ display: 'flex', flexDirection: 'column-reverse' }}
           inverse={true}
           scrollableTarget="scrollableDiv"

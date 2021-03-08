@@ -48,3 +48,9 @@
 .MuiDrawer-paper::-webkit-scrollbar {
   display: none;
 }
+
+/* Infintie scroll loader */
+
+.infinite-scroll-component {
+  overflow: hidden !important;
+}

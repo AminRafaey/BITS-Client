@@ -17,7 +17,7 @@ function App() {
         <ConnectStatusProvider>
           <TemplateProvider template={[]}>
             <AddressBookProvider addressBook={addressBook}>
-              <ChatProvider>
+              <ChatProvider chat={chat}>
                 <MiniDrawer />
               </ChatProvider>
             </AddressBookProvider>

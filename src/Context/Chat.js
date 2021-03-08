@@ -7,7 +7,6 @@ const ChatDispatch = React.createContext(null);
 function ChatReducer(state, action) {
   const cloneState = stateCloner(state);
   const { messages, jid } = action.payload;
-  console.log(messages, jid);
   switch (action.type) {
     case 'LOAD_CHATS':
       return [...stateCloner(action.payload.chats)];
@@ -18,7 +17,6 @@ function ChatReducer(state, action) {
           ...cloneState[index]['messages'],
           ...messages.reverse(),
         ]);
-      console.log(cloneState);
       return [...cloneState];
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);

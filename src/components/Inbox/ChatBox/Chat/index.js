@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Badge } from '../../../HOC';
+import { calculateTimeInFormat } from '../../utility';
 import { styled, Box, Typography } from '@material-ui/core';
 import {
   LightTextColor,
@@ -19,11 +20,11 @@ const ChatWrapper = styled(Box)({
   },
 });
 const NameTyp = styled(Typography)({
-  fontSize: 15,
-  fontWeight: 600,
+  fontSize: 14,
+  fontWeight: 500,
 });
 const LastMessageTyp = styled(Typography)({
-  fontSize: 14,
+  fontSize: 13,
   color: LightTextColor,
   fontWeight: 100,
   textOverflow: 'ellipsis',
@@ -47,6 +48,7 @@ const LeftWrapper = styled(Box)({
   height: '100%',
   display: 'flex',
   alignItems: 'center',
+  paddingBottom: 5,
 });
 const RightWrapper = styled(Box)({
   width: '5%',
@@ -59,18 +61,19 @@ const ContentWrapper = styled(Box)({
 });
 
 function Chat(props) {
-  const { name, date, message, unreadCount } = props;
+  const { jid, name, date, message, unreadCount, setCurrentChatJid } = props;
+
   return (
-    <ChatWrapper className="chat-Wrapper">
+    <ChatWrapper onClick={() => setCurrentChatJid(jid)}>
       <LeftWrapper>
         <Badge badgeContent={unreadCount} color="primary" />
       </LeftWrapper>
       <ContentWrapper>
         <NameWrapper>
-          <NameTyp className="chat">{name}</NameTyp>
-          <DateTyp className="chat">{date}</DateTyp>
+          <NameTyp>{name}</NameTyp>
+          <DateTyp>{calculateTimeInFormat(date)}</DateTyp>
         </NameWrapper>
-        <LastMessageTyp className="chat">{message}</LastMessageTyp>
+        <LastMessageTyp>{message}</LastMessageTyp>
       </ContentWrapper>
       <RightWrapper></RightWrapper>
     </ChatWrapper>
@@ -79,8 +82,10 @@ function Chat(props) {
 
 Chat.propTypes = {
   name: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  date: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
   unreadCount: PropTypes.number.isRequired,
+  jid: PropTypes.string.isRequired,
+  setCurrentChatJid: PropTypes.func.isRequired,
 };
 export default Chat;

@@ -5,7 +5,11 @@ import {
   useConnectStatusDispatch,
   updateStatus,
 } from '../../../Context/ConnectStatus';
-import { getQrCode } from '../../../api/connection';
+import {
+  useChatState,
+  useChatDispatch,
+  loadChats,
+} from '../../../Context/Chat';
 import {
   IconButton,
   Typography,
@@ -19,7 +23,7 @@ import {
 } from '@material-ui/core';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import CloseIcon from '@material-ui/icons/Close';
-
+import { useSocketState } from '../../../Context/Socket';
 const ContentWrapper = styled(Box)({
   padding: '35px 0px 0px 50px',
 });
@@ -73,14 +77,47 @@ export default function Modal(props) {
   const [open, setOpen] = useState(false);
   const [qrString, setQrString] = useState('');
   const connectStatusDispatch = useConnectStatusDispatch();
+  const chatState = useChatState();
+  const chatDispatch = useChatDispatch();
+  const socket = useSocketState();
 
   useEffect(() => {
-    openModal && getQrCode(setQrString, setOpen, handleAfterScan);
+    if (openModal) {
+      socket.emit('get-qr', {});
+    }
   }, [openModal]);
+
+  useEffect(() => {
+    socket.on('no-qr', () =>
+      alert('Make sure you have an active internet connection on server')
+    );
+    socket.on('get-qr', (res) => {
+      setQrString(res);
+    });
+    socket.on('connection-status', (res) => {
+      res === 'success' ? handleAfterScan(true) : handleAfterScan(false);
+    });
+    socket.on('contacts-received', (res) => {
+      console.log(res);
+    });
+    socket.on('chats-received', (res) => {
+      if (chatState.length < 1) {
+        loadChats(chatDispatch, {
+          chats: res,
+        });
+      }
+    });
+  }, []);
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (qrString) {
+      setOpen(true);
+    }
+  }, [qrString]);
 
   const handleAfterScan = (status) => {
     setOpen(false);

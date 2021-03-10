@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Box, styled, Typography } from '@material-ui/core';
 import { HighlightColor, HoverColor } from '../../../constants/theme';
+import { calculateTimeInFormat } from '../../utility';
 
 const MessageWrapper = styled(Box)({
   display: 'flex',
@@ -11,11 +13,12 @@ const MessageWrapper = styled(Box)({
 const ChatTopWrapper = styled(Box)({
   width: '40%',
   display: 'flex',
+  justifyContent: 'flex-end',
   padding: '20px',
 });
 
 const MessageBoxWrapper = styled(Box)({
-  padding: '6px 10px',
+  padding: '6px 6px 2px 10px',
   borderRadius: '6px 0px 6px 6px',
   background: HoverColor,
   fontSize: 14,
@@ -25,24 +28,32 @@ const MessageBoxWrapper = styled(Box)({
 const DateTyp = styled(Typography)({
   float: 'right',
   color: HighlightColor,
-  fontSize: 12,
+  fontSize: 11,
   marginTop: 2,
-  paddingRight: '10px',
+
+  paddingLeft: 25,
+});
+
+const MessageTyp = styled(Typography)({
+  fontSize: 14,
+  display: 'inline',
 });
 
 function Sender(props) {
+  const { message } = props;
   return (
     <MessageWrapper>
       <ChatTopWrapper>
         <MessageBoxWrapper className="S_tri-right S_left-top">
-          Hello, how are you my man Hello, how are you my man Hello, how are you
-          my man Hello, how are you my man
-          <DateTyp>27-09-2021</DateTyp>
+          <MessageTyp>{message.message.conversation}</MessageTyp>
+          <DateTyp>{calculateTimeInFormat(message.messageTimestamp)}</DateTyp>
         </MessageBoxWrapper>
       </ChatTopWrapper>
     </MessageWrapper>
   );
 }
 
-Sender.propTypes = {};
+Sender.propTypes = {
+  message: PropTypes.object.isRequired,
+};
 export default Sender;

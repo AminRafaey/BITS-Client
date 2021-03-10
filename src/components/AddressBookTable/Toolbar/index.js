@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { WhatsAppIcon } from '../../../resources';
 import { useAddressBookState } from '../../../Context/AddressBook';
+import { useSocketState } from '../../../Context/Socket';
 import { sendTextMesage } from '../../../api/send';
 import {
   Toolbar as MuiToolbar,
@@ -46,6 +47,7 @@ export default function Toolbar(props) {
   const classes = useToolbarStyles();
   const { numSelected, message } = props;
   const addressBookState = useAddressBookState();
+  const socket = useSocketState();
   return (
     <ToolbarWrapper>
       <MuiToolbar
@@ -72,7 +74,8 @@ export default function Toolbar(props) {
                   addressBookState
                     .filter((a) => a.selected)
                     .map((a) => a.mobileNumber),
-                  message
+                  message,
+                  socket
                 )
               }
             >

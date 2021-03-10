@@ -36,15 +36,21 @@
   color: #ffff;
 }
 
-#Chat-Box-Styled-Scroll::-webkit-scrollbar {
-  width: 6px;
+.Chat-Box-Styled-Scroll::-webkit-scrollbar {
+  width: 2px;
 }
 
-#Chat-Box-Styled-Scroll::-webkit-scrollbar-thumb {
+.Chat-Box-Styled-Scroll::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #ededed;
 }
 
 .MuiDrawer-paper::-webkit-scrollbar {
   display: none;
+}
+
+/* Infintie scroll loader */
+
+.infinite-scroll-component {
+  overflow: hidden !important;
 }

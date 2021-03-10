@@ -48,6 +48,7 @@ const LeftWrapper = styled(Box)({
   height: '100%',
   display: 'flex',
   alignItems: 'center',
+  paddingBottom: 5,
 });
 const RightWrapper = styled(Box)({
   width: '5%',

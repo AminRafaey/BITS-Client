@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ChatBox from './ChatBox';
 import ChatArea from './ChatArea';
 import Info from './Info';
+import WABg from '../../public/images/WABg.png';
 import { Box, styled, Grid } from '@material-ui/core';
 
 const InboxWrapper = styled(Box)({
@@ -22,7 +23,7 @@ function Inbox(props) {
         <Grid item xs={3}>
           <ChatBox setCurrentChatJid={setCurrentChatJid} />
         </Grid>
-        {currentChatJid && (
+        {currentChatJid ? (
           <React.Fragment>
             <Grid item xs={7}>
               <ChatArea currentChatJid={currentChatJid} />
@@ -31,6 +32,11 @@ function Inbox(props) {
               <Info />
             </Grid>
           </React.Fragment>
+        ) : (
+          <Grid item xs={9}>
+            {' '}
+            <img src={WABg} style={{ width: '100%', height: '100%' }} />{' '}
+          </Grid>
         )}
       </Grid>
     </InboxWrapper>

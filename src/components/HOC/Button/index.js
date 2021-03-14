@@ -9,10 +9,13 @@ import {
 const StyledButton = withStyles({
   root: {
     background: HighlightColor,
-    padding: '2px 4px',
+    paddingTop: '2px',
+    paddingBottom: '2px',
+    borderRadius: 0,
   },
   label: {
-    fontSize: 14,
+    fontSize: 13,
+    fontFamily: 'Regular',
     color: HeadingColor,
     textTransform: 'none',
   },

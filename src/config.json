@@ -1,3 +1,3 @@
 {
-  "baseUrl": "https://bits-server.herokuapp.com/"
+  "baseUrl": "http://localhost:4000/"
 }

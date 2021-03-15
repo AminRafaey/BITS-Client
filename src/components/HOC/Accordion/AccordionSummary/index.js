@@ -5,15 +5,18 @@ import { AccordionSummary as MuiAccordionSummary } from '@material-ui/core';
 const StyledMuiAccordionSummary = withStyles({
   root: {
     padding: 0,
+    minHeight: 0,
     '&.Mui-expanded': {
       minHeight: `initial !important`,
     },
+    '& .MuiAccordionSummary-content': {
+      margin: '0px !important',
+    },
     '& .MuiAccordionSummary-content.Mui-expanded': {
-      margin: '0 !important',
+      margin: '0px !important',
     },
   },
   content: {
-    margin: 0,
     width: '100%',
   },
 })(MuiAccordionSummary);

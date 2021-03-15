@@ -2,6 +2,8 @@ export const addressBook = [
   {
     _id: 1,
     profile: '',
+    title: 'Amin Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -16,6 +18,8 @@ export const addressBook = [
   {
     _id: 2,
     profile: '',
+    title: 'Zaid',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -30,6 +34,8 @@ export const addressBook = [
   {
     _id: 3,
     profile: '',
+    title: 'Sair Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -44,6 +50,8 @@ export const addressBook = [
   {
     _id: 4,
     profile: '',
+    title: 'Bilal',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -58,6 +66,8 @@ export const addressBook = [
   {
     _id: 5,
     profile: '',
+    title: 'Usman',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -72,6 +82,8 @@ export const addressBook = [
   {
     _id: 6,
     profile: '',
+    title: 'Moeed',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -86,6 +98,8 @@ export const addressBook = [
   {
     _id: 7,
     profile: '',
+    title: 'Amin Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -100,6 +114,8 @@ export const addressBook = [
   {
     _id: 8,
     profile: '',
+    title: 'Amin Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -114,6 +130,8 @@ export const addressBook = [
   {
     _id: 9,
     profile: '',
+    title: 'Amin Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -128,6 +146,8 @@ export const addressBook = [
   {
     _id: 10,
     profile: '',
+    title: 'Amin Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -142,6 +162,8 @@ export const addressBook = [
   {
     _id: 11,
     profile: '',
+    title: 'Amin Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -156,6 +178,8 @@ export const addressBook = [
   {
     _id: 12,
     profile: '',
+    title: 'Amin Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:
@@ -170,6 +194,8 @@ export const addressBook = [
   {
     _id: 13,
     profile: '',
+    title: 'Amin Rafaey',
+    email: 'aminrafaey543@gmail.com',
     mobileNumber: '923364773099',
     lastInteraction: {
       message:

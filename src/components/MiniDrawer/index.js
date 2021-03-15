@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Box, styled, CssBaseline, makeStyles } from '@material-ui/core';
-import { AddressBookTable, Home, QuickSend, Inbox } from '../../components';
+import {
+  AddressBookTable,
+  Home,
+  QuickSend,
+  Inbox,
+  ManageContact,
+} from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 
@@ -25,6 +31,12 @@ const InboxWrapper = styled(Box)({
   height: '100%',
   width: '100%',
 });
+const ContactWrapper = styled(Box)({
+  padding: '75px 0px 0px 0px',
+  background: '#E9EEF5',
+  height: '100%',
+});
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -70,6 +82,11 @@ export default function MiniDrawer() {
                 {' '}
                 <Inbox setOpen={setOpen} />
               </InboxWrapper>
+            </Route>
+            <Route path="/manageContacts">
+              <ContactWrapper>
+                <ManageContact />
+              </ContactWrapper>
             </Route>
             <Route path="/">
               <HomePageWrapper>

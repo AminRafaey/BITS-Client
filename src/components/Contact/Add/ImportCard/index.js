@@ -10,10 +10,11 @@ import {
   Typography,
 } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { GrayColor } from '../../../constants/theme';
 
 const TitleTyp = styled(Typography)({
   fontSize: 14,
-  background: '#F6F8F8',
+  background: GrayColor,
   height: 40,
   display: 'flex',
   alignItems: 'center',

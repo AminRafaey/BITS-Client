@@ -5,3 +5,6 @@ export { default as Button } from './Button';
 export { default as Accordion } from './Accordion/Accordion';
 export { default as AccordionSummary } from './Accordion/AccordionSummary';
 export { default as AccordionDetails } from './Accordion/AccordionDetails';
+export { default as Tab } from './Tab/Tab';
+export { default as Tabs } from './Tab/Tabs';
+export { default as SelectedTab } from './Tab/SelectedTab';

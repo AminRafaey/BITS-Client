@@ -5,8 +5,8 @@ import { Accordion as MuiAccordion } from '@material-ui/core';
 const StyledMuiAccordion = withStyles({
   root: {
     position: 'static',
-    background: 'inherit',
     boxShadow: 'none',
+    background: 'inherit',
     '&.Mui-expanded': {
       margin: 0,
     },

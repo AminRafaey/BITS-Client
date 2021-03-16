@@ -19,7 +19,7 @@ function SocketReducer(state, action) {
 function SocketProvider({ children, socket }) {
   const [state, dispatch] = React.useReducer(
     SocketReducer,
-    io.connect('https://bits-server.herokuapp.com')
+    io.connect('http://localhost:4000')
   );
   return (
     <SocketState.Provider value={state}>

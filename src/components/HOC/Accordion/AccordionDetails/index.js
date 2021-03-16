@@ -5,6 +5,7 @@ import { AccordionDetails as MuiAccordionDetails } from '@material-ui/core';
 const StyledMuiAccordionDetails = withStyles({
   root: {
     padding: 0,
+    display: 'block',
   },
 })(MuiAccordionDetails);
 

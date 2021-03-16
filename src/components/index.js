@@ -11,3 +11,5 @@ export { default as FileOption } from './QuickSend/FileOption';
 export { default as AddressBookTable } from './AddressBookTable';
 export { default as Inbox } from './Inbox';
 export { default as ConnectionModal } from './ConnectionModal';
+export { default as ManageContact } from './Contact/Manage';
+export { default as AddContacts } from './Contact/Add';

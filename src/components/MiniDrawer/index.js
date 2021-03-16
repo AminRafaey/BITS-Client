@@ -7,6 +7,7 @@ import {
   QuickSend,
   Inbox,
   ManageContact,
+  AddContacts,
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -83,9 +84,15 @@ export default function MiniDrawer() {
                 <Inbox setOpen={setOpen} />
               </InboxWrapper>
             </Route>
+
             <Route path="/manageContacts">
               <ContactWrapper>
                 <ManageContact />
+              </ContactWrapper>
+            </Route>
+            <Route path="/addContacts">
+              <ContactWrapper>
+                <AddContacts />
               </ContactWrapper>
             </Route>
             <Route path="/">

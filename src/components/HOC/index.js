@@ -8,3 +8,5 @@ export { default as AccordionDetails } from './Accordion/AccordionDetails';
 export { default as Tab } from './Tab/Tab';
 export { default as Tabs } from './Tab/Tabs';
 export { default as SelectedTab } from './Tab/SelectedTab';
+export { default as TextField } from './TextField';
+export { default as Chip } from './Chip';

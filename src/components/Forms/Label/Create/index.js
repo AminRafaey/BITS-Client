@@ -4,11 +4,7 @@ import { Button, TextField, Chip } from '../../../HOC';
 import { Box, styled, Grid, Typography, withStyles } from '@material-ui/core';
 import { DarkBackgroundColor, GrayColor } from '../../../constants/theme';
 import { colors } from '../../../constants/AvatarColor';
-const textFieldStyle = {
-  background: '#ffff',
-  borderRadius: 5,
-  width: '100%',
-};
+
 const CreateLabelInnerWrapper = styled(Box)({
   width: '100%',
   minHeight: 100,
@@ -36,11 +32,7 @@ const ColorBoxWrapper = styled(Box)({
     opacity: 1,
   },
 });
-const CircleWrapper = styled(Box)({
-  width: 5,
-  height: 5,
-  borderRadius: '50%',
-});
+
 const ButtonsWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
@@ -70,28 +62,19 @@ function CreateLabel(props) {
         <Grid item xs={12}>
           <FieldWrapper>
             <FieldLabelNameTyp>Preview</FieldLabelNameTyp>
-            <Chip
-              avatar={<CircleWrapper style={{ background: '#FF6377' }} />}
-              label="Important"
-            />
+            <Chip avatarBackground="#FF6377" label="Important" />
           </FieldWrapper>
         </Grid>
         <Grid item xs={3}>
           <FieldWrapper>
             <FieldLabelNameTyp>Label Name</FieldLabelNameTyp>
-            <TextField
-              placeholder="Name(Required)"
-              style={{ ...textFieldStyle }}
-            />
+            <TextField placeholder="Name(Required)" />
           </FieldWrapper>
         </Grid>
         <Grid item xs={6}>
           <FieldWrapper>
             <FieldLabelNameTyp>Description</FieldLabelNameTyp>
-            <TextField
-              placeholder="Description(Optional)"
-              style={{ ...textFieldStyle }}
-            />
+            <TextField placeholder="Description(Optional)" />
           </FieldWrapper>
         </Grid>
         <Grid item xs={2}>

@@ -1,6 +1,11 @@
 import React from 'react';
-import { withStyles, Chip as MuiChip } from '@material-ui/core';
+import { withStyles, Chip as MuiChip, Box, styled } from '@material-ui/core';
 
+const CircleWrapper = styled(Box)({
+  width: 5,
+  height: 5,
+  borderRadius: '50%',
+});
 const StyledChip = withStyles({
   label: {
     fontSize: 14,
@@ -8,8 +13,15 @@ const StyledChip = withStyles({
 })(MuiChip);
 
 const Chip = (props) => {
-  const { ...other } = props;
-  return <StyledChip size="small" variant="outlined" {...other} />;
+  const { avatarBackground, ...other } = props;
+  return (
+    <StyledChip
+      size="small"
+      variant="outlined"
+      avatar={<CircleWrapper style={{ background: avatarBackground }} />}
+      {...other}
+    />
+  );
 };
 
 export default Chip;

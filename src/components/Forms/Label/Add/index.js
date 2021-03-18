@@ -134,7 +134,7 @@ function AddLabel() {
             )}
           />
         </DialogContent>
-        <DialogActions pr={3}>
+        <DialogActions style={{paddingRight:24}}>
           <Button onClick={handleClose}>Close</Button>
           <Button onClick={handleClose}>Add</Button>
         </DialogActions>

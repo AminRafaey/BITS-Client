@@ -23,5 +23,7 @@ const Chip = (props) => {
     />
   );
 };
-
+Chip.defaultProps = {
+  avatarBackground: '#B60205',
+};
 export default Chip;

@@ -49,7 +49,7 @@ const styles = (theme) => ({
   },
 });
 
-const Transition = React.forwardRef(function Transition(props, ref) {
+export const Transition = React.forwardRef(function Transition(props, ref) {
   return <Zoom direction="up" ref={ref} {...props} />;
 });
 

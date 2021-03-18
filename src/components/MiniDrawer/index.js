@@ -11,7 +11,7 @@ import {
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
-import CreateLabel from '../Forms/Label/Create';
+import AddLabel from '../Forms/Label/Add';
 const AddressBookWrapper = styled(Box)({
   padding: '100px 50px 0px 50px',
   background: '#E9EEF5',
@@ -69,7 +69,7 @@ export default function MiniDrawer() {
           <Switch>
             <Route path="/">
               <QuickSendWrapper>
-                <CreateLabel />
+                <AddLabel />
               </QuickSendWrapper>
             </Route>
             <Route path="/sendSms">

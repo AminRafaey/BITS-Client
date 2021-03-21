@@ -13,3 +13,9 @@ export const initLeadData = {
   zip: '',
   country: null,
 };
+
+export const initLabel = {
+  name: '',
+  description: '',
+  color: '#ffff',
+};

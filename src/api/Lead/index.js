@@ -4,7 +4,6 @@ const endPointApi = `${config.baseUrl}lead/create`;
 
 export async function createLead(leadData) {
   try {
-    console.log('here');
     const res = await axios.post(endPointApi, leadData);
     return res.data;
   } catch (ex) {

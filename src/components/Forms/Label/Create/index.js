@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField, Chip } from '../../../HOC';
-import { Box, styled, Grid, Typography, withStyles } from '@material-ui/core';
+import { createLabel } from '../../../../api/Label';
+import {
+  Box,
+  styled,
+  Grid,
+  Typography,
+  withStyles,
+  CircularProgress,
+} from '@material-ui/core';
 import { DarkBackgroundColor, GrayColor } from '../../../constants/theme';
 import { colors } from '../../../constants/AvatarColor';
+import { initLabel } from '../../../constants/InitialValues';
 
 const CreateLabelInnerWrapper = styled(Box)({
   width: '100%',
@@ -55,37 +64,86 @@ const StyledButton = withStyles({
   },
 })(Button);
 
+const NameErrorTyp = styled(Typography)({
+  color: '#f44336',
+  margin: '4px 14px 0px',
+  fontSize: '0.75rem',
+});
+
 function CreateLabel(props) {
+  const [label, setLabel] = useState(initLabel);
+  const [nameError, setNameError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = () => {
+    if (!label.name) {
+      setNameError(true);
+      return;
+    }
+    setLoading(true);
+    console.log(label);
+    createLabel(label)
+      .then((res) => {
+        setLeadData(initLabel);
+        setLoading(false);
+      })
+      .catch((err) => setLoading(false));
+  };
   return (
     <CreateLabelInnerWrapper>
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <FieldWrapper>
             <FieldLabelNameTyp>Preview</FieldLabelNameTyp>
-            <Chip avatarBackground="#FF6377" label="Important" />
+            <Chip
+              avatarBackground={label.color}
+              label={label.name || 'Label Preview'}
+            />
           </FieldWrapper>
         </Grid>
         <Grid item xs={3}>
           <FieldWrapper>
             <FieldLabelNameTyp>Label Name</FieldLabelNameTyp>
-            <TextField placeholder="Name(Required)" />
+            <TextField
+              placeholder="Name(Required)"
+              error={nameError}
+              value={label.name}
+              onChange={(e) => {
+                nameError && e.target.value && setNameError(false);
+                setLabel({ ...label, name: e.target.value });
+              }}
+            />
+            <NameErrorTyp>
+              {nameError ? 'This field is required.' : ''}
+            </NameErrorTyp>
           </FieldWrapper>
         </Grid>
         <Grid item xs={6}>
           <FieldWrapper>
             <FieldLabelNameTyp>Description</FieldLabelNameTyp>
-            <TextField placeholder="Description(Optional)" />
+            <TextField
+              placeholder="Description(Optional)"
+              value={label.description}
+              onChange={(e) =>
+                setLabel({ ...label, description: e.target.value })
+              }
+            />
           </FieldWrapper>
         </Grid>
         <Grid item xs={2}>
           <Grid container>
             <Box mt={4} width="100%" />
             {colors.map((c, index) => (
-              <Grid item xs={3} key={c}>
+              <Grid
+                item
+                xs={3}
+                key={c}
+                onClick={(e) => setLabel({ ...label, color: c })}
+              >
                 <ColorBoxWrapper
                   style={{
                     background: c,
-                    ...(index === 1 && { borderRadius: '50%' }),
+                    ...(c === label.color && { borderRadius: '50%' }),
                   }}
                 ></ColorBoxWrapper>
               </Grid>
@@ -94,12 +152,20 @@ function CreateLabel(props) {
         </Grid>
         <Grid item xs={1} />
         <Grid item xs={12}>
-          <ButtonsWrapper>
+          <ButtonsWrapper style={{ ...(loading && { paddingRight: 79 }) }}>
             {' '}
-            <StyledButton color="default" mr={1}>
+            <StyledButton
+              color="default"
+              mr={1}
+              onClick={() => setLabel(initLabel)}
+            >
               Cancel
             </StyledButton>
-            <Button>Create Label</Button>{' '}
+            {loading ? (
+              <CircularProgress size={24} color="primary" />
+            ) : (
+              <Button onClick={handleSubmit}>Create Label</Button>
+            )}
           </ButtonsWrapper>
         </Grid>
       </Grid>

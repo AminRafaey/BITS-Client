@@ -9,7 +9,7 @@ import { ChatProvider } from './Context/Chat';
 import { SocketProvider } from './Context/Socket';
 import { chat } from './Static/Chat';
 import { addressBook } from './Static/AddressBook';
-
+import { LabelProvider } from './Context/Label';
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -18,7 +18,9 @@ function App() {
           <TemplateProvider template={[]}>
             <AddressBookProvider addressBook={addressBook}>
               <ChatProvider chat={chat}>
-                <MiniDrawer />
+                <LabelProvider>
+                  <MiniDrawer />
+                </LabelProvider>
               </ChatProvider>
             </AddressBookProvider>
           </TemplateProvider>

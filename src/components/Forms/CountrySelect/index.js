@@ -23,31 +23,15 @@ const StyledAutoComplete = withStyles({
   },
 })(Autocomplete);
 function CountrySelect() {
-  const [open, setOpen] = useState(false);
-
+  const [selectedCountry, setSelectedCountry] = useState(null);
   return (
     <StyledAutoComplete
       autoHighlight
       openOnFocus
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
       size="small"
+      closeIcon={false}
       options={countries}
-      filterOptions={(options, { inputValue, selected }) => {
-        if (inputValue != '') {
-          options = options.filter((option) =>
-            `${option.label}${option.phone}`
-              .toLowerCase()
-              .includes(inputValue.toLowerCase())
-          );
-          return options;
-        } else return options;
-      }}
+      onChange={(e, value) => setSelectedCountry(value)}
       getOptionLabel={(option) => option.label}
       renderOption={(option, { selected, inputValue }) => {
         const matches = match(`${option.label}`, inputValue);
@@ -86,5 +70,5 @@ function CountrySelect() {
     />
   );
 }
-
+CountrySelect.propTypes = {};
 export default CountrySelect;

@@ -11,6 +11,7 @@ import {
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
+import CreateContact from '../Forms/Contact/Create';
 const AddressBookWrapper = styled(Box)({
   padding: '100px 50px 0px 50px',
   background: '#E9EEF5',
@@ -66,6 +67,11 @@ export default function MiniDrawer() {
         <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
           <Switch>
+            <Route path="/">
+              <QuickSendWrapper>
+                <CreateContact />
+              </QuickSendWrapper>
+            </Route>
             <Route path="/sendSms">
               <QuickSendWrapper>
                 <QuickSend />

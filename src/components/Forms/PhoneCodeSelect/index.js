@@ -3,11 +3,21 @@ import ReactCountryFlag from 'react-country-flag';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { TextField } from '../../HOC';
-import { TextField as MUITextField, withStyles, Box } from '@material-ui/core';
+import {
+  TextField as MUITextField,
+  withStyles,
+  Box,
+  InputAdornment,
+  styled,
+  Typography,
+} from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { countries } from '../../constants/Countries';
 import { HoverColor, HeadingColor } from '../../constants/theme';
 
+const StyledPhoneCode = styled(Typography)({
+  fontSize: 13,
+});
 const StyledAutoComplete = withStyles({
   root: {
     '& .MuiFormControl-root': {
@@ -32,24 +42,43 @@ const StyledTextField = withStyles({
     },
   },
 })(TextField);
-export default function PhoneCodeSelect() {
-  const [open, setOpen] = useState(false);
 
+const StyledCountrySelectedTextField = withStyles({
+  root: {
+    '& .MuiInputBase-root': {
+      height: 38,
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
+      paddingRight: 0,
+    },
+    '& .MuiInputBase-root > .MuiInputBase-input': {
+      height: 0,
+      width: 0,
+    },
+  },
+})(MUITextField);
+
+function PhoneCodeSelect() {
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [mobileNumber, setMobileNumber] = useState(null);
+  const TagName = selectedCountry
+    ? StyledCountrySelectedTextField
+    : MUITextField;
   return (
     <Box display="flex">
       <StyledAutoComplete
         autoHighlight
         openOnFocus
         closeIcon={false}
-        open={open}
-        onOpen={() => {
-          setOpen(true);
-        }}
-        onClose={() => {
-          setOpen(false);
-        }}
         size="small"
+        multiple
         options={countries}
+        value={countries.filter(
+          (c) => selectedCountry && c.label == selectedCountry.label
+        )}
+        onChange={(e, allValues, type, value) =>
+          setSelectedCountry(value.option)
+        }
         filterOptions={(options, { inputValue, selected }) => {
           if (inputValue != '') {
             options = options.filter((option) =>
@@ -91,25 +120,38 @@ export default function PhoneCodeSelect() {
             </div>
           );
         }}
+        renderTags={() => (
+          <ReactCountryFlag
+            style={{ height: 25, width: 25 }}
+            countryCode={selectedCountry.code}
+            svg
+          />
+        )}
         renderInput={(params) => (
-          <MUITextField
+          <TagName
             {...params}
             variant="outlined"
             inputProps={{
               ...params.inputProps,
+              style: { ...(selectedCountry && { padding: 0 }) },
             }}
           />
         )}
       />
       <StyledTextField
-        style={{
-          background: '#ffff',
-          borderRadius: 5,
-          borderTopLeftRadius: 0,
-          borderBottomLeftRadius: 0,
-          width: '100%',
+        onBlur={(e) => setMobileNumber(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <StyledPhoneCode>
+                {selectedCountry ? '+' + selectedCountry.phone : ''}
+              </StyledPhoneCode>
+            </InputAdornment>
+          ),
         }}
       />
     </Box>
   );
 }
+PhoneCodeSelect.propTypes = {};
+export default PhoneCodeSelect;

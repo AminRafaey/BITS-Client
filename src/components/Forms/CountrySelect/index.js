@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactCountryFlag from 'react-country-flag';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -22,8 +23,8 @@ const StyledAutoComplete = withStyles({
     },
   },
 })(Autocomplete);
-function CountrySelect() {
-  const [selectedCountry, setSelectedCountry] = useState(null);
+function CountrySelect(props) {
+  const { personInfo, setPersonInfo } = props;
   return (
     <StyledAutoComplete
       autoHighlight
@@ -31,7 +32,7 @@ function CountrySelect() {
       size="small"
       closeIcon={false}
       options={countries}
-      onChange={(e, value) => setSelectedCountry(value)}
+      onChange={(e, value) => setPersonInfo({ ...personInfo, country: value })}
       getOptionLabel={(option) => option.label}
       renderOption={(option, { selected, inputValue }) => {
         const matches = match(`${option.label}`, inputValue);
@@ -70,5 +71,8 @@ function CountrySelect() {
     />
   );
 }
-CountrySelect.propTypes = {};
+CountrySelect.propTypes = {
+  personInfo: PropTypes.object.isRequired,
+  setPersonInfo: PropTypes.func.isRequired,
+};
 export default CountrySelect;

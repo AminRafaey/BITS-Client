@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import match from 'autosuggest-highlight/match';
@@ -48,6 +48,7 @@ const StyledAutoComplete = withStyles({
   },
 })(Autocomplete);
 function LabelMultiSelect(props) {
+  const { personInfo, setPersonInfo } = props;
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
@@ -75,9 +76,19 @@ function LabelMultiSelect(props) {
     options.length === 0 && setOptions(stateCloner(labelState));
   }, [labelState]);
 
+  useEffect(() => {
+    setPersonInfo({ ...personInfo, labels: options.filter((o) => o.selected) });
+  }, [options]);
+
   const noOptionItem = () => {
     return (
-      <Link to={'/addLabel'} style={{ textDecoration: 'none', width: '100%' }}>
+      <Link
+        to={'/addLabel'}
+        style={{ textDecoration: 'none', width: '100%' }}
+        onMouseDown={() =>
+          window.localStorage.setItem('leadData', JSON.stringify(personInfo))
+        }
+      >
         <NoOptionTyp>+ Add</NoOptionTyp>
       </Link>
     );
@@ -187,5 +198,8 @@ function LabelMultiSelect(props) {
     />
   );
 }
-LabelMultiSelect.propTypes = {};
+LabelMultiSelect.propTypes = {
+  personInfo: PropTypes.object.isRequired,
+  setPersonInfo: PropTypes.func.isRequired,
+};
 export default LabelMultiSelect;

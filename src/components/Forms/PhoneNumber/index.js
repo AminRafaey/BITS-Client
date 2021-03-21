@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import ReactCountryFlag from 'react-country-flag';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
@@ -58,9 +59,9 @@ const StyledCountrySelectedTextField = withStyles({
   },
 })(MUITextField);
 
-function PhoneCodeSelect() {
+function PhoneNumber(props) {
+  const { personInfo, setPersonInfo } = props;
   const [selectedCountry, setSelectedCountry] = useState(null);
-  const [mobileNumber, setMobileNumber] = useState(null);
   const TagName = selectedCountry
     ? StyledCountrySelectedTextField
     : MUITextField;
@@ -139,7 +140,8 @@ function PhoneCodeSelect() {
         )}
       />
       <StyledTextField
-        onBlur={(e) => setMobileNumber(e.target.value)}
+        type="tel"
+        onBlur={(e) => setPersonInfo({ ...personInfo, phone: e.target.value })}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
@@ -153,5 +155,8 @@ function PhoneCodeSelect() {
     </Box>
   );
 }
-PhoneCodeSelect.propTypes = {};
-export default PhoneCodeSelect;
+PhoneNumber.propTypes = {
+  personInfo: PropTypes.object.isRequired,
+  setPersonInfo: PropTypes.func.isRequired,
+};
+export default PhoneNumber;

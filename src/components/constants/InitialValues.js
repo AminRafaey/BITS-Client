@@ -1,7 +1,7 @@
 export const initLeadData = {
   firstName: '',
   lastName: '',
-  title: '',
+  leadSource: '',
   companyName: '',
   labels: [],
   email: '',

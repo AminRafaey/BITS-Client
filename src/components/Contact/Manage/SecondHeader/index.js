@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import AddLabel from '../../../Forms/Label/Add';
 import { Button, Checkbox } from '../../../HOC';
-import { styled, Box, Typography } from '@material-ui/core';
+import { styled, Box } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {
-  DelieverStatusColor,
-  DarkBackgroundColor,
-} from '../../../constants/theme';
+import { DarkBackgroundColor } from '../../../constants/theme';
 
 const SecondHeaderWrapper = styled(Box)({
   display: 'flex',
@@ -20,13 +18,38 @@ const ButtonsWrapper = styled(Box)({
 });
 
 function SecondHeader(props) {
+  const { handleSelectAllClick, selectedCount } = props;
+  const [openAddLabelModal, setOpenAddLabelModal] = useState(false);
+  const [openRemoveLabelModal, setOpenRemoveLabelModal] = useState(false);
   return (
     <SecondHeaderWrapper>
-      <Checkbox />
+      <Checkbox onChange={handleSelectAllClick} />
       <ButtonsWrapper>
-        <Button>Add Label</Button>
+        <Button
+          onClick={() => setOpenAddLabelModal(!openAddLabelModal)}
+          disabled={selectedCount === 0}
+        >
+          Add Label
+        </Button>
+        <AddLabel
+          openModal={openAddLabelModal}
+          setOpenModal={setOpenAddLabelModal}
+          type={'Add'}
+          selectedCount={selectedCount}
+        />
         <Box pl={1}>
-          <Button>Remove Label</Button>
+          <Button
+            onClick={() => setOpenRemoveLabelModal(!openRemoveLabelModal)}
+            disabled={selectedCount === 0}
+          >
+            Remove Label
+          </Button>
+          <AddLabel
+            openModal={openRemoveLabelModal}
+            setOpenModal={setOpenRemoveLabelModal}
+            type={'Remove'}
+            selectedCount={selectedCount}
+          />
         </Box>
         <Box pl={1}>
           <Button>Send Email</Button>
@@ -42,5 +65,8 @@ function SecondHeader(props) {
   );
 }
 
-SecondHeader.propTypes = {};
+SecondHeader.propTypes = {
+  handleSelectAllClick: PropTypes.func.isRequired,
+  selectedCount: PropTypes.number.isRequired,
+};
 export default SecondHeader;

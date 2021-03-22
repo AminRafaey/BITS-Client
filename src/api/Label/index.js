@@ -1,7 +1,7 @@
 import config from '../../config.json';
 import axios from 'axios';
 const endPointApi = `${config.baseUrl}label`;
-import { labels } from '../../Static/Label';
+import { labels } from '../../Static/LabelRevamp';
 export async function getLabels() {
   try {
     // const res = await axios.get(endPointApi);

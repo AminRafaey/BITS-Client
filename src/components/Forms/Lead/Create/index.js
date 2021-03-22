@@ -148,13 +148,13 @@ function CreateLead() {
                   />
                 </Grid>
                 {emptySpacingRow()}
-                {FieldNameRow('Title')}
+                {FieldNameRow('Lead Source')}
                 <Grid item xs={9}>
                   <TextField
-                    defaultValue={leadData.title}
-                    placeholder="Title"
+                    defaultValue={leadData.leadSource}
+                    placeholder="Facebook, WhatsApp"
                     onBlur={(e) =>
-                      setLeadData({ ...leadData, title: e.target.value })
+                      setLeadData({ ...leadData, leadSource: e.target.value })
                     }
                   />
                 </Grid>
@@ -174,6 +174,7 @@ function CreateLead() {
                 {FieldNameRow('Tags')}
                 <Grid item xs={9}>
                   <LabelMultiSelect
+                    type={'createLead'}
                     personInfo={leadData}
                     setPersonInfo={setLeadData}
                   />

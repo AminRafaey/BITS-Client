@@ -3,4 +3,5 @@ export const headCells = [
   { label: 'Mobile Number' },
   { label: 'Lead Source' },
   { label: 'Label' },
+  { label: '' },
 ];

@@ -9,7 +9,7 @@ import {
   useLabelState,
   useLabelDispatch,
   loadLabels,
-} from '../../../Context/Label';
+} from '../../../Context/LabelRevamp';
 import { getLabels } from '../../../api/Label';
 import stateCloner from '../../utility/StateCloner';
 import {
@@ -48,8 +48,7 @@ const StyledAutoComplete = withStyles({
   },
 })(Autocomplete);
 function LabelMultiSelect(props) {
-  const { personInfo, setPersonInfo } = props;
-  const [open, setOpen] = useState(false);
+  const { personInfo, setPersonInfo, type } = props;
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
 
@@ -60,20 +59,21 @@ function LabelMultiSelect(props) {
     if (!loading) {
       return undefined;
     }
-    if (labelState.length < 1) {
-      getLabels()
-        .then((res) => {
-          res.push({ title: 'Add', default: true });
-          return res;
-        })
-        .then((res) =>
-          setTimeout(() => loadLabels(labelDispatch, { labels: res }), 2000)
-        );
+    if (Object.entries(labelState).length < 1) {
+      getLabels().then((res) =>
+        setTimeout(() => loadLabels(labelDispatch, { labels: res }), 2000)
+      );
     }
   }, [loading]);
 
   useEffect(() => {
-    options.length === 0 && setOptions(stateCloner(labelState));
+    if (options.length === 0) {
+      let cloneLabelState = stateCloner(
+        Object.keys(labelState).map((l) => labelState[l])
+      );
+      cloneLabelState.push({ title: 'Add', default: true });
+      setOptions(cloneLabelState);
+    }
   }, [labelState]);
 
   useEffect(() => {
@@ -86,6 +86,8 @@ function LabelMultiSelect(props) {
         to={'/addLabel'}
         style={{ textDecoration: 'none', width: '100%' }}
         onMouseDown={() =>
+          type &&
+          type === 'createLead' &&
           window.localStorage.setItem('leadData', JSON.stringify(personInfo))
         }
       >
@@ -100,13 +102,6 @@ function LabelMultiSelect(props) {
       disableCloseOnSelect
       multiple
       closeIcon={false}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
       size="small"
       getOptionLabel={(option) => option.title}
       options={options}
@@ -124,7 +119,7 @@ function LabelMultiSelect(props) {
         }
         setOptions(
           options.map((o) =>
-            o.id == selectedOption.id ? { ...o, selected: selectedValue } : o
+            o._id == selectedOption._id ? { ...o, selected: selectedValue } : o
           )
         );
       }}
@@ -142,7 +137,9 @@ function LabelMultiSelect(props) {
               onChange={(e) =>
                 setOptions(
                   options.map((o) =>
-                    o.id == option.id ? { ...o, selected: e.target.checked } : o
+                    o._id == option._id
+                      ? { ...o, selected: e.target.checked }
+                      : o
                   )
                 )
               }
@@ -165,12 +162,12 @@ function LabelMultiSelect(props) {
       renderTags={(values) =>
         values.map((v) => (
           <Chip
-            key={v.id}
+            key={v._id}
             label={v.title}
             onDelete={(e) => {
               setOptions(
                 options.map((o) =>
-                  o.id === v.id ? { ...o, selected: false } : o
+                  o._id === v._id ? { ...o, selected: false } : o
                 )
               );
             }}
@@ -201,5 +198,6 @@ function LabelMultiSelect(props) {
 LabelMultiSelect.propTypes = {
   personInfo: PropTypes.object.isRequired,
   setPersonInfo: PropTypes.func.isRequired,
+  type: PropTypes.string,
 };
 export default LabelMultiSelect;

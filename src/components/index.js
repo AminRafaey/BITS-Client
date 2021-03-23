@@ -13,3 +13,4 @@ export { default as Inbox } from './Inbox';
 export { default as ConnectionModal } from './ConnectionModal';
 export { default as ManageContact } from './Contact/Manage';
 export { default as AddContacts } from './Contact/Add';
+export { default as CreateLabel } from './Forms/Label/Create';

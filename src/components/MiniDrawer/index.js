@@ -8,6 +8,7 @@ import {
   Inbox,
   ManageContact,
   AddContacts,
+  CreateLabel,
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -94,6 +95,11 @@ export default function MiniDrawer() {
               <ContactWrapper>
                 <AddContacts />
               </ContactWrapper>
+            </Route>
+            <Route path="/addLabel">
+              <QuickSendWrapper>
+                <CreateLabel />
+              </QuickSendWrapper>
             </Route>
             <Route path="/">
               <HomePageWrapper>

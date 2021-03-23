@@ -38,13 +38,13 @@ export const optionsList = [
   },
   ,
   {
-    title: 'Group Management',
+    title: 'Label Management',
     icon: <GroupIcon style={{ color: '#FFFF' }} />,
     menuArr: [
-      { title: 'Manage', link: 'manageGroups' },
-      { title: 'Add', link: 'addGroups' },
+      { title: 'Manage', link: 'managelabels' },
+      { title: 'Add', link: 'addlabel' },
     ],
-    defaultPath: 'manageGroups',
+    defaultPath: 'managelabels',
   },
 ];
 

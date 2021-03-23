@@ -64,9 +64,9 @@ export default function TemplateMultiSelect(props) {
       return undefined;
     }
     if (templateState.length < 1) {
-      getTemplates()
-        .then((res) => loadTemplates(templateDispatch, { templates: res }))
-        .catch((err) => alert(err));
+      getTemplates().then((res) =>
+        loadTemplates(templateDispatch, { templates: res })
+      );
     }
   }, [loading]);
 

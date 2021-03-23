@@ -90,7 +90,6 @@ function Row(props) {
           <AccordionDetails key={index}>
             <AutoCompleteWrapper>
               <StyledAutoComplete
-                id="free-solo-demo"
                 freeSolo
                 options={[]}
                 size="small"

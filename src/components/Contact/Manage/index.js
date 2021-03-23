@@ -9,11 +9,8 @@ function ManageContact(props) {
   return (
     <div>
       <FirstHeader />
-      <SecondHeader />
       <Grid container>
-        <Grid item xs={9}>
-          <ContactsTable />
-        </Grid>
+        <ContactsTable />
         <Grid item xs={3}>
           <Filters />
         </Grid>

@@ -4,8 +4,9 @@ const endPointApi = `${config.baseUrl}lead`;
 
 export async function createLead(leadData) {
   try {
-    const res = await axios.post(endPointApi + '/create', leadData);
-    return res.data;
+    // const res = await axios.post(endPointApi + '/create', leadData);
+    // return res.data;
+    return;
   } catch (ex) {
     if (!ex.response) {
       alert('Please check your internet connection');

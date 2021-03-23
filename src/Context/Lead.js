@@ -7,6 +7,7 @@ const LeadsDispatch = React.createContext(null);
 function LeadsReducer(state, action) {
   const { selected, _id, startingIndex, endingIndex } = action.payload;
   const { selectedLeads, labels } = action.payload;
+  const { leadData } = action.payload;
   let cloneState = stateCloner(state);
   switch (action.type) {
     case 'LOAD_LEADS':
@@ -39,6 +40,11 @@ function LeadsReducer(state, action) {
           );
         });
       });
+      return [...cloneState];
+    case 'ADD_LEAD':
+      return [{ ...leadData }, ...cloneState];
+    case 'REMOVE_LEADS':
+      cloneState = cloneState.filter((c) => !c.selected);
       return [...cloneState];
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -85,6 +91,8 @@ export {
   handleMultipleSelectedStatus,
   addLabels,
   removeLabels,
+  addLead,
+  removeLeads,
 };
 
 function loadLeads(dispatch, data) {
@@ -117,6 +125,19 @@ function addLabels(dispatch, data) {
 function removeLabels(dispatch, data) {
   dispatch({
     type: 'REMOVE_LABELS',
+    payload: data,
+  });
+}
+function addLead(dispatch, data) {
+  dispatch({
+    type: 'ADD_LEAD',
+    payload: data,
+  });
+}
+
+function removeLeads(dispatch, data) {
+  dispatch({
+    type: 'REMOVE_LEADS',
     payload: data,
   });
 }

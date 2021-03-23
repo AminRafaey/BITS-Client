@@ -70,7 +70,9 @@ function AddLabel(props) {
       onClose={handleClose}
       TransitionComponent={Transition}
     >
-      <DialogTitle>Add label to {selectedCount} selected contacts</DialogTitle>
+      <DialogTitle>
+        {type} label to {selectedCount} selected contacts
+      </DialogTitle>
       <DialogContent>
         <LabelMultiSelect personInfo={labels} setPersonInfo={setLabels} />
       </DialogContent>

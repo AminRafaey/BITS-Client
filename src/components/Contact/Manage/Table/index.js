@@ -9,7 +9,7 @@ import {
   handleSelectedStatus,
   handleMultipleSelectedStatus,
 } from '../../../../Context/Lead';
-import { useLabelState } from '../../../../Context/LabelRevamp';
+import { useLabelState } from '../../../../Context/Label';
 import {
   Table,
   TableBody,
@@ -207,7 +207,7 @@ export default function ContactsTable() {
                         </TableCell>
 
                         <TableCell align="left">
-                          <ItemTyp>{'+' + row.phone}</ItemTyp>
+                          <ItemTyp>{row.phone ? '+' + row.phone : ''}</ItemTyp>
                         </TableCell>
 
                         <TableCell align="left">

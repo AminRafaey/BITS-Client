@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AddLabel from '../../../Forms/Label/Add';
+import DeleteAlert from '../DeleteAlert';
 import { Button, Checkbox } from '../../../HOC';
 import { styled, Box } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -21,6 +22,7 @@ function SecondHeader(props) {
   const { handleSelectAllClick, selectedCount } = props;
   const [openAddLabelModal, setOpenAddLabelModal] = useState(false);
   const [openRemoveLabelModal, setOpenRemoveLabelModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   return (
     <SecondHeaderWrapper>
       <Checkbox onChange={handleSelectAllClick} />
@@ -58,7 +60,18 @@ function SecondHeader(props) {
           <Button>Send WhatsApp</Button>
         </Box>
         <Box pl={1}>
-          <Button startIcon={<DeleteIcon />}>Delete</Button>
+          <Button
+            startIcon={<DeleteIcon />}
+            disabled={selectedCount === 0}
+            onClick={() => setOpenDeleteModal(!openDeleteModal)}
+          >
+            Delete
+          </Button>
+          <DeleteAlert
+            open={openDeleteModal}
+            setOpen={setOpenDeleteModal}
+            selectedCount={selectedCount}
+          />
         </Box>
       </ButtonsWrapper>
     </SecondHeaderWrapper>

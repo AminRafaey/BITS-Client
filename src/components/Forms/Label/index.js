@@ -9,7 +9,7 @@ import {
   useLabelState,
   useLabelDispatch,
   loadLabels,
-} from '../../../Context/LabelRevamp';
+} from '../../../Context/Label';
 import { getLabels } from '../../../api/Label';
 import stateCloner from '../../utility/StateCloner';
 import {

@@ -9,11 +9,10 @@ import { ChatProvider } from './Context/Chat';
 import { SocketProvider } from './Context/Socket';
 import { chat } from './Static/Chat';
 import { addressBook } from './Static/AddressBook';
-import { LabelProvider } from './Context/Label';
 import { LeadsProvider } from './Context/Lead';
 import { leads } from './Static/Lead';
-import { LabelProvider as LabelProviderRevamp } from './Context/LabelRevamp';
-import { labels as labelsRevamp } from './Static/LabelRevamp';
+import { LabelProvider } from './Context/Label';
+import { labels } from './Static/Label';
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -23,10 +22,8 @@ function App() {
             <LeadsProvider leads={leads}>
               <AddressBookProvider addressBook={addressBook}>
                 <ChatProvider chat={chat}>
-                  <LabelProvider>
-                    <LabelProviderRevamp label={labelsRevamp}>
-                      <MiniDrawer />
-                    </LabelProviderRevamp>
+                  <LabelProvider label={labels}>
+                    <MiniDrawer />
                   </LabelProvider>
                 </ChatProvider>
               </AddressBookProvider>

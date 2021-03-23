@@ -7,7 +7,7 @@ const LabelDispatch = React.createContext(null);
 function LabelReducer(state, action) {
   switch (action.type) {
     case 'LOAD_LABELS':
-      return [...stateCloner(action.payload.labels)];
+      return { ...stateCloner(action.payload.labels) };
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -17,7 +17,7 @@ function LabelReducer(state, action) {
 function LabelProvider({ children, label }) {
   const [state, dispatch] = React.useReducer(
     LabelReducer,
-    label && label.length > 0 ? label : []
+    label && Object.entries(label).length > 0 ? label : {}
   );
   return (
     <LabelState.Provider value={state}>

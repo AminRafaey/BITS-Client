@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextField, Chip } from '../../../HOC';
 import { createLabel } from '../../../../api/Label';
+import { useLabelDispatch, addLabel } from '../../../../Context/Label';
 import {
   Box,
   styled,
@@ -71,12 +72,13 @@ const NameErrorTyp = styled(Typography)({
 });
 
 function CreateLabel(props) {
+  const labelDispatch = useLabelDispatch();
   const [label, setLabel] = useState(initLabel);
   const [nameError, setNameError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
-    if (!label.name) {
+    if (!label.title) {
       setNameError(true);
       return;
     }
@@ -84,7 +86,9 @@ function CreateLabel(props) {
     console.log(label);
     createLabel(label)
       .then((res) => {
-        setLeadData(initLabel);
+        const { _id, ...label } = res;
+        addLabel(labelDispatch, { _id, label });
+        setLabel(initLabel);
         setLoading(false);
       })
       .catch((err) => setLoading(false));
@@ -97,7 +101,7 @@ function CreateLabel(props) {
             <FieldLabelNameTyp>Preview</FieldLabelNameTyp>
             <Chip
               avatarBackground={label.color}
-              label={label.name || 'Label Preview'}
+              label={label.title || 'Label Preview'}
             />
           </FieldWrapper>
         </Grid>
@@ -107,10 +111,10 @@ function CreateLabel(props) {
             <TextField
               placeholder="Name(Required)"
               error={nameError}
-              value={label.name}
+              value={label.title}
               onChange={(e) => {
                 nameError && e.target.value && setNameError(false);
-                setLabel({ ...label, name: e.target.value });
+                setLabel({ ...label, title: e.target.value });
               }}
             />
             <NameErrorTyp>

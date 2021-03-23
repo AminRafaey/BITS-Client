@@ -42,7 +42,7 @@ export const optionsList = [
     icon: <GroupIcon style={{ color: '#FFFF' }} />,
     menuArr: [
       { title: 'Manage', link: 'managelabels' },
-      { title: 'Add', link: 'addlabels' },
+      { title: 'Add', link: 'addlabel' },
     ],
     defaultPath: 'managelabels',
   },

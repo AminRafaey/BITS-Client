@@ -70,7 +70,13 @@ function CreateLead(props) {
     setLoading(true);
     createLead(leadData)
       .then((res) => {
-        addLead(leadsDispatch, { leadData });
+        addLead(leadsDispatch, {
+          leadData: {
+            ...leadData,
+            _id: 50,
+            labels: [...leadData.labels.map((l) => l._id)],
+          },
+        });
         setLeadData(initLeadData);
         setLoading(false);
       })

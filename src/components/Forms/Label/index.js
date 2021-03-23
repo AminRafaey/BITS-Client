@@ -111,7 +111,6 @@ function LabelMultiSelect(props) {
         const selectedOption = value.option;
         let selectedValue = false;
         if (selectedOption.default) {
-          setOpen(false);
           return;
         }
         if (!selectedOption['selected']) {
@@ -164,6 +163,7 @@ function LabelMultiSelect(props) {
           <Chip
             key={v._id}
             label={v.title}
+            avatarBackground={v.color}
             onDelete={(e) => {
               setOptions(
                 options.map((o) =>

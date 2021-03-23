@@ -96,7 +96,7 @@ export default function MiniDrawer() {
                 <AddContacts />
               </ContactWrapper>
             </Route>
-            <Route path="/addLabels">
+            <Route path="/addLabel">
               <QuickSendWrapper>
                 <CreateLabel />
               </QuickSendWrapper>

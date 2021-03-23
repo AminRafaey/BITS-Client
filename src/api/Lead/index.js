@@ -6,7 +6,10 @@ export async function createLead(leadData) {
   try {
     // const res = await axios.post(endPointApi + '/create', leadData);
     // return res.data;
-    return;
+    return {
+      ...leadData,
+      _id: 50,
+    };
   } catch (ex) {
     if (!ex.response) {
       alert('Please check your internet connection');

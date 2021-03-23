@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactCountryFlag from 'react-country-flag';
+import phone from 'phone';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import { TextField } from '../../HOC';
@@ -141,7 +142,15 @@ function PhoneNumber(props) {
       />
       <StyledTextField
         type="tel"
-        onBlur={(e) => setPersonInfo({ ...personInfo, phone: e.target.value })}
+        disabled={selectedCountry ? false : true}
+        error={
+          personInfo.phone && selectedCountry
+            ? phone(`+${selectedCountry.phone}${personInfo.phone}`).length === 0
+              ? true
+              : false
+            : false
+        }
+        onKeyUp={(e) => setPersonInfo({ ...personInfo, phone: e.target.value })}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextField, Chip } from '../../../HOC';
+import { Button, TextField, Chip, SecondaryButton } from '../../../HOC';
 import { createLabel } from '../../../../api/Label';
 import { useLabelDispatch, addLabel } from '../../../../Context/Label';
 import {
@@ -8,7 +8,6 @@ import {
   styled,
   Grid,
   Typography,
-  withStyles,
   CircularProgress,
 } from '@material-ui/core';
 import { DarkBackgroundColor, GrayColor } from '../../../constants/theme';
@@ -50,21 +49,6 @@ const ButtonsWrapper = styled(Box)({
   paddingTop: 24,
 });
 
-const StyledButton = withStyles({
-  root: {
-    background: '#ffff',
-    marginRight: 16,
-  },
-  label: {
-    color: 'black',
-  },
-  contained: {
-    '&:hover': {
-      background: GrayColor,
-    },
-  },
-})(Button);
-
 const NameErrorTyp = styled(Typography)({
   color: '#f44336',
   margin: '4px 14px 0px',
@@ -83,7 +67,6 @@ function CreateLabel(props) {
       return;
     }
     setLoading(true);
-    console.log(label);
     createLabel(label)
       .then((res) => {
         const { _id, ...label } = res;
@@ -158,13 +141,9 @@ function CreateLabel(props) {
         <Grid item xs={12}>
           <ButtonsWrapper style={{ ...(loading && { paddingRight: 79 }) }}>
             {' '}
-            <StyledButton
-              color="default"
-              mr={1}
-              onClick={() => setLabel(initLabel)}
-            >
+            <SecondaryButton mr={1} onClick={() => setLabel(initLabel)}>
               Cancel
-            </StyledButton>
+            </SecondaryButton>
             {loading ? (
               <CircularProgress size={24} color="primary" />
             ) : (

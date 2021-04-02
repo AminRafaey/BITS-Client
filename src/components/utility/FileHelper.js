@@ -10,8 +10,6 @@ Note:
 for single file check files parameter should be [file];
 */
 
-import { optionsList } from '../constants/optionsList';
-
 export default function validateFile(files, options) {
   const errors = { limit: '', type: '', size: '' };
   maxSelectFile(files, options, errors);
@@ -58,6 +56,12 @@ const checkMimeType = (files, options, errors) => {
       'video/H264',
     ];
   else if (options.type === 'pdf') types = ['application/pdf'];
+  else if (options.type === 'csv')
+    types = [
+      '.csv',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'application/vnd.ms-excel',
+    ];
   else if (options.type === 'any') return true;
 
   for (let i = 0; i < files.length; i++) {
@@ -73,9 +77,14 @@ const checkFileSize = (files, options, errors) => {
 
   for (let i = 0; i < files.length; i++) {
     if (files[i].size / 1000 > options.size) {
-      options.size === 16999 && (options.size = 17);
+      if (options.size === 16999) {
+        options.size = 17;
+        errors.size =
+          'Files greater than ' + options.size + ' MB are not allowed';
+        break;
+      }
       errors.size =
-        'Files greater than ' + options.size + ' MB are not allowed';
+        'Files greater than ' + options.size / 1000 + ' MB are not allowed';
       break;
     }
   }

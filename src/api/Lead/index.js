@@ -52,3 +52,18 @@ export async function removeLabelsFromLeads(userIdsWithLabels) {
     }
   }
 }
+
+export async function sendCSV(file) {
+  try {
+    const res = await axios.post(`${endPointApi}/csv`, file);
+    return res.data;
+  } catch (ex) {
+    if (!ex.response) {
+      alert('Please check your internet connection');
+      return;
+    } else {
+      alert('Server Error!');
+      return;
+    }
+  }
+}

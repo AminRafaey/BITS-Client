@@ -1,6 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Row from './Row';
+import {
+  Label,
+  Company,
+  LeadSource,
+  Country,
+  City,
+  State,
+  FirstName,
+  LastName,
+  Email,
+  Phone,
+} from './Filter';
 import { styled, Box, Typography } from '@material-ui/core';
 import { LinkColor } from '../../../constants/theme';
 
@@ -28,10 +39,16 @@ function Filters(props) {
         <FiltersTyp>Filters</FiltersTyp>
         <ClearTyp>Clear</ClearTyp>
       </HeaderWrapper>
-      <Row />
-      <Row />
-      <Row />
-      <Row />
+      <Label />
+      <Company />
+      <LeadSource />
+      <Country />
+      <City />
+      <State />
+      <FirstName />
+      <LastName />
+      <Email />
+      <Phone />
     </FiltersWrapper>
   );
 }

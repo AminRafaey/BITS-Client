@@ -35,6 +35,7 @@ const ClearTyp = styled(Typography)({
 function Filters(props) {
   const [filters, setFilters] = useState({
     labels: [],
+    companies: [],
     countries: [],
   });
   console.log(filters);
@@ -46,8 +47,9 @@ function Filters(props) {
         <ClearTyp>Clear</ClearTyp>
       </HeaderWrapper>
       <Label {...commonProps} />
+
+      <Company {...commonProps} />
       {
-        //   <Company />
         // <LeadSource />
       }
       <Country {...commonProps} />

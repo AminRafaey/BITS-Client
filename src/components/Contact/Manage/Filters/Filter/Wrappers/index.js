@@ -31,10 +31,10 @@ export const AddTyp = styled(Typography)({
   background: HeadingColor,
   width: '100%',
   color: DelieverStatusColor,
+  width: 'fit-content',
+  paddingRight: '10%',
   '&:hover': {
     background: IconHoverColor,
-    width: 'fit-content',
-    paddingRight: '10%',
     cursor: 'pointer',
   },
 });

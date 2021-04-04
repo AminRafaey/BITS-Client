@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ConditionalSelect from '../../ConditionalSelect';
-import FreeSolo from '../../FreeSolo';
+import Collection from './Collection';
 import {
   Accordion,
   AccordionDetails,
@@ -19,11 +18,16 @@ import {
   OptionTyp,
   ArrowIconParentWrapper,
   DeleteIconWrapper,
-  FieldWrapper,
+  DeleteIconInnerWrapper,
+  AddWrapper,
 } from '../Wrappers';
 
 function Company(props) {
+  const { filters, setFilters } = props;
   const [expanded, setExpanded] = React.useState(false);
+  const [count, setCount] = useState(1);
+  const commonProps = { filters: filters, setFilters: setFilters };
+
   return (
     <Box mt={1.5}>
       <Accordion>
@@ -40,30 +44,70 @@ function Company(props) {
           </SummaryWrapper>
         </AccordionSummary>
 
-        {[1, 2].map((m, index) => (
+        {filters.companies.map((company, index) => (
           <AccordionDetails key={index}>
-            <FieldWrapper>
-              <ConditionalSelect />
-            </FieldWrapper>
-            <FieldWrapper>
-              <FreeSolo />
-            </FieldWrapper>
-            {index !== 0 && (
-              <DeleteIconWrapper>
+            <Collection
+              {...commonProps}
+              selected={
+                typeof company.company === 'object'
+                  ? company.company['$ne']
+                  : company.company
+              }
+              index={index}
+              selectedCondition={typeof company.company === 'object' ? 2 : 1}
+            />
+
+            <DeleteIconWrapper>
+              <DeleteIconInnerWrapper
+                onClick={() => {
+                  setFilters({
+                    ...filters,
+                    companies: filters.companies.filter((l, i) => i !== index),
+                  });
+                  count !== 1 && setCount(1);
+                }}
+              >
                 <DeleteIcon
                   style={{ color: DelieverStatusColor, height: 16 }}
                 />
+              </DeleteIconInnerWrapper>
+            </DeleteIconWrapper>
+          </AccordionDetails>
+        ))}
+        {count > filters.companies.length && (
+          <AccordionDetails>
+            <Collection {...commonProps} />
+
+            {count !== 1 && (
+              <DeleteIconWrapper>
+                <DeleteIconInnerWrapper onClick={() => setCount(1)}>
+                  <DeleteIcon
+                    style={{ color: DelieverStatusColor, height: 16 }}
+                  />
+                </DeleteIconInnerWrapper>
               </DeleteIconWrapper>
             )}
           </AccordionDetails>
-        ))}
+        )}
         <AccordionDetails>
-          <AddTyp>+Add</AddTyp>
+          <AddWrapper>
+            <AddTyp
+              onClick={() =>
+                count <= filters.companies.length &&
+                setCount(filters.companies.length + 1)
+              }
+            >
+              +Add
+            </AddTyp>
+          </AddWrapper>
         </AccordionDetails>
       </Accordion>
     </Box>
   );
 }
 
-Company.propTypes = {};
+Company.propTypes = {
+  filters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired,
+};
 export default Company;

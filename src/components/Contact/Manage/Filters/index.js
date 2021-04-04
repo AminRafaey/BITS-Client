@@ -35,6 +35,7 @@ const ClearTyp = styled(Typography)({
 function Filters(props) {
   const [filters, setFilters] = useState({
     labels: [],
+    country: [],
   });
   const commonProps = { filters: filters, setFilters: setFilters };
   return (
@@ -47,7 +48,9 @@ function Filters(props) {
       {
         //   <Company />
         // <LeadSource />
-        // <Country />
+      }
+      <Country {...commonProps} />
+      {
         // <City />
         // <State />
         // <FirstName />

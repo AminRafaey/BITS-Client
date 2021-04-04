@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ConditionalSelect from '../../ConditionalSelect';
-import LabelSelect from '../Label/LabelSelect';
+import Collection from './Collection';
 import {
   Accordion,
   AccordionDetails,
@@ -19,11 +18,16 @@ import {
   OptionTyp,
   ArrowIconParentWrapper,
   DeleteIconWrapper,
-  FieldWrapper,
+  DeleteIconInnerWrapper,
+  AddWrapper,
 } from '../Wrappers';
 
 function Country(props) {
+  const { filters, setFilters } = props;
   const [expanded, setExpanded] = React.useState(false);
+  const [count, setCount] = useState(1);
+  const commonProps = { filters: filters, setFilters: setFilters };
+
   return (
     <Box mt={1.5}>
       <Accordion>
@@ -40,30 +44,69 @@ function Country(props) {
           </SummaryWrapper>
         </AccordionSummary>
 
-        {[1, 2].map((m, index) => (
+        {filters.country.map((country, index) => (
           <AccordionDetails key={index}>
-            <FieldWrapper>
-              <ConditionalSelect />
-            </FieldWrapper>
-            <FieldWrapper>
-              <LabelSelect />
-            </FieldWrapper>
-            {index !== 0 && (
-              <DeleteIconWrapper>
+            <Collection
+              {...commonProps}
+              selected={
+                typeof country.country === 'object'
+                  ? country.country['$ne']
+                  : country.country
+              }
+              index={index}
+            />
+
+            <DeleteIconWrapper>
+              <DeleteIconInnerWrapper
+                onClick={() => {
+                  setFilters({
+                    ...filters,
+                    country: filters.country.filter((l, i) => i !== index),
+                  });
+                  count !== 1 && setCount(1);
+                }}
+              >
                 <DeleteIcon
                   style={{ color: DelieverStatusColor, height: 16 }}
                 />
+              </DeleteIconInnerWrapper>
+            </DeleteIconWrapper>
+          </AccordionDetails>
+        ))}
+        {count > filters.country.length && (
+          <AccordionDetails>
+            <Collection {...commonProps} />
+
+            {count !== 1 && (
+              <DeleteIconWrapper>
+                <DeleteIconInnerWrapper onClick={() => setCount(1)}>
+                  <DeleteIcon
+                    style={{ color: DelieverStatusColor, height: 16 }}
+                  />
+                </DeleteIconInnerWrapper>
               </DeleteIconWrapper>
             )}
           </AccordionDetails>
-        ))}
+        )}
         <AccordionDetails>
-          <AddTyp>+Add</AddTyp>
+          <AddWrapper>
+            <AddTyp
+              onClick={() =>
+                count <= filters.country.length &&
+                setCount(filters.country.length + 1)
+              }
+            >
+              +Add
+            </AddTyp>
+          </AddWrapper>
         </AccordionDetails>
       </Accordion>
     </Box>
   );
 }
 
-Country.propTypes = {};
+Country.propTypes = {
+  filters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired,
+};
 export default Country;

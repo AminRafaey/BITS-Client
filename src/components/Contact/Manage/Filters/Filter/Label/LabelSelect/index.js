@@ -9,7 +9,6 @@ import {
   loadLabels,
 } from '../../../../../../../Context/Label';
 import { getLabels } from '../../../../../../../api/Label';
-import stateCloner from '../../../../../../utility/StateCloner';
 import {
   Box,
   styled,
@@ -63,10 +62,7 @@ function LabelSelect(props) {
 
   useEffect(() => {
     if (options.length === 0) {
-      let cloneLabelState = stateCloner(
-        Object.keys(labelState).map((l) => labelState[l])
-      );
-      setOptions(cloneLabelState);
+      setOptions(Object.keys(labelState).map((l) => labelState[l]));
     }
   }, [labelState]);
 

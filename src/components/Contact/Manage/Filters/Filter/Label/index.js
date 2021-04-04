@@ -27,7 +27,7 @@ function Label(props) {
   const [expanded, setExpanded] = React.useState(false);
   const [count, setCount] = useState(1);
   const commonProps = { filters: filters, setFilters: setFilters };
-  console.log(filters);
+
   return (
     <Box mt={1.5}>
       <Accordion>
@@ -54,6 +54,7 @@ function Label(props) {
                   : label.labels
               }
               index={index}
+              selectedCondition={typeof label.labels === 'object' ? 2 : 1}
             />
 
             <DeleteIconWrapper>

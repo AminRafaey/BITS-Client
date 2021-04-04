@@ -37,6 +37,7 @@ function Filters(props) {
     labels: [],
     country: [],
   });
+  console.log(filters);
   const commonProps = { filters: filters, setFilters: setFilters };
   return (
     <FiltersWrapper>

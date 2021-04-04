@@ -54,6 +54,7 @@ function Country(props) {
                   : country.country
               }
               index={index}
+              selectedCondition={typeof country.country === 'object' ? 2 : 1}
             />
 
             <DeleteIconWrapper>

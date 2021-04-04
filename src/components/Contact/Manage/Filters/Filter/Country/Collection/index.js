@@ -7,7 +7,9 @@ import { FieldWrapper } from '../../Wrappers';
 
 function Collection(props) {
   const { filters, setFilters, selected, index } = props;
-  const [selectedCondition, setSelectedCondition] = useState(1);
+  const [selectedCondition, setSelectedCondition] = useState(
+    props.selectedCondition ? props.selectedCondition : 1
+  );
   const commonProps = {
     filters: filters,
     setFilters: setFilters,

@@ -35,7 +35,7 @@ const ClearTyp = styled(Typography)({
 function Filters(props) {
   const [filters, setFilters] = useState({
     labels: [],
-    country: [],
+    countries: [],
   });
   console.log(filters);
   const commonProps = { filters: filters, setFilters: setFilters };

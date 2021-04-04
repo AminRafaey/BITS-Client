@@ -20,7 +20,7 @@ function Collection(props) {
     if (selected) {
       setFilters({
         ...filters,
-        country: filters.country.map((country, i) =>
+        countries: filters.countries.map((country, i) =>
           index === i
             ? selectedCondition === 1
               ? { country: selected }

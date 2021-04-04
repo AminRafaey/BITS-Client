@@ -44,7 +44,7 @@ function Country(props) {
           </SummaryWrapper>
         </AccordionSummary>
 
-        {filters.country.map((country, index) => (
+        {filters.countries.map((country, index) => (
           <AccordionDetails key={index}>
             <Collection
               {...commonProps}
@@ -62,7 +62,7 @@ function Country(props) {
                 onClick={() => {
                   setFilters({
                     ...filters,
-                    country: filters.country.filter((l, i) => i !== index),
+                    countries: filters.countries.filter((l, i) => i !== index),
                   });
                   count !== 1 && setCount(1);
                 }}
@@ -74,7 +74,7 @@ function Country(props) {
             </DeleteIconWrapper>
           </AccordionDetails>
         ))}
-        {count > filters.country.length && (
+        {count > filters.countries.length && (
           <AccordionDetails>
             <Collection {...commonProps} />
 
@@ -93,8 +93,8 @@ function Country(props) {
           <AddWrapper>
             <AddTyp
               onClick={() =>
-                count <= filters.country.length &&
-                setCount(filters.country.length + 1)
+                count <= filters.countries.length &&
+                setCount(filters.countries.length + 1)
               }
             >
               +Add

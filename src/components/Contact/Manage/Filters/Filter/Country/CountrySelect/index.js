@@ -54,7 +54,7 @@ function CountrySelect(props) {
       onChange={(e, value) => {
         const selectedOption = value;
         const country = selected
-          ? filters.country.map((country, i) =>
+          ? filters.countries.map((country, i) =>
               index === i
                 ? selectedCondition === 1
                   ? { country: selectedOption.label }
@@ -64,14 +64,14 @@ function CountrySelect(props) {
                 : country
             )
           : [
-              ...filters.country,
+              ...filters.countries,
               selectedCondition === 1
                 ? { country: selectedOption.label }
                 : selectedCondition === 2 && {
                     country: { $ne: selectedOption.label },
                   },
             ];
-        setFilters({ ...filters, country: country });
+        setFilters({ ...filters, countries: country });
       }}
       renderOption={(option, { selected, inputValue }) => {
         const matches = match(option.label, inputValue);

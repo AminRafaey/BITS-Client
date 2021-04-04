@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles, FormControl } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -19,21 +20,28 @@ const StyledFormControl = withStyles({
     },
   },
 })(FormControl);
-function ConditionalSelect() {
-  const [option, setOption] = React.useState(1);
+function ConditionalSelect(props) {
+  const { selectedCondition, setSelectedCondition } = props;
 
   const handleChange = (event) => {
-    setOption(event.target.value);
+    setSelectedCondition(event.target.value);
   };
 
   return (
     <StyledFormControl>
-      <Select value={option} onChange={handleChange} variant="outlined">
+      <Select
+        value={selectedCondition}
+        onChange={handleChange}
+        variant="outlined"
+      >
         <MenuItem value={1}>is</MenuItem>
         <MenuItem value={2}>isn't</MenuItem>
       </Select>
     </StyledFormControl>
   );
 }
-ConditionalSelect.propTypes = {};
+ConditionalSelect.propTypes = {
+  selectedCondition: PropTypes.number.isRequired,
+  setSelectedCondition: PropTypes.func.isRequired,
+};
 export default ConditionalSelect;

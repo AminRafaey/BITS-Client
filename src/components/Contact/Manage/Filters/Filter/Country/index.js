@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ConditionalSelect from '../../ConditionalSelect';
-import OptionSelect from '../../OptionSelect';
+import LabelSelect from '../Label/LabelSelect';
 import {
   Accordion,
   AccordionDetails,
@@ -46,7 +46,7 @@ function Country(props) {
               <ConditionalSelect />
             </FieldWrapper>
             <FieldWrapper>
-              <OptionSelect />
+              <LabelSelect />
             </FieldWrapper>
             {index !== 0 && (
               <DeleteIconWrapper>

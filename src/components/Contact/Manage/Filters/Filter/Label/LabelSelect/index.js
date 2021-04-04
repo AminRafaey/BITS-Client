@@ -7,9 +7,9 @@ import {
   useLabelState,
   useLabelDispatch,
   loadLabels,
-} from '../../../../../Context/Label';
-import { getLabels } from '../../../../../api/Label';
-import stateCloner from '../../../../utility/StateCloner';
+} from '../../../../../../../Context/Label';
+import { getLabels } from '../../../../../../../api/Label';
+import stateCloner from '../../../../../../utility/StateCloner';
 import {
   Box,
   styled,
@@ -19,7 +19,7 @@ import {
 } from '@material-ui/core';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { HoverColor, HeadingColor } from '../../../../constants/theme';
+import { HoverColor, HeadingColor } from '../../../../../../constants/theme';
 
 const OptionWrapper = styled(Box)({
   display: 'flex',
@@ -41,10 +41,12 @@ const StyledAutoComplete = withStyles({
     },
   },
 })(Autocomplete);
-function OptionSelect(props) {
+function LabelSelect(props) {
+  const { filters, setFilters, selected, selectedCondition, index } = props;
   const [options, setOptions] = useState([]);
+  const [value, setValue] = useState(null);
+  const [inputValue, setInputValue] = useState('');
   const loading = true && options.length === 0;
-
   const labelState = useLabelState();
   const labelDispatch = useLabelDispatch();
 
@@ -68,6 +70,12 @@ function OptionSelect(props) {
     }
   }, [labelState]);
 
+  useEffect(() => {
+    if (Object.entries(labelState).length > 0 && selected) {
+      setValue(labelState[selected]);
+    }
+  }, [selected]);
+
   return (
     <StyledAutoComplete
       autoHighlight
@@ -77,22 +85,28 @@ function OptionSelect(props) {
       options={options}
       getOptionLabel={(option) => option.title}
       loading={loading}
-      onChange={(e, allValues, type, value) => {
-        const selectedOption = value.option;
-        let selectedValue = false;
-        if (selectedOption.default) {
-          return;
-        }
-        if (!selectedOption['selected']) {
-          selectedValue = true;
-        }
-        setOptions(
-          options.map((o) =>
-            o._id == selectedOption._id
-              ? { ...o, selected: selectedValue }
-              : { ...o, selected: false }
-          )
-        );
+      value={value}
+      onChange={(e, value) => {
+        const selectedOption = value;
+        const labels = selected
+          ? filters.labels.map((label, i) =>
+              index === i
+                ? selectedCondition === 1
+                  ? { labels: selectedOption._id }
+                  : selectedCondition === 2 && {
+                      labels: { $ne: selectedOption._id },
+                    }
+                : label
+            )
+          : [
+              ...filters.labels,
+              selectedCondition === 1
+                ? { labels: selectedOption._id }
+                : selectedCondition === 2 && {
+                    labels: { $ne: selectedOption._id },
+                  },
+            ];
+        setFilters({ ...filters, labels: labels });
       }}
       renderOption={(option, { selected, inputValue }) => {
         const matches = match(option.title, inputValue);
@@ -112,6 +126,10 @@ function OptionSelect(props) {
             })}
           </OptionWrapper>
         );
+      }}
+      inputValue={inputValue}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
       }}
       renderInput={(params) => (
         <TextField
@@ -134,5 +152,11 @@ function OptionSelect(props) {
     />
   );
 }
-OptionSelect.propTypes = {};
-export default OptionSelect;
+LabelSelect.propTypes = {
+  selectedCondition: PropTypes.number.isRequired,
+  filters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired,
+  selected: PropTypes.string,
+  index: PropTypes.number,
+};
+export default LabelSelect;

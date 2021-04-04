@@ -4,6 +4,7 @@ import { styled, Box, Typography } from '@material-ui/core';
 import {
   HeadingColor,
   DelieverStatusColor,
+  IconHoverColor,
 } from '../../../../../constants/theme';
 
 export const iconsStyle = {
@@ -19,12 +20,23 @@ export const SummaryWrapper = styled(Box)({
   paddingLeft: 8,
 });
 
+export const AddWrapper = styled(Box)({
+  paddingTop: 16,
+  background: HeadingColor,
+});
+
 export const AddTyp = styled(Typography)({
   fontSize: 14,
   paddingLeft: '5%',
   background: HeadingColor,
   width: '100%',
   color: DelieverStatusColor,
+  '&:hover': {
+    background: IconHoverColor,
+    width: 'fit-content',
+    paddingRight: '10%',
+    cursor: 'pointer',
+  },
 });
 export const OptionTyp = styled(Typography)({
   fontSize: 14,
@@ -42,7 +54,14 @@ export const DeleteIconWrapper = styled(Box)({
   justifyContent: 'flex-end',
   paddingTop: 16,
 });
-
+export const DeleteIconInnerWrapper = styled(Box)({
+  padding: '5px 2px 1px 2px',
+  '&:hover': {
+    background: IconHoverColor,
+    borderRadius: '50%',
+    cursor: 'pointer',
+  },
+});
 export const FieldWrapper = styled(Box)({
   width: '100%',
   padding: '16px 16px 0px',

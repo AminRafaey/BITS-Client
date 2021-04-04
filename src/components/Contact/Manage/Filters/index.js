@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Label,
@@ -33,22 +33,28 @@ const ClearTyp = styled(Typography)({
 });
 
 function Filters(props) {
+  const [filters, setFilters] = useState({
+    labels: [],
+  });
+  const commonProps = { filters: filters, setFilters: setFilters };
   return (
     <FiltersWrapper>
       <HeaderWrapper>
         <FiltersTyp>Filters</FiltersTyp>
         <ClearTyp>Clear</ClearTyp>
       </HeaderWrapper>
-      <Label />
-      <Company />
-      <LeadSource />
-      <Country />
-      <City />
-      <State />
-      <FirstName />
-      <LastName />
-      <Email />
-      <Phone />
+      <Label {...commonProps} />
+      {
+        //   <Company />
+        // <LeadSource />
+        // <Country />
+        // <City />
+        // <State />
+        // <FirstName />
+        // <LastName />
+        // <Email />
+        // <Phone />
+      }
     </FiltersWrapper>
   );
 }

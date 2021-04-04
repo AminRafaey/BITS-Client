@@ -16,3 +16,4 @@ export const NotConnected = '#d32f2f';
 export const Connected = '#06D755';
 export const ErrorAlert =
   'linear-gradient(to right top, #ffcccc, #ffc6c6, #ffc0c0, #ffb9b9, #ffb3b3)';
+export const IconHoverColor = '#e0e0e0';

@@ -55,6 +55,11 @@ function Filters(props) {
     countries: [],
     leadSources: [],
     cities: [],
+    states: [],
+    firstNames: [],
+    lastNames: [],
+    emails: [],
+    phones: [],
   });
   const [companyLoader, setCompanyLoader] = useState(false);
   const [leadSourceLoader, setLeadSourceLoader] = useState(false);
@@ -63,7 +68,6 @@ function Filters(props) {
   const leadSourceState = useLeadSourceState();
   const leadSourceDispatch = useLeadSourceDispatch();
 
-  console.log(filters);
   useEffect(() => {
     if (companyState.length < 1) {
       setCompanyLoader(true);
@@ -104,15 +108,13 @@ function Filters(props) {
 
           <Country {...commonProps} />
           <City {...commonProps} />
+          <State {...commonProps} />
+          <FirstName {...commonProps} />
+          <LastName {...commonProps} />
+          <Email {...commonProps} />
+          <Phone {...commonProps} />
         </React.Fragment>
       )}
-      {
-        // <State />
-        // <FirstName />
-        // <LastName />
-        // <Email />
-        // <Phone />
-      }
     </FiltersWrapper>
   );
 }

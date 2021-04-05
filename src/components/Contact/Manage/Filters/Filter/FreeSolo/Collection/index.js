@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ConditionalSelect from '../../../ConditionalSelect';
-import FreeSolo from '../../../FreeSolo';
+import Select from '../Select';
 
 import { FieldWrapper } from '../../Wrappers';
 
 function Collection(props) {
-  const { filters, setFilters, selected, index } = props;
+  const {
+    filters,
+    setFilters,
+    selected,
+    index,
+    parentKey,
+    childKey,
+    freeSoloOptions,
+  } = props;
   const [selectedCondition, setSelectedCondition] = useState(
     props.selectedCondition ? props.selectedCondition : 1
   );
@@ -14,23 +22,24 @@ function Collection(props) {
     filters: filters,
     setFilters: setFilters,
     selected: selected,
-    parentKey: 'companies',
-    childKey: 'company',
+    parentKey: parentKey,
+    childKey: childKey,
     index: index,
+    freeSoloOptions: freeSoloOptions,
   };
 
   useEffect(() => {
     if (selected) {
       setFilters({
         ...filters,
-        companies: filters.companies.map((company, i) =>
+        [parentKey]: filters[parentKey].map((value, i) =>
           index === i
             ? selectedCondition === 1
-              ? { company: selected }
+              ? { [childKey]: selected }
               : selectedCondition === 2 && {
-                  company: { $ne: selected },
+                  [childKey]: { $ne: selected },
                 }
-            : company
+            : value
         ),
       });
     }
@@ -44,7 +53,7 @@ function Collection(props) {
         />
       </FieldWrapper>
       <FieldWrapper>
-        <FreeSolo {...commonProps} selectedCondition={selectedCondition} />
+        <Select {...commonProps} selectedCondition={selectedCondition} />
       </FieldWrapper>
     </React.Fragment>
   );
@@ -55,5 +64,8 @@ Collection.propTypes = {
   setFilters: PropTypes.func.isRequired,
   selected: PropTypes.string,
   index: PropTypes.number,
+  parentKey: PropTypes.string.isRequired,
+  childKey: PropTypes.string.isRequired,
+  freeSoloOptions: PropTypes.array.isRequired,
 };
 export default Collection;

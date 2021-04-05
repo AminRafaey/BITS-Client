@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, withStyles } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { HeadingColor } from '../../../../constants/theme';
+import { HeadingColor } from '../../../../../../constants/theme';
 const StyledAutoComplete = withStyles({
   root: {
     width: '100%',
@@ -22,7 +22,7 @@ const StyledAutoComplete = withStyles({
     },
   },
 })(Autocomplete);
-function FreeSolo(props) {
+function Select(props) {
   const {
     filters,
     setFilters,
@@ -31,6 +31,7 @@ function FreeSolo(props) {
     index,
     parentKey,
     childKey,
+    freeSoloOptions,
   } = props;
   const [inputValue, setInputValue] = useState(selected ? selected : '');
 
@@ -62,7 +63,7 @@ function FreeSolo(props) {
       openOnFocus
       closeIcon={false}
       size="small"
-      options={top100Films.map((option) => option)}
+      options={freeSoloOptions.map((option) => option)}
       onChange={(e, value) => setInputValue(value)}
       inputValue={inputValue}
       onInputChange={(event, newInputValue, reason) => {
@@ -79,7 +80,7 @@ function FreeSolo(props) {
     />
   );
 }
-FreeSolo.propTypes = {
+Select.propTypes = {
   selectedCondition: PropTypes.number.isRequired,
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
@@ -87,15 +88,6 @@ FreeSolo.propTypes = {
   index: PropTypes.number,
   parentKey: PropTypes.string.isRequired,
   childKey: PropTypes.string.isRequired,
+  freeSoloOptions: PropTypes.array.isRequired,
 };
-export default FreeSolo;
-
-const top100Films = [
-  'The Shawshank Redemption',
-  'The Godfather',
-  'The Godfather: Part II',
-  'The Dark Knight',
-  '12 Angry Men',
-  "Schindler's List",
-  'Pulp Fiction',
-];
+export default Select;

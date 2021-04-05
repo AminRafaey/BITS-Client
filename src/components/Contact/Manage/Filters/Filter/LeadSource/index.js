@@ -1,69 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ConditionalSelect from '../../ConditionalSelect';
-import FreeSolo from '../../FreeSolo';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-} from '../../../../../HOC';
-import { Box } from '@material-ui/core';
-import RemoveIcon from '@material-ui/icons/Remove';
-import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { DelieverStatusColor } from '../../../../../constants/theme';
-import {
-  iconsStyle,
-  SummaryWrapper,
-  AddTyp,
-  OptionTyp,
-  ArrowIconParentWrapper,
-  DeleteIconWrapper,
-  FieldWrapper,
-} from '../Wrappers';
+import FreeSolo from '../FreeSolo';
+import { useLeadSourceState } from '../../../../../../Context/LeadSource';
 
 function LeadSource(props) {
-  const [expanded, setExpanded] = React.useState(false);
-  return (
-    <Box mt={1.5}>
-      <Accordion>
-        <AccordionSummary>
-          <SummaryWrapper onClick={() => setExpanded(!expanded)}>
-            <OptionTyp>Lead Source</OptionTyp>
-            <ArrowIconParentWrapper>
-              {expanded ? (
-                <RemoveIcon style={{ ...iconsStyle }} />
-              ) : (
-                <AddIcon style={{ ...iconsStyle }} />
-              )}
-            </ArrowIconParentWrapper>
-          </SummaryWrapper>
-        </AccordionSummary>
+  const { filters, setFilters } = props;
+  const leadSourceState = useLeadSourceState();
+  const parentKey = 'leadSources';
+  const childKey = 'leadSource';
+  const commonProps = {
+    filters: filters,
+    setFilters: setFilters,
+    parentKey: parentKey,
+    childKey: childKey,
+    freeSoloOptions: leadSourceState,
+    filterName: 'Lead Source',
+  };
 
-        {[1, 2].map((m, index) => (
-          <AccordionDetails key={index}>
-            <FieldWrapper>
-              <ConditionalSelect />
-            </FieldWrapper>
-            <FieldWrapper>
-              <FreeSolo />
-            </FieldWrapper>
-            {index !== 0 && (
-              <DeleteIconWrapper>
-                <DeleteIcon
-                  style={{ color: DelieverStatusColor, height: 16 }}
-                />
-              </DeleteIconWrapper>
-            )}
-          </AccordionDetails>
-        ))}
-        <AccordionDetails>
-          <AddTyp>+Add</AddTyp>
-        </AccordionDetails>
-      </Accordion>
-    </Box>
-  );
+  return <FreeSolo {...commonProps} />;
 }
 
-LeadSource.propTypes = {};
+LeadSource.propTypes = {
+  filters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired,
+};
 export default LeadSource;

@@ -54,6 +54,7 @@ function Filters(props) {
     companies: [],
     countries: [],
     leadSources: [],
+    cities: [],
   });
   const [companyLoader, setCompanyLoader] = useState(false);
   const [leadSourceLoader, setLeadSourceLoader] = useState(false);
@@ -102,10 +103,10 @@ function Filters(props) {
           <LeadSource {...commonProps} />
 
           <Country {...commonProps} />
+          <City {...commonProps} />
         </React.Fragment>
       )}
       {
-        // <City />
         // <State />
         // <FirstName />
         // <LastName />

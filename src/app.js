@@ -21,10 +21,10 @@ function App() {
       <SocketProvider>
         <ConnectStatusProvider>
           <TemplateProvider template={[]}>
-            <LeadsProvider leads={leads}>
+            <LeadsProvider>
               <AddressBookProvider addressBook={addressBook}>
                 <ChatProvider chat={chat}>
-                  <LabelProvider label={labels}>
+                  <LabelProvider>
                     <CompanyProvider>
                       <LeadSourceProvider>
                         <MiniDrawer />

@@ -3,6 +3,22 @@ import axios from 'axios';
 const endPointApi = `${config.baseUrl}lead`;
 import { companies } from '../../Static/Company';
 import { leadSource } from '../../Static/LeadSource';
+
+export async function getLeads(leadData) {
+  try {
+    const res = await axios.get(endPointApi + '/all');
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      alert('Please check your internet connection');
+      throw new Error('Please check your internet connection');
+    } else {
+      alert('Server Error!');
+      throw new Error('Server Error!');
+    }
+  }
+}
+
 export async function createLead(leadData) {
   try {
     // const res = await axios.post(endPointApi + '/create', leadData);

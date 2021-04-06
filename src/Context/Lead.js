@@ -11,7 +11,7 @@ function LeadsReducer(state, action) {
   let cloneState = stateCloner(state);
   switch (action.type) {
     case 'LOAD_LEADS':
-      return [...stateCloner(action.payload.Leads)];
+      return [...stateCloner(action.payload.leads)];
     case 'HANDLE_SELECTED_STATUS':
       return cloneState.map((s) =>
         s._id == _id ? { ...s, selected: selected } : { ...s }

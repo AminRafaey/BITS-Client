@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LabelMultiSelect from '../../Label/index';
 import CountrySelect from '../../CountrySelect';
 import PhoneNumber from '../../PhoneNumber';
-import { Button, TextField, SecondaryButton } from '../../../HOC';
+import { Button, TextField, SecondaryButton, Alert } from '../../../HOC';
 import { Transition } from '../../../ConnectionModal/Modal';
 import { isUrlValid, isEmailValid } from '../index';
 import { useLeadsDispatch, addLead } from '../../../../Context/Lead';
@@ -39,14 +39,17 @@ const LoadingWrapper = styled(Box)({
   alignItems: 'center',
   justifyContent: 'center',
 });
-
+const MediaErorWrapper = styled(Box)({
+  paddingTop: 10,
+  fontSize: 14,
+});
 function CreateLead(props) {
   const { openModal, setOpenModal } = props;
   const leadsDispatch = useLeadsDispatch();
   const [leadData, setLeadData] = useState(initLeadData);
   const [nameError, setNameError] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState({});
   useEffect(() => {
     if (window.localStorage.getItem('leadData')) {
       setLeadData(JSON.parse(window.localStorage.getItem('leadData')));
@@ -58,7 +61,7 @@ function CreateLead(props) {
     setOpenModal(false);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (btnType) => {
     if (!leadData.firstName) {
       setNameError(true);
       return;
@@ -68,10 +71,12 @@ function CreateLead(props) {
       return;
     }
     setLoading(true);
+    const phoneCode = leadData.phoneCode;
+    delete leadData['phoneCode'];
     createLead({
       ...leadData,
-      _id: 50,
       labels: [...leadData.labels.map((l) => l._id)],
+      phone: phoneCode && leadData.phone ? phoneCode + leadData.phone : '',
     })
       .then((res) => {
         addLead(leadsDispatch, {
@@ -79,8 +84,12 @@ function CreateLead(props) {
         });
         setLeadData(initLeadData);
         setLoading(false);
+        btnType !== 'Continue' && handleClose();
       })
-      .catch((err) => setLoading(false));
+      .catch((err) => {
+        setLoading(false);
+        setError({ ...err });
+      });
   };
   const emptySpacingRow = () => {
     return (
@@ -89,6 +98,26 @@ function CreateLead(props) {
       </Grid>
     );
   };
+  const errorRow = (name) => {
+    return (
+      <React.Fragment>
+        {error.name &&
+          (error.name === name ||
+            (name === '' &&
+              !['email', 'phone', 'website'].includes(error.name))) && (
+            <React.Fragment>
+              <Grid item xs={3}></Grid>
+              <Grid item xs={9}>
+                <MediaErorWrapper pb={name === '' && 1.5}>
+                  <Alert severity="error">{error.message}</Alert>
+                </MediaErorWrapper>
+              </Grid>
+            </React.Fragment>
+          )}
+      </React.Fragment>
+    );
+  };
+
   const FieldNameRow = (name) => {
     return (
       <Grid item xs={3}>
@@ -121,6 +150,7 @@ function CreateLead(props) {
         <>
           <DialogContent className="Chat-Box-Styled-Scroll">
             <Grid container id="scroll-dialog-description">
+              {errorRow('')}
               {FieldNameRow('Name')}
               <Grid item xs={9}>
                 <TextField
@@ -208,8 +238,8 @@ function CreateLead(props) {
                   }
                 />
               </Grid>
+              {errorRow('email')}
               {emptySpacingRow()}
-
               {FieldNameRow('Add Phone')}
               <Grid item xs={9}>
                 <PhoneNumber
@@ -217,6 +247,7 @@ function CreateLead(props) {
                   setPersonInfo={setLeadData}
                 />
               </Grid>
+              {errorRow('phone')}
               {emptySpacingRow()}
 
               {FieldNameRow('Website')}
@@ -243,6 +274,7 @@ function CreateLead(props) {
                   }
                 />
               </Grid>
+              {errorRow('website')}
               {emptySpacingRow()}
 
               {FieldNameRow('Address')}
@@ -307,15 +339,14 @@ function CreateLead(props) {
             <SecondaryButton onClick={handleClose}>Close</SecondaryButton>
             <Button
               onClick={() => {
-                handleSubmit();
-                handleClose();
+                handleSubmit('Add');
               }}
             >
               Add
             </Button>
             <Button
               onClick={() => {
-                handleSubmit();
+                handleSubmit('Continue');
               }}
             >
               Continue Adding

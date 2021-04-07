@@ -78,9 +78,10 @@ function PhoneNumber(props) {
         value={countries.filter(
           (c) => selectedCountry && c.label == selectedCountry.label
         )}
-        onChange={(e, allValues, type, value) =>
-          setSelectedCountry(value.option)
-        }
+        onChange={(e, allValues, type, value) => {
+          setSelectedCountry(value.option);
+          setPersonInfo({ ...personInfo, phoneCode: '+' + value.option.phone });
+        }}
         filterOptions={(options, { inputValue, selected }) => {
           if (inputValue != '') {
             options = options.filter((option) =>

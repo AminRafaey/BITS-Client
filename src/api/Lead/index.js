@@ -21,19 +21,14 @@ export async function getLeads(leadData) {
 
 export async function createLead(leadData) {
   try {
-    // const res = await axios.post(endPointApi + '/create', leadData);
-    // return res.data;
-    return {
-      ...leadData,
-      _id: 50,
-    };
+    const res = await axios.post(endPointApi + '/create', leadData);
+    return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
       alert('Please check your internet connection');
       throw new Error('Please check your internet connection');
     } else {
-      alert('Server Error!');
-      throw new Error('Server Error!');
+      throw ex.response.data.field;
     }
   }
 }

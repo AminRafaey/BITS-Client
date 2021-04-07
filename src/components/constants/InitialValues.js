@@ -5,13 +5,13 @@ export const initLeadData = {
   companyName: '',
   labels: [],
   email: '',
-  phone: null,
+  phone: '',
   website: '',
   address: '',
   city: '',
   state: '',
   zip: '',
-  country: null,
+  country: '',
 };
 
 export const initLabel = {

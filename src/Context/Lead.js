@@ -7,7 +7,7 @@ const LeadsDispatch = React.createContext(null);
 function LeadsReducer(state, action) {
   const { selected, _id, startingIndex, endingIndex } = action.payload;
   const { selectedLeads, labels } = action.payload;
-  const { leadData } = action.payload;
+  const { leadData, leads } = action.payload;
   let cloneState = stateCloner(state);
   switch (action.type) {
     case 'LOAD_LEADS':
@@ -41,6 +41,8 @@ function LeadsReducer(state, action) {
         });
       });
       return [...cloneState];
+    case 'ADD_LEADS':
+      return [...leads, ...cloneState];
     case 'ADD_LEAD':
       return [{ ...leadData }, ...cloneState];
     case 'REMOVE_LEADS':
@@ -92,6 +94,7 @@ export {
   addLabels,
   removeLabels,
   addLead,
+  addLeads,
   removeLeads,
 };
 
@@ -134,7 +137,12 @@ function addLead(dispatch, data) {
     payload: data,
   });
 }
-
+function addLeads(dispatch, data) {
+  dispatch({
+    type: 'ADD_LEADS',
+    payload: data,
+  });
+}
 function removeLeads(dispatch, data) {
   dispatch({
     type: 'REMOVE_LEADS',

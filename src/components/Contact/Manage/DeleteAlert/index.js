@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, SecondaryButton } from '../../../HOC';
-import { useLeadsDispatch, removeLeads } from '../../../../Context/Lead';
+import { removeLeads as removeLeadsFromApi } from '../../../../api/Lead';
+import {
+  useLeadsState,
+  useLeadsDispatch,
+  removeLeads,
+  addLeads,
+} from '../../../../Context/Lead';
 import {
   Dialog,
   DialogActions,
@@ -13,8 +19,15 @@ import {
 function DeleteAlert(props) {
   const { open, setOpen, selectedCount } = props;
   const leadsDispatch = useLeadsDispatch();
-
+  const leadsState = useLeadsState();
   const handleSubmit = () => {
+    const leads = leadsState.filter((l) => l.selected);
+    removeLeadsFromApi(leads.map((l) => l._id))
+      .then((res) => {})
+      .catch((err) => {
+        addLeads(leadsDispatch, { leads });
+        alert(err.message);
+      });
     removeLeads(leadsDispatch, {});
     handleClose();
   };

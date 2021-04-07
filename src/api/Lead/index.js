@@ -33,6 +33,22 @@ export async function createLead(leadData) {
   }
 }
 
+export async function removeLeads(leads) {
+  try {
+    const res = await axios.delete(endPointApi, {
+      params: { leads: JSON.stringify(leads) },
+    });
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      alert('Please check your internet connection');
+      throw new Error('Please check your internet connection');
+    } else {
+      throw ex.response.data.field;
+    }
+  }
+}
+
 export async function addLabelsInLeads(userIdsWithLabels) {
   try {
     // const res = await axios.put(endPointApi, userIdsWithLabels);

@@ -49,18 +49,18 @@ export async function removeLeads(leads) {
   }
 }
 
-export async function addLabelsInLeads(userIdsWithLabels) {
+export async function updateLeadsLabels(updatedLeads, prevState) {
   try {
-    // const res = await axios.put(endPointApi, userIdsWithLabels);
-    // return res.data;
-    return;
+    const res = await axios.put(endPointApi + '/labels', {
+      leads: updatedLeads,
+    });
+    return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
       alert('Please check your internet connection');
       throw new Error('Please check your internet connection');
     } else {
-      alert('Server Error!');
-      throw new Error('Server Error!');
+      throw { prevState, error: ex.response.data.field };
     }
   }
 }

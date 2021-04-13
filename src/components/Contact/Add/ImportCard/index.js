@@ -16,7 +16,7 @@ import {
 } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { GrayColor, LinkColor } from '../../../constants/theme';
-
+import config from '../../../../config.json';
 const TitleTyp = styled(Typography)({
   fontSize: 14,
   background: GrayColor,
@@ -96,6 +96,7 @@ function ImportCard(props) {
     } else if (type === 'labels') {
     }
   };
+
   return (
     <Card style={{ maxWidth: '90%' }} variant="outlined">
       <StyledCardContent>
@@ -113,16 +114,17 @@ function ImportCard(props) {
             style={{ display: 'none' }}
             accept={'.csv'}
           />
-          <Button
-            size="small"
-            variant="contained"
-            color="default"
-            startIcon={<CloudUploadIcon />}
-          >
-            <label htmlFor="csv" style={{ color: 'white', cursor: 'pointer' }}>
+          <label htmlFor="csv" style={{ color: 'white', cursor: 'pointer' }}>
+            <Button
+              size="small"
+              variant="contained"
+              color="default"
+              startIcon={<CloudUploadIcon />}
+              style={{ pointerEvents: 'none' }}
+            >
               Upload CSV File
-            </label>
-          </Button>
+            </Button>
+          </label>
           <FileNameTyp>
             {selectedCSV ? selectedCSV.name : 'No File Choosen'}
           </FileNameTyp>
@@ -130,7 +132,14 @@ function ImportCard(props) {
       </StyledCardContent>
       <CardActions>
         <CardActionsInnerWrapper {...(loading && { mr: 2 })}>
-          <DownloadTyp>Download Sample</DownloadTyp>
+          <a
+            href={
+              type === 'leads' ? `${config.baseUrl}lead/downloadSample` : ''
+            }
+            style={{ textDecoration: 'none' }}
+          >
+            <DownloadTyp>Download Sample</DownloadTyp>
+          </a>
           {loading ? (
             <CircularProgress size={26} color="primary" />
           ) : (

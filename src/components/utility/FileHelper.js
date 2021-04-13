@@ -57,11 +57,7 @@ const checkMimeType = (files, options, errors) => {
     ];
   else if (options.type === 'pdf') types = ['application/pdf'];
   else if (options.type === 'csv')
-    types = [
-      '.csv',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      'application/vnd.ms-excel',
-    ];
+    types = ['text/csv', 'application/vnd.ms-excel'];
   else if (options.type === 'any') return true;
 
   for (let i = 0; i < files.length; i++) {

@@ -83,15 +83,13 @@ export async function removeLabelsFromLeads(userIdsWithLabels) {
 
 export async function sendCSV(file) {
   try {
-    const res = await axios.post(`${endPointApi}/csv`, file);
-    return res.data;
+    const res = await axios.post(`${endPointApi}/csvUpload`, file);
+    return res.data.field.message;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
-      return;
+      throw 'Please check your internet connection or close a file before uploading';
     } else {
-      alert('Server Error!');
-      return;
+      throw ex.response.data.field.message;
     }
   }
 }

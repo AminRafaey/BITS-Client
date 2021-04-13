@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { InfoAlert } from '../../../Assets';
 import { Button } from '../../../HOC';
 import { handleCSVChange } from '../../utility';
 import { sendCSV } from '../../../../api/Lead';
@@ -68,7 +69,8 @@ function ImportCard(props) {
   const { setError, heading, description, type } = props;
   const [selectedCSV, setSelectedCSV] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [openInfoAlert, setOpenInfoAlert] = useState(false);
+  const message = useRef('');
   const handleSubmit = () => {
     const data = new FormData();
     data.append('excelFile', selectedCSV);
@@ -77,7 +79,20 @@ function ImportCard(props) {
       return undefined;
     }
     if (type === 'leads') {
-      sendCSV(data).then((res) => {});
+      setLoading(true);
+      sendCSV(data)
+        .then((res) => {
+          message.current = res;
+          setSelectedCSV(null);
+          setLoading(false);
+          setOpenInfoAlert(true);
+        })
+        .catch((err) => {
+          message.current = err;
+          setSelectedCSV(null);
+          setLoading(false);
+          setOpenInfoAlert(true);
+        });
     } else if (type === 'labels') {
     }
   };
@@ -96,9 +111,7 @@ function ImportCard(props) {
               handleCSVChange(e, setSelectedCSV, setError, 'csv', 1000)
             }
             style={{ display: 'none' }}
-            accept={
-              '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-            }
+            accept={'.csv'}
           />
           <Button
             size="small"
@@ -132,6 +145,12 @@ function ImportCard(props) {
           )}
         </CardActionsInnerWrapper>
       </CardActions>
+      <InfoAlert
+        open={openInfoAlert}
+        setOpen={setOpenInfoAlert}
+        title={'CSV Upload Status'}
+        message={message.current}
+      />
     </Card>
   );
 }

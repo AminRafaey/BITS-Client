@@ -7,7 +7,7 @@ function Company(props) {
   const { filters, setFilters } = props;
   const companyState = useCompanyState();
   const parentKey = 'companies';
-  const childKey = 'company';
+  const childKey = 'companyName';
   const commonProps = {
     filters: filters,
     setFilters: setFilters,

@@ -20,3 +20,16 @@ export const initLabel = {
   description: '',
   color: '#ffff',
 };
+
+export const initLeadFilters = {
+  labels: [],
+  companies: [],
+  countries: [],
+  leadSources: [],
+  cities: [],
+  states: [],
+  firstNames: [],
+  lastNames: [],
+  emails: [],
+  phones: [],
+};

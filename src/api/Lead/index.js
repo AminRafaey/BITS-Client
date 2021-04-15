@@ -125,3 +125,16 @@ export async function getLeadSource() {
     }
   }
 }
+
+export async function getFilteredLeads(filters) {
+  try {
+    const res = await axios.get(`${endPointApi}/filter`, { params: filters });
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      alert('Please check your internet connection');
+    } else {
+      alert('Server Error!');
+    }
+  }
+}

@@ -6,7 +6,6 @@ import { Button } from '../../../HOC';
 import { useLeadsState } from '../../../../Context/Lead';
 import { styled, Box, Typography } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { initLeadData } from '../../../constants/InitialValues';
 import { DelieverStatusColor } from '../../../constants/theme';
 
 const FirstHeaderWrapper = styled(Box)({
@@ -31,7 +30,6 @@ const ContactNumTyp = styled(Typography)({
 function FirstHeader(props) {
   const leadsState = useLeadsState();
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
-  const [leadData, setLeadData] = useState(initLeadData);
   return (
     <FirstHeaderWrapper>
       <Box>
@@ -48,8 +46,6 @@ function FirstHeader(props) {
         <CreateLead
           openModal={openCreateLabelModal}
           setOpenModal={setOpenCreateLabelModal}
-          leadData={leadData}
-          setLeadData={setLeadData}
         />
         <Box pl={1}>
           <Link

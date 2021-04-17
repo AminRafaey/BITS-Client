@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import phone from 'phone';
 import LabelMultiSelect from '../../Label/index';
 import CountrySelect from '../../CountrySelect';
 import PhoneNumber from '../../PhoneNumber';
 import { Button, TextField, SecondaryButton, Alert } from '../../../HOC';
 import { Transition } from '../../../ConnectionModal/Modal';
 import { isUrlValid, isEmailValid } from '../index';
-import { useLeadsDispatch, addLead } from '../../../../Context/Lead';
-import { createLead } from '../../../../api/Lead';
+import {
+  useLeadsDispatch,
+  addLead,
+  updateLead as updateLeadInContext,
+} from '../../../../Context/Lead';
+import { createLead, updateLead } from '../../../../api/Lead';
 import {
   Dialog,
   DialogTitle,
@@ -44,14 +49,23 @@ const MediaErorWrapper = styled(Box)({
   fontSize: 14,
 });
 function CreateLead(props) {
-  const { openModal, setOpenModal } = props;
+  const {
+    openModal,
+    setOpenModal,
+    type,
+    editingLead,
+    selectedLeadIndex,
+  } = props;
   const leadsDispatch = useLeadsDispatch();
   const [leadData, setLeadData] = useState(initLeadData);
   const [nameError, setNameError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
+
   useEffect(() => {
-    if (window.localStorage.getItem('leadData')) {
+    if (type === 'edit') {
+      setLeadData({ ...editingLead });
+    } else if (window.localStorage.getItem('leadData')) {
       setLeadData(JSON.parse(window.localStorage.getItem('leadData')));
       localStorage.removeItem('leadData');
     }
@@ -62,6 +76,7 @@ function CreateLead(props) {
   };
 
   const handleSubmit = (btnType) => {
+    const phoneCode = leadData.phoneCode;
     if (!leadData.firstName) {
       setNameError(true);
       return;
@@ -69,21 +84,40 @@ function CreateLead(props) {
       return;
     } else if (leadData.website && !isUrlValid(leadData.website)) {
       return;
+    } else if (
+      phoneCode &&
+      leadData.phone &&
+      phone(phoneCode + leadData.phone).length === 0
+    ) {
+      return;
     }
     setLoading(true);
-    const phoneCode = leadData.phoneCode;
     delete leadData['phoneCode'];
-    createLead({
+
+    setLeadData({
+      ...leadData,
+      labels: [...leadData.labels.map((l) => l._id)],
+      phone: phoneCode && leadData.phone ? phoneCode + leadData.phone : '',
+    });
+    const selectedApiFunc = type === 'edit' ? updateLead : createLead;
+    selectedApiFunc({
       ...leadData,
       labels: [...leadData.labels.map((l) => l._id)],
       phone: phoneCode && leadData.phone ? phoneCode + leadData.phone : '',
     })
       .then((res) => {
-        addLead(leadsDispatch, {
-          leadData: res,
-        });
+        type === 'edit'
+          ? updateLeadInContext(leadsDispatch, {
+              leadData: res,
+              selectedLeadIndex,
+            })
+          : addLead(leadsDispatch, {
+              leadData: res,
+            });
+
         setLeadData(initLeadData);
         setLoading(false);
+        setError({});
         btnType !== 'Continue' && handleClose();
       })
       .catch((err) => {
@@ -108,7 +142,7 @@ function CreateLead(props) {
             <React.Fragment>
               <Grid item xs={3}></Grid>
               <Grid item xs={9}>
-                <MediaErorWrapper pb={name === '' && 1.5}>
+                <MediaErorWrapper pb={name === '' ? 1.5 : 0}>
                   <Alert severity="error">{error.message}</Alert>
                 </MediaErorWrapper>
               </Grid>
@@ -207,7 +241,7 @@ function CreateLead(props) {
               {FieldNameRow('Tags')}
               <Grid item xs={9}>
                 <LabelMultiSelect
-                  type={'createLead'}
+                  type={type}
                   personInfo={leadData}
                   setPersonInfo={setLeadData}
                 />
@@ -342,15 +376,17 @@ function CreateLead(props) {
                 handleSubmit('Add');
               }}
             >
-              Add
+              {type === 'edit' ? 'Save' : 'Add'}
             </Button>
-            <Button
-              onClick={() => {
-                handleSubmit('Continue');
-              }}
-            >
-              Continue Adding
-            </Button>
+            {type !== 'edit' && (
+              <Button
+                onClick={() => {
+                  handleSubmit('Continue');
+                }}
+              >
+                Continue Adding
+              </Button>
+            )}
           </DialogActions>
         </>
       )}
@@ -361,5 +397,8 @@ function CreateLead(props) {
 CreateLead.propTypes = {
   openModal: PropTypes.bool.isRequired,
   setOpenModal: PropTypes.func.isRequired,
+  type: PropTypes.string,
+  editingLead: PropTypes.object,
+  selectedLeadIndex: PropTypes.number,
 };
 export default CreateLead;

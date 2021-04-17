@@ -32,6 +32,7 @@ function CountrySelect(props) {
       size="small"
       closeIcon={false}
       options={countries}
+      value={countries.find((c) => c.label === personInfo.country) || null}
       onChange={(e, value) =>
         setPersonInfo({ ...personInfo, country: value.label })
       }

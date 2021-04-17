@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactCountryFlag from 'react-country-flag';
 import phone from 'phone';
@@ -63,9 +63,31 @@ const StyledCountrySelectedTextField = withStyles({
 function PhoneNumber(props) {
   const { personInfo, setPersonInfo } = props;
   const [selectedCountry, setSelectedCountry] = useState(null);
+
   const TagName = selectedCountry
     ? StyledCountrySelectedTextField
     : MUITextField;
+
+  useEffect(() => {
+    if (personInfo.phone) {
+      if (phone(personInfo.phone).length === 0)
+        setPersonInfo({ ...personInfo, phone: '' });
+      else {
+        const country = countries.find((c) =>
+          c.label
+            .toLowerCase()
+            .includes(phone(personInfo.phone)[1].toLowerCase())
+        );
+        setSelectedCountry(country);
+        setPersonInfo({
+          ...personInfo,
+          phoneCode: '+' + country.phone,
+          phone: personInfo.phone.replace('+' + country.phone, ''),
+        });
+      }
+    }
+  }, []);
+
   return (
     <Box display="flex">
       <StyledAutoComplete
@@ -142,6 +164,7 @@ function PhoneNumber(props) {
         )}
       />
       <StyledTextField
+        value={personInfo.phone && selectedCountry ? personInfo.phone : ''}
         type="tel"
         disabled={selectedCountry ? false : true}
         error={
@@ -151,7 +174,9 @@ function PhoneNumber(props) {
               : false
             : false
         }
-        onKeyUp={(e) => setPersonInfo({ ...personInfo, phone: e.target.value })}
+        onChange={(e) =>
+          setPersonInfo({ ...personInfo, phone: e.target.value })
+        }
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

@@ -33,6 +33,19 @@ export async function createLead(leadData) {
   }
 }
 
+export async function updateLead(updatedLead) {
+  try {
+    const res = await axios.put(endPointApi, updatedLead);
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      throw new Error('Please check your internet connection');
+    } else {
+      throw ex.response.data.field;
+    }
+  }
+}
+
 export async function removeLeads(leads) {
   try {
     const res = await axios.delete(endPointApi, {
@@ -61,22 +74,6 @@ export async function updateLeadsLabels(updatedLeads, prevState) {
       throw new Error('Please check your internet connection');
     } else {
       throw { prevState, error: ex.response.data.field };
-    }
-  }
-}
-
-export async function removeLabelsFromLeads(userIdsWithLabels) {
-  try {
-    // const res = await axios.put(endPointApi, userIdsWithLabels);
-    // return res.data;
-    return;
-  } catch (ex) {
-    if (!ex.response) {
-      alert('Please check your internet connection');
-      throw new Error('Please check your internet connection');
-    } else {
-      alert('Server Error!');
-      throw new Error('Server Error!');
     }
   }
 }

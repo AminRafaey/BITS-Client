@@ -52,6 +52,13 @@ function LabelMultiSelect(props) {
       let cloneLabelState = stateCloner(
         Object.keys(labelState).map((l) => labelState[l])
       );
+      if (type === 'edit' && personInfo.labels.length > 0) {
+        cloneLabelState = cloneLabelState.map((l) =>
+          personInfo.labels.find((p) => p === l._id)
+            ? { ...l, selected: true }
+            : { ...l }
+        );
+      }
       cloneLabelState.push({ title: 'Add', default: true });
       setOptions(cloneLabelState);
     }
@@ -86,7 +93,11 @@ function LabelMultiSelect(props) {
       size="small"
       getOptionLabel={(option) => option.title}
       options={options}
-      value={options.filter((o) => o.selected)}
+      value={
+        options.filter((o) => o.selected)
+          ? options.filter((o) => o.selected)
+          : ''
+      }
       onChange={(e, allValues, type, value) => {
         const selectedOption = value.option;
         let selectedValue = false;

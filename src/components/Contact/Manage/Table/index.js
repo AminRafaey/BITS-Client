@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Checkbox } from '../../../HOC';
 import SecondHeader from '../SecondHeader';
 import TableHead from './TableHead';
+import CreateLead from '../../../Forms/Lead/Create';
 import { colors } from '../../../constants/AvatarColor';
 import {
   useLeadsState,
@@ -113,15 +114,18 @@ export default function ContactsTable() {
   const [selectedCount, setSelectedCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [leadLoader, setLeadloader] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
+  const selectedLead = useRef(null);
   const open = Boolean(anchorEl);
 
   useEffect(() => {
     setSelectedCount(leadsState.filter((l) => l.selected).length);
   }, [leadsState]);
 
-  const handleIconClick = (event) => {
+  const handleIconClick = (event, row, index) => {
     setAnchorEl(event.currentTarget);
+    selectedLead.current = { lead: { ...row }, index: index };
   };
 
   const handleClose = () => {
@@ -240,7 +244,7 @@ export default function ContactsTable() {
                             <IconWrapper
                               aria-controls="fade-menu"
                               aria-haspopup="true"
-                              onClick={handleIconClick}
+                              onClick={(e) => handleIconClick(e, row, index)}
                             >
                               {' '}
                               <MoreVertIcon style={{ height: 18 }} />
@@ -259,7 +263,12 @@ export default function ContactsTable() {
                               onClose={handleClose}
                               TransitionComponent={Fade}
                             >
-                              <MenuItem onClick={handleClose}>
+                              <MenuItem
+                                onClick={() => {
+                                  setOpenCreateLabelModal(true);
+                                  handleClose();
+                                }}
+                              >
                                 <EditIcon style={{ ...iconsStyle }} />
                                 <ItemTyp>Edit</ItemTyp>
                               </MenuItem>
@@ -284,7 +293,21 @@ export default function ContactsTable() {
                         </TableRow>
                       );
                     })}
-
+                  {openCreateLabelModal && (
+                    <CreateLead
+                      openModal={openCreateLabelModal}
+                      setOpenModal={setOpenCreateLabelModal}
+                      type={'edit'}
+                      editingLead={
+                        selectedLead.current ? selectedLead.current.lead : {}
+                      }
+                      selectedLeadIndex={
+                        selectedLead.current
+                          ? selectedLead.current.index
+                          : undefined
+                      }
+                    />
+                  )}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: 53 * emptyRows }}>
                       <TableCell colSpan={6} />

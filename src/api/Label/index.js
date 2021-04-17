@@ -20,9 +20,8 @@ export async function getLabels() {
 
 export async function createLabel(label) {
   try {
-    // const res = await axios.post(endPointApi, label);
-    // return res.data;
-    return { _id: 100, ...label };
+    const res = await axios.post(endPointApi, label);
+    return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
       alert('Please check your internet connection');

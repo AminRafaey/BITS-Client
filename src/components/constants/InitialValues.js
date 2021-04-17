@@ -15,7 +15,6 @@ export const initLeadData = {
 };
 
 export const initLabel = {
-  _id: '',
   title: '',
   description: '',
   color: '#ffff',

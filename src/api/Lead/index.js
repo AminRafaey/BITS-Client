@@ -93,9 +93,8 @@ export async function sendCSV(file) {
 
 export async function getCompanies() {
   try {
-    // const res = await axios.get(`${endPointApi}/companies`);
-    // return res.data;
-    return companies;
+    const res = await axios.get(`${endPointApi}/allCompanies`);
+    return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
       alert('Please check your internet connection');
@@ -109,9 +108,8 @@ export async function getCompanies() {
 
 export async function getLeadSource() {
   try {
-    // const res = await axios.get(`${endPointApi}/companies`);
-    // return res.data;
-    return leadSource;
+    const res = await axios.get(`${endPointApi}/allLeadSources`);
+    return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
       alert('Please check your internet connection');

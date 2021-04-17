@@ -32,7 +32,10 @@ function CountrySelect(props) {
       size="small"
       closeIcon={false}
       options={countries}
-      onChange={(e, value) => setPersonInfo({ ...personInfo, country: value })}
+      value={countries.find((c) => c.label === personInfo.country) || null}
+      onChange={(e, value) =>
+        setPersonInfo({ ...personInfo, country: value.label })
+      }
       getOptionLabel={(option) => option.label}
       renderOption={(option, { selected, inputValue }) => {
         const matches = match(`${option.label}`, inputValue);

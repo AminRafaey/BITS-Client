@@ -5,18 +5,12 @@ import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 
 import { Checkbox, Chip } from '../../HOC';
-import {
-  useLabelState,
-  useLabelDispatch,
-  loadLabels,
-} from '../../../Context/Label';
-import { getLabels } from '../../../api/Label';
+import { useLabelState } from '../../../Context/Label';
 import stateCloner from '../../utility/StateCloner';
 import {
   Box,
   Typography,
   styled,
-  CircularProgress,
   TextField,
   withStyles,
 } from '@material-ui/core';
@@ -50,27 +44,21 @@ const StyledAutoComplete = withStyles({
 function LabelMultiSelect(props) {
   const { personInfo, setPersonInfo, type } = props;
   const [options, setOptions] = useState([]);
-  const loading = open && options.length === 0;
 
   const labelState = useLabelState();
-  const labelDispatch = useLabelDispatch();
-
-  useEffect(() => {
-    if (!loading) {
-      return undefined;
-    }
-    if (Object.entries(labelState).length < 1) {
-      getLabels().then((res) =>
-        setTimeout(() => loadLabels(labelDispatch, { labels: res }), 2000)
-      );
-    }
-  }, [loading]);
 
   useEffect(() => {
     if (options.length === 0) {
       let cloneLabelState = stateCloner(
         Object.keys(labelState).map((l) => labelState[l])
       );
+      if (type === 'edit' && personInfo.labels.length > 0) {
+        cloneLabelState = cloneLabelState.map((l) =>
+          personInfo.labels.find((p) => p === l._id)
+            ? { ...l, selected: true }
+            : { ...l }
+        );
+      }
       cloneLabelState.push({ title: 'Add', default: true });
       setOptions(cloneLabelState);
     }
@@ -105,8 +93,11 @@ function LabelMultiSelect(props) {
       size="small"
       getOptionLabel={(option) => option.title}
       options={options}
-      loading={loading}
-      value={options.filter((o) => o.selected)}
+      value={
+        options.filter((o) => o.selected)
+          ? options.filter((o) => o.selected)
+          : ''
+      }
       onChange={(e, allValues, type, value) => {
         const selectedOption = value.option;
         let selectedValue = false;
@@ -181,14 +172,6 @@ function LabelMultiSelect(props) {
           variant="outlined"
           InputProps={{
             ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
           }}
         />
       )}

@@ -12,7 +12,7 @@ function LabelReducer(state, action) {
     case 'LOAD_LABELS':
       return { ...stateCloner(action.payload.labels) };
     case 'ADD_LABEL':
-      cloneState[_id] = { ...label };
+      cloneState[_id] = { ...label, _id };
       return { ...cloneState };
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);

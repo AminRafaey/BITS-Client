@@ -5,18 +5,30 @@ export const initLeadData = {
   companyName: '',
   labels: [],
   email: '',
-  phone: null,
+  phone: '',
   website: '',
   address: '',
   city: '',
   state: '',
   zip: '',
-  country: null,
+  country: '',
 };
 
 export const initLabel = {
-  _id: '',
   title: '',
   description: '',
   color: '#ffff',
+};
+
+export const initLeadFilters = {
+  labels: [],
+  companies: [],
+  countries: [],
+  leadSources: [],
+  cities: [],
+  states: [],
+  firstNames: [],
+  lastNames: [],
+  emails: [],
+  phones: [],
 };

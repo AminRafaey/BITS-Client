@@ -1,6 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Box, styled, CssBaseline, makeStyles } from '@material-ui/core';
+import {
+  useLabelState,
+  useLabelDispatch,
+  loadLabels,
+} from '../../Context/Label';
+import { useLeadsState, useLeadsDispatch, loadLeads } from '../../Context/Lead';
+import {
+  useCompanyState,
+  useCompanyDispatch,
+  loadCompanies,
+} from '../../Context/Company';
+import {
+  useLeadSourceState,
+  useLeadSourceDispatch,
+  loadLeadSource,
+} from '../../Context/LeadSource';
+import { getLabels } from '../../api/Label';
+import { getLeads, getCompanies, getLeadSource } from '../../api/Lead';
+import {
+  Box,
+  styled,
+  CssBaseline,
+  makeStyles,
+  CircularProgress,
+} from '@material-ui/core';
 import {
   AddressBookTable,
   Home,
@@ -38,7 +62,13 @@ const ContactWrapper = styled(Box)({
   background: '#E9EEF5',
   height: '100%',
 });
-
+const LoaderWrapper = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  paddingRight: 50,
+  minHeight: '80vh',
+});
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -56,6 +86,57 @@ export default function MiniDrawer() {
   const classes = useStyles();
 
   const [open, setOpen] = useState(true);
+  const [loader, setLoader] = useState(false);
+  const labelState = useLabelState();
+  const labelDispatch = useLabelDispatch();
+  const leadsState = useLeadsState();
+  const leadsDispatch = useLeadsDispatch();
+  const companyState = useCompanyState();
+  const companyDispatch = useCompanyDispatch();
+  const leadSourceState = useLeadSourceState();
+  const leadSourceDispatch = useLeadSourceDispatch();
+
+  useEffect(() => {
+    const requests = [];
+    setLoader(true);
+
+    if (Object.entries(labelState).length < 1) {
+      requests.push(
+        getLabels().then((res) => {
+          loadLabels(labelDispatch, { labels: res });
+        })
+      );
+    }
+
+    if (leadsState.length < 1) {
+      requests.push(
+        getLeads().then((res) => {
+          loadLeads(leadsDispatch, { leads: res });
+        })
+      );
+    }
+
+    if (companyState.length < 1) {
+      requests.push(
+        getCompanies().then((res) => {
+          loadCompanies(companyDispatch, { companies: res });
+        })
+      );
+    }
+
+    if (leadSourceState.length < 1) {
+      requests.push(
+        getLeadSource().then((res) => {
+          loadLeadSource(leadSourceDispatch, { leadSource: res });
+        })
+      );
+    }
+
+    Promise.allSettled(requests).then((resArr) => {
+      setLoader(false);
+    });
+  }, []);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -67,46 +148,54 @@ export default function MiniDrawer() {
         {open && <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />}
         <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
-          <Switch>
-            <Route path="/sendSms">
-              <QuickSendWrapper>
-                <QuickSend />
-              </QuickSendWrapper>
-            </Route>
-            <Route path="/sendFromAddressBook">
-              <AddressBookWrapper>
-                {' '}
-                <AddressBookTable />
-              </AddressBookWrapper>
-            </Route>
-            <Route path="/inbox">
-              <InboxWrapper>
-                {' '}
-                <Inbox setOpen={setOpen} />
-              </InboxWrapper>
-            </Route>
+          {loader ? (
+            <QuickSendWrapper>
+              <LoaderWrapper>
+                <CircularProgress color="primary" />
+              </LoaderWrapper>
+            </QuickSendWrapper>
+          ) : (
+            <Switch>
+              <Route path="/sendSms">
+                <QuickSendWrapper>
+                  <QuickSend />
+                </QuickSendWrapper>
+              </Route>
+              <Route path="/sendFromAddressBook">
+                <AddressBookWrapper>
+                  {' '}
+                  <AddressBookTable />
+                </AddressBookWrapper>
+              </Route>
+              <Route path="/inbox">
+                <InboxWrapper>
+                  {' '}
+                  <Inbox setOpen={setOpen} />
+                </InboxWrapper>
+              </Route>
 
-            <Route path="/manageContacts">
-              <ContactWrapper>
-                <ManageContact />
-              </ContactWrapper>
-            </Route>
-            <Route path="/addContacts">
-              <ContactWrapper>
-                <AddContacts />
-              </ContactWrapper>
-            </Route>
-            <Route path="/addLabel">
-              <QuickSendWrapper>
-                <CreateLabel />
-              </QuickSendWrapper>
-            </Route>
-            <Route path="/">
-              <HomePageWrapper>
-                <Home />
-              </HomePageWrapper>
-            </Route>
-          </Switch>
+              <Route path="/manageContacts">
+                <ContactWrapper>
+                  <ManageContact />
+                </ContactWrapper>
+              </Route>
+              <Route path="/addContacts">
+                <ContactWrapper>
+                  <AddContacts />
+                </ContactWrapper>
+              </Route>
+              <Route path="/addLabel">
+                <QuickSendWrapper>
+                  <CreateLabel />
+                </QuickSendWrapper>
+              </Route>
+              <Route path="/">
+                <HomePageWrapper>
+                  <Home />
+                </HomePageWrapper>
+              </Route>
+            </Switch>
+          )}
         </main>
       </div>
     </Router>

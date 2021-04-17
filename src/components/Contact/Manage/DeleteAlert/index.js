@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, SecondaryButton } from '../../../HOC';
-import { useLeadsDispatch, removeLeads } from '../../../../Context/Lead';
+import { removeLeads as removeLeadsFromApi } from '../../../../api/Lead';
+import {
+  useLeadsState,
+  useLeadsDispatch,
+  removeLeads,
+  addLeads,
+  removeLead,
+} from '../../../../Context/Lead';
 import {
   Dialog,
   DialogActions,
@@ -11,11 +18,28 @@ import {
 } from '@material-ui/core';
 
 function DeleteAlert(props) {
-  const { open, setOpen, selectedCount } = props;
+  const {
+    open,
+    setOpen,
+    selectedCount,
+    selectedLead,
+    selectedLeadIndex,
+  } = props;
   const leadsDispatch = useLeadsDispatch();
-
+  const leadsState = useLeadsState();
   const handleSubmit = () => {
-    removeLeads(leadsDispatch, {});
+    const leads = selectedLead
+      ? [{ ...selectedLead }]
+      : leadsState.filter((l) => l.selected);
+    removeLeadsFromApi(leads.map((l) => l._id))
+      .then((res) => {})
+      .catch((err) => {
+        addLeads(leadsDispatch, { leads });
+        alert(err.message);
+      });
+    selectedLead
+      ? removeLead(leadsDispatch, { selectedLeadIndex })
+      : removeLeads(leadsDispatch, {});
     handleClose();
   };
 
@@ -36,7 +60,7 @@ function DeleteAlert(props) {
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           Deleted contacts can't be restore. Are you sure you want to delete{' '}
-          {selectedCount} contacts?
+          {selectedCount} contact{selectedCount > 1 ? 's' : ''}?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -53,5 +77,7 @@ DeleteAlert.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
   selectedCount: PropTypes.number.isRequired,
+  selectedLead: PropTypes.object,
+  selectedLeadIndex: PropTypes.number,
 };
 export default DeleteAlert;

@@ -13,17 +13,23 @@ import { LeadsProvider } from './Context/Lead';
 import { leads } from './Static/Lead';
 import { LabelProvider } from './Context/Label';
 import { labels } from './Static/Label';
+import { CompanyProvider } from './Context/Company';
+import { LeadSourceProvider } from './Context/LeadSource';
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
         <ConnectStatusProvider>
           <TemplateProvider template={[]}>
-            <LeadsProvider leads={leads}>
+            <LeadsProvider>
               <AddressBookProvider addressBook={addressBook}>
                 <ChatProvider chat={chat}>
-                  <LabelProvider label={labels}>
-                    <MiniDrawer />
+                  <LabelProvider>
+                    <CompanyProvider>
+                      <LeadSourceProvider>
+                        <MiniDrawer />
+                      </LeadSourceProvider>
+                    </CompanyProvider>
                   </LabelProvider>
                 </ChatProvider>
               </AddressBookProvider>

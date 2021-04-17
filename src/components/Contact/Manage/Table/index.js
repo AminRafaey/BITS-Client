@@ -3,6 +3,7 @@ import { Checkbox } from '../../../HOC';
 import SecondHeader from '../SecondHeader';
 import TableHead from './TableHead';
 import CreateLead from '../../../Forms/Lead/Create';
+import DeleteAlert from '../DeleteAlert';
 import { colors } from '../../../constants/AvatarColor';
 import {
   useLeadsState,
@@ -116,6 +117,7 @@ export default function ContactsTable() {
   const [leadLoader, setLeadloader] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const selectedLead = useRef(null);
   const open = Boolean(anchorEl);
 
@@ -272,10 +274,16 @@ export default function ContactsTable() {
                                 <EditIcon style={{ ...iconsStyle }} />
                                 <ItemTyp>Edit</ItemTyp>
                               </MenuItem>
-                              <MenuItem onClick={handleClose}>
+                              <MenuItem
+                                onClick={() => {
+                                  setOpenDeleteModal(true);
+                                  handleClose();
+                                }}
+                              >
                                 <DeleteIcon style={{ ...iconsStyle }} />
                                 <ItemTyp>Delete</ItemTyp>
                               </MenuItem>
+
                               <MenuItem onClick={handleClose}>
                                 <NoteAddIcon style={{ ...iconsStyle }} />
                                 <ItemTyp>Add Note</ItemTyp>
@@ -299,6 +307,21 @@ export default function ContactsTable() {
                       setOpenModal={setOpenCreateLabelModal}
                       type={'edit'}
                       editingLead={
+                        selectedLead.current ? selectedLead.current.lead : {}
+                      }
+                      selectedLeadIndex={
+                        selectedLead.current
+                          ? selectedLead.current.index
+                          : undefined
+                      }
+                    />
+                  )}
+                  {openDeleteModal && (
+                    <DeleteAlert
+                      open={openDeleteModal}
+                      setOpen={setOpenDeleteModal}
+                      selectedCount={1}
+                      selectedLead={
                         selectedLead.current ? selectedLead.current.lead : {}
                       }
                       selectedLeadIndex={

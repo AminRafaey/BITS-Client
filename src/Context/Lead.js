@@ -48,8 +48,10 @@ function LeadsReducer(state, action) {
     case 'REMOVE_LEADS':
       cloneState = cloneState.filter((c) => !c.selected);
       return [...cloneState];
+    case 'REMOVE_LEAD':
+      cloneState.splice(selectedLeadIndex, 1);
+      return [...cloneState];
     case 'UPDATE_LEAD':
-      console.log(selectedLeadIndex, leadData);
       cloneState[selectedLeadIndex] = leadData;
       return [...cloneState];
 
@@ -102,6 +104,7 @@ export {
   addLeads,
   removeLeads,
   updateLead,
+  removeLead,
 };
 
 function loadLeads(dispatch, data) {
@@ -155,7 +158,12 @@ function removeLeads(dispatch, data) {
     payload: data,
   });
 }
-
+function removeLead(dispatch, data) {
+  dispatch({
+    type: 'REMOVE_LEAD',
+    payload: data,
+  });
+}
 function updateLead(dispatch, data) {
   dispatch({
     type: 'UPDATE_LEAD',

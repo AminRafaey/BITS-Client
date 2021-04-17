@@ -86,10 +86,7 @@ export default function MiniDrawer() {
   const classes = useStyles();
 
   const [open, setOpen] = useState(true);
-  const [labelLoader, setLabelloader] = useState(false);
-  const [leadLoader, setLeadloader] = useState(false);
-  const [companyLoader, setCompanyLoader] = useState(false);
-  const [leadSourceLoader, setLeadSourceLoader] = useState(false);
+  const [loader, setLoader] = useState(false);
   const labelState = useLabelState();
   const labelDispatch = useLabelDispatch();
   const leadsState = useLeadsState();
@@ -100,43 +97,44 @@ export default function MiniDrawer() {
   const leadSourceDispatch = useLeadSourceDispatch();
 
   useEffect(() => {
+    const requests = [];
+    setLoader(true);
+
     if (Object.entries(labelState).length < 1) {
-      setLabelloader(true);
-      getLabels().then((res) => {
-        loadLabels(labelDispatch, { labels: res });
-        setLabelloader(false);
-      });
+      requests.push(
+        getLabels().then((res) => {
+          loadLabels(labelDispatch, { labels: res });
+        })
+      );
     }
-  }, []);
 
-  useEffect(() => {
     if (leadsState.length < 1) {
-      setLeadloader(true);
-      getLeads().then((res) => {
-        loadLeads(leadsDispatch, { leads: res });
-        setLeadloader(false);
-      });
+      requests.push(
+        getLeads().then((res) => {
+          loadLeads(leadsDispatch, { leads: res });
+        })
+      );
     }
-  }, []);
 
-  useEffect(() => {
     if (companyState.length < 1) {
-      setCompanyLoader(true);
-      getCompanies().then((res) => {
-        loadCompanies(companyDispatch, { companies: res });
-        setCompanyLoader(false);
-      });
+      requests.push(
+        getCompanies().then((res) => {
+          loadCompanies(companyDispatch, { companies: res });
+        })
+      );
     }
-  }, []);
 
-  useEffect(() => {
     if (leadSourceState.length < 1) {
-      setLeadSourceLoader(true);
-      getLeadSource().then((res) => {
-        loadLeadSource(leadSourceDispatch, { leadSource: res });
-        setLeadSourceLoader(false);
-      });
+      requests.push(
+        getLeadSource().then((res) => {
+          loadLeadSource(leadSourceDispatch, { leadSource: res });
+        })
+      );
     }
+
+    Promise.allSettled(requests).then((resArr) => {
+      setLoader(false);
+    });
   }, []);
 
   const handleDrawerOpen = () => {
@@ -150,7 +148,7 @@ export default function MiniDrawer() {
         {open && <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />}
         <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
-          {labelLoader || leadLoader || companyLoader || leadSourceLoader ? (
+          {loader ? (
             <QuickSendWrapper>
               <LoaderWrapper>
                 <CircularProgress color="primary" />

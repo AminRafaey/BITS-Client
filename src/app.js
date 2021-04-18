@@ -1,7 +1,9 @@
 import React from 'react';
+import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from '@material-ui/styles';
 import { theme } from './theme';
 import { MiniDrawer } from './components';
+import Toast from './components/Toast';
 import { ConnectStatusProvider } from './Context/ConnectStatus';
 import { TemplateProvider } from './Context/Template';
 import { AddressBookProvider } from './Context/AddressBook';
@@ -15,6 +17,7 @@ import { LabelProvider } from './Context/Label';
 import { labels } from './Static/Label';
 import { CompanyProvider } from './Context/Company';
 import { LeadSourceProvider } from './Context/LeadSource';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -27,7 +30,16 @@ function App() {
                   <LabelProvider>
                     <CompanyProvider>
                       <LeadSourceProvider>
-                        <MiniDrawer />
+                        <SnackbarProvider
+                          maxSnack={3}
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                          }}
+                        >
+                          <Toast />
+                          <MiniDrawer />
+                        </SnackbarProvider>
                       </LeadSourceProvider>
                     </CompanyProvider>
                   </LabelProvider>

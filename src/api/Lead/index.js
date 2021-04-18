@@ -1,8 +1,7 @@
 import config from '../../config.json';
 import axios from 'axios';
+import { toastActions } from '../../components/Toast';
 const endPointApi = `${config.baseUrl}lead`;
-import { companies } from '../../Static/Company';
-import { leadSource } from '../../Static/LeadSource';
 
 export async function getLeads(leadData) {
   try {
@@ -51,13 +50,17 @@ export async function removeLeads(leads) {
     const res = await axios.delete(endPointApi, {
       params: { leads: JSON.stringify(leads) },
     });
-    return res.data.field.data;
+    toastActions.success(
+      `Lead${leads.length > 1 ? 's ' : ' '}${
+        leads.length > 1 ? 'are ' : 'is '
+      } Successfully deleted`
+    );
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
-      throw new Error('Please check your internet connection');
+      toastActions.error('Please check your internet connection');
     } else {
-      throw ex.response.data.field;
+      toastActions.error(ex.response.data.field.message);
+      throw 'Exception!';
     }
   }
 }

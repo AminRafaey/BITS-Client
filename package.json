@@ -37,6 +37,7 @@
     "file-loader": "^6.1.1",
     "html-webpack-plugin": "^4.5.0",
     "match": "^1.2.10",
+    "notistack": "^1.0.5",
     "parse": "^2.19.0",
     "phone": "^2.4.21",
     "prettier": "^2.1.2",

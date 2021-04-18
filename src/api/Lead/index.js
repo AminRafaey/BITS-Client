@@ -60,6 +60,7 @@ export async function removeLeads(leads) {
       toastActions.error('Please check your internet connection');
     } else {
       toastActions.error(ex.response.data.field.message);
+      throw 'Exception!';
     }
   }
 }

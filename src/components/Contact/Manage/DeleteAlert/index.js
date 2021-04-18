@@ -35,7 +35,6 @@ function DeleteAlert(props) {
       .then((res) => {})
       .catch((err) => {
         addLeads(leadsDispatch, { leads });
-        alert(err.message);
       });
     selectedLead
       ? removeLead(leadsDispatch, { selectedLeadIndex })

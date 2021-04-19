@@ -61,7 +61,7 @@ const StyledCountrySelectedTextField = withStyles({
 })(MUITextField);
 
 function PhoneNumber(props) {
-  const { personInfo, setPersonInfo } = props;
+  const { personInfo, setPersonInfo, source } = props;
   const [selectedCountry, setSelectedCountry] = useState(null);
 
   const TagName = selectedCountry
@@ -94,6 +94,7 @@ function PhoneNumber(props) {
         autoHighlight
         openOnFocus
         closeIcon={false}
+        disabled={source === 'From-Inbox'}
         size="small"
         multiple
         options={countries}
@@ -166,7 +167,9 @@ function PhoneNumber(props) {
       <StyledTextField
         value={personInfo.phone && selectedCountry ? personInfo.phone : ''}
         type="tel"
-        disabled={selectedCountry ? false : true}
+        disabled={
+          source === 'From-Inbox' ? true : selectedCountry ? false : true
+        }
         error={
           personInfo.phone && selectedCountry
             ? phone(`+${selectedCountry.phone}${personInfo.phone}`).length === 0
@@ -193,5 +196,6 @@ function PhoneNumber(props) {
 PhoneNumber.propTypes = {
   personInfo: PropTypes.object.isRequired,
   setPersonInfo: PropTypes.func.isRequired,
+  source: PropTypes.string,
 };
 export default PhoneNumber;

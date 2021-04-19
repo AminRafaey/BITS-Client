@@ -55,6 +55,7 @@ function CreateLead(props) {
     type,
     editingLead,
     selectedLeadIndex,
+    source,
   } = props;
   const leadsDispatch = useLeadsDispatch();
   const [leadData, setLeadData] = useState(initLeadData);
@@ -279,6 +280,7 @@ function CreateLead(props) {
                 <PhoneNumber
                   personInfo={leadData}
                   setPersonInfo={setLeadData}
+                  source={source}
                 />
               </Grid>
               {errorRow('phone')}
@@ -400,5 +402,6 @@ CreateLead.propTypes = {
   type: PropTypes.string,
   editingLead: PropTypes.object,
   selectedLeadIndex: PropTypes.number,
+  source: PropTypes.string,
 };
 export default CreateLead;

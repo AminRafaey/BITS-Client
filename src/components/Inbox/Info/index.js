@@ -111,7 +111,7 @@ function Info(props) {
         </LoaderWrapper>
       ) : (
         <React.Fragment>
-          <About />
+          <About currentChatJid={currentChatJid} />
           <EmptyWrapper />
           <LabelArea />
           <EmptyWrapper />

@@ -18,6 +18,21 @@ export async function getLeads(leadData) {
   }
 }
 
+export async function getLeadByPhone(phone) {
+  try {
+    const res = await axios.get(endPointApi + '/phone', { params: { phone } });
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+      throw 'Please check your internet connection';
+    } else {
+      toastActions.error(ex.response.data.field.message);
+      throw ex.response.data.field.message;
+    }
+  }
+}
+
 export async function createLead(leadData) {
   try {
     const res = await axios.post(endPointApi + '/create', leadData);

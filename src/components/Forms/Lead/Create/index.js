@@ -63,7 +63,7 @@ function CreateLead(props) {
   const [error, setError] = useState({});
 
   useEffect(() => {
-    if (type === 'edit') {
+    if (type === 'edit' || type === 'createWithProvidedInfo') {
       setLeadData({ ...editingLead });
     } else if (window.localStorage.getItem('leadData')) {
       setLeadData(JSON.parse(window.localStorage.getItem('leadData')));
@@ -378,7 +378,7 @@ function CreateLead(props) {
             >
               {type === 'edit' ? 'Save' : 'Add'}
             </Button>
-            {type !== 'edit' && (
+            {type !== 'edit' && type !== 'createWithProvidedInfo' && (
               <Button
                 onClick={() => {
                   handleSubmit('Continue');

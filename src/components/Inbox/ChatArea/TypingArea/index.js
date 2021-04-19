@@ -33,7 +33,7 @@ const TextAreaWrapper = styled(Box)({
 const TemplateSelectWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
-  padding: '8px 10px 0px',
+  padding: '0px 10px 0px',
 });
 
 const FotterWrapper = styled(Box)({

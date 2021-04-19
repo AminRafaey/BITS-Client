@@ -1,7 +1,7 @@
 export const chat = [
   {
     count: 4,
-    jid: '923222070707@s.whatsapp.net',
+    jid: '923348035644@s.whatsapp.net',
     message: 'true',
     messages: [
       {

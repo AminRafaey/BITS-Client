@@ -25,7 +25,7 @@ const NoOptionTyp = styled(Typography)({
 const StyledInboxAutoComplete = withStyles({
   root: {
     '& .MuiFormControl-root': {
-      width: 160,
+      width: 215,
       '& .MuiInputBase-root .MuiOutlinedInput-notchedOutline': {
         border: 'none',
       },
@@ -58,7 +58,7 @@ export default function TemplateMultiSelect(props) {
   const loading = open && options.length === 0;
 
   const TagName =
-    type && type === 'inbox' ? StyledInboxAutoComplete : StyledAutoComplete;
+    type === 'inbox' ? StyledInboxAutoComplete : StyledAutoComplete;
   useEffect(() => {
     if (!loading) {
       return undefined;
@@ -125,10 +125,11 @@ export default function TemplateMultiSelect(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Select Template"
+          {...(type !== 'inbox' && { label: 'Select Template' })}
           variant="outlined"
           InputProps={{
             ...params.InputProps,
+            ...(type === 'inbox' && { placeholder: 'Select Template' }),
             endAdornment: (
               <React.Fragment>
                 {loading ? (

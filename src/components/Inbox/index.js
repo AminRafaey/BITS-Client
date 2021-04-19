@@ -29,7 +29,7 @@ function Inbox(props) {
               <ChatArea currentChatJid={currentChatJid} />
             </Grid>
             <Grid item xs={2}>
-              <Info />
+              <Info currentChatJid={currentChatJid} />
             </Grid>
           </React.Fragment>
         ) : (

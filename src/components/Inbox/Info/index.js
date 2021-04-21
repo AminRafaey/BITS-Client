@@ -21,7 +21,7 @@ const InfoWrapper = styled(Box)({
   overflowY: 'scroll',
 });
 
-const EmptyWrapper = styled(Box)({
+export const EmptyWrapper = styled(Box)({
   width: '100%',
   height: 1,
   background: HomeIconDefaultColor,
@@ -124,11 +124,6 @@ function Info(props) {
             selectedLead={selectedLead}
             setSelectedLead={setSelectedLead}
           />
-          <EmptyWrapper />
-          <Notes />
-          <EmptyWrapper />
-          <Notes />
-          <EmptyWrapper />
           <Notes />
         </React.Fragment>
       )}

@@ -48,7 +48,6 @@ function LabelMultiSelect(props) {
   const labelState = useLabelState();
 
   useEffect(() => {
-    console.log('hi', personInfo, type);
     if (options.length === 0) {
       let cloneLabelState = stateCloner(
         Object.keys(labelState).map((l) => labelState[l])

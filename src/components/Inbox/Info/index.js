@@ -50,6 +50,7 @@ function Info(props) {
   const { currentChatJid } = props;
   const [loader, setLoader] = useState(true);
   const [notAddedInDB, setNotAddedInDB] = useState(false);
+  const [selectedLead, setSelectedLead] = useState({});
   const leadsState = useLeadsState();
   const leadsDispatch = useLeadsDispatch();
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
@@ -73,7 +74,13 @@ function Info(props) {
     }
   }, [currentChatJid, leadsState]);
 
-  if (loader) {
+  useEffect(() => {
+    setSelectedLead(
+      leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
+    );
+  }, [currentChatJid, leadsState]);
+
+  if (loader || Object.entries(selectedLead).length === 0) {
     return (
       <LoaderWrapper>
         <CircularProgress color="primary" />
@@ -111,9 +118,12 @@ function Info(props) {
         </LoaderWrapper>
       ) : (
         <React.Fragment>
-          <About currentChatJid={currentChatJid} />
+          <About selectedLead={selectedLead} />
           <EmptyWrapper />
-          <LabelArea />
+          <LabelArea
+            selectedLead={selectedLead}
+            setSelectedLead={setSelectedLead}
+          />
           <EmptyWrapper />
           <Notes />
           <EmptyWrapper />

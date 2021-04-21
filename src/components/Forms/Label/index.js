@@ -42,17 +42,21 @@ const StyledAutoComplete = withStyles({
   },
 })(Autocomplete);
 function LabelMultiSelect(props) {
-  const { personInfo, setPersonInfo, type } = props;
+  const { personInfo, setPersonInfo, type, setShowLabelSelect } = props;
   const [options, setOptions] = useState([]);
 
   const labelState = useLabelState();
 
   useEffect(() => {
+    console.log('hi', personInfo, type);
     if (options.length === 0) {
       let cloneLabelState = stateCloner(
         Object.keys(labelState).map((l) => labelState[l])
       );
-      if (type === 'edit' && personInfo.labels.length > 0) {
+      if (
+        (type === 'edit' || type === 'inbox') &&
+        personInfo.labels.length > 0
+      ) {
         cloneLabelState = cloneLabelState.map((l) =>
           personInfo.labels.find((p) => p === l._id)
             ? { ...l, selected: true }
@@ -74,7 +78,6 @@ function LabelMultiSelect(props) {
         to={'/addLabel'}
         style={{ textDecoration: 'none', width: '100%' }}
         onMouseDown={() =>
-          type &&
           type === 'createLead' &&
           window.localStorage.setItem('leadData', JSON.stringify(personInfo))
         }
@@ -93,6 +96,7 @@ function LabelMultiSelect(props) {
       size="small"
       getOptionLabel={(option) => option.title}
       options={options}
+      onClose={() => type === 'inbox' && setShowLabelSelect(false)}
       value={
         options.filter((o) => o.selected)
           ? options.filter((o) => o.selected)
@@ -168,7 +172,7 @@ function LabelMultiSelect(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Select Template"
+          label="Select Labels"
           variant="outlined"
           InputProps={{
             ...params.InputProps,
@@ -182,5 +186,6 @@ LabelMultiSelect.propTypes = {
   personInfo: PropTypes.object.isRequired,
   setPersonInfo: PropTypes.func.isRequired,
   type: PropTypes.string,
+  setShowLabelSelect: PropTypes.func,
 };
 export default LabelMultiSelect;

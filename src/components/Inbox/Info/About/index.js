@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import CreateLead from '../../../Forms/Lead/Create';
 import { Button, Tooltip } from '../../../HOC';
@@ -74,17 +74,11 @@ const EditWrapper = styled(Box)({
 });
 
 function About(props) {
-  const { currentChatJid } = props;
-  const [selectedLead, setSelectedLead] = useState({});
+  const { selectedLead } = props;
+
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
   const leadsState = useLeadsState();
 
-  useEffect(() => {
-    setSelectedLead(
-      leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
-    );
-  }, [currentChatJid, leadsState]);
-  
   return (
     <AboutWrapper>
       {Object.entries(selectedLead).length > 0 && (
@@ -169,7 +163,7 @@ function About(props) {
   );
 }
 About.propTypes = {
-  currentChatJid: PropTypes.string.isRequired,
+  selectedLead: PropTypes.object.isRequired,
 };
 
 export default About;

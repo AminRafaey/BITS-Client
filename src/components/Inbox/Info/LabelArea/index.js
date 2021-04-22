@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import LabelMultiSelect from '../../../Forms/Label';
 import { Checkbox } from '../../../HOC';
 import { useLabelState } from '../../../../Context/Label';

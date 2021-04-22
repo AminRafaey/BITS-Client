@@ -124,7 +124,11 @@ function Info(props) {
             selectedLead={selectedLead}
             setSelectedLead={setSelectedLead}
           />
-          <Notes />
+          <EmptyWrapper />
+          <Notes
+            selectedLead={selectedLead}
+            setSelectedLead={setSelectedLead}
+          />
         </React.Fragment>
       )}
     </InfoWrapper>

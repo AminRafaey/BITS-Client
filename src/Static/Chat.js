@@ -542,7 +542,7 @@ export const chat = [
   },
   {
     count: 0,
-    jid: '923222070707@s.whatsapp.net',
+    jid: '923439816064@s.whatsapp.net',
     message: 'true',
     messages: [],
     mute: '0',

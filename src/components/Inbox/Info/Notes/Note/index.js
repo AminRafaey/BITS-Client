@@ -1,34 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { TextArea } from '../../../../HOC';
 import { Box, styled, Typography } from '@material-ui/core';
-import {
-  LinkColor,
-  BackgroundColor,
-  LightTextColor,
-} from '../../../../constants/theme';
+import { BackgroundColor, LightTextColor } from '../../../../constants/theme';
 
 const globalTyp = {
   display: 'inline',
   fontSize: 12,
   color: LightTextColor,
 };
-const LabelAreaWrapper = styled(Box)({
-  padding: '5px 15px 0px 5px',
-  background: BackgroundColor,
-});
 const NoteWrapper = styled(Box)({
-  display: 'flex',
-  justifyContent: 'space-between',
-  paddingBottom: 12,
-});
-const NoteTyp = styled(Typography)({
-  fontSize: 15,
-  fontWeight: 600,
-});
-
-const ManageNoteTyp = styled(Typography)({
-  fontSize: 14,
-  color: LinkColor,
+  padding: '5px 15px 10px 5px',
+  background: BackgroundColor,
 });
 
 const NoteInfoTyp = styled(Typography)({
@@ -46,22 +29,61 @@ const NoteContentTyp = styled(Typography)({
   paddingBottom: 12,
 });
 function Note(props) {
+  const { selectedLead, setSelectedLead, content, date, index } = props;
+  const [showTextArea, setShowTextArea] = useState(false);
+  useEffect(() => {
+    content.length === 0 && setShowTextArea(true);
+  }, [date]);
+
   return (
-    <LabelAreaWrapper>
-      <NoteWrapper>
-        <NoteTyp>Notes</NoteTyp>
-        <ManageNoteTyp>Add Notes</ManageNoteTyp>
-      </NoteWrapper>
-      <NoteInfoTyp>Mon Dec 21, 2020 11:19pm · </NoteInfoTyp>
-      <ButtonTyp>Edit</ButtonTyp>
+    <NoteWrapper>
+      <NoteInfoTyp>{`${
+        new Date(date).toString().split('GMT')[0]
+      } · `}</NoteInfoTyp>
+      <ButtonTyp onClick={() => setShowTextArea(true)}>Edit</ButtonTyp>
       <NoteInfoTyp> · </NoteInfoTyp>
-      <ButtonTyp>Delete</ButtonTyp>
-      <NoteContentTyp>
-        This customer is very important, PLease take care of him
-      </NoteContentTyp>
-    </LabelAreaWrapper>
+      <ButtonTyp
+        onClick={() =>
+          setSelectedLead({
+            ...selectedLead,
+            notes: selectedLead.notes.filter((n, i) => i !== index),
+          })
+        }
+      >
+        Delete
+      </ButtonTyp>
+      {showTextArea ? (
+        <TextArea
+          rowsMax={10}
+          defaultValue={content}
+          autoFocus={true}
+          onBlur={(e) => {
+            e.target.value.length !== 0
+              ? setSelectedLead({
+                  ...selectedLead,
+                  notes: selectedLead.notes.map((n, i) =>
+                    i === index ? { ...n, content: e.target.value } : n
+                  ),
+                })
+              : setSelectedLead({
+                  ...selectedLead,
+                  notes: selectedLead.notes.filter((n, i) => i !== index),
+                });
+            setShowTextArea(false);
+          }}
+        />
+      ) : (
+        <NoteContentTyp>{content}</NoteContentTyp>
+      )}
+    </NoteWrapper>
   );
 }
-Note.propTypes = {};
+Note.propTypes = {
+  content: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  selectedLead: PropTypes.object.isRequired,
+  setSelectedLead: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
+};
 
 export default Note;

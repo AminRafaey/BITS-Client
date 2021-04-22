@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import About from './About';
 import LabelArea from './LabelArea';
@@ -10,7 +10,7 @@ import {
   useLeadsDispatch,
   addLead,
 } from '../../../Context/Lead';
-import { getLeadByPhone } from '../../../api/Lead';
+import { getLeadByPhone, updateLeadWithContext } from '../../../api/Lead';
 import { styled, Box, CircularProgress, Typography } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { HomeIconDefaultColor } from '../../constants/theme';
@@ -54,7 +54,8 @@ function Info(props) {
   const leadsState = useLeadsState();
   const leadsDispatch = useLeadsDispatch();
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
-
+  const selectedLeadRef = useRef(null);
+  selectedLeadRef.current = selectedLead;
   useEffect(() => {
     setLoader(true);
     if (
@@ -78,7 +79,23 @@ function Info(props) {
     setSelectedLead(
       leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
     );
+    return () => {
+      if (Object.entries(selectedLeadRef.current).length > 0) {
+        const orignalData = leadsState.find(
+          (l) => l._id === selectedLeadRef.current._id
+        );
+        JSON.stringify(orignalData) !==
+          JSON.stringify(selectedLeadRef.current) &&
+          updateLeadWithContext(
+            selectedLeadRef.current,
+            leadsDispatch,
+            leadsState.findIndex((l) => l._id === selectedLeadRef.current._id)
+          );
+      }
+    };
   }, [currentChatJid, leadsState]);
+
+  useLayoutEffect(() => {}, []);
 
   if (loader || Object.entries(selectedLead).length === 0) {
     return (

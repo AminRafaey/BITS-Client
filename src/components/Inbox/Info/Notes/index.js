@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 import Note from './Note';
 import { EmptyWrapper } from '../index';
 import { Box, styled, Typography } from '@material-ui/core';
-import {
-  LinkColor,
-  BackgroundColor,
-} from '../../../constants/theme';
+import { LinkColor, BackgroundColor } from '../../../constants/theme';
 const NoteWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',

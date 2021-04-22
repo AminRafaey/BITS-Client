@@ -1,6 +1,7 @@
 import config from '../../config.json';
 import axios from 'axios';
 import { toastActions } from '../../components/Toast';
+import { updateLead as updateLeadInContext } from '../../Context/Lead';
 const endPointApi = `${config.baseUrl}lead`;
 
 export async function getLeads(leadData) {
@@ -56,6 +57,29 @@ export async function updateLead(updatedLead) {
       throw new Error('Please check your internet connection');
     } else {
       throw ex.response.data.field;
+    }
+  }
+}
+
+export async function updateLeadWithContext(
+  updatedLead,
+  leadsDispatch,
+  selectedLeadIndex
+) {
+  try {
+    const res = await axios.put(endPointApi, updatedLead);
+    updateLeadInContext(leadsDispatch, {
+      leadData: { ...res.data.field.data },
+      selectedLeadIndex: selectedLeadIndex,
+    });
+    toastActions.success('Previous lead updated successfully');
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+    } else {
+      toastActions.error(
+        ex.response.data.field.message + "So, previous lead isn't updated."
+      );
     }
   }
 }

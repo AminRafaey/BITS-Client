@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Note from './Note';
 import { EmptyWrapper } from '../index';
 import { Box, styled, Typography } from '@material-ui/core';
-import { LinkColor, BackgroundColor } from '../../../constants/theme';
+import { LinkColor } from '../../../constants/theme';
 const NoteWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
@@ -25,7 +25,6 @@ const ManageNoteTyp = styled(Typography)({
 
 const NotesWrapper = styled(Box)({
   padding: '5px 15px 0px 5px',
-  background: BackgroundColor,
 });
 
 function Notes(props) {

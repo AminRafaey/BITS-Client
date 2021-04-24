@@ -6,21 +6,19 @@ import { Checkbox } from '../../../HOC';
 import { useLabelState } from '../../../../Context/Label';
 import { Chip, Box, styled, Typography, withStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import {
-  LinkColor,
-  BackgroundColor,
-  HoverColor,
-} from '../../../constants/theme';
+
+import { LinkColor, HoverColor } from '../../../constants/theme';
 
 const LabelAreaWrapper = styled(Box)({
   padding: '5px 15px 0px 5px',
-  background: BackgroundColor,
 });
+
 const LabelWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
   paddingBottom: 12,
 });
+
 const LabelTyp = styled(Typography)({
   fontSize: 15,
   fontFamily: 'medium',
@@ -40,10 +38,12 @@ const CircleWrapper = styled(Box)({
   height: 5,
   borderRadius: '50%',
 });
+
 const SuggestTyp = styled(Typography)({
   fontSize: 14,
   padding: '12px 0px 8px',
 });
+
 const ChipWrapper = styled(Box)({
   padding: 4,
   display: 'inline-flex',
@@ -55,12 +55,15 @@ const AddIconWrapper = styled(Box)({
     background: HoverColor,
   },
 });
+
 const CheckboxWrapper = styled(Box)({});
+
 const StyledChip = withStyles({
   label: {
     fontSize: 14,
   },
 })(Chip);
+
 const StyledAddLabelChip = withStyles({
   root: {
     height: 28,
@@ -72,6 +75,7 @@ const StyledAddLabelChip = withStyles({
     },
   },
 })(Chip);
+
 function LabelArea(props) {
   const { selectedLead, setSelectedLead } = props;
   const labelState = useLabelState();
@@ -87,6 +91,7 @@ function LabelArea(props) {
         labels: personInfo.labels.map((l) => l._id),
       });
   }, [personInfo]);
+
   return (
     <LabelAreaWrapper>
       <LabelWrapper>

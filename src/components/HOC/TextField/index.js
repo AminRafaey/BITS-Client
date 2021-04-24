@@ -10,6 +10,7 @@ const StyledTextField = withStyles({
     '& .MuiOutlinedInput-root > .MuiInputBase-input': {
       height: 10,
       fontSize: 13,
+      fontFamily: 'system-ui',
     },
   },
 })(MuiTextField);

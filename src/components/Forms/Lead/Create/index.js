@@ -56,6 +56,7 @@ function CreateLead(props) {
     editingLead,
     selectedLeadIndex,
     source,
+    setSelectedLead,
   } = props;
   const leadsDispatch = useLeadsDispatch();
   const [leadData, setLeadData] = useState(initLeadData);
@@ -115,7 +116,7 @@ function CreateLead(props) {
           : addLead(leadsDispatch, {
               leadData: res,
             });
-
+        setSelectedLead && setSelectedLead(res);
         setLeadData(initLeadData);
         setLoading(false);
         setError({});
@@ -403,5 +404,6 @@ CreateLead.propTypes = {
   editingLead: PropTypes.object,
   selectedLeadIndex: PropTypes.number,
   source: PropTypes.string,
+  setSelectedLead: PropTypes.func,
 };
 export default CreateLead;

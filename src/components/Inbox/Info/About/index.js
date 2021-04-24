@@ -8,12 +8,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
-import {
-  LinkColor,
-  HeadingColor,
-  HoverColor,
-  BackgroundColor,
-} from '../../../constants/theme';
+import { LinkColor, HeadingColor, HoverColor } from '../../../constants/theme';
 import { colors } from '../../../constants/AvatarColor';
 const iconStyling = {
   width: 17,
@@ -29,7 +24,6 @@ const globalTypStyle = {
 };
 const AboutWrapper = styled(Box)({
   padding: '5px 0px 0px 5px',
-  background: BackgroundColor,
 });
 const ProfileWrapper = styled(Box)({
   display: 'flex',
@@ -74,7 +68,7 @@ const EditWrapper = styled(Box)({
 });
 
 function About(props) {
-  const { selectedLead } = props;
+  const { selectedLead, setSelectedLead } = props;
 
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
   const leadsState = useLeadsState();
@@ -153,6 +147,7 @@ function About(props) {
           editingLead={{
             ...selectedLead,
           }}
+          setSelectedLead={setSelectedLead}
           selectedLeadIndex={leadsState.findIndex(
             (l) => l._id === selectedLead._id
           )}
@@ -164,6 +159,7 @@ function About(props) {
 }
 About.propTypes = {
   selectedLead: PropTypes.object.isRequired,
+  setSelectedLead: PropTypes.func.isRequired,
 };
 
 export default About;

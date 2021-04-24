@@ -13,12 +13,13 @@ import {
 import { getLeadByPhone, updateLeadWithContext } from '../../../api/Lead';
 import { styled, Box, CircularProgress, Typography } from '@material-ui/core';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
-import { HomeIconDefaultColor } from '../../constants/theme';
+import { HomeIconDefaultColor, BackgroundColor } from '../../constants/theme';
 import { initLeadData } from '../../constants/InitialValues';
 
 const InfoWrapper = styled(Box)({
-  maxHeight: '100vh',
+  height: '100vh',
   overflowY: 'scroll',
+  background: BackgroundColor,
 });
 
 export const EmptyWrapper = styled(Box)({
@@ -93,9 +94,7 @@ function Info(props) {
           );
       }
     };
-  }, [currentChatJid, leadsState]);
-
-  useLayoutEffect(() => {}, []);
+  }, [currentChatJid]);
 
   if (loader || Object.entries(selectedLead).length === 0) {
     return (
@@ -135,7 +134,10 @@ function Info(props) {
         </LoaderWrapper>
       ) : (
         <React.Fragment>
-          <About selectedLead={selectedLead} />
+          <About
+            selectedLead={selectedLead}
+            setSelectedLead={setSelectedLead}
+          />
           <EmptyWrapper />
           <LabelArea
             selectedLead={selectedLead}

@@ -1,13 +1,10 @@
-/* eslint-disable no-use-before-define */
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useChatState } from '../../../../Context/Chat';
 import { Box, styled, TextField, withStyles } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
-import {
-  HeadingColor,
-  HighlightColor,
-  HomeIconDefaultColor,
-} from '../../../constants/theme';
+import { HeadingColor, HomeIconDefaultColor } from '../../../constants/theme';
 
 const SearchInputWrapper = styled(Box)({
   marginTop: 8,
@@ -41,7 +38,10 @@ const StyledAutoComplete = withStyles({
     },
   },
 })(Autocomplete);
-export default function SearchInput() {
+export default function SearchInput(props) {
+  const { searchString, setSearchString } = props;
+  const chatState = useChatState();
+
   return (
     <SearchInputWrapper>
       <IconWrapper>
@@ -49,11 +49,14 @@ export default function SearchInput() {
       </IconWrapper>
       <StyledAutoComplete
         freeSolo
-        id="free-solo-2-demo"
         size="small"
         closeIcon={false}
         disableClearable
-        options={top100Films.map((option) => option.title)}
+        options={chatState.map((option) => option.name)}
+        inputValue={searchString}
+        onInputChange={(event, newInputValue) => {
+          setSearchString(newInputValue);
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -67,15 +70,6 @@ export default function SearchInput() {
   );
 }
 
-const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 },
-  { title: 'The Dark Knight', year: 2008 },
-  { title: '12 Angry Men', year: 1957 },
-  { title: "Schindler's List", year: 1993 },
-  { title: 'Pulp Fiction', year: 1994 },
-  { title: 'The Lord of the Rings: The Return of the King', year: 2003 },
-  { title: 'The Good, the Bad and the Ugly', year: 1966 },
-  { title: 'Fight Club', year: 1999 },
-];
+SearchInput.propTypes = {
+  currentChatJid: PropTypes.string.isRequired,
+};

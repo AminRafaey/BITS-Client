@@ -10,6 +10,9 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
 import { LinkColor, HeadingColor, HoverColor } from '../../../constants/theme';
 import { colors } from '../../../constants/AvatarColor';
+import PublicIcon from '@material-ui/icons/Public';
+import BusinessIcon from '@material-ui/icons/Business';
+
 const iconStyling = {
   width: 17,
   height: 17,
@@ -113,6 +116,12 @@ function About(props) {
             <PhoneIcon style={{ ...iconStyling }} />
             <InfoTyp>{selectedLead.phone}</InfoTyp>
           </FlexWrapper>
+
+          <FlexWrapper>
+            <BusinessIcon style={{ ...iconStyling }} />
+            <InfoTyp>{selectedLead.companyName}</InfoTyp>
+          </FlexWrapper>
+
           <FlexWrapper>
             <LinkIcon style={{ ...iconStyling }} />
             <Tooltip
@@ -129,6 +138,11 @@ function About(props) {
             <LocationOnIcon style={{ ...iconStyling }} />
             <InfoTyp>{selectedLead.address}</InfoTyp>
           </FlexWrapper>
+          <FlexWrapper>
+            <PublicIcon style={{ ...iconStyling }} />
+            <InfoTyp>{selectedLead.country}</InfoTyp>
+          </FlexWrapper>
+
           <EditOuterWrapper>
             {' '}
             <EditWrapper>

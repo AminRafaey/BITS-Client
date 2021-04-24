@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import QrCode from '../QrCode';
+import { toastActions } from '../../Toast';
 import {
   useConnectStatusDispatch,
   updateStatus,
@@ -95,7 +96,13 @@ export default function Modal(props) {
       setQrString(res);
     });
     socket.on('connection-status', (res) => {
-      res === 'success' ? handleAfterScan(true) : handleAfterScan(false);
+      if (res === 'success') {
+        toastActions.success('Connected to a WhatsApp successfully.');
+        handleAfterScan(true);
+      } else {
+        toastActions.error('Connection timed out, Please try again.');
+        handleAfterScan(false);
+      }
     });
     socket.on('contacts-received', (res) => {
       console.log(res);

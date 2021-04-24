@@ -8,7 +8,12 @@ import EmailIcon from '@material-ui/icons/Email';
 import PhoneIcon from '@material-ui/icons/Phone';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LinkIcon from '@material-ui/icons/Link';
-import { LinkColor, HeadingColor, HoverColor } from '../../../constants/theme';
+import {
+  LinkColor,
+  HeadingColor,
+  HoverColor,
+  LightTextColor,
+} from '../../../constants/theme';
 import { colors } from '../../../constants/AvatarColor';
 import PublicIcon from '@material-ui/icons/Public';
 import BusinessIcon from '@material-ui/icons/Business';
@@ -70,6 +75,15 @@ const EditWrapper = styled(Box)({
   },
 });
 
+const EditedTyp = styled(Typography)({
+  fontSize: 12,
+  color: LightTextColor,
+  display: 'inline',
+  '&:hover': {
+    cursor: 'pointer',
+    textDecoration: 'underline',
+  },
+});
 function About(props) {
   const { selectedLead, setSelectedLead } = props;
 
@@ -122,17 +136,24 @@ function About(props) {
             <InfoTyp>{selectedLead.companyName}</InfoTyp>
           </FlexWrapper>
 
-          <FlexWrapper>
+          <FlexWrapper flexWrap={'wrap'}>
             <LinkIcon style={{ ...iconStyling }} />
-            <Tooltip
-              title={`${
-                new Date(selectedLead.createdAt).toString().split('GMT')[0]
-              }`}
-            >
-              <InfoTyp>{`Customer since:\n ${
-                new Date(selectedLead.createdAt).toString().split('GMT')[0]
-              }`}</InfoTyp>
-            </Tooltip>
+
+            <InfoTyp>{`Customer since:\n`}</InfoTyp>
+            <Box flexBasis={'100%'}>
+              <InfoTyp display="inline">
+                {new Date(selectedLead.createdAt).toString().split('GMT')[0]}
+              </InfoTyp>
+              {selectedLead.updatedAt && (
+                <Tooltip
+                  title={
+                    new Date(selectedLead.updatedAt).toString().split('GMT')[0]
+                  }
+                >
+                  <EditedTyp>(edited·)</EditedTyp>
+                </Tooltip>
+              )}
+            </Box>
           </FlexWrapper>
           <FlexWrapper>
             <LocationOnIcon style={{ ...iconStyling }} />

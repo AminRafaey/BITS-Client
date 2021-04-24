@@ -71,5 +71,6 @@ export default function SearchInput(props) {
 }
 
 SearchInput.propTypes = {
-  currentChatJid: PropTypes.string.isRequired,
+  searchString: PropTypes.string.isRequired,
+  setSearchString: PropTypes.func.isRequired,
 };

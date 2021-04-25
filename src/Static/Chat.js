@@ -533,7 +533,21 @@ export const chat = [
     count: 2,
     jid: '923224797905@s.whatsapp.net',
     message: 'true',
-    messages: [],
+    messages: [
+      {
+        ephemeralOutOfSync: false,
+        key: {
+          remoteJid: '923327104504@s.whatsapp.net',
+          fromMe: true,
+          id: '3AB4A0370AFD02CE7AB7',
+        },
+        message: {
+          conversation: 'Hello amin, how are you. what are you doing right now',
+        },
+        messageTimestamp: '1614788595',
+        status: 'ERROR',
+      },
+    ],
     modify_tag: '90971',
     mute: '0',
     name: 'Fayiz Butt',

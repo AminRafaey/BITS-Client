@@ -49,8 +49,10 @@ function ChatBox(props) {
         {chatState
           .filter((c) => c.jid.split('@')[1] === 's.whatsapp.net')
           .filter((c) =>
-            c.name
-              ? c.name.toLowerCase().includes(searchString.toLowerCase())
+            searchString
+              ? c.name
+                ? c.name.toLowerCase().includes(searchString.toLowerCase())
+                : false
               : true
           )
           .map((c, index) => {

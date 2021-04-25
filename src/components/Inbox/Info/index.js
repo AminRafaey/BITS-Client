@@ -64,22 +64,25 @@ function Info(props) {
     ) {
       getLeadByPhone('+' + currentChatJid.split('@')[0])
         .then((res) => {
-          res
-            ? addLead(leadsDispatch, { leadData: res })
-            : setNotAddedInDB(true);
+          if (res) {
+            addLead(leadsDispatch, { leadData: res });
+            setSelectedLead(res);
+          } else {
+            setNotAddedInDB(true);
+          }
           setLoader(false);
         })
         .catch((err) => {});
     } else {
+      setSelectedLead(
+        leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
+      );
       setNotAddedInDB(false);
       setLoader(false);
     }
   }, [currentChatJid, leadsState]);
 
   useEffect(() => {
-    setSelectedLead(
-      leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
-    );
     return () => {
       if (Object.entries(selectedLeadRef.current).length > 0) {
         const orignalData = leadsState.find(
@@ -96,7 +99,7 @@ function Info(props) {
     };
   }, [currentChatJid]);
 
-  if (loader || Object.entries(selectedLead).length === 0) {
+  if (loader) {
     return (
       <LoaderWrapper>
         <CircularProgress color="primary" />

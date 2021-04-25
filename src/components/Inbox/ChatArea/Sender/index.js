@@ -37,6 +37,7 @@ const DateTyp = styled(Typography)({
 const MessageTyp = styled(Typography)({
   fontSize: 14,
   display: 'inline',
+  wordBreak: 'break-all',
 });
 
 function Sender(props) {

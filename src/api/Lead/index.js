@@ -10,10 +10,10 @@ export async function getLeads(leadData) {
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
+      toastActions.error('Please check your internet connection');
       throw new Error('Please check your internet connection');
     } else {
-      alert('Server Error!');
+      toastActions.error(ex.response.data.field.message);
       throw new Error('Server Error!');
     }
   }

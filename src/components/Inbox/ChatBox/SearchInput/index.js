@@ -52,7 +52,11 @@ export default function SearchInput(props) {
         size="small"
         closeIcon={false}
         disableClearable
-        options={chatState.map((option) => option.name)}
+        options={chatState
+          .filter((c) => c.jid.split('@')[1] === 's.whatsapp.net')
+          .map((option) =>
+            option.name ? option.name : option.jid.split('@')[0]
+          )}
         inputValue={searchString}
         onInputChange={(event, newInputValue) => {
           setSearchString(newInputValue);

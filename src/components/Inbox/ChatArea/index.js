@@ -9,7 +9,7 @@ import {
   addMessages,
 } from '../../../Context/Chat';
 import { useSocketState } from '../../../Context/Socket';
-import { styled, Box } from '@material-ui/core';
+import { styled, Box, CircularProgress } from '@material-ui/core';
 
 const ChatAreaWrapper = styled(Box)({
   display: 'flex',
@@ -20,7 +20,7 @@ const ChatAreaWrapper = styled(Box)({
 const TypingAreaWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
-  height: '30vh',
+  height: '35vh',
   background: '#ffff',
 });
 
@@ -29,7 +29,15 @@ const ChatsWrapper = styled(Box)({
   display: 'flex',
   flexDirection: 'column-reverse',
   padding: '0px 5px 0px 5px',
-  height: '70vh',
+  height: '65vh',
+});
+
+const LoadingWrapper = styled(Box)({
+  width: '100%',
+  height: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
 });
 
 function ChatArea(props) {
@@ -40,10 +48,14 @@ function ChatArea(props) {
   const [selectedTemplate, setSelectedTemplate] = useState({});
   const [message, setMessage] = useState('');
   const [selectedMedia, setSelectedMedia] = useState({});
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    if (chatState.find((c) => c.jid === currentChatJid).messages.length < 1) {
+    setLoader(true);
+    const messages = chatState.find((c) => c.jid === currentChatJid).messages;
+    if (messages ? messages.length < 1 : true) {
       socket.on('get-contact-messages', (res) => {
+        setLoader(false);
         addMessages(chatDispatch, {
           jid: res.jid,
           messages: res.messages.messages,
@@ -51,6 +63,8 @@ function ChatArea(props) {
       });
 
       socket.emit('get-contact-messages', currentChatJid);
+    } else {
+      setLoader(false);
     }
   }, [currentChatJid]);
 
@@ -58,7 +72,13 @@ function ChatArea(props) {
     Object.entries(selectedTemplate).length > 0 &&
       setMessage(selectedTemplate.content);
   }, [selectedTemplate]);
-
+  if (loader) {
+    return (
+      <LoadingWrapper>
+        <CircularProgress color="primary" />
+      </LoadingWrapper>
+    );
+  }
   return (
     <ChatAreaWrapper>
       <ChatsWrapper id="scrollableDiv" className="Chat-Box-Styled-Scroll">

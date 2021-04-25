@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import { useSocketState } from '../../../../Context/Socket';
+import {
+  useChatState,
+  useChatDispatch,
+  addMessage,
+} from '../../../../Context/Chat';
 import { sendTextMesage } from '../../../../api/send';
 import { styled, Box } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { HeadingColor, GrayColor } from '../../../constants/theme';
+import {
+  HeadingColor,
+  GrayColor,
+  DarkHoverColor,
+  primaryColor,
+} from '../../../constants/theme';
 const textAreaStyle = {
   resize: 'none',
   border: `0px solid #ffff`,
@@ -20,14 +30,16 @@ const TypingAreaWrapper = styled(Box)({
   border: `1px solid ${GrayColor}`,
   marginRight: 2,
   width: '100%',
-  height: '95%',
+  height: '98%',
+  display: 'flex',
+  flexDirection: 'column',
 });
 
 const TextAreaWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   padding: '0px 10px',
-  height: 'calc(100% - 77px)',
+  height: '100%',
 });
 
 const TemplateSelectWrapper = styled(Box)({
@@ -40,12 +52,29 @@ const FotterWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
   alignItems: 'center',
-  padding: '3px 10px',
+  padding: '2px 10px',
   borderTop: `1px solid ${GrayColor}`,
 });
 
 const SendWrapper = styled(Box)({
+  height: 24,
   cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '1px 2px',
+  '&:hover': {
+    background: DarkHoverColor,
+  },
+  '&:active': {
+    background: primaryColor,
+  },
+});
+const TypingAndSendingAreaWrapper = styled(Box)({
+  justifyContent: 'space-between',
+  flexDirection: 'column',
+  display: 'flex',
+  height: '100%',
 });
 function TypingArea(props) {
   const {
@@ -58,6 +87,8 @@ function TypingArea(props) {
   } = props;
   const [textAreaVal, setTextAreaVal] = useState('');
   const socket = useSocketState();
+  const chatState = useChatState();
+  const chatDispatch = useChatDispatch();
 
   useEffect(() => {
     setTextAreaVal(message);
@@ -77,6 +108,20 @@ function TypingArea(props) {
       formData.append('mediaType', selectedMedia.type);
       sendMedia(formData, socket);
     }
+    addMessage(chatDispatch, {
+      jid: currentChatJid,
+      message: {
+        key: {
+          fromMe: true,
+        },
+        message: {
+          conversation: message,
+        },
+        messageTimestamp: new Date().getTime(),
+      },
+    });
+    setTextAreaVal('');
+    setMessage('');
   };
 
   return (
@@ -87,24 +132,26 @@ function TypingArea(props) {
           setSelectedTemplate={setSelectedTemplate}
         />
       </TemplateSelectWrapper>
-      <TextAreaWrapper>
-        <textarea
-          style={textAreaStyle}
-          value={textAreaVal}
-          id="templateTextArea"
-          placeholder="Type a message..."
-          onChange={(e) => {
-            setTextAreaVal(e.target.value);
-          }}
-          onBlur={(e) => setMessage(e.target.value)}
-        />
-      </TextAreaWrapper>
-      <FotterWrapper>
-        {' '}
-        <SendWrapper onClick={() => handleSend()}>
-          <SendIcon />
-        </SendWrapper>
-      </FotterWrapper>
+      <TypingAndSendingAreaWrapper>
+        <TextAreaWrapper>
+          <textarea
+            style={textAreaStyle}
+            value={textAreaVal}
+            id="templateTextArea"
+            placeholder="Type a message..."
+            onChange={(e) => {
+              setTextAreaVal(e.target.value);
+            }}
+            onBlur={(e) => setMessage(e.target.value)}
+          />
+        </TextAreaWrapper>
+        <FotterWrapper>
+          {' '}
+          <SendWrapper onClick={() => handleSend()}>
+            <SendIcon style={{ height: 24, width: 24 }} />
+          </SendWrapper>
+        </FotterWrapper>
+      </TypingAndSendingAreaWrapper>
     </TypingAreaWrapper>
   );
 }

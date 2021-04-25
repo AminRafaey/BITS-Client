@@ -108,6 +108,7 @@ export default function Modal(props) {
       console.log(res);
     });
     socket.on('chats-received', (res) => {
+      toastActions.success('Chats recieved successfully');
       if (chatState.length < 1) {
         loadChats(chatDispatch, {
           chats: res,

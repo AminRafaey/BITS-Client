@@ -8,6 +8,13 @@ import WABg from '../../public/images/WABg.png';
 import { useConnectStatusState } from '../../Context/ConnectStatus';
 import { Box, styled, Grid, CircularProgress } from '@material-ui/core';
 
+const LoadingWrapper = styled(Box)({
+  width: '100%',
+  height: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 const InboxWrapper = styled(Box)({
   display: 'flex',
   width: '100%',
@@ -25,6 +32,7 @@ function Inbox(props) {
   useEffect(() => {
     !connectState && setOpenModal(true);
   }, [connectState]);
+
   return (
     <InboxWrapper>
       {connectState ? (
@@ -49,9 +57,10 @@ function Inbox(props) {
           )}
         </Grid>
       ) : (
-        <>
+        <LoadingWrapper>
+          <CircularProgress color="primary" />
           <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
-        </>
+        </LoadingWrapper>
       )}
     </InboxWrapper>
   );

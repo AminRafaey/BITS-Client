@@ -28,7 +28,7 @@ function App() {
           <TemplateProvider template={[]}>
             <LeadsProvider>
               <AddressBookProvider addressBook={addressBook}>
-                <ChatProvider chat={chat}>
+                <ChatProvider>
                   <LabelProvider>
                     <CompanyProvider companies={companies}>
                       <LeadSourceProvider leadSource={leadSource}>

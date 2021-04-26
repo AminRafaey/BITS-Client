@@ -66,6 +66,9 @@ function ChatArea(props) {
     } else {
       setLoader(false);
     }
+    return () => {
+      socket.off('get-contact-messages');
+    };
   }, [currentChatJid]);
 
   useEffect(() => {

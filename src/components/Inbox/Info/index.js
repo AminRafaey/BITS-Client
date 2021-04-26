@@ -132,6 +132,7 @@ function Info(props) {
                 ...initLeadData,
                 phone: '+' + currentChatJid.split('@')[0],
               }}
+              source={'From-Inbox'}
             />
           )}
         </LoaderWrapper>

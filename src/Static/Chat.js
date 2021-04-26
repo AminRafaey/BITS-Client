@@ -578,7 +578,7 @@ export const chat = [
 
   {
     count: 0,
-    jid: '923224797905@s.whatsapp.net',
+    jid: '923224799905@s.whatsapp.net',
     message: 'true',
     messages: [],
     modify_tag: '90971',

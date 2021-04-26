@@ -24,11 +24,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <ConnectStatusProvider>
+        <ConnectStatusProvider connectStatus={true}>
           <TemplateProvider template={[]}>
             <LeadsProvider>
               <AddressBookProvider addressBook={addressBook}>
-                <ChatProvider>
+                <ChatProvider chat={chat}>
                   <LabelProvider>
                     <CompanyProvider companies={companies}>
                       <LeadSourceProvider leadSource={leadSource}>

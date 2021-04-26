@@ -98,15 +98,14 @@ export default function Modal(props) {
     socket.on('connection-status', (res) => {
       if (res === 'success') {
         toastActions.success('Connected to a WhatsApp successfully.');
-        handleAfterScan(true);
       } else {
         toastActions.error('Connection timed out, Please try again.');
         handleAfterScan(false);
       }
     });
-    socket.on('contacts-received', (res) => {
-      console.log(res);
-    });
+    // socket.on('contacts-received', (res) => {
+    //   console.log(res);
+    // });
     socket.on('chats-received', (res) => {
       toastActions.success('Chats recieved successfully');
       if (chatState.length < 1) {
@@ -114,7 +113,14 @@ export default function Modal(props) {
           chats: res,
         });
       }
+      handleAfterScan(true);
     });
+    return () => {
+      socket.off('no-qr');
+      socket.off('get-qr');
+      socket.off('connection-status');
+      socket.off('chats-received');
+    };
   }, []);
 
   const handleClose = () => {

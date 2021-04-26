@@ -35,6 +35,20 @@ function Note(props) {
     content.length === 0 && setShowTextArea(true);
   }, [date]);
 
+  const handleTextAreaBlur = (e) => {
+    e.target.value.length !== 0
+      ? setSelectedLead({
+          ...selectedLead,
+          notes: selectedLead.notes.map((n, i) =>
+            i === index ? { ...n, content: e.target.value } : n
+          ),
+        })
+      : setSelectedLead({
+          ...selectedLead,
+          notes: selectedLead.notes.filter((n, i) => i !== index),
+        });
+    setShowTextArea(false);
+  };
   return (
     <NoteWrapper>
       <NoteInfoTyp>{`${
@@ -57,20 +71,10 @@ function Note(props) {
           rowsMax={10}
           defaultValue={content}
           autoFocus={true}
-          onBlur={(e) => {
-            e.target.value.length !== 0
-              ? setSelectedLead({
-                  ...selectedLead,
-                  notes: selectedLead.notes.map((n, i) =>
-                    i === index ? { ...n, content: e.target.value } : n
-                  ),
-                })
-              : setSelectedLead({
-                  ...selectedLead,
-                  notes: selectedLead.notes.filter((n, i) => i !== index),
-                });
-            setShowTextArea(false);
-          }}
+          onBlur={handleTextAreaBlur}
+          onKeyDown={(e) =>
+            e.ctrlKey && e.key === 'Enter' && handleTextAreaBlur(e)
+          }
         />
       ) : (
         <NoteContentTyp>{content}</NoteContentTyp>

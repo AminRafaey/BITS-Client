@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import FirstHeader from './FirstHeader';
 import ContactsTable from './Table';
 import Filters from './Filters';
-import { Grid } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 function ManageContact(props) {
   return (
-    <div>
+    <Box mb={6}>
       <FirstHeader />
       <Grid container>
         <ContactsTable />
@@ -14,7 +14,7 @@ function ManageContact(props) {
           <Filters />
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 }
 

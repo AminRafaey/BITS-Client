@@ -182,7 +182,9 @@ export default function ContactsTable() {
           </LoaderWrapper>
         ) : (
           <React.Fragment>
-            <Toolbar numSelected={selectedCount} message={'hey'} />
+            {pathname === '/sendFromAddressBook' && (
+              <Toolbar numSelected={selectedCount} message={'hey'} />
+            )}
             <StyledPaper>
               <StyledTableContainer className="scrollElement">
                 <Table

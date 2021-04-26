@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { WhatsAppIcon } from '../../../resources';
-import { useAddressBookState } from '../../../Context/AddressBook';
+import { useLeadsState } from '../../../Context/Lead';
 import { useSocketState } from '../../../Context/Socket';
 import { sendTextMesage } from '../../../api/send';
 import {
@@ -38,7 +38,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 export default function Toolbar(props) {
   const classes = useToolbarStyles();
   const { numSelected, message } = props;
-  const addressBookState = useAddressBookState();
+  const leadsState = useLeadsState();
   const socket = useSocketState();
   return (
     <ToolbarWrapper>
@@ -55,9 +55,7 @@ export default function Toolbar(props) {
             aria-label="Send WhatsApp"
             onClick={() =>
               sendTextMesage(
-                addressBookState
-                  .filter((a) => a.selected)
-                  .map((a) => a.mobileNumber),
+                leadsState.filter((a) => a.selected).map((a) => a.mobileNumber),
                 message,
                 socket
               )

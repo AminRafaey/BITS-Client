@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ContactsTable from '../Contact/Manage/Table';
 import Filters from '../Contact/Manage/Filters';
-import { addressBook } from '../../Static/AddressBook';
 import { TemplateMultiSelect, Template } from '../../components';
 import { CheckIcon, CheckAllIcon } from '../../resources';
-import {
-  useAddressBookState,
-  useAddressBookDispatch,
-  handleSelectedStatus,
-  handleMultipleSelectedStatus,
-} from '../../Context/AddressBook';
-import { Typography, styled, Box, makeStyles, Grid } from '@material-ui/core';
+import { styled, Box, makeStyles, Grid } from '@material-ui/core';
 import { LinkColor } from '../constants/theme';
 
 const IconWrapper = styled(Box)({

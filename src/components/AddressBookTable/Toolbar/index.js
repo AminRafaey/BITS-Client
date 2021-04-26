@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import InfoAlert from '../../Assets/InfoAlert';
 import { WhatsAppIcon } from '../../../resources';
-import { useLeadsState } from '../../../Context/Lead';
 import { useSocketState } from '../../../Context/Socket';
-import { sendTextMesage } from '../../../api/send';
+import { sendTextMesage, sendMedia } from '../../../api/send';
 import {
   Toolbar as MuiToolbar,
   Typography,
@@ -15,6 +15,7 @@ import {
   Fade,
 } from '@material-ui/core';
 import { HeadingColor, DarkBackgroundColor } from '../../constants/theme';
+import { useLeadsState } from '../../../Context/Lead';
 
 const ToolbarWrapper = styled(Box)({
   marginTop: 23,
@@ -37,9 +38,39 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 export default function Toolbar(props) {
   const classes = useToolbarStyles();
-  const { numSelected, message } = props;
-  const leadsState = useLeadsState();
+  const { numSelected, message, selectedMedia } = props;
+  const [openInfoAlert, setOpenInfoAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const socket = useSocketState();
+  const leadsState = useLeadsState();
+
+  const handleSend = () => {
+    if (!message) {
+      setAlertMessage(
+        "Message body can't be empty, Please type a message to continue..."
+      );
+      setOpenInfoAlert(true);
+      return;
+    }
+    if (numSelected === 0) {
+      setAlertMessage('Please select one or more contact to continue...');
+      setOpenInfoAlert(true);
+      return;
+    }
+    const contantList = leadsState
+      .filter((l) => l.selected && l.phone)
+      .map((l) => l.phone.replace('+', ''));
+    if (selectedMedia.file === undefined) {
+      sendTextMesage(contantList, message, socket);
+    } else if (selectedMedia.file) {
+      const formData = new FormData();
+      formData.append('mobileNumbers', JSON.stringify(contantList));
+      formData.append('message', message);
+      formData.append('file', selectedMedia.file);
+      formData.append('mediaType', selectedMedia.type);
+      sendMedia(formData, socket);
+    }
+  };
   return (
     <ToolbarWrapper>
       <MuiToolbar className={classes.root}>
@@ -51,20 +82,17 @@ export default function Toolbar(props) {
           interactive
           TransitionComponent={Fade}
         >
-          <IconButton
-            aria-label="Send WhatsApp"
-            onClick={() =>
-              sendTextMesage(
-                leadsState.filter((a) => a.selected).map((a) => a.mobileNumber),
-                message,
-                socket
-              )
-            }
-          >
+          <IconButton aria-label="Send WhatsApp" onClick={() => handleSend()}>
             <WhatsAppIcon />
           </IconButton>
         </Tooltip>
       </MuiToolbar>
+      <InfoAlert
+        open={openInfoAlert}
+        setOpen={setOpenInfoAlert}
+        title={'WhatsApp'}
+        message={alertMessage}
+      />
     </ToolbarWrapper>
   );
 }
@@ -72,4 +100,5 @@ export default function Toolbar(props) {
 Toolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
+  selectedMedia: PropTypes.object.isRequired,
 };

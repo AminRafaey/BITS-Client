@@ -1,9 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import ContactsTable from '../Contact/Manage/Table';
 import Filters from '../Contact/Manage/Filters';
-import { TemplateMultiSelect, Template } from '../../components';
+import {
+  TemplateMultiSelect,
+  Template,
+  ConnectionModal,
+} from '../../components';
 import { CheckIcon, CheckAllIcon } from '../../resources';
-import { styled, Box, makeStyles, Grid } from '@material-ui/core';
+import { useConnectStatusState } from '../../Context/ConnectStatus';
+import {
+  styled,
+  Box,
+  makeStyles,
+  Grid,
+  CircularProgress,
+} from '@material-ui/core';
 import { LinkColor } from '../constants/theme';
 
 const IconWrapper = styled(Box)({
@@ -15,6 +26,14 @@ const CampaignSelectWrapper = styled(Box)({
   justifyContent: 'flex-end',
 });
 const TemplateWrapper = styled(Box)({});
+
+const LoadingWrapper = styled(Box)({
+  width: '100%',
+  height: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,11 +53,17 @@ export default function AddressBookTable() {
   const [message, setMessage] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState({});
   const [selectedMedia, setSelectedMedia] = useState({});
+  const [openModal, setOpenModal] = useState(false);
+  const connectState = useConnectStatusState();
 
   useEffect(() => {
     Object.entries(selectedTemplate).length > 0 &&
       setMessage(selectedTemplate.content);
   }, [selectedTemplate]);
+
+  useEffect(() => {
+    !connectState && setOpenModal(true);
+  }, [connectState]);
 
   const getMyStatusIcon = (status) => {
     switch (status) {
@@ -64,23 +89,32 @@ export default function AddressBookTable() {
   };
   return (
     <div className={classes.root}>
-      <CampaignSelectWrapper>
-        <TemplateMultiSelect setSelectedTemplate={setSelectedTemplate} />
-      </CampaignSelectWrapper>
-      <TemplateWrapper>
-        <Template
-          message={message}
-          setMessage={setMessage}
-          selectedMedia={selectedMedia}
-          setSelectedMedia={setSelectedMedia}
-        />
-      </TemplateWrapper>
-      <Grid container>
-        <ContactsTable />
-        <Grid item xs={3}>
-          <Filters />
-        </Grid>
-      </Grid>
+      {connectState ? (
+        <React.Fragment>
+          <CampaignSelectWrapper>
+            <TemplateMultiSelect setSelectedTemplate={setSelectedTemplate} />
+          </CampaignSelectWrapper>
+          <TemplateWrapper>
+            <Template
+              message={message}
+              setMessage={setMessage}
+              selectedMedia={selectedMedia}
+              setSelectedMedia={setSelectedMedia}
+            />
+          </TemplateWrapper>
+          <Grid container>
+            <ContactsTable message={message} selectedMedia={selectedMedia} />
+            <Grid item xs={3}>
+              <Filters />
+            </Grid>
+          </Grid>
+        </React.Fragment>
+      ) : (
+        <LoadingWrapper>
+          <CircularProgress color="primary" />
+          <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
+        </LoadingWrapper>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { Checkbox } from '../../../HOC';
 import SecondHeader from '../SecondHeader';
@@ -110,7 +111,8 @@ const StyledTableContainer = withStyles({
   },
 })(TableContainer);
 
-export default function ContactsTable() {
+export default function ContactsTable(props) {
+  const { message, selectedMedia } = props;
   const { pathname } = useLocation();
   const leadsState = useLeadsState();
   const leadsDispatch = useLeadsDispatch();
@@ -166,7 +168,7 @@ export default function ContactsTable() {
     rowsPerPage - Math.min(rowsPerPage, leadsState.length - page * rowsPerPage);
 
   return (
-    <>
+    <React.Fragment>
       {pathname !== '/sendFromAddressBook' && (
         <Grid item xs={12}>
           <SecondHeader
@@ -183,7 +185,11 @@ export default function ContactsTable() {
         ) : (
           <React.Fragment>
             {pathname === '/sendFromAddressBook' && (
-              <Toolbar numSelected={selectedCount} message={'hey'} />
+              <Toolbar
+                numSelected={selectedCount}
+                message={message}
+                selectedMedia={selectedMedia}
+              />
             )}
             <StyledPaper>
               <StyledTableContainer className="scrollElement">
@@ -381,8 +387,11 @@ export default function ContactsTable() {
           </React.Fragment>
         )}
       </Grid>
-    </>
+    </React.Fragment>
   );
 }
 
-ContactsTable.prototypes = {};
+ContactsTable.prototypes = {
+  message: PropTypes.string,
+  selectedMedia: PropTypes.object,
+};

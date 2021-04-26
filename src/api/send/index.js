@@ -19,15 +19,13 @@ export async function sendMedia(data, socket, tryNo = 1) {
         'Content-Type': 'multipart/form-data',
       },
     });
-    if (res.status === 200) {
-      tryNo = 3;
-      socket.emit(`send-${data.get('mediaType')}`, {
-        mobileNumbers: data.get('mobileNumbers'),
-        message: data.get('message'),
-        mediaPath: res.data.field.data,
-      });
-      toastActions.success('Message sent successfully');
-    }
+    tryNo = 3;
+    socket.emit(`send-${data.get('mediaType')}`, {
+      mobileNumbers: data.get('mobileNumbers'),
+      message: data.get('message'),
+      mediaPath: res.data.field.data,
+    });
+    toastActions.success('Message sent successfully');
   } catch (ex) {
     if (!ex.response) {
       toastActions.error('Please check your internet connection');

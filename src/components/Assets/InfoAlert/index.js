@@ -10,6 +10,7 @@ import {
   IconButton,
   Typography,
   styled,
+  Zoom,
 } from '@material-ui/core';
 
 import CloseIcon from '@material-ui/icons/Close';
@@ -39,6 +40,10 @@ const MuiDialogContent = withStyles((theme) => ({
   },
 }))(DialogContent);
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Zoom direction="up" ref={ref} {...props} />;
+});
+
 function InfoAlert(props) {
   const { open, setOpen, title, message } = props;
   const classes = useStyles();
@@ -47,7 +52,7 @@ function InfoAlert(props) {
   };
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={handleClose} open={open} TransitionComponent={Transition}>
       <DialogTitle disableTypography className={classes.root}>
         <Typography variant="h6">{title}</Typography>
 

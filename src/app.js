@@ -6,11 +6,9 @@ import { MiniDrawer } from './components';
 import Toast from './components/Toast';
 import { ConnectStatusProvider } from './Context/ConnectStatus';
 import { TemplateProvider } from './Context/Template';
-import { AddressBookProvider } from './Context/AddressBook';
 import { ChatProvider } from './Context/Chat';
 import { SocketProvider } from './Context/Socket';
 import { chat } from './Static/Chat';
-import { addressBook } from './Static/AddressBook';
 import { LeadsProvider } from './Context/Lead';
 import { leads } from './Static/Lead';
 import { LabelProvider } from './Context/Label';
@@ -27,26 +25,24 @@ function App() {
         <ConnectStatusProvider connectStatus={true}>
           <TemplateProvider template={[]}>
             <LeadsProvider>
-              <AddressBookProvider addressBook={addressBook}>
-                <ChatProvider chat={chat}>
-                  <LabelProvider>
-                    <CompanyProvider companies={companies}>
-                      <LeadSourceProvider leadSource={leadSource}>
-                        <SnackbarProvider
-                          maxSnack={3}
-                          anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                          }}
-                        >
-                          <Toast />
-                          <MiniDrawer />
-                        </SnackbarProvider>
-                      </LeadSourceProvider>
-                    </CompanyProvider>
-                  </LabelProvider>
-                </ChatProvider>
-              </AddressBookProvider>
+              <ChatProvider chat={chat}>
+                <LabelProvider>
+                  <CompanyProvider companies={companies}>
+                    <LeadSourceProvider leadSource={leadSource}>
+                      <SnackbarProvider
+                        maxSnack={3}
+                        anchorOrigin={{
+                          vertical: 'bottom',
+                          horizontal: 'right',
+                        }}
+                      >
+                        <Toast />
+                        <MiniDrawer />
+                      </SnackbarProvider>
+                    </LeadSourceProvider>
+                  </CompanyProvider>
+                </LabelProvider>
+              </ChatProvider>
             </LeadsProvider>
           </TemplateProvider>
         </ConnectStatusProvider>

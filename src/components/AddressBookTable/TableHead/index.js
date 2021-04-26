@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '../../HOC';
 import { headCells } from '../../constants/ColumnName';
-import { useAddressBookState } from '../../../Context/AddressBook';
+import { useLeadsState } from '../../../Context/Lead';
 import {
   TableHead as MuiTableHead,
   TableRow,
@@ -17,18 +17,17 @@ const ItemTyp = styled(Typography)({
 
 export default function TableHead(props) {
   const { onSelectAllClick, page, rowsPerPage } = props;
-  const addressBookState = useAddressBookState();
+  const leadsState = useLeadsState();
 
   const checkBoxStatus = (function () {
-    const selectedOnes = addressBookState
+    const selectedOnes = leadsState
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .filter((a) => a.selected).length;
+
     switch (true) {
       case selectedOnes ===
-        addressBookState.slice(
-          page * rowsPerPage,
-          page * rowsPerPage + rowsPerPage
-        ).length:
+        leadsState.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .length:
         return 'checked';
       case selectedOnes > 0:
         return 'indeterminate';
@@ -49,6 +48,7 @@ export default function TableHead(props) {
         </TableCell>
 
         {headCells.map((headCell, index) => {
+          if (!headCell.label) return;
           return (
             <TableCell key={index} align={'left'}>
               <ItemTyp>{headCell.label}</ItemTyp>

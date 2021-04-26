@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Chat from './Chat';
 import SearchInput from './SearchInput';
@@ -20,6 +20,7 @@ const SearchInputWrapper = styled(Box)({
 
 function ChatBox(props) {
   const { setCurrentChatJid } = props;
+  const [searchString, setSearchString] = useState('');
   const chatState = useChatState();
 
   const getMessage = (c, index) => {
@@ -35,14 +36,25 @@ function ChatBox(props) {
       }
     }
   };
+
   return (
     <ChatsWrapper className="Chat-Box-Styled-Scroll">
       <SearchInputWrapper>
-        <SearchInput />
+        <SearchInput
+          searchString={searchString}
+          setSearchString={setSearchString}
+        />
       </SearchInputWrapper>
       <Paper>
         {chatState
           .filter((c) => c.jid.split('@')[1] === 's.whatsapp.net')
+          .filter((c) =>
+            searchString
+              ? c.name
+                ? c.name.toLowerCase().includes(searchString.toLowerCase())
+                : false
+              : true
+          )
           .map((c, index) => {
             return (
               <Chat
@@ -53,6 +65,7 @@ function ChatBox(props) {
                 unreadCount={c.count}
                 setCurrentChatJid={setCurrentChatJid}
                 jid={c.jid}
+                searchString={searchString}
               />
             );
           })}

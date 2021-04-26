@@ -1,7 +1,7 @@
 import config from '../../config.json';
 import axios from 'axios';
+import { toastActions } from '../../components/Toast';
 const endPointApi = `${config.baseUrl}label`;
-import { labels } from '../../Static/Label';
 
 export async function getLabels() {
   try {
@@ -9,10 +9,10 @@ export async function getLabels() {
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
+      toastActions.error('Please check your internet connection');
       return [];
     } else {
-      alert('Server Error!');
+      toastActions.error(ex.response.data.field.message);
       return [];
     }
   }

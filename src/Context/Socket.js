@@ -1,5 +1,6 @@
 import React from 'react';
 import io from 'socket.io-client';
+import Config from '../config.json';
 
 const SocketState = React.createContext(null);
 const SocketDispatch = React.createContext(null);
@@ -19,7 +20,7 @@ function SocketReducer(state, action) {
 function SocketProvider({ children, socket }) {
   const [state, dispatch] = React.useReducer(
     SocketReducer,
-    io.connect('http://localhost:4000')
+    io.connect(Config.baseUrl)
   );
   return (
     <SocketState.Provider value={state}>

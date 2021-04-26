@@ -5,20 +5,19 @@ const textFieldStyle = {
   borderRadius: 5,
   width: '100%',
 };
-const StyledTextField = withStyles({
+const StyledTextArea = withStyles({
   root: {
     '& .MuiOutlinedInput-root > .MuiInputBase-input': {
-      height: 10,
       fontSize: 13,
-      fontFamily: 'system-ui',
     },
   },
 })(MuiTextField);
 
-const TextField = (props) => {
+const TextArea = (props) => {
   const { ...other } = props;
   return (
-    <StyledTextField
+    <StyledTextArea
+      multiline
       variant="outlined"
       size="small"
       style={{ ...textFieldStyle }}
@@ -27,4 +26,4 @@ const TextField = (props) => {
   );
 };
 
-export default TextField;
+export default TextArea;

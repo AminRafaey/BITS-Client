@@ -55,6 +55,8 @@ function CreateLead(props) {
     type,
     editingLead,
     selectedLeadIndex,
+    source,
+    setSelectedLead,
   } = props;
   const leadsDispatch = useLeadsDispatch();
   const [leadData, setLeadData] = useState(initLeadData);
@@ -63,7 +65,7 @@ function CreateLead(props) {
   const [error, setError] = useState({});
 
   useEffect(() => {
-    if (type === 'edit') {
+    if (type === 'edit' || type === 'createWithProvidedInfo') {
       setLeadData({ ...editingLead });
     } else if (window.localStorage.getItem('leadData')) {
       setLeadData(JSON.parse(window.localStorage.getItem('leadData')));
@@ -114,7 +116,7 @@ function CreateLead(props) {
           : addLead(leadsDispatch, {
               leadData: res,
             });
-
+        setSelectedLead && setSelectedLead(res);
         setLeadData(initLeadData);
         setLoading(false);
         setError({});
@@ -279,6 +281,7 @@ function CreateLead(props) {
                 <PhoneNumber
                   personInfo={leadData}
                   setPersonInfo={setLeadData}
+                  source={source}
                 />
               </Grid>
               {errorRow('phone')}
@@ -378,7 +381,7 @@ function CreateLead(props) {
             >
               {type === 'edit' ? 'Save' : 'Add'}
             </Button>
-            {type !== 'edit' && (
+            {type !== 'edit' && type !== 'createWithProvidedInfo' && (
               <Button
                 onClick={() => {
                   handleSubmit('Continue');
@@ -400,5 +403,7 @@ CreateLead.propTypes = {
   type: PropTypes.string,
   editingLead: PropTypes.object,
   selectedLeadIndex: PropTypes.number,
+  source: PropTypes.string,
+  setSelectedLead: PropTypes.func,
 };
 export default CreateLead;

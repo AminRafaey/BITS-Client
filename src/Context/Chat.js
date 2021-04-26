@@ -6,11 +6,11 @@ const ChatDispatch = React.createContext(null);
 
 function ChatReducer(state, action) {
   const cloneState = stateCloner(state);
-  const { messages, jid } = action.payload;
+  const { messages, jid, message } = action.payload;
   switch (action.type) {
     case 'LOAD_CHATS':
       return [...stateCloner(action.payload.chats)];
-    case 'ADD_MESSAGES':
+    case 'ADD_MESSAGES': {
       const index = cloneState.findIndex((c) => c.jid === jid);
       index !== -1 &&
         (cloneState[index]['messages'] = [
@@ -18,6 +18,21 @@ function ChatReducer(state, action) {
           ...messages.reverse(),
         ]);
       return [...cloneState];
+    }
+    case 'ADD_MESSAGE': {
+      const index = cloneState.findIndex((c) => c.jid === jid);
+      index !== -1 &&
+        (cloneState[index]['messages'] = [
+          message,
+          ...cloneState[index]['messages'],
+        ]);
+      return [...cloneState];
+    }
+    case 'MARK_AS_UNREAD': {
+      const index = cloneState.findIndex((c) => c.jid === jid);
+      index !== -1 && (cloneState[index]['count'] = 0);
+      return [...cloneState];
+    }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -52,7 +67,15 @@ function useChatDispatch() {
   return context;
 }
 
-export { ChatProvider, useChatState, useChatDispatch, loadChats, addMessages };
+export {
+  ChatProvider,
+  useChatState,
+  useChatDispatch,
+  loadChats,
+  addMessages,
+  addMessage,
+  markAsUnread,
+};
 
 function loadChats(dispatch, data) {
   dispatch({
@@ -64,6 +87,19 @@ function loadChats(dispatch, data) {
 function addMessages(dispatch, data) {
   dispatch({
     type: 'ADD_MESSAGES',
+    payload: data,
+  });
+}
+
+function addMessage(dispatch, data) {
+  dispatch({
+    type: 'ADD_MESSAGE',
+    payload: data,
+  });
+}
+function markAsUnread(dispatch, data) {
+  dispatch({
+    type: 'MARK_AS_UNREAD',
     payload: data,
   });
 }

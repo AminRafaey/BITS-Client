@@ -1,21 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Note from './Note';
+import { EmptyWrapper } from '../index';
 import { Box, styled, Typography } from '@material-ui/core';
-import {
-  LinkColor,
-  BackgroundColor,
-  LightTextColor,
-} from '../../../constants/theme';
-
-const globalTyp = {
-  display: 'inline',
-  fontSize: 12,
-  color: LightTextColor,
-};
-const LabelAreaWrapper = styled(Box)({
-  padding: '5px 15px 0px 5px',
-  background: BackgroundColor,
-});
+import { LinkColor } from '../../../constants/theme';
 const NoteWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
@@ -23,45 +11,60 @@ const NoteWrapper = styled(Box)({
 });
 const NoteTyp = styled(Typography)({
   fontSize: 15,
-  fontWeight: 600,
+  fontFamily: 'medium',
 });
 
 const ManageNoteTyp = styled(Typography)({
   fontSize: 14,
   color: LinkColor,
-});
-
-const NoteInfoTyp = styled(Typography)({
-  ...globalTyp,
-});
-const ButtonTyp = styled(Typography)({
-  ...globalTyp,
-  cursor: 'pointer',
   '&:hover': {
+    cursor: 'pointer',
     textDecoration: 'underline',
   },
 });
-const NoteContentTyp = styled(Typography)({
-  fontSize: 14,
-  paddingBottom: 12,
+
+const NotesWrapper = styled(Box)({
+  padding: '5px 15px 0px 5px',
 });
+
 function Notes(props) {
+  const { selectedLead, setSelectedLead } = props;
   return (
-    <LabelAreaWrapper>
+    <NotesWrapper>
       <NoteWrapper>
         <NoteTyp>Notes</NoteTyp>
-        <ManageNoteTyp>Add Notes</ManageNoteTyp>
+        <ManageNoteTyp
+          onClick={() =>
+            setSelectedLead({
+              ...selectedLead,
+              notes: [
+                { content: '', createdAt: new Date().toString() },
+                ...selectedLead.notes,
+              ],
+            })
+          }
+        >
+          Add Notes
+        </ManageNoteTyp>
       </NoteWrapper>
-      <NoteInfoTyp>Mon Dec 21, 2020 11:19pm · </NoteInfoTyp>
-      <ButtonTyp>Edit</ButtonTyp>
-      <NoteInfoTyp> · </NoteInfoTyp>
-      <ButtonTyp>Delete</ButtonTyp>
-      <NoteContentTyp>
-        This customer is very important, PLease take care of him
-      </NoteContentTyp>
-    </LabelAreaWrapper>
+      {selectedLead.notes.map((n, i) => (
+        <React.Fragment key={i}>
+          {i !== 0 && <EmptyWrapper />}
+          <Note
+            selectedLead={selectedLead}
+            setSelectedLead={setSelectedLead}
+            content={n.content}
+            date={n.createdAt}
+            index={i}
+          />
+        </React.Fragment>
+      ))}
+    </NotesWrapper>
   );
 }
-Notes.propTypes = {};
+Notes.propTypes = {
+  selectedLead: PropTypes.object.isRequired,
+  setSelectedLead: PropTypes.func.isRequired,
+};
 
 export default Notes;

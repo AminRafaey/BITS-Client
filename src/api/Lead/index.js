@@ -1,6 +1,7 @@
 import config from '../../config.json';
 import axios from 'axios';
 import { toastActions } from '../../components/Toast';
+import { updateLead as updateLeadInContext } from '../../Context/Lead';
 const endPointApi = `${config.baseUrl}lead`;
 
 export async function getLeads(leadData) {
@@ -9,11 +10,26 @@ export async function getLeads(leadData) {
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
+      toastActions.error('Please check your internet connection');
       throw new Error('Please check your internet connection');
     } else {
-      alert('Server Error!');
+      toastActions.error(ex.response.data.field.message);
       throw new Error('Server Error!');
+    }
+  }
+}
+
+export async function getLeadByPhone(phone) {
+  try {
+    const res = await axios.get(endPointApi + '/phone', { params: { phone } });
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+      throw 'Please check your internet connection';
+    } else {
+      toastActions.error(ex.response.data.field.message);
+      throw ex.response.data.field.message;
     }
   }
 }
@@ -45,6 +61,29 @@ export async function updateLead(updatedLead) {
   }
 }
 
+export async function updateLeadWithContext(
+  updatedLead,
+  leadsDispatch,
+  selectedLeadIndex
+) {
+  try {
+    const res = await axios.put(endPointApi, updatedLead);
+    updateLeadInContext(leadsDispatch, {
+      leadData: { ...res.data.field.data },
+      selectedLeadIndex: selectedLeadIndex,
+    });
+    toastActions.success('Previous lead updated successfully');
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+    } else {
+      toastActions.error(
+        ex.response.data.field.message + "So, previous lead isn't updated."
+      );
+    }
+  }
+}
+
 export async function removeLeads(leads) {
   try {
     const res = await axios.delete(endPointApi, {
@@ -58,6 +97,7 @@ export async function removeLeads(leads) {
   } catch (ex) {
     if (!ex.response) {
       toastActions.error('Please check your internet connection');
+      throw 'Exception!';
     } else {
       toastActions.error(ex.response.data.field.message);
       throw 'Exception!';

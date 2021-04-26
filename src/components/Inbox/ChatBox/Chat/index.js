@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Badge } from '../../../HOC';
 import { calculateTimeInFormat } from '../../utility';
+import { useChatDispatch, markAsUnread } from '../../../../Context/Chat';
 import { styled, Box, Typography } from '@material-ui/core';
 import {
   LightTextColor,
   BackgroundColor,
   HoverColor,
   HomeIconDefaultColor,
+  primaryColor,
 } from '../../../constants/theme';
 const ChatWrapper = styled(Box)({
   height: 62,
@@ -17,6 +19,9 @@ const ChatWrapper = styled(Box)({
   borderBottom: `1px ${HomeIconDefaultColor} solid`,
   '&:hover': {
     background: HoverColor,
+  },
+  '&:active': {
+    background: primaryColor,
   },
 });
 const NameTyp = styled(Typography)({
@@ -62,9 +67,15 @@ const ContentWrapper = styled(Box)({
 
 function Chat(props) {
   const { jid, name, date, message, unreadCount, setCurrentChatJid } = props;
+  const chatDispatch = useChatDispatch();
 
   return (
-    <ChatWrapper onClick={() => setCurrentChatJid(jid)}>
+    <ChatWrapper
+      onClick={() => {
+        setCurrentChatJid(jid);
+        unreadCount > 0 && markAsUnread(chatDispatch, { jid: jid });
+      }}
+    >
       <LeftWrapper>
         <Badge badgeContent={unreadCount} color="primary" />
       </LeftWrapper>

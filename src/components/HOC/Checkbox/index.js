@@ -4,6 +4,7 @@ import { HoverColor } from '../../constants/theme';
 
 const StyledMuiCheckbox = withStyles({
   root: {
+    padding: 4,
     '& .MuiIconButton-label > .MuiSvgIcon-root': {
       fill: HoverColor,
     },

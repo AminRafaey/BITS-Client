@@ -102,6 +102,7 @@ export default function AppBar(props) {
         <AppBarListWrapper>
           {appBarList.map((option, index) => (
             <Link
+              key={index}
               to={option.path}
               style={{
                 textDecoration: 'none',
@@ -109,7 +110,7 @@ export default function AppBar(props) {
                 color: 'rgba(0, 0, 0, 0.87)',
               }}
             >
-              <ListItem button key={index}>
+              <ListItem button>
                 <OptionTyp>{option.title}</OptionTyp>
               </ListItem>
             </Link>

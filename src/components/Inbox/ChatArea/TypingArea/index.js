@@ -93,12 +93,13 @@ function TypingArea(props) {
 
   useEffect(() => {
     let convertedMsg = message;
-    keywords.map((k) => {
-      convertedMsg = convertedMsg.replaceAll(
-        `__${k.title}__`,
-        selectedLeadRef.current[k.value]
-      );
-    });
+    selectedLeadRef.current &&
+      keywords.map((k) => {
+        convertedMsg = convertedMsg.replaceAll(
+          `__${k.title}__`,
+          selectedLeadRef.current[k.value]
+        );
+      });
     setTextAreaVal(convertedMsg);
   }, [message]);
 

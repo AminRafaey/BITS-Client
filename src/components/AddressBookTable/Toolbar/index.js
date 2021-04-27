@@ -45,7 +45,7 @@ export default function Toolbar(props) {
   const leadsState = useLeadsState();
 
   const handleSend = () => {
-    if (!message) {
+    if (!message && selectedMedia.file === undefined) {
       setAlertMessage(
         "Message body can't be empty, Please type a message to continue..."
       );

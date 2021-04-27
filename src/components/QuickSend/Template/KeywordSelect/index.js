@@ -102,7 +102,6 @@ function KeywordSelect(props) {
             setMessage
           );
         }}
-        inputValue={''}
         renderInput={(params) => (
           <TextField
             {...params}

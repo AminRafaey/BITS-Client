@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { appBarList } from '../../constants/optionsList';
 import { ConnectIcon } from '../../../resources';
@@ -100,9 +101,18 @@ export default function AppBar(props) {
         </IconButton>
         <AppBarListWrapper>
           {appBarList.map((option, index) => (
-            <ListItem button key={index}>
-              <OptionTyp>{option.title}</OptionTyp>
-            </ListItem>
+            <Link
+              to={option.path}
+              style={{
+                textDecoration: 'none',
+                width: '100%',
+                color: 'rgba(0, 0, 0, 0.87)',
+              }}
+            >
+              <ListItem button key={index}>
+                <OptionTyp>{option.title}</OptionTyp>
+              </ListItem>
+            </Link>
           ))}
         </AppBarListWrapper>
         <div onClick={() => handleConnectIconClick()}>

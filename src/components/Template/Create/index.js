@@ -1,4 +1,4 @@
-import React, { useState, createRef, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import KeywordSelect from '../../QuickSend/Template/KeywordSelect';
 import { Button, Alert, SecondaryButton } from '../../HOC';
@@ -16,9 +16,8 @@ import {
   Typography,
   CircularProgress,
   TextField,
-  withStyles,
 } from '@material-ui/core';
-import { DarkBackgroundColor, GrayColor } from '../../constants/theme';
+import { DarkBackgroundColor } from '../../constants/theme';
 import { initTemplate } from '../../constants/InitialValues';
 
 const textAreaStyle = {
@@ -36,7 +35,7 @@ const textFieldStyle = {
   borderRadius: 5,
   width: 200,
 };
-const CreateLabelInnerWrapper = styled(Box)({
+const CreateTemplateWrapper = styled(Box)({
   width: '100%',
   minHeight: 100,
   background: DarkBackgroundColor,
@@ -75,10 +74,10 @@ const LoaderWrapper = styled(Box)({
   alignItems: 'center',
 });
 
-function CreateLabel(props) {
+function CreateTemplate(props) {
   const templateDispatch = useTemplateDispatch();
-  const [template, setTemplate] = useState(initTemplate);
   const templateState = useTemplateState();
+  const [template, setTemplate] = useState(initTemplate);
   const [templateLoading, setTemplateLoading] = useState(true);
   const [error, setError] = useState({ name: '', message: '' });
   const [loading, setLoading] = useState(false);
@@ -123,7 +122,7 @@ function CreateLabel(props) {
       });
   };
   return (
-    <CreateLabelInnerWrapper>
+    <CreateTemplateWrapper>
       {templateLoading ? (
         <LoaderWrapper>
           <CircularProgress color="primary" />
@@ -200,8 +199,8 @@ function CreateLabel(props) {
           </Grid>
         </Grid>
       )}
-    </CreateLabelInnerWrapper>
+    </CreateTemplateWrapper>
   );
 }
-CreateLabel.propTypes = {};
-export default CreateLabel;
+CreateTemplate.propTypes = {};
+export default CreateTemplate;

@@ -33,6 +33,7 @@ import {
   ManageContact,
   AddContacts,
   CreateLabel,
+  CreateTemplate,
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -189,6 +190,12 @@ export default function MiniDrawer() {
                   <CreateLabel />
                 </QuickSendWrapper>
               </Route>
+              <Route path="/addTemplate">
+                <QuickSendWrapper>
+                  <CreateTemplate />
+                </QuickSendWrapper>
+              </Route>
+
               <Route path="/">
                 <HomePageWrapper>
                   <Home />

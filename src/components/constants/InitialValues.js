@@ -20,6 +20,10 @@ export const initLabel = {
   color: '#ffff',
 };
 
+export const initTemplate = {
+  title: '',
+  content: '',
+};
 export const initLeadFilters = {
   labels: [],
   companies: [],

@@ -5,9 +5,13 @@ const TemplateState = React.createContext(null);
 const TemplateDispatch = React.createContext(null);
 
 function TemplateReducer(state, action) {
+  let cloneState = stateCloner(state);
+  const { template } = action.payload;
   switch (action.type) {
     case 'LOAD_TEMPLATES':
       return [...stateCloner(action.payload.templates)];
+    case 'ADD_TEMPLATE':
+      return [...cloneState, { ...template }];
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
@@ -51,11 +55,19 @@ export {
   useTemplateState,
   useTemplateDispatch,
   loadTemplates,
+  addTemplate,
 };
 
 function loadTemplates(dispatch, data) {
   dispatch({
     type: 'LOAD_TEMPLATES',
+    payload: data,
+  });
+}
+
+function addTemplate(dispatch, data) {
+  dispatch({
+    type: 'ADD_TEMPLATE',
     payload: data,
   });
 }

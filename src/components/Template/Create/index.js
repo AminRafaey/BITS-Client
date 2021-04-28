@@ -52,7 +52,6 @@ const FieldWrapper = styled(Box)({
 const FieldLabelNameTyp = styled(Typography)({
   fontSize: 15,
   fontFamily: 'medium',
-  paddingBottom: 4,
 });
 
 const ButtonsWrapper = styled(Box)({
@@ -89,11 +88,8 @@ function CreateLabel(props) {
   useEffect(() => {
     if (templateState.length < 1) {
       getTemplates()
-        .then((res) => {
-          loadTemplates(templateDispatch, { templates: res });
-          setTemplateLoading(false);
-        })
-        .catch((err) => alert(err));
+        .then((res) => loadTemplates(templateDispatch, { templates: res }))
+        .catch((err) => {});
     } else {
       setTemplateLoading(false);
     }
@@ -118,6 +114,7 @@ function CreateLabel(props) {
       .then((res) => {
         addTemplate(templateDispatch, { template: res });
         setTemplate(initTemplate);
+        templateTextAreaRef.current.value = '';
         setLoading(false);
       })
       .catch((err) => {
@@ -135,7 +132,10 @@ function CreateLabel(props) {
         <Grid container spacing={0}>
           <Grid item xs={12}>
             <FieldWrapper ml={5.5}>
-              <FieldLabelNameTyp>Template Name</FieldLabelNameTyp>
+              <Box pb={0.75}>
+                {' '}
+                <FieldLabelNameTyp>Template Name</FieldLabelNameTyp>
+              </Box>
               <TextField
                 placeholder="Name(Required)"
                 variant="outlined"
@@ -174,7 +174,6 @@ function CreateLabel(props) {
               />
             </FieldWrapper>
           </Grid>
-          <Grid item xs={3} />
           <Grid item xs={12}>
             {error.message && (
               <ErorWrapper>
@@ -187,7 +186,7 @@ function CreateLabel(props) {
                 mr={1}
                 onClick={() => {
                   setTemplate(initTemplate);
-                  setTextAreaVal('');
+                  templateTextAreaRef.current.value = '';
                 }}
               >
                 Cancel

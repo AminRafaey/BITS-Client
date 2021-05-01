@@ -22,10 +22,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <ConnectStatusProvider connectStatus={true}>
-          <TemplateProvider template={[]}>
+        <ConnectStatusProvider>
+          <TemplateProvider>
             <LeadsProvider>
-              <ChatProvider chat={chat}>
+              <ChatProvider>
                 <LabelProvider>
                   <CompanyProvider>
                     <LeadSourceProvider>

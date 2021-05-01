@@ -84,7 +84,7 @@ function Chat(props) {
           <NameTyp>{name}</NameTyp>
           <DateTyp>{calculateTimeInFormat(date)}</DateTyp>
         </NameWrapper>
-        <LastMessageTyp>{"+"+jid.split('@')[0]}</LastMessageTyp>
+        <LastMessageTyp>{'+' + jid.split('@')[0]}</LastMessageTyp>
       </ContentWrapper>
       <RightWrapper></RightWrapper>
     </ChatWrapper>

@@ -27,8 +27,8 @@ function App() {
             <LeadsProvider>
               <ChatProvider chat={chat}>
                 <LabelProvider>
-                  <CompanyProvider companies={companies}>
-                    <LeadSourceProvider leadSource={leadSource}>
+                  <CompanyProvider>
+                    <LeadSourceProvider>
                       <SnackbarProvider
                         maxSnack={3}
                         anchorOrigin={{

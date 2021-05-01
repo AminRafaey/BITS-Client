@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
-import { Checkbox } from '../../../HOC';
+import { Checkbox, Chip } from '../../../HOC';
 import SecondHeader from '../SecondHeader';
 import TableHead from './TableHead';
 import Toolbar from '../../../AddressBookTable/Toolbar';
@@ -28,7 +28,6 @@ import {
   styled,
   Box,
   Avatar,
-  Chip,
   withStyles,
   Menu,
   MenuItem,
@@ -87,12 +86,7 @@ const LoaderWrapper = styled(Box)({
   alignItems: 'center',
   minHeight: '70vh',
 });
-const StyledChip = withStyles({
-  root: {
-    background: '#EDF1F2',
-    margin: '0px 8px 8px 0px',
-  },
-})(Chip);
+
 const StyledPaper = withStyles({
   root: {
     borderRadius: 0,
@@ -209,6 +203,9 @@ export default function ContactsTable(props) {
                   )}
                   <TableBody>
                     {leadsState
+                      .sort(
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      )
                       .slice(
                         page * rowsPerPage,
                         page * rowsPerPage + rowsPerPage
@@ -264,10 +261,11 @@ export default function ContactsTable(props) {
                             <TableCell align="left">
                               {row.labels.length > 0 &&
                                 row.labels.map((l) => (
-                                  <StyledChip
+                                  <Chip
+                                    style={{ margin: '0px 8px 8px 0px' }}
                                     key={row._id + l}
-                                    size="small"
                                     label={labelState[l]['title']}
+                                    avatarBackground={labelState[l].color}
                                   />
                                 ))}
                             </TableCell>

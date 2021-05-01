@@ -89,10 +89,13 @@ function CreateTemplate(props) {
       getTemplates()
         .then((res) => loadTemplates(templateDispatch, { templates: res }))
         .catch((err) => {});
-    } else {
-      setTemplateLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    templateState.length > 0 && templateLoading && setTemplateLoading(false);
+  }, [templateState]);
+
   const handleSubmit = () => {
     if (!template.title) {
       setError({

@@ -20,6 +20,7 @@ const NoOptionTyp = styled(Typography)({
 });
 const AutocompleteWrapper = styled(Box)({
   marginLeft: 36,
+  width: 'fit-content',
 });
 const StyledAutoComplete = withStyles({
   root: {

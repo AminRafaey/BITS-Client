@@ -7,7 +7,7 @@ import {
 } from '../../components';
 import { Box, styled } from '@material-ui/core';
 
-const CampaignSelectWrapper = styled(Box)({
+const TemplateSelectWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'flex-end',
 });
@@ -28,9 +28,9 @@ function QuickSend(props) {
 
   return (
     <div>
-      <CampaignSelectWrapper>
+      <TemplateSelectWrapper>
         <TemplateMultiSelect setSelectedTemplate={setSelectedTemplate} />
-      </CampaignSelectWrapper>
+      </TemplateSelectWrapper>
       <TemplateWrapper>
         <Template
           message={message}

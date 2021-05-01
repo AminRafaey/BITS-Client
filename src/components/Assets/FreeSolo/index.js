@@ -47,8 +47,6 @@ function FreeSolo(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          margin="normal"
-          variant="outlined"
           placeholder={placeholder}
           onBlur={(e) => onBlur(e)}
         />

@@ -4,7 +4,8 @@ import ReactCountryFlag from 'react-country-flag';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 
-import { TextField, withStyles } from '@material-ui/core';
+import { TextField } from '../../HOC';
+import { withStyles } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { countries } from '../../constants/Countries';
 import { HoverColor, HeadingColor } from '../../constants/theme';
@@ -64,8 +65,7 @@ function CountrySelect(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Choose a country"
-          variant="outlined"
+          placeholder="Choose a country"
           inputProps={{
             ...params.inputProps,
           }}

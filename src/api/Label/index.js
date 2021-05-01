@@ -21,14 +21,15 @@ export async function getLabels() {
 export async function createLabel(label) {
   try {
     const res = await axios.post(endPointApi, label);
+    toastActions.success('Label created successfully!');
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
-      throw new Error('Please check your internet connection');
+      toastActions.error('Please check your internet connection');
+      throw 'Please check your internet connection';
     } else {
-      alert('Server Error!');
-      throw new Error('Server Error!');
+      toastActions.error(ex.response.data.field.message);
+      throw ex.response.data.field.message;
     }
   }
 }

@@ -7,8 +7,10 @@ const textFieldStyle = {
 };
 const StyledTextArea = withStyles({
   root: {
-    '& .MuiOutlinedInput-root > .MuiInputBase-input': {
+    '& .MuiOutlinedInput-root': {
       fontSize: 13,
+      paddingTop: 7.5,
+      paddingBottom: 7.5,
     },
   },
 })(MuiTextField);

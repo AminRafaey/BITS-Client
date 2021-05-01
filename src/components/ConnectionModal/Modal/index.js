@@ -89,9 +89,12 @@ export default function Modal(props) {
   }, [openModal]);
 
   useEffect(() => {
-    socket.on('no-qr', () =>
-      alert('Make sure you have an active internet connection on server')
-    );
+    socket.on('no-qr', () => {
+      setOpenModal(false);
+      setQrString('');
+      setOpen(false);
+      toastActions.error('Connection timed out, Please try again.');
+    });
     socket.on('get-qr', (res) => {
       setQrString(res);
     });

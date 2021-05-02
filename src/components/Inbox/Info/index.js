@@ -56,7 +56,7 @@ function Info(props) {
   const leadsDispatch = useLeadsDispatch();
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
   const selectedLeadRef = useRef(null);
-  selectedLeadRef.current = selectedLead;
+
   useEffect(() => {
     setLoader(true);
     if (
@@ -82,6 +82,9 @@ function Info(props) {
     }
   }, [currentChatJid, leadsState]);
 
+  useEffect(() => {
+    selectedLeadRef.current = selectedLead;
+  }, [selectedLead]);
   useEffect(() => {
     return () => {
       if (Object.entries(selectedLeadRef.current).length > 0) {

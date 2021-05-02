@@ -22,7 +22,7 @@ import {
 } from '@material-ui/core';
 
 const SelectWrapper = styled(Box)({
-  maxWidth: 330,
+  maxWidth: 370,
 });
 function AddLabel(props) {
   const { openModal, setOpenModal, selectedCount, type } = props;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import QrCode from '../QrCode';
 import { toastActions } from '../../Toast';
@@ -77,6 +77,7 @@ export default function Modal(props) {
   const { openModal, setOpenModal } = props;
   const [open, setOpen] = useState(false);
   const [qrString, setQrString] = useState('');
+  const getQrTimeOutRef = useRef();
   const connectStatusDispatch = useConnectStatusDispatch();
   const chatState = useChatState();
   const chatDispatch = useChatDispatch();
@@ -85,6 +86,12 @@ export default function Modal(props) {
   useEffect(() => {
     if (openModal) {
       socket.emit('get-qr', {});
+      getQrTimeOutRef.current = setTimeout(() => {
+        setOpenModal(false);
+        toastActions.error(
+          'Connection timed out, Please check your internet connection and try again'
+        );
+      }, 15000);
     }
   }, [openModal]);
 
@@ -94,8 +101,10 @@ export default function Modal(props) {
       setQrString('');
       setOpen(false);
       toastActions.error('Connection timed out, Please try again.');
+      location.reload();
     });
     socket.on('get-qr', (res) => {
+      clearTimeout(getQrTimeOutRef.current);
       setQrString(res);
     });
     socket.on('connection-status', (res) => {

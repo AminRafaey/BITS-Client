@@ -40,9 +40,10 @@ export async function createLead(leadData) {
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
-      throw new Error('Please check your internet connection');
+      toastActions.error('Please check your internet connection');
+      throw 'Please check your internet connection';
     } else {
+      toastActions.error(ex.response.data.field.message);
       throw ex.response.data.field;
     }
   }
@@ -140,11 +141,9 @@ export async function getCompanies() {
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
-      return;
+      toastActions.error('Please check your internet connection');
     } else {
-      alert('Server Error!');
-      return;
+      toastActions.error('Server Error!');
     }
   }
 }
@@ -155,11 +154,9 @@ export async function getLeadSource() {
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
-      return;
+      toastActions.error('Please check your internet connection');
     } else {
-      alert('Server Error!');
-      return;
+      toastActions.error('Server Error!');
     }
   }
 }
@@ -170,9 +167,9 @@ export async function getFilteredLeads(filters) {
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
-      alert('Please check your internet connection');
+      toastActions.error('Please check your internet connection');
     } else {
-      alert('Server Error!');
+      toastActions.error('Server Error!');
     }
   }
 }

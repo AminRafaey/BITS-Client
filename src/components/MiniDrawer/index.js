@@ -120,7 +120,7 @@ export default function MiniDrawer() {
     if (companyState.length < 1) {
       requests.push(
         getCompanies().then((res) => {
-          loadCompanies(companyDispatch, { companies: res });
+          res && loadCompanies(companyDispatch, { companies: res });
         })
       );
     }
@@ -128,7 +128,7 @@ export default function MiniDrawer() {
     if (leadSourceState.length < 1) {
       requests.push(
         getLeadSource().then((res) => {
-          loadLeadSource(leadSourceDispatch, { leadSource: res });
+          res && loadLeadSource(leadSourceDispatch, { leadSource: res });
         })
       );
     }

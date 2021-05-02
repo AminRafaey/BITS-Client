@@ -4,6 +4,7 @@ import phone from 'phone';
 import LabelMultiSelect from '../../Label/index';
 import CountrySelect from '../../CountrySelect';
 import PhoneNumber from '../../PhoneNumber';
+import { CompanySelect, LeadSource } from '../../../Assets';
 import { Button, TextField, SecondaryButton, Alert } from '../../../HOC';
 import { Transition } from '../../../ConnectionModal/Modal';
 import { isUrlValid, isEmailValid } from '../index';
@@ -12,6 +13,8 @@ import {
   addLead,
   updateLead as updateLeadInContext,
 } from '../../../../Context/Lead';
+import { useCompanyState } from '../../../../Context/Company';
+import { useLeadSourceState } from '../../../../Context/LeadSource';
 import { createLead, updateLead } from '../../../../api/Lead';
 import {
   Dialog,
@@ -59,6 +62,8 @@ function CreateLead(props) {
     setSelectedLead,
   } = props;
   const leadsDispatch = useLeadsDispatch();
+  const companyState = useCompanyState();
+  const leadSourceState = useLeadSourceState();
   const [leadData, setLeadData] = useState(initLeadData);
   const [nameError, setNameError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -219,23 +224,25 @@ function CreateLead(props) {
               {emptySpacingRow()}
               {FieldNameRow('Lead Source')}
               <Grid item xs={9}>
-                <TextField
-                  defaultValue={leadData.leadSource}
-                  placeholder="Facebook, WhatsApp"
+                <LeadSource
+                  options={leadSourceState}
+                  value={leadData.leadSource}
                   onBlur={(e) =>
                     setLeadData({ ...leadData, leadSource: e.target.value })
                   }
+                  placeholder={'Facebook, WhatsApp'}
                 />
               </Grid>
               {emptySpacingRow()}
               {FieldNameRow('Company')}
               <Grid item xs={9}>
-                <TextField
-                  defaultValue={leadData.companyName}
-                  placeholder="Company name"
+                <CompanySelect
+                  options={companyState}
+                  value={leadData.companyName}
                   onBlur={(e) =>
                     setLeadData({ ...leadData, companyName: e.target.value })
                   }
+                  placeholder={'Company name'}
                 />
               </Grid>
               {emptySpacingRow()}

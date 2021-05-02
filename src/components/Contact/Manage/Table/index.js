@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Checkbox } from '../../../HOC';
+import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
+import { Checkbox, Chip } from '../../../HOC';
 import SecondHeader from '../SecondHeader';
 import TableHead from './TableHead';
+import Toolbar from '../../../AddressBookTable/Toolbar';
+import { default as AddressBookTableHead } from '../../../AddressBookTable/TableHead';
 import CreateLead from '../../../Forms/Lead/Create';
 import DeleteAlert from '../DeleteAlert';
 import { colors } from '../../../constants/AvatarColor';
@@ -24,7 +28,6 @@ import {
   styled,
   Box,
   Avatar,
-  Chip,
   withStyles,
   Menu,
   MenuItem,
@@ -83,12 +86,7 @@ const LoaderWrapper = styled(Box)({
   alignItems: 'center',
   minHeight: '70vh',
 });
-const StyledChip = withStyles({
-  root: {
-    background: '#EDF1F2',
-    margin: '0px 8px 8px 0px',
-  },
-})(Chip);
+
 const StyledPaper = withStyles({
   root: {
     borderRadius: 0,
@@ -107,7 +105,9 @@ const StyledTableContainer = withStyles({
   },
 })(TableContainer);
 
-export default function ContactsTable() {
+export default function ContactsTable(props) {
+  const { message, selectedMedia } = props;
+  const { pathname } = useLocation();
   const leadsState = useLeadsState();
   const leadsDispatch = useLeadsDispatch();
   const labelState = useLabelState();
@@ -162,197 +162,234 @@ export default function ContactsTable() {
     rowsPerPage - Math.min(rowsPerPage, leadsState.length - page * rowsPerPage);
 
   return (
-    <>
-      <Grid item xs={12}>
-        <SecondHeader
-          handleSelectAllClick={handleSelectAllClick}
-          selectedCount={selectedCount}
-        />
-      </Grid>
+    <React.Fragment>
+      {pathname !== '/sendFromAddressBook' && (
+        <Grid item xs={12}>
+          <SecondHeader
+            handleSelectAllClick={handleSelectAllClick}
+            selectedCount={selectedCount}
+          />
+        </Grid>
+      )}
       <Grid item xs={9}>
         {leadLoader ? (
           <LoaderWrapper>
             <CircularProgress color="primary" />
           </LoaderWrapper>
         ) : (
-          <StyledPaper>
-            <StyledTableContainer className="scrollElement">
-              <Table
-                aria-labelledby="tableTitle"
-                size={'medium'}
-                aria-label="enhanced table"
-              >
-                <TableHead />
-                <TableBody>
-                  {leadsState
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      return (
-                        <TableRow hover key={row._id}>
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={row.selected ? true : false}
-                              onChange={(event) => handleClick(event, row._id)}
-                            />
-                          </TableCell>
-                          <TableCell padding="none" align="left">
-                            <BasicInfoWrapper>
-                              <Avatar
-                                style={{
-                                  color: '#ffff',
-                                  background:
-                                    colors[
-                                      `${row.firstName} ${
-                                        row.lastName ? row.lastName : ''
-                                      }`
-                                        .split(' ')
-                                        .map((char) => char.charCodeAt(0))
-                                        .join('') % colors.length
-                                    ],
-                                }}
-                              >
-                                {`${row.firstName} ${row.lastName || ''}`
-                                  .split(' ')
-                                  .map((c) => c.charAt(0))
-                                  .join('')}
-                              </Avatar>
-                              <BasicInfoContentWrapper>
-                                <TitleTyp>{`${row.firstName} ${
-                                  row.lastName || ''
-                                }`}</TitleTyp>
-                                <EmailTyp>{row.email}</EmailTyp>
-                              </BasicInfoContentWrapper>
-                            </BasicInfoWrapper>
-                          </TableCell>
-
-                          <TableCell align="left">
-                            <ItemTyp>{row.phone || ''}</ItemTyp>
-                          </TableCell>
-
-                          <TableCell align="left">
-                            <ItemTyp>{row.leadSource}</ItemTyp>
-                          </TableCell>
-                          <TableCell align="left">
-                            {row.labels.length > 0 &&
-                              row.labels.map((l) => (
-                                <StyledChip
-                                  key={row._id + l}
-                                  size="small"
-                                  label={labelState[l]['title']}
-                                />
-                              ))}
-                          </TableCell>
-                          <TableCell align="left">
-                            <IconWrapper
-                              aria-controls="fade-menu"
-                              aria-haspopup="true"
-                              onClick={(e) => handleIconClick(e, row, index)}
-                            >
-                              {' '}
-                              <MoreVertIcon style={{ height: 18 }} />
-                            </IconWrapper>
-
-                            <Menu
-                              elevation={1}
-                              transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                              }}
-                              id="fade-menu"
-                              anchorEl={anchorEl}
-                              keepMounted
-                              open={open}
-                              onClose={handleClose}
-                              TransitionComponent={Fade}
-                            >
-                              <MenuItem
-                                onClick={() => {
-                                  setOpenCreateLabelModal(true);
-                                  handleClose();
-                                }}
-                              >
-                                <EditIcon style={{ ...iconsStyle }} />
-                                <ItemTyp>Edit</ItemTyp>
-                              </MenuItem>
-                              <MenuItem
-                                onClick={() => {
-                                  setOpenDeleteModal(true);
-                                  handleClose();
-                                }}
-                              >
-                                <DeleteIcon style={{ ...iconsStyle }} />
-                                <ItemTyp>Delete</ItemTyp>
-                              </MenuItem>
-
-                              <MenuItem onClick={handleClose}>
-                                <NoteAddIcon style={{ ...iconsStyle }} />
-                                <ItemTyp>Add Note</ItemTyp>
-                              </MenuItem>
-                              <MenuItem onClick={handleClose}>
-                                <EventIcon style={{ ...iconsStyle }} />
-                                <ItemTyp>Schedule an appointment</ItemTyp>
-                              </MenuItem>
-                              <MenuItem onClick={handleClose}>
-                                <MonetizationOnIcon style={{ ...iconsStyle }} />
-                                <ItemTyp>Add Deal</ItemTyp>
-                              </MenuItem>
-                            </Menu>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {openCreateLabelModal && (
-                    <CreateLead
-                      openModal={openCreateLabelModal}
-                      setOpenModal={setOpenCreateLabelModal}
-                      type={'edit'}
-                      editingLead={
-                        selectedLead.current ? selectedLead.current.lead : {}
-                      }
-                      selectedLeadIndex={
-                        selectedLead.current
-                          ? selectedLead.current.index
-                          : undefined
-                      }
+          <React.Fragment>
+            {pathname === '/sendFromAddressBook' && (
+              <Toolbar
+                numSelected={selectedCount}
+                message={message}
+                selectedMedia={selectedMedia}
+              />
+            )}
+            <StyledPaper>
+              <StyledTableContainer className="scrollElement">
+                <Table
+                  aria-labelledby="tableTitle"
+                  size={'medium'}
+                  aria-label="enhanced table"
+                >
+                  {pathname === '/sendFromAddressBook' ? (
+                    <AddressBookTableHead
+                      onSelectAllClick={handleSelectAllClick}
+                      page={page}
+                      rowsPerPage={rowsPerPage}
                     />
+                  ) : (
+                    <TableHead />
                   )}
-                  {openDeleteModal && (
-                    <DeleteAlert
-                      open={openDeleteModal}
-                      setOpen={setOpenDeleteModal}
-                      selectedCount={1}
-                      selectedLead={
-                        selectedLead.current ? selectedLead.current.lead : {}
-                      }
-                      selectedLeadIndex={
-                        selectedLead.current
-                          ? selectedLead.current.index
-                          : undefined
-                      }
-                    />
-                  )}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </StyledTableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 20, 30]}
-              component="div"
-              count={leadsState.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-          </StyledPaper>
+                  <TableBody>
+                    {leadsState
+                      .sort(
+                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      )
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => {
+                        return (
+                          <TableRow hover key={row._id}>
+                            <TableCell padding="checkbox">
+                              <Checkbox
+                                checked={row.selected ? true : false}
+                                onChange={(event) =>
+                                  handleClick(event, row._id)
+                                }
+                              />
+                            </TableCell>
+                            <TableCell padding="none" align="left">
+                              <BasicInfoWrapper>
+                                <Avatar
+                                  style={{
+                                    color: '#ffff',
+                                    background:
+                                      colors[
+                                        `${row.firstName} ${
+                                          row.lastName ? row.lastName : ''
+                                        }`
+                                          .split(' ')
+                                          .map((char) => char.charCodeAt(0))
+                                          .join('') % colors.length
+                                      ],
+                                  }}
+                                >
+                                  {`${row.firstName} ${row.lastName || ''}`
+                                    .split(' ')
+                                    .map((c) => c.charAt(0))
+                                    .join('')}
+                                </Avatar>
+                                <BasicInfoContentWrapper>
+                                  <TitleTyp>{`${row.firstName} ${
+                                    row.lastName || ''
+                                  }`}</TitleTyp>
+                                  <EmailTyp>{row.email}</EmailTyp>
+                                </BasicInfoContentWrapper>
+                              </BasicInfoWrapper>
+                            </TableCell>
+
+                            <TableCell align="left">
+                              <ItemTyp>{row.phone || ''}</ItemTyp>
+                            </TableCell>
+
+                            <TableCell align="left">
+                              <ItemTyp>{row.leadSource}</ItemTyp>
+                            </TableCell>
+                            <TableCell align="left">
+                              {row.labels.length > 0 &&
+                                row.labels.map((l) => (
+                                  <Chip
+                                    style={{ margin: '0px 8px 8px 0px' }}
+                                    key={row._id + l}
+                                    label={labelState[l]['title']}
+                                    avatarBackground={labelState[l].color}
+                                  />
+                                ))}
+                            </TableCell>
+                            {pathname !== '/sendFromAddressBook' && (
+                              <TableCell align="left">
+                                <IconWrapper
+                                  aria-controls="fade-menu"
+                                  aria-haspopup="true"
+                                  onClick={(e) =>
+                                    handleIconClick(e, row, index)
+                                  }
+                                >
+                                  {' '}
+                                  <MoreVertIcon style={{ height: 18 }} />
+                                </IconWrapper>
+
+                                <Menu
+                                  elevation={1}
+                                  transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                  }}
+                                  id="fade-menu"
+                                  anchorEl={anchorEl}
+                                  keepMounted
+                                  open={open}
+                                  onClose={handleClose}
+                                  TransitionComponent={Fade}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      setOpenCreateLabelModal(true);
+                                      handleClose();
+                                    }}
+                                  >
+                                    <EditIcon style={{ ...iconsStyle }} />
+                                    <ItemTyp>Edit</ItemTyp>
+                                  </MenuItem>
+                                  <MenuItem
+                                    onClick={() => {
+                                      setOpenDeleteModal(true);
+                                      handleClose();
+                                    }}
+                                  >
+                                    <DeleteIcon style={{ ...iconsStyle }} />
+                                    <ItemTyp>Delete</ItemTyp>
+                                  </MenuItem>
+
+                                  <MenuItem onClick={handleClose}>
+                                    <NoteAddIcon style={{ ...iconsStyle }} />
+                                    <ItemTyp>Add Note</ItemTyp>
+                                  </MenuItem>
+                                  <MenuItem onClick={handleClose}>
+                                    <EventIcon style={{ ...iconsStyle }} />
+                                    <ItemTyp>Schedule an appointment</ItemTyp>
+                                  </MenuItem>
+                                  <MenuItem onClick={handleClose}>
+                                    <MonetizationOnIcon
+                                      style={{ ...iconsStyle }}
+                                    />
+                                    <ItemTyp>Add Deal</ItemTyp>
+                                  </MenuItem>
+                                </Menu>
+                              </TableCell>
+                            )}
+                          </TableRow>
+                        );
+                      })}
+                    {openCreateLabelModal && (
+                      <CreateLead
+                        openModal={openCreateLabelModal}
+                        setOpenModal={setOpenCreateLabelModal}
+                        type={'edit'}
+                        editingLead={
+                          selectedLead.current ? selectedLead.current.lead : {}
+                        }
+                        selectedLeadIndex={
+                          selectedLead.current
+                            ? selectedLead.current.index
+                            : undefined
+                        }
+                      />
+                    )}
+                    {openDeleteModal && (
+                      <DeleteAlert
+                        open={openDeleteModal}
+                        setOpen={setOpenDeleteModal}
+                        selectedCount={1}
+                        selectedLead={
+                          selectedLead.current ? selectedLead.current.lead : {}
+                        }
+                        selectedLeadIndex={
+                          selectedLead.current
+                            ? selectedLead.current.index
+                            : undefined
+                        }
+                      />
+                    )}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 53 * emptyRows }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </StyledTableContainer>
+              <TablePagination
+                rowsPerPageOptions={[10, 20, 30]}
+                component="div"
+                count={leadsState.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </StyledPaper>
+          </React.Fragment>
         )}
       </Grid>
-    </>
+    </React.Fragment>
   );
 }
 
-ContactsTable.prototypes = {};
+ContactsTable.prototypes = {
+  message: PropTypes.string,
+  selectedMedia: PropTypes.object,
+};

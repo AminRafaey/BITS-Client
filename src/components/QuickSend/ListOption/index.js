@@ -4,6 +4,7 @@ import { Button } from '../../HOC';
 import { useSocketState } from '../../../Context/Socket';
 import { sendTextMesage, sendMedia } from '../../../api/send';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
+import { toastActions } from '../../Toast';
 const textAreaStyle = {
   width: '100%',
   minHeight: '160px',
@@ -38,7 +39,17 @@ export default function ListOption(props) {
   const socket = useSocketState();
 
   const handleSend = () => {
+    if (contantList.length === 0) {
+      toastActions.warning(
+        'Type or select one or more valid contacts to continue ...'
+      );
+      return;
+    }
     if (selectedMedia.file === undefined) {
+      if (!message) {
+        toastActions.warning('Type message to continue ...');
+        return;
+      }
       sendTextMesage(contantList, message, socket);
     } else if (selectedMedia.file) {
       const formData = new FormData();

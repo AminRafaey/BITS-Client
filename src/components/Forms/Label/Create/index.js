@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TextField, Chip, SecondaryButton } from '../../../HOC';
+import {
+  Button,
+  TextField,
+  Chip,
+  SecondaryButton,
+  TextArea,
+} from '../../../HOC';
+import { isColorCodeValid } from '../utility';
 import { createLabel } from '../../../../api/Label';
 import { useLabelDispatch, addLabel } from '../../../../Context/Label';
 import {
@@ -9,11 +16,16 @@ import {
   Grid,
   Typography,
   CircularProgress,
+  InputAdornment,
 } from '@material-ui/core';
-import { DarkBackgroundColor, GrayColor } from '../../../constants/theme';
+import { DarkBackgroundColor } from '../../../constants/theme';
 import { colors } from '../../../constants/AvatarColor';
 import { initLabel } from '../../../constants/InitialValues';
 
+const CircleWrapper = styled(Box)({
+  width: 15,
+  height: 15,
+});
 const CreateLabelInnerWrapper = styled(Box)({
   width: '100%',
   minHeight: 100,
@@ -59,11 +71,16 @@ function CreateLabel(props) {
   const labelDispatch = useLabelDispatch();
   const [label, setLabel] = useState(initLabel);
   const [nameError, setNameError] = useState(false);
+  const [colorError, setColorError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
     if (!label.title) {
       setNameError(true);
+      return;
+    }
+    if (!isColorCodeValid(label.color)) {
+      setColorError(true);
       return;
     }
     setLoading(true);
@@ -83,7 +100,9 @@ function CreateLabel(props) {
           <FieldWrapper>
             <FieldLabelNameTyp>Preview</FieldLabelNameTyp>
             <Chip
-              avatarBackground={label.color}
+              avatarBackground={
+                isColorCodeValid(label.color) ? label.color : ''
+              }
               label={label.title || 'Label Preview'}
             />
           </FieldWrapper>
@@ -105,16 +124,48 @@ function CreateLabel(props) {
             </NameErrorTyp>
           </FieldWrapper>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <FieldWrapper>
             <FieldLabelNameTyp>Description</FieldLabelNameTyp>
-            <TextField
+            <TextArea
               placeholder="Description(Optional)"
               value={label.description}
               onChange={(e) =>
                 setLabel({ ...label, description: e.target.value })
               }
             />
+          </FieldWrapper>
+        </Grid>
+        <Grid item xs={2}>
+          <FieldWrapper>
+            <FieldLabelNameTyp>Color</FieldLabelNameTyp>
+            <TextField
+              placeholder="#CCCCCC"
+              value={label.color}
+              error={colorError}
+              onChange={(e) => {
+                colorError &&
+                  isColorCodeValid(e.target.value) &&
+                  setColorError(false);
+                setLabel({ ...label, color: e.target.value });
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <CircleWrapper
+                      style={{
+                        ...(isColorCodeValid(label.color) && {
+                          background: label.color,
+                        }),
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+              }}
+            />
+            <NameErrorTyp>
+              {colorError ? 'In-valid color code.' : ''}
+            </NameErrorTyp>
           </FieldWrapper>
         </Grid>
         <Grid item xs={2}>

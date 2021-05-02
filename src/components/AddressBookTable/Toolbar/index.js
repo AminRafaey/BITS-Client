@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
+import InfoAlert from '../../Assets/InfoAlert';
 import { WhatsAppIcon } from '../../../resources';
-import { useAddressBookState } from '../../../Context/AddressBook';
 import { useSocketState } from '../../../Context/Socket';
-import { sendTextMesage } from '../../../api/send';
+import { sendTextMesage, sendMedia } from '../../../api/send';
 import {
   Toolbar as MuiToolbar,
   Typography,
@@ -15,14 +14,11 @@ import {
   Box,
   Fade,
 } from '@material-ui/core';
-import {
-  HoverColor,
-  HeadingColor,
-  BackgroundColor,
-} from '../../constants/theme';
+import { HeadingColor, DarkBackgroundColor } from '../../constants/theme';
+import { useLeadsState } from '../../../Context/Lead';
 
 const ToolbarWrapper = styled(Box)({
-  marginTop: 6,
+  marginTop: 23,
 });
 const ItemTyp = styled(Typography)({
   color: HeadingColor,
@@ -31,12 +27,9 @@ const ItemTyp = styled(Typography)({
 
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: BackgroundColor,
     height: 58,
-  },
-  highlight: {
     color: HeadingColor,
-    backgroundColor: HoverColor,
+    backgroundColor: DarkBackgroundColor,
   },
   title: {
     flex: '1 1 100%',
@@ -45,45 +38,61 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 export default function Toolbar(props) {
   const classes = useToolbarStyles();
-  const { numSelected, message } = props;
-  const addressBookState = useAddressBookState();
+  const { numSelected, message, selectedMedia } = props;
+  const [openInfoAlert, setOpenInfoAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const socket = useSocketState();
+  const leadsState = useLeadsState();
+
+  const handleSend = () => {
+    if (!message && selectedMedia.file === undefined) {
+      setAlertMessage(
+        "Message body can't be empty, Please type a message to continue..."
+      );
+      setOpenInfoAlert(true);
+      return;
+    }
+    if (numSelected === 0) {
+      setAlertMessage('Please select one or more contact to continue...');
+      setOpenInfoAlert(true);
+      return;
+    }
+    const contantList = leadsState
+      .filter((l) => l.selected && l.phone)
+      .map((l) => l.phone.replace('+', ''));
+    if (selectedMedia.file === undefined) {
+      sendTextMesage(contantList, message, socket);
+    } else if (selectedMedia.file) {
+      const formData = new FormData();
+      formData.append('mobileNumbers', JSON.stringify(contantList));
+      formData.append('message', message);
+      formData.append('file', selectedMedia.file);
+      formData.append('mediaType', selectedMedia.type);
+      sendMedia(formData, socket);
+    }
+  };
   return (
     <ToolbarWrapper>
-      <MuiToolbar
-        className={clsx(classes.root, {
-          [classes.highlight]: numSelected > 0,
-        })}
-      >
-        {numSelected > 0 && (
-          <ItemTyp className={classes.title}>{numSelected} selected</ItemTyp>
-        )}
-
-        {numSelected > 0 && (
-          <Tooltip
-            title="Send WhatsApp"
-            placement={'top'}
-            arrow
-            interactive
-            TransitionComponent={Fade}
-          >
-            <IconButton
-              aria-label="Send WhatsApp"
-              onClick={() =>
-                sendTextMesage(
-                  addressBookState
-                    .filter((a) => a.selected)
-                    .map((a) => a.mobileNumber),
-                  message,
-                  socket
-                )
-              }
-            >
-              <WhatsAppIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+      <MuiToolbar className={classes.root}>
+        <ItemTyp className={classes.title}>{numSelected} selected</ItemTyp>
+        <Tooltip
+          title="Send WhatsApp"
+          placement={'top'}
+          arrow
+          interactive
+          TransitionComponent={Fade}
+        >
+          <IconButton aria-label="Send WhatsApp" onClick={() => handleSend()}>
+            <WhatsAppIcon />
+          </IconButton>
+        </Tooltip>
       </MuiToolbar>
+      <InfoAlert
+        open={openInfoAlert}
+        setOpen={setOpenInfoAlert}
+        title={'WhatsApp'}
+        message={alertMessage}
+      />
     </ToolbarWrapper>
   );
 }
@@ -91,4 +100,5 @@ export default function Toolbar(props) {
 Toolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   message: PropTypes.string.isRequired,
+  selectedMedia: PropTypes.object.isRequired,
 };

@@ -54,3 +54,8 @@
 .infinite-scroll-component {
   overflow: hidden !important;
 }
+
+#notistack-snackbar {
+  font-size: 12px;
+  font-family: 'Regular';
+}

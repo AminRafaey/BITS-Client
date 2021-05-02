@@ -20,6 +20,7 @@ const NoOptionTyp = styled(Typography)({
 });
 const AutocompleteWrapper = styled(Box)({
   marginLeft: 36,
+  width: 'fit-content',
 });
 const StyledAutoComplete = withStyles({
   root: {
@@ -67,6 +68,7 @@ function KeywordSelect(props) {
         getOptionLabel={(option) => option.title}
         options={options}
         loading={loading}
+        value={null}
         renderOption={(option, { selected, inputValue }) => {
           const matches = match(option.title, inputValue);
           const parts = parse(option.title, matches);

@@ -12,7 +12,7 @@ import {
   primaryColor,
 } from '../../../constants/theme';
 const ChatWrapper = styled(Box)({
-  height: 62,
+  height: 60,
   background: BackgroundColor,
   display: 'flex',
   cursor: 'pointer',
@@ -52,7 +52,7 @@ const LeftWrapper = styled(Box)({
   width: '10%',
   height: '100%',
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   paddingBottom: 5,
 });
 const RightWrapper = styled(Box)({
@@ -84,7 +84,7 @@ function Chat(props) {
           <NameTyp>{name}</NameTyp>
           <DateTyp>{calculateTimeInFormat(date)}</DateTyp>
         </NameWrapper>
-        <LastMessageTyp>{message}</LastMessageTyp>
+        <LastMessageTyp>{'+' + jid.split('@')[0]}</LastMessageTyp>
       </ContentWrapper>
       <RightWrapper></RightWrapper>
     </ChatWrapper>

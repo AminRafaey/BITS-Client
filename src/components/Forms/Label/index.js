@@ -4,16 +4,10 @@ import { Link } from 'react-router-dom';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 
-import { Checkbox, Chip } from '../../HOC';
+import { Checkbox, Chip, TextField } from '../../HOC';
 import { useLabelState } from '../../../Context/Label';
 import stateCloner from '../../utility/StateCloner';
-import {
-  Box,
-  Typography,
-  styled,
-  TextField,
-  withStyles,
-} from '@material-ui/core';
+import { Box, Typography, styled, withStyles } from '@material-ui/core';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { HoverColor, HeadingColor } from '../../constants/theme';
@@ -171,8 +165,7 @@ function LabelMultiSelect(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Select Labels"
-          variant="outlined"
+          placeholder="Select Labels"
           InputProps={{
             ...params.InputProps,
           }}

@@ -78,6 +78,7 @@ function PhoneNumber(props) {
             .toLowerCase()
             .includes(phone(personInfo.phone)[1].toLowerCase())
         );
+
         setSelectedCountry(country);
         setPersonInfo({
           ...personInfo,

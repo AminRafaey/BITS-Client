@@ -12,27 +12,33 @@ export const iconList = [
   {
     title: 'Send Message',
     icon: <ChatIcon />,
+    defaultPath: '/sendFromAddressBook',
   },
   {
     title: 'Inbox',
     icon: <InboxIcon />,
+    defaultPath: '/inbox',
   },
   {
     title: 'Templates',
     icon: <TemplateIcon />,
+    defaultPath: '/addTemplate',
   },
   {
     title: 'Contact Management',
     icon: <ContactIcon />,
+    defaultPath: '/manageContacts',
   },
   ,
   {
-    title: 'Group Management',
+    title: 'Label Management',
     icon: <GroupIcon />,
+    defaultPath: '/addlabel',
   },
   ,
   {
     title: 'Logs',
     icon: <LogIcon />,
+    defaultPath: '/logs',
   },
 ];

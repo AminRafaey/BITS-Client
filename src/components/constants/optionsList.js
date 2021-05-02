@@ -67,11 +67,14 @@ export const singleOptionList = [
 export const appBarList = [
   {
     title: 'Home',
+    path: '/',
   },
   {
     title: 'Account',
+    path: '/',
   },
   {
     title: 'Logout',
+    path: '/',
   },
 ];

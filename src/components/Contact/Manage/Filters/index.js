@@ -46,8 +46,8 @@ function Filters(props) {
 
   useEffect(() => {
     if (prevFilters.current !== JSON.stringify(filters)) {
-      getFilteredLeads(filters).then((res) =>
-        loadLeads(leadsDispatch, { leads: res })
+      getFilteredLeads(filters).then(
+        (res) => res && loadLeads(leadsDispatch, { leads: res })
       );
       prevFilters.current = JSON.stringify(filters);
     }

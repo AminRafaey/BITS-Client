@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { headCells } from '../../../../constants/ColumnName';
-import { useAddressBookState } from '../../../../../Context/AddressBook';
 import {
   TableHead as MuiTableHead,
   TableRow,

@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import { useSocketState } from '../../../../Context/Socket';
-import {
-  useChatState,
-  useChatDispatch,
-  addMessage,
-} from '../../../../Context/Chat';
+import { useChatDispatch, addMessage } from '../../../../Context/Chat';
+import { useLeadsState } from '../../../../Context/Lead';
 import { sendTextMesage } from '../../../../api/send';
 import { styled, Box } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
@@ -16,6 +13,7 @@ import {
   DarkHoverColor,
   primaryColor,
 } from '../../../constants/theme';
+import { keywords } from '../../../../Static/Keyword';
 const textAreaStyle = {
   resize: 'none',
   border: `0px solid #ffff`,
@@ -87,11 +85,22 @@ function TypingArea(props) {
   } = props;
   const [textAreaVal, setTextAreaVal] = useState('');
   const socket = useSocketState();
-  const chatState = useChatState();
   const chatDispatch = useChatDispatch();
+  const leadsState = useLeadsState();
+  const selectedLeadRef = useRef(
+    leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
+  );
 
   useEffect(() => {
-    setTextAreaVal(message);
+    let convertedMsg = message;
+    selectedLeadRef.current &&
+      keywords.map((k) => {
+        convertedMsg = convertedMsg.replaceAll(
+          `__${k.title}__`,
+          selectedLeadRef.current[k.value]
+        );
+      });
+    setTextAreaVal(convertedMsg);
   }, [message]);
 
   const handleSend = () => {

@@ -33,6 +33,7 @@ import {
   ManageContact,
   AddContacts,
   CreateLabel,
+  CreateTemplate,
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -119,7 +120,7 @@ export default function MiniDrawer() {
     if (companyState.length < 1) {
       requests.push(
         getCompanies().then((res) => {
-          loadCompanies(companyDispatch, { companies: res });
+          res && loadCompanies(companyDispatch, { companies: res });
         })
       );
     }
@@ -127,7 +128,7 @@ export default function MiniDrawer() {
     if (leadSourceState.length < 1) {
       requests.push(
         getLeadSource().then((res) => {
-          loadLeadSource(leadSourceDispatch, { leadSource: res });
+          res && loadLeadSource(leadSourceDispatch, { leadSource: res });
         })
       );
     }
@@ -189,6 +190,12 @@ export default function MiniDrawer() {
                   <CreateLabel />
                 </QuickSendWrapper>
               </Route>
+              <Route path="/addTemplate">
+                <QuickSendWrapper>
+                  <CreateTemplate />
+                </QuickSendWrapper>
+              </Route>
+
               <Route path="/">
                 <HomePageWrapper>
                   <Home />

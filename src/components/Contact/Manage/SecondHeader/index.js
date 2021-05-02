@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import AddLabel from '../../../Forms/Label/Add';
 import DeleteAlert from '../DeleteAlert';
 import { Button, Checkbox } from '../../../HOC';
@@ -57,7 +58,16 @@ function SecondHeader(props) {
           <Button>Send Email</Button>
         </Box>
         <Box pl={1}>
-          <Button>Send WhatsApp</Button>
+          <Link
+            to={'/sendFromAddressBook'}
+            style={{
+              textDecoration: 'none',
+              width: '100%',
+              color: 'rgba(0, 0, 0, 0.87)',
+            }}
+          >
+            <Button disabled={selectedCount === 0}>Send WhatsApp</Button>
+          </Link>
         </Box>
         <Box pl={1}>
           <Button

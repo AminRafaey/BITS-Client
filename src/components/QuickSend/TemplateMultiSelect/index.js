@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import {
@@ -52,6 +52,7 @@ const StyledAutoComplete = withStyles({
 })(Autocomplete);
 export default function TemplateMultiSelect(props) {
   const { setSelectedTemplate, type } = props;
+  const history = useHistory();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [textFieldVal, setTextFieldVal] = useState('');
@@ -86,7 +87,6 @@ export default function TemplateMultiSelect(props) {
       <Link
         to={'/addTemplate'}
         style={{ textDecoration: 'none', width: '100%' }}
-        onMouseDown={() => {}}
       >
         <NoOptionTyp>+ Add</NoOptionTyp>
       </Link>
@@ -136,6 +136,19 @@ export default function TemplateMultiSelect(props) {
         }
 
         setSelectedTemplate(value ? value : {});
+      }}
+      noOptionsText={
+        <NoOptionTyp
+          onMouseDown={() => {
+            history.push('/addTemplate');
+          }}
+        >
+          + Add {textFieldVal}
+        </NoOptionTyp>
+      }
+      inputValue={textFieldVal}
+      onInputChange={(event, newInputValue) => {
+        newInputValue !== 'Add' && setTextFieldVal(newInputValue);
       }}
       renderInput={(params) => (
         <TextField

@@ -145,7 +145,6 @@ function LabelMultiSelect(props) {
           </OptionWrapper>
         );
       }}
-      noOptionsText={noOptionItem()}
       renderTags={(values) =>
         values.map((v) => (
           <Chip

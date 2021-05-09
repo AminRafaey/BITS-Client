@@ -22,7 +22,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <ConnectStatusProvider connectStatus={true}>
+        <ConnectStatusProvider>
           <TemplateProvider>
             <LeadsProvider>
               <ChatProvider>

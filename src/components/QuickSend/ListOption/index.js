@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../HOC';
 import { useSocketState } from '../../../Context/Socket';
+import { useConnectStatusState } from '../../../Context/ConnectStatus';
 import { sendTextMesage, sendMedia } from '../../../api/send';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
 import { toastActions } from '../../Toast';
@@ -37,8 +38,15 @@ export const ButtonWrapper = styled(Box)({
 export default function ListOption(props) {
   const { setContactList, contantList, selectedMedia, message } = props;
   const socket = useSocketState();
+  const connectStatusState = useConnectStatusState();
 
   const handleSend = () => {
+    if (!connectStatusState) {
+      setAlertMessage(
+        'Disconnected from WhatsApp, please connect again to continue...'
+      );
+      return;
+    }
     if (contantList.length === 0) {
       toastActions.warning(
         'Type or select one or more valid contacts to continue ...'

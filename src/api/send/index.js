@@ -3,13 +3,40 @@ import axios from 'axios';
 import { toastActions } from '../../components/Toast';
 const endPointApi = `${config.baseUrl}send`;
 
+const withTimeout = (onSuccess, onTimeout, timeout) => {
+  let called = false;
+
+  const timer = setTimeout(() => {
+    if (called) return;
+    called = true;
+    onTimeout();
+  }, timeout);
+
+  return (...args) => {
+    if (called) return;
+    called = true;
+    clearTimeout(timer);
+    onSuccess.apply(this, args);
+  };
+};
+
 export async function sendTextMesage(mobileNumbers, message, socket) {
-  try {
-    socket.emit('send-text-message', { mobileNumbers: mobileNumbers, message });
-    toastActions.success('Message sent successfully');
-  } catch (err) {
-    toastActions.error('Server Error!');
-  }
+  socket.emit(
+    'send-text-message',
+    { mobileNumbers: mobileNumbers, message },
+    {},
+    withTimeout(
+      () => {
+        toastActions.success('Message sent successfully');
+      },
+      () => {
+        toastActions.error(
+          'Connection timed out, Please check your internet connection and try again'
+        );
+      },
+      10000
+    )
+  );
 }
 
 export async function sendMedia(data, socket, tryNo = 1) {
@@ -20,12 +47,26 @@ export async function sendMedia(data, socket, tryNo = 1) {
       },
     });
     tryNo = 3;
-    socket.emit(`send-${data.get('mediaType')}`, {
-      mobileNumbers: data.get('mobileNumbers'),
-      message: data.get('message'),
-      mediaPath: res.data.field.data,
-    });
-    toastActions.success('Message sent successfully');
+    socket.emit(
+      `send-${data.get('mediaType')}`,
+      {
+        mobileNumbers: data.get('mobileNumbers'),
+        message: data.get('message'),
+        mediaPath: res.data.field.data,
+      },
+      {},
+      withTimeout(
+        () => {
+          toastActions.success('Message sent successfully');
+        },
+        () => {
+          toastActions.error(
+            'Connection timed out, Please check your internet connection and try again'
+          );
+        },
+        10000
+      )
+    );
   } catch (ex) {
     if (!ex.response) {
       toastActions.error('Please check your internet connection');

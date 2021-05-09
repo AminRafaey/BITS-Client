@@ -16,6 +16,7 @@ import {
 } from '@material-ui/core';
 import { HeadingColor, DarkBackgroundColor } from '../../constants/theme';
 import { useLeadsState } from '../../../Context/Lead';
+import { useConnectStatusState } from '../../../Context/ConnectStatus';
 
 const ToolbarWrapper = styled(Box)({
   marginTop: 23,
@@ -43,8 +44,16 @@ export default function Toolbar(props) {
   const [alertMessage, setAlertMessage] = useState('');
   const socket = useSocketState();
   const leadsState = useLeadsState();
+  const connectStatusState = useConnectStatusState();
 
   const handleSend = () => {
+    if (!connectStatusState) {
+      setAlertMessage(
+        'Disconnected from WhatsApp, please connect again to continue...'
+      );
+      setOpenInfoAlert(true);
+      return;
+    }
     if (!message && selectedMedia.file === undefined) {
       setAlertMessage(
         "Message body can't be empty, Please type a message to continue..."

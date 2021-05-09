@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import QrCode from '../QrCode';
+import InfoAlert from '../../Assets/InfoAlert';
 import { toastActions } from '../../Toast';
 import {
   useConnectStatusDispatch,
@@ -77,7 +78,9 @@ export default function Modal(props) {
   const { openModal, setOpenModal } = props;
   const [open, setOpen] = useState(false);
   const [qrString, setQrString] = useState('');
-  const getQrTimeOutRef = useRef();
+  const [openInfoAlert, setOpenInfoAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const currentConnRef = useRef();
   const connectStatusDispatch = useConnectStatusDispatch();
   const chatState = useChatState();
   const chatDispatch = useChatDispatch();
@@ -85,34 +88,29 @@ export default function Modal(props) {
 
   useEffect(() => {
     if (openModal) {
-      socket.emit('get-qr', {});
-      getQrTimeOutRef.current = setTimeout(() => {
-        setOpenModal(false);
-        toastActions.error(
-          'Connection timed out, Please check your internet connection and try again'
-        );
-      }, 15000);
+      currentConnRef.current = new Date().toString();
+      socket.emit('get-qr', currentConnRef.current);
     }
   }, [openModal]);
 
   useEffect(() => {
     socket.on('no-qr', () => {
+      handleAutoClose();
       setOpenModal(false);
-      setQrString('');
-      setOpen(false);
-      toastActions.error('Connection timed out, Please try again.');
-      location.reload();
+      toastActions.error(
+        'Connection timed out, Please check you internet connection and try again.'
+      );
     });
     socket.on('get-qr', (res) => {
-      clearTimeout(getQrTimeOutRef.current);
-      setQrString(res);
+      currentConnRef.current == res.currentConnRef && setQrString(res.qr);
     });
     socket.on('connection-status', (res) => {
       if (res === 'success') {
         toastActions.success('Connected to a WhatsApp successfully.');
       } else {
-        toastActions.error('Connection timed out, Please try again.');
         handleAfterScan(false);
+        setOpenModal(false);
+        toastActions.error('Connection timed out, Please try again.');
       }
     });
     // socket.on('contacts-received', (res) => {
@@ -127,16 +125,37 @@ export default function Modal(props) {
       }
       handleAfterScan(true);
     });
+    socket.on('disconnected', (res) => {
+      if (res.currentConnRef == currentConnRef.current) {
+        toastActions.warning(res.message);
+        updateStatus(connectStatusDispatch, {
+          status: false,
+        });
+        setAlertMessage(
+          'Disconnected from WhatsApp, please connect again to continue...'
+        );
+        setOpenInfoAlert(true);
+        setOpenModal(false);
+      }
+    });
     return () => {
       socket.off('no-qr');
       socket.off('get-qr');
       socket.off('connection-status');
       socket.off('chats-received');
+      socket.off('disconnected');
     };
-  }, []);
+  }, [openModal]);
 
-  const handleClose = () => {
+  const handleSelfClose = () => {
+    setOpenModal(false);
     setOpen(false);
+    setQrString('');
+  };
+
+  const handleAutoClose = () => {
+    setOpen(false);
+    setQrString('');
   };
 
   useEffect(() => {
@@ -146,50 +165,57 @@ export default function Modal(props) {
   }, [qrString]);
 
   const handleAfterScan = (status) => {
-    setOpen(false);
-    setOpenModal(false);
+    handleAutoClose();
     updateStatus(connectStatusDispatch, {
       status: status,
     });
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      disableBackdropClick={true}
-      disableEscapeKeyDown={true}
-      fullWidth={true}
-      maxWidth={'md'}
-      scroll={'body'}
-      TransitionComponent={Transition}
-      aria-labelledby="scroll-dialog-title"
-      aria-describedby="scroll-dialog-description"
-    >
-      <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        Connect to WhatsApp
-      </DialogTitle>
-      <DialogContent dividers={scroll === 'paper'}>
-        <Grid container id="scroll-dialog-description">
-          <Grid item xs={8}>
-            <ContentWrapper>
-              <ContentTyp>1- Open WhatsApp on your phone.</ContentTyp>
-              <ContentTyp>
-                2- Tap <b>Menu</b> and <b>Setting</b> and <b>WhatsApp Web</b>.
-              </ContentTyp>
-              <ContentTyp>
-                3- Point your phone to this screen to capture the code.
-              </ContentTyp>
-            </ContentWrapper>
+    <React.Fragment>
+      <Dialog
+        open={open}
+        onClose={handleSelfClose}
+        disableBackdropClick={true}
+        disableEscapeKeyDown={true}
+        fullWidth={true}
+        maxWidth={'md'}
+        scroll={'body'}
+        TransitionComponent={Transition}
+        aria-labelledby="scroll-dialog-title"
+        aria-describedby="scroll-dialog-description"
+      >
+        <DialogTitle id="customized-dialog-title" onClose={handleSelfClose}>
+          Connect to WhatsApp
+        </DialogTitle>
+        <DialogContent dividers={scroll === 'paper'}>
+          <Grid container id="scroll-dialog-description">
+            <Grid item xs={8}>
+              <ContentWrapper>
+                <ContentTyp>1- Open WhatsApp on your phone.</ContentTyp>
+                <ContentTyp>
+                  2- Tap <b>Menu</b> and <b>Setting</b> and <b>WhatsApp Web</b>.
+                </ContentTyp>
+                <ContentTyp>
+                  3- Point your phone to this screen to capture the code.
+                </ContentTyp>
+              </ContentWrapper>
+            </Grid>
+            <Grid item xs={4}>
+              <QrCodeWrapper>
+                <QrCode qrString={qrString} />
+              </QrCodeWrapper>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <QrCodeWrapper>
-              <QrCode qrString={qrString} />
-            </QrCodeWrapper>
-          </Grid>
-        </Grid>
-      </DialogContent>
-    </Dialog>
+        </DialogContent>
+      </Dialog>
+      <InfoAlert
+        open={openInfoAlert}
+        setOpen={setOpenInfoAlert}
+        title={'WhatsApp'}
+        message={alertMessage}
+      />
+    </React.Fragment>
   );
 }
 

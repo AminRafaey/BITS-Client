@@ -4,6 +4,7 @@ import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import { useSocketState } from '../../../../Context/Socket';
 import { useChatDispatch, addMessage } from '../../../../Context/Chat';
 import { useLeadsState } from '../../../../Context/Lead';
+import { useConnectStatusState } from '../../../../Context/ConnectStatus';
 import { sendTextMesage } from '../../../../api/send';
 import { styled, Box } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
@@ -87,6 +88,7 @@ function TypingArea(props) {
   const socket = useSocketState();
   const chatDispatch = useChatDispatch();
   const leadsState = useLeadsState();
+  const connectStatusState = useConnectStatusState();
   const selectedLeadRef = useRef(
     leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
   );
@@ -104,6 +106,12 @@ function TypingArea(props) {
   }, [message]);
 
   const handleSend = () => {
+    if (!connectStatusState) {
+      setAlertMessage(
+        'Disconnected from WhatsApp, please connect again to continue...'
+      );
+      return;
+    }
     if (selectedMedia.file === undefined) {
       sendTextMesage([currentChatJid.split('@')[0]], message, socket);
     } else if (selectedMedia.file) {

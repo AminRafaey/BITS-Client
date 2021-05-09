@@ -79,6 +79,7 @@ export default function AppBar(props) {
       updateStatus(connectStatusDispatch, {
         status: false,
       });
+    connectStatusState && setOpenModal(false);
   };
   return (
     <MuiAppBar

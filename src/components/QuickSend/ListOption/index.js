@@ -75,12 +75,13 @@ export default function ListOption(props) {
           <TextAreaWrapper>
             <textarea
               style={textAreaStyle}
-              placeholder="Valid Format 923364773099,923174343123"
+              placeholder="Valid Format +923364773099,+923174343123"
               onBlur={(e) => {
                 setContactList(
                   e.target.value
+                    .replaceAll(' ', '')
+                    .replaceAll('+', '')
                     .split(',')
-                    .filter((n) => n.match(/^(92)\d{10}$/))
                 );
               }}
             />
@@ -90,7 +91,7 @@ export default function ListOption(props) {
       <Grid container>
         <Grid item xs={4}></Grid>
         <Grid item xs={4}>
-          <FormatTyp>{'Valid Format 923364773099,923174343123'}</FormatTyp>
+          <FormatTyp>{'Valid Format +923364773099,+923174343123'}</FormatTyp>
         </Grid>
       </Grid>
       <Grid container>

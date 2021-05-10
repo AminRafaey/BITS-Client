@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import AddLabel from '../../../Forms/Label/Add';
 import DeleteAlert from '../DeleteAlert';
 import { Button, Checkbox } from '../../../HOC';
-import { styled, Box } from '@material-ui/core';
+import { styled, Box, Typography } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { DarkBackgroundColor } from '../../../constants/theme';
+import { DarkBackgroundColor, HeadingColor } from '../../../constants/theme';
 
 const SecondHeaderWrapper = styled(Box)({
   display: 'flex',
@@ -18,6 +18,12 @@ const ButtonsWrapper = styled(Box)({
   display: 'flex',
   alignItems: 'center',
 });
+const SelectedLeadTyp = styled(Typography)({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '0px 12px',
+  color: HeadingColor,
+});
 
 function SecondHeader(props) {
   const { handleSelectAllClick, selectedCount } = props;
@@ -27,6 +33,7 @@ function SecondHeader(props) {
   return (
     <SecondHeaderWrapper>
       <Checkbox onChange={handleSelectAllClick} />
+      <SelectedLeadTyp>{selectedCount + ' Selected'}</SelectedLeadTyp>
       <ButtonsWrapper>
         <Button
           onClick={() => setOpenAddLabelModal(!openAddLabelModal)}

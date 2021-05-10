@@ -106,7 +106,7 @@ const StyledTableContainer = withStyles({
 })(TableContainer);
 
 export default function ContactsTable(props) {
-  const { message, selectedMedia } = props;
+  const { message, selectedMedia, sortType } = props;
   const { pathname } = useLocation();
   const leadsState = useLeadsState();
   const leadsDispatch = useLeadsDispatch();
@@ -203,8 +203,10 @@ export default function ContactsTable(props) {
                   )}
                   <TableBody>
                     {leadsState
-                      .sort(
-                        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                      .sort((a, b) =>
+                        sortType === 2
+                          ? new Date(b.createdAt) - new Date(a.createdAt)
+                          : new Date(a.createdAt) - new Date(b.createdAt)
                       )
                       .slice(
                         page * rowsPerPage,
@@ -392,4 +394,5 @@ export default function ContactsTable(props) {
 ContactsTable.prototypes = {
   message: PropTypes.string,
   selectedMedia: PropTypes.object,
+  sortType: PropTypes.number.isRequired,
 };

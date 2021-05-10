@@ -52,6 +52,16 @@ function Filters(props) {
       prevFilters.current = JSON.stringify(filters);
     }
   }, [filters]);
+
+  useEffect(() => {
+    if (localStorage.getItem('filters')) {
+      prevFilters.current = localStorage.getItem('filters');
+      setFilters(JSON.parse(localStorage.getItem('filters')));
+    }
+    return () => {
+      localStorage.setItem('filters', prevFilters.current);
+    };
+  }, []);
   const commonProps = { filters: filters, setFilters: setFilters };
   return (
     <FiltersWrapper>

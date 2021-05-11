@@ -94,8 +94,9 @@ export default function Modal(props) {
   }, [openModal]);
 
   useEffect(() => {
+    console.log('Mount');
     socket.on('no-qr', () => {
-      handleAutoClose();
+      handleClose();
       setOpenModal(false);
       toastActions.error(
         'Connection timed out, Please check you internet connection and try again.'
@@ -117,8 +118,8 @@ export default function Modal(props) {
     //   console.log(res);
     // });
     socket.on('chats-received', (res) => {
-      toastActions.success('Chats recieved successfully');
-      if (chatState.length < 1) {
+      res.length !== 0 && toastActions.success('Chats recieved successfully');
+      if (chatState.length < 1 && res.length !== 0) {
         loadChats(chatDispatch, {
           chats: res,
         });
@@ -126,6 +127,7 @@ export default function Modal(props) {
       handleAfterScan(true);
     });
     socket.on('disconnected', (res) => {
+      console.log(res);
       if (res.currentConnRef == currentConnRef.current) {
         toastActions.warning(res.message);
         updateStatus(connectStatusDispatch, {
@@ -139,6 +141,7 @@ export default function Modal(props) {
       }
     });
     return () => {
+      console.log('UnMount');
       socket.off('no-qr');
       socket.off('get-qr');
       socket.off('connection-status');
@@ -146,14 +149,15 @@ export default function Modal(props) {
       socket.off('disconnected');
     };
   }, [openModal]);
+  console.log(openModal);
 
-  const handleSelfClose = () => {
-    setOpenModal(false);
+  const handleClose = () => {
     setOpen(false);
     setQrString('');
   };
 
-  const handleAutoClose = () => {
+  const handleCloseIconClick = () => {
+    setOpenModal(false);
     setOpen(false);
     setQrString('');
   };
@@ -165,7 +169,7 @@ export default function Modal(props) {
   }, [qrString]);
 
   const handleAfterScan = (status) => {
-    handleAutoClose();
+    handleClose();
     updateStatus(connectStatusDispatch, {
       status: status,
     });
@@ -175,7 +179,7 @@ export default function Modal(props) {
     <React.Fragment>
       <Dialog
         open={open}
-        onClose={handleSelfClose}
+        onClose={handleClose}
         disableBackdropClick={true}
         disableEscapeKeyDown={true}
         fullWidth={true}
@@ -185,7 +189,10 @@ export default function Modal(props) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleSelfClose}>
+        <DialogTitle
+          id="customized-dialog-title"
+          onClose={handleCloseIconClick}
+        >
           Connect to WhatsApp
         </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>

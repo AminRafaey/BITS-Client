@@ -94,7 +94,6 @@ export default function Modal(props) {
   }, [openModal]);
 
   useEffect(() => {
-    console.log('Mount');
     socket.on('no-qr', () => {
       handleClose();
       setOpenModal(false);
@@ -127,7 +126,6 @@ export default function Modal(props) {
       handleAfterScan(true);
     });
     socket.on('disconnected', (res) => {
-      console.log(res);
       if (res.currentConnRef == currentConnRef.current) {
         toastActions.warning(res.message);
         updateStatus(connectStatusDispatch, {
@@ -141,7 +139,6 @@ export default function Modal(props) {
       }
     });
     return () => {
-      console.log('UnMount');
       socket.off('no-qr');
       socket.off('get-qr');
       socket.off('connection-status');
@@ -149,7 +146,6 @@ export default function Modal(props) {
       socket.off('disconnected');
     };
   }, [openModal]);
-  console.log(openModal);
 
   const handleClose = () => {
     setOpen(false);

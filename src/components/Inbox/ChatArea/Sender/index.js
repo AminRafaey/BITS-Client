@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, styled, Typography } from '@material-ui/core';
 import { HighlightColor, HoverColor } from '../../../constants/theme';
-import { calculateTimeInFormat } from '../../utility';
+import { formattedTime } from '../../utility';
 
 const MessageWrapper = styled(Box)({
   display: 'flex',
@@ -47,7 +47,7 @@ function Sender(props) {
       <ChatTopWrapper>
         <MessageBoxWrapper className="S_tri-right S_left-top">
           <MessageTyp>{message.message.conversation}</MessageTyp>
-          <DateTyp>{calculateTimeInFormat(message.messageTimestamp)}</DateTyp>
+          <DateTyp>{formattedTime(message.messageTimestamp)}</DateTyp>
         </MessageBoxWrapper>
       </ChatTopWrapper>
     </MessageWrapper>

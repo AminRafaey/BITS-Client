@@ -32,6 +32,17 @@ export const calculateTimeInFormat = (date) => {
   );
 };
 
+export const formattedTime = (date) => {
+  const convertedTimeInFormat = new Date(date * 1000)
+    .toLocaleString()
+    .split(',')[1];
+  return (
+    convertedTimeInFormat.split(' ')[1].split(':')[0] +
+    convertedTimeInFormat.split(' ')[1].split(':')[1] +
+    ' ' +
+    convertedTimeInFormat.split(' ')[2]
+  );
+};
 export const formatBytes = (a, b = 0) => {
   if (0 === a) return '0 Bytes';
   const c = 0 > b ? 0 : b,

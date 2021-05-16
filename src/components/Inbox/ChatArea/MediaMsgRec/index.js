@@ -16,7 +16,7 @@ import {
   HoverColor,
   DarkHoverColor,
 } from '../../../constants/theme';
-import { calculateTimeInFormat, formatBytes } from '../../utility';
+import { formattedTime, formatBytes } from '../../utility';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
 const MessageWrapper = styled(Box)({
@@ -108,7 +108,7 @@ function MediaMsgRec(props) {
                   : ''
               }`}</FileSizeTyp>
             )}
-            <DateTyp>{calculateTimeInFormat(message.messageTimestamp)}</DateTyp>
+            <DateTyp>{formattedTime(message.messageTimestamp)}</DateTyp>
           </InfoWrapper>
         </MessageBoxWrapper>
       </ChatTopWrapper>

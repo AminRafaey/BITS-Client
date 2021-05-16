@@ -147,12 +147,12 @@ export default function Modal(props) {
     });
     socket.on('get-contact-messages', getMessagesHandler);
 
-    socket.on('chat-new', (res) => {      
+    socket.on('chat-new', (res) => {
       addNewChat(chatDispatch, {
         chat: { ...res, messages: [] },
       });
     });
-    socket.on('new-message', (res) => {      
+    socket.on('new-message', (res) => {
       const chat = chatStateRef.current.find(
         (c) => c.jid === res.key.remoteJid
       );

@@ -11,6 +11,10 @@ import {
   useChatState,
   useChatDispatch,
   loadChats,
+  addMessage,
+  addUnread,
+  addMessages,
+  addNewChat,
 } from '../../../Context/Chat';
 import {
   IconButton,
@@ -83,6 +87,7 @@ export default function Modal(props) {
   const currentConnRef = useRef();
   const connectStatusDispatch = useConnectStatusDispatch();
   const chatState = useChatState();
+  const chatStateRef = useRef();
   const chatDispatch = useChatDispatch();
   const socket = useSocketState();
 
@@ -92,7 +97,9 @@ export default function Modal(props) {
       socket.emit('get-qr', currentConnRef.current);
     }
   }, [openModal]);
-
+  useEffect(() => {
+    chatStateRef.current = chatState;
+  }, [chatState]);
   useEffect(() => {
     socket.on('no-qr', () => {
       handleClose();
@@ -138,12 +145,39 @@ export default function Modal(props) {
         setOpenModal(false);
       }
     });
+    socket.on('get-contact-messages', getMessagesHandler);
+
+    socket.on('chat-new', (res) => {      
+      addNewChat(chatDispatch, {
+        chat: { ...res, messages: [] },
+      });
+    });
+    socket.on('new-message', (res) => {      
+      const chat = chatStateRef.current.find(
+        (c) => c.jid === res.key.remoteJid
+      );
+      if (chat && chat.messages ? chat.messages.length < 1 : true) {
+        socket.emit('get-contact-messages', res.key.remoteJid);
+      } else if (chat) {
+        addMessage(chatDispatch, {
+          jid: res.key.remoteJid,
+          message: res,
+        });
+        addUnread(chatDispatch, {
+          jid: res.key.remoteJid,
+          unreadCount: 1,
+        });
+      }
+    });
     return () => {
       socket.off('no-qr');
       socket.off('get-qr');
       socket.off('connection-status');
       socket.off('chats-received');
       socket.off('disconnected');
+      socket.off('new-message');
+      socket.off('get-contact-messages', getMessagesHandler);
+      socket.off('chat-new');
     };
   }, [openModal]);
 
@@ -163,6 +197,13 @@ export default function Modal(props) {
       setOpen(true);
     }
   }, [qrString]);
+
+  const getMessagesHandler = (res) => {
+    addMessages(chatDispatch, {
+      jid: res.jid,
+      messages: res.messages.messages,
+    });
+  };
 
   const handleAfterScan = (status) => {
     handleClose();

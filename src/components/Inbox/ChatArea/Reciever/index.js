@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Box, styled, Typography } from '@material-ui/core';
 import { LightTextColor, GrayColor } from '../../../constants/theme';
-import { calculateTimeInFormat } from '../../utility';
+import { formattedTime } from '../../utility';
 
 const MessageWrapper = styled(Box)({
   width: '40%',
@@ -42,7 +42,7 @@ function Reciever(props) {
       <ChatTopWrapper>
         <MessageBoxWrapper className="tri-right left-top">
           <MessageTyp>{message.message.conversation}</MessageTyp>
-          <DateTyp>{calculateTimeInFormat(message.messageTimestamp)}</DateTyp>
+          <DateTyp>{formattedTime(message.messageTimestamp)}</DateTyp>
         </MessageBoxWrapper>
       </ChatTopWrapper>
     </MessageWrapper>

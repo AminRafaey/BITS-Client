@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link, useHistory } from 'react-router-dom';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 import {
@@ -18,6 +19,7 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import { HoverColor, HeadingColor } from '../../constants/theme';
+import stateCloner from '../../utility/StateCloner';
 const NoOptionTyp = styled(Typography)({
   cursor: 'pointer',
   color: 'rgba(0, 0, 0, 0.85)',
@@ -50,6 +52,7 @@ const StyledAutoComplete = withStyles({
 })(Autocomplete);
 export default function TemplateMultiSelect(props) {
   const { setSelectedTemplate, type } = props;
+  const history = useHistory();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [textFieldVal, setTextFieldVal] = useState('');
@@ -59,22 +62,36 @@ export default function TemplateMultiSelect(props) {
 
   const TagName =
     type === 'inbox' ? StyledInboxAutoComplete : StyledAutoComplete;
-  useEffect(() => {
-    if (!loading) {
-      return undefined;
-    }
-    if (templateState.length < 1) {
-      getTemplates().then((res) =>
-        loadTemplates(templateDispatch, { templates: res })
-      );
-    }
-  }, [loading]);
 
   useEffect(() => {
-    if (templateState && templateState.length > 0 && options.length < 1) {
-      setOptions(templateState);
+    if (open) {
+      if (templateState.length < 1) {
+        getTemplates().then((res) => {
+          loadTemplates(templateDispatch, { templates: res });
+          updateOptions(res);
+        });
+      } else {
+        updateOptions(templateState);
+      }
     }
-  }, [templateState]);
+  }, [open]);
+
+  const updateOptions = (templateState) => {
+    const templateClone = stateCloner(templateState);
+    templateClone.push({ title: 'Add', default: true });
+    setOptions(templateClone);
+  };
+
+  const noOptionItem = () => {
+    return (
+      <Link
+        to={'/addTemplate'}
+        style={{ textDecoration: 'none', width: '100%' }}
+      >
+        <NoOptionTyp>+ Add</NoOptionTyp>
+      </Link>
+    );
+  };
 
   return (
     <TagName
@@ -92,6 +109,9 @@ export default function TemplateMultiSelect(props) {
       options={options}
       loading={loading}
       renderOption={(option, { selected, inputValue }) => {
+        if (option.default) {
+          return noOptionItem();
+        }
         const matches = match(option.title, inputValue);
         const parts = parse(option.title, matches);
 
@@ -110,17 +130,25 @@ export default function TemplateMultiSelect(props) {
           </div>
         );
       }}
+      onChange={(e, value) => {
+        if (value && value.default) {
+          return;
+        }
+
+        setSelectedTemplate(value ? value : {});
+      }}
       noOptionsText={
         <NoOptionTyp
           onMouseDown={() => {
-            setTextFieldVal('');
+            history.push('/addTemplate');
           }}
         >
           + Add {textFieldVal}
         </NoOptionTyp>
       }
-      onChange={(e, value) => {
-        setSelectedTemplate(value ? value : {});
+      inputValue={textFieldVal}
+      onInputChange={(event, newInputValue) => {
+        newInputValue !== 'Add' && setTextFieldVal(newInputValue);
       }}
       renderInput={(params) => (
         <TextField

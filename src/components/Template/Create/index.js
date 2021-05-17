@@ -85,16 +85,17 @@ function CreateTemplate(props) {
   const templateTextAreaRef = useRef();
 
   useEffect(() => {
-    if (templateState.length < 1) {
+    if (templateState.length === 0) {
       getTemplates()
-        .then((res) => loadTemplates(templateDispatch, { templates: res }))
+        .then((res) => {
+          setTemplateLoading(false);
+          loadTemplates(templateDispatch, { templates: res });
+        })
         .catch((err) => {});
+    } else {
+      setTemplateLoading(false);
     }
   }, []);
-
-  useEffect(() => {
-    templateState.length > 0 && templateLoading && setTemplateLoading(false);
-  }, [templateState]);
 
   const handleSubmit = () => {
     if (!template.title) {

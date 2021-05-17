@@ -6,7 +6,7 @@ const ChatDispatch = React.createContext(null);
 
 function ChatReducer(state, action) {
   const cloneState = stateCloner(state);
-  const { messages, jid, message } = action.payload;
+  const { messages, jid, message, unreadCount, chat } = action.payload;
   switch (action.type) {
     case 'LOAD_CHATS':
       return [...stateCloner(action.payload.chats)];
@@ -32,6 +32,15 @@ function ChatReducer(state, action) {
       const index = cloneState.findIndex((c) => c.jid === jid);
       index !== -1 && (cloneState[index]['count'] = 0);
       return [...cloneState];
+    }
+    case 'ADD_UNREAD': {
+      const index = cloneState.findIndex((c) => c.jid === jid);
+      index !== -1 &&
+        (cloneState[index]['count'] = cloneState[index]['count'] + unreadCount);
+      return [...cloneState];
+    }
+    case 'ADD_NEW_CHAT': {
+      return [chat, ...cloneState];
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -75,6 +84,8 @@ export {
   addMessages,
   addMessage,
   markAsUnread,
+  addUnread,
+  addNewChat,
 };
 
 function loadChats(dispatch, data) {
@@ -100,6 +111,18 @@ function addMessage(dispatch, data) {
 function markAsUnread(dispatch, data) {
   dispatch({
     type: 'MARK_AS_UNREAD',
+    payload: data,
+  });
+}
+function addUnread(dispatch, data) {
+  dispatch({
+    type: 'ADD_UNREAD',
+    payload: data,
+  });
+}
+function addNewChat(dispatch, data) {
+  dispatch({
+    type: 'ADD_NEW_CHAT',
     payload: data,
   });
 }

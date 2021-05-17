@@ -83,6 +83,7 @@ function Collection(props) {
           placeholder={filterName}
           onChange={(e) => setFieldVal(e.target.value)}
           onBlur={(e) => updateFilter(e.target.value)}
+          onKeyUp={(e) => e.key === 'Enter' && updateFilter(e.target.value)}
         />
       </FieldWrapper>
     </React.Fragment>

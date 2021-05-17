@@ -70,9 +70,9 @@ function QuickSend(props) {
       ) : (
         <LoadingWrapper>
           <CircularProgress color="primary" />
-          <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
         </LoadingWrapper>
       )}
+      <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
     </div>
   );
 }

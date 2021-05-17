@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import Reciever from './Reciever';
 import Sender from './Sender';
 import TypingArea from './TypingArea';
+import MediaMsgRec from './MediaMsgRec';
+import MediaMsgSen from './MediaMsgSen';
+import { InfoAlert } from '../../Assets';
 import {
   useChatState,
   useChatDispatch,
@@ -49,6 +52,7 @@ function ChatArea(props) {
   const [message, setMessage] = useState('');
   const [selectedMedia, setSelectedMedia] = useState({});
   const [loader, setLoader] = useState(false);
+  const [openInfoAlert, setOpenInfoAlert] = useState(false);
 
   useEffect(() => {
     setLoader(true);
@@ -88,11 +92,39 @@ function ChatArea(props) {
         {chatState
           .find((c) => c.jid === currentChatJid)
           ['messages'].map((m, index) => {
-            if (m.message && m.message.conversation) {
+            if (
+              m.message &&
+              (m.message.conversation ||
+                Object.keys(m.message).find((k) => k === 'conversation'))
+            ) {
               return m.key.fromMe ? (
                 <Sender message={m} key={index} />
               ) : (
                 <Reciever message={m} key={index} />
+              );
+            } else if (m.message) {
+              return m.key.fromMe ? (
+                <MediaMsgSen
+                  message={m}
+                  key={index}
+                  type={
+                    Object.keys(m.message)
+                      .find((k) => k.split('M').length === 2)
+                      .split('M')[0]
+                  }
+                  setOpenInfoAlert={setOpenInfoAlert}
+                />
+              ) : (
+                <MediaMsgRec
+                  message={m}
+                  key={index}
+                  type={
+                    Object.keys(m.message)
+                      .find((k) => k.split('M').length === 2)
+                      .split('M')[0]
+                  }
+                  setOpenInfoAlert={setOpenInfoAlert}
+                />
               );
             }
           })}
@@ -108,6 +140,12 @@ function ChatArea(props) {
           setSelectedMedia={setSelectedMedia}
         />
       </TypingAreaWrapper>
+      <InfoAlert
+        open={openInfoAlert}
+        setOpen={setOpenInfoAlert}
+        title={'WhatsApp'}
+        message={`Some Whatsapp features are not available in BITS as the purpose of BITS is not to reinvent a cross-platform centralized messaging, and voice-over-IP service like Whatsapp but to provide a system where you can manage your leads and communicate with them by using a most popular messaging platform where customer feel comfortable for interaction.`}
+      />
     </ChatAreaWrapper>
   );
 }

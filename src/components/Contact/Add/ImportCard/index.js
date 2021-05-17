@@ -111,6 +111,7 @@ function ImportCard(props) {
             onChange={(e) =>
               handleCSVChange(e, setSelectedCSV, setError, 'csv', 1000)
             }
+            onClick={(e) => (e.target.value = null)}
             style={{ display: 'none' }}
             accept={'.csv'}
           />

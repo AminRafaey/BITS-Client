@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import match from 'autosuggest-highlight/match';
 import parse from 'autosuggest-highlight/parse';
 
@@ -37,8 +37,9 @@ const StyledAutoComplete = withStyles({
 })(Autocomplete);
 function LabelMultiSelect(props) {
   const { personInfo, setPersonInfo, type, setShowLabelSelect } = props;
+  const history = useHistory();
   const [options, setOptions] = useState([]);
-
+  const [textFieldVal, setTextFieldVal] = useState('');
   const labelState = useLabelState();
 
   useEffect(() => {
@@ -145,7 +146,21 @@ function LabelMultiSelect(props) {
           </OptionWrapper>
         );
       }}
-      noOptionsText={noOptionItem()}
+      noOptionsText={
+        <NoOptionTyp
+          onMouseDown={() => {
+            history.push('/addLabel');
+          }}
+        >
+          + Add {textFieldVal}
+        </NoOptionTyp>
+      }
+      inputValue={textFieldVal}
+      onInputChange={(event, newInputValue, reason) => {
+        reason === 'input' &&
+          newInputValue !== 'Add' &&
+          setTextFieldVal(newInputValue);
+      }}
       renderTags={(values) =>
         values.map((v) => (
           <Chip

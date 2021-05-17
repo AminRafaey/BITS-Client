@@ -104,7 +104,7 @@ export default function AddressBookTable() {
           </TemplateWrapper>
           <Grid container>
             <ContactsTable message={message} selectedMedia={selectedMedia} />
-            <Grid item xs={3}>
+            <Grid item xs={12} md={3}>
               <Filters />
             </Grid>
           </Grid>
@@ -112,9 +112,9 @@ export default function AddressBookTable() {
       ) : (
         <LoadingWrapper>
           <CircularProgress color="primary" />
-          <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
         </LoadingWrapper>
       )}
+      <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
     </div>
   );
 }

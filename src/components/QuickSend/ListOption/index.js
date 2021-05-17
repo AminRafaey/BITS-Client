@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '../../HOC';
 import { useSocketState } from '../../../Context/Socket';
+import { useConnectStatusState } from '../../../Context/ConnectStatus';
 import { sendTextMesage, sendMedia } from '../../../api/send';
 import { styled, Typography, Box, Grid } from '@material-ui/core';
 import { toastActions } from '../../Toast';
@@ -37,8 +38,15 @@ export const ButtonWrapper = styled(Box)({
 export default function ListOption(props) {
   const { setContactList, contantList, selectedMedia, message } = props;
   const socket = useSocketState();
+  const connectStatusState = useConnectStatusState();
 
   const handleSend = () => {
+    if (!connectStatusState) {
+      setAlertMessage(
+        'Disconnected from WhatsApp, please connect again to continue...'
+      );
+      return;
+    }
     if (contantList.length === 0) {
       toastActions.warning(
         'Type or select one or more valid contacts to continue ...'
@@ -67,12 +75,13 @@ export default function ListOption(props) {
           <TextAreaWrapper>
             <textarea
               style={textAreaStyle}
-              placeholder="Valid Format 923364773099,923174343123"
+              placeholder="Valid Format +923364773099,+923174343123"
               onBlur={(e) => {
                 setContactList(
                   e.target.value
+                    .replaceAll(' ', '')
+                    .replaceAll('+', '')
                     .split(',')
-                    .filter((n) => n.match(/^(92)\d{10}$/))
                 );
               }}
             />
@@ -82,7 +91,7 @@ export default function ListOption(props) {
       <Grid container>
         <Grid item xs={4}></Grid>
         <Grid item xs={4}>
-          <FormatTyp>{'Valid Format 923364773099,923174343123'}</FormatTyp>
+          <FormatTyp>{'Valid Format +923364773099,+923174343123'}</FormatTyp>
         </Grid>
       </Grid>
       <Grid container>

@@ -114,6 +114,7 @@ export default function Modal(props) {
     socket.on('connection-status', (res) => {
       if (res === 'success') {
         toastActions.success('Connected to a WhatsApp successfully.');
+        handleClose();
       } else {
         handleAfterScan(false);
         setOpenModal(false);
@@ -130,7 +131,9 @@ export default function Modal(props) {
           chats: res,
         });
       }
-      handleAfterScan(true);
+      updateStatus(connectStatusDispatch, {
+        status: true,
+      });
     });
     socket.on('disconnected', (res) => {
       if (res.currentConnRef == currentConnRef.current) {

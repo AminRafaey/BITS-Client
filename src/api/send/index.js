@@ -64,7 +64,7 @@ export async function sendMedia(data, socket, tryNo = 1) {
             'Connection timed out, Please check your internet connection and try again'
           );
         },
-        10000
+        100000
       )
     );
   } catch (ex) {

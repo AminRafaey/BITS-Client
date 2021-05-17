@@ -9,7 +9,7 @@ const config = {
 
   // Output
   output: {
-    path: path.resolve(__dirname, './src/dist'),
+    path: path.resolve(__dirname, './src/build'),
     filename: 'bundle.js',
   },
 

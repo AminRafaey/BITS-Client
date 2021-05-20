@@ -47,7 +47,10 @@ function QuickSend(props) {
       {connectState ? (
         <React.Fragment>
           <TemplateSelectWrapper>
-            <TemplateMultiSelect setSelectedTemplate={setSelectedTemplate} />
+            <TemplateMultiSelect
+              setSelectedTemplate={setSelectedTemplate}
+              selectedTemplate={selectedTemplate}
+            />
           </TemplateSelectWrapper>
           <TemplateWrapper>
             <Template

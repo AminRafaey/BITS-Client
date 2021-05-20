@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
+import { InfoAlert } from '../../../Assets';
 import { useSocketState } from '../../../../Context/Socket';
 import { useChatDispatch, addMessage } from '../../../../Context/Chat';
 import { useLeadsState } from '../../../../Context/Lead';
@@ -89,6 +90,8 @@ function TypingArea(props) {
   const chatDispatch = useChatDispatch();
   const leadsState = useLeadsState();
   const connectStatusState = useConnectStatusState();
+  const [alertMessage, setAlertMessage] = useState('');
+  const [openInfoAlert, setOpenInfoAlert] = useState(false);
   const selectedLeadRef = useRef(
     leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
   );
@@ -110,6 +113,7 @@ function TypingArea(props) {
       setAlertMessage(
         'Disconnected from WhatsApp, please connect again to continue...'
       );
+      setOpenInfoAlert(true);
       return;
     }
     if (selectedMedia.file === undefined) {
@@ -154,6 +158,7 @@ function TypingArea(props) {
       <TemplateSelectWrapper>
         <TemplateMultiSelect
           type={'inbox'}
+          selectedTemplate={selectedTemplate}
           setSelectedTemplate={setSelectedTemplate}
         />
       </TemplateSelectWrapper>
@@ -177,6 +182,12 @@ function TypingArea(props) {
           </SendWrapper>
         </FotterWrapper>
       </TypingAndSendingAreaWrapper>
+      <InfoAlert
+        open={openInfoAlert}
+        setOpen={setOpenInfoAlert}
+        title={'WhatsApp'}
+        message={alertMessage}
+      />
     </TypingAreaWrapper>
   );
 }

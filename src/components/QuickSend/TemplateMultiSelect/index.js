@@ -51,7 +51,7 @@ const StyledAutoComplete = withStyles({
   },
 })(Autocomplete);
 export default function TemplateMultiSelect(props) {
-  const { setSelectedTemplate, type } = props;
+  const { setSelectedTemplate, type, selectedTemplate } = props;
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -64,17 +64,15 @@ export default function TemplateMultiSelect(props) {
     type === 'inbox' ? StyledInboxAutoComplete : StyledAutoComplete;
 
   useEffect(() => {
-    if (open) {
-      if (templateState.length < 1) {
-        getTemplates().then((res) => {
-          loadTemplates(templateDispatch, { templates: res });
-          updateOptions(res);
-        });
-      } else {
-        updateOptions(templateState);
-      }
+    if (templateState.length < 1) {
+      getTemplates().then((res) => {
+        loadTemplates(templateDispatch, { templates: res });
+        updateOptions(res);
+      });
+    } else {
+      updateOptions(templateState);
     }
-  }, [open]);
+  }, []);
 
   const updateOptions = (templateState) => {
     const templateClone = stateCloner(templateState);
@@ -105,6 +103,13 @@ export default function TemplateMultiSelect(props) {
         setOpen(false);
       }}
       size="small"
+      value={
+        selectedTemplate &&
+        Object.entries(selectedTemplate).length > 0 &&
+        options.length > 0
+          ? options.find((o) => o._id === selectedTemplate._id)
+          : null
+      }
       getOptionLabel={(option) => option.title}
       options={options}
       loading={loading}
@@ -143,12 +148,12 @@ export default function TemplateMultiSelect(props) {
             history.push('/addTemplate');
           }}
         >
-          + Add {textFieldVal}
+          + Add
         </NoOptionTyp>
       }
       inputValue={textFieldVal}
       onInputChange={(event, newInputValue) => {
-        newInputValue !== 'Add' && setTextFieldVal(newInputValue);
+        setTextFieldVal(newInputValue);
       }}
       renderInput={(params) => (
         <TextField
@@ -175,5 +180,6 @@ export default function TemplateMultiSelect(props) {
 
 TemplateMultiSelect.propTypes = {
   setSelectedTemplate: PropTypes.func.isRequired,
+  selectedTemplate: PropTypes.object.isRequired,
   type: PropTypes.string,
 };

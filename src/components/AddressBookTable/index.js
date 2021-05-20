@@ -92,7 +92,10 @@ export default function AddressBookTable() {
       {connectState ? (
         <React.Fragment>
           <CampaignSelectWrapper>
-            <TemplateMultiSelect setSelectedTemplate={setSelectedTemplate} />
+            <TemplateMultiSelect
+              setSelectedTemplate={setSelectedTemplate}
+              selectedTemplate={selectedTemplate}
+            />
           </CampaignSelectWrapper>
           <TemplateWrapper>
             <Template

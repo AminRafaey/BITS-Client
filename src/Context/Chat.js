@@ -12,11 +12,7 @@ function ChatReducer(state, action) {
       return [...stateCloner(action.payload.chats)];
     case 'ADD_MESSAGES': {
       const index = cloneState.findIndex((c) => c.jid === jid);
-      index !== -1 &&
-        (cloneState[index]['messages'] = [
-          ...cloneState[index]['messages'],
-          ...messages.reverse(),
-        ]);
+      index !== -1 && (cloneState[index]['messages'] = [...messages]);
       return [...cloneState];
     }
     case 'ADD_MESSAGE': {

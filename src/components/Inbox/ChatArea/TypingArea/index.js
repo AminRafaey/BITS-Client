@@ -6,7 +6,7 @@ import { useSocketState } from '../../../../Context/Socket';
 import { useChatDispatch, addMessage } from '../../../../Context/Chat';
 import { useLeadsState } from '../../../../Context/Lead';
 import { useConnectStatusState } from '../../../../Context/ConnectStatus';
-import { sendTextMesage } from '../../../../api/send';
+import { sendTextMesage, sendTextMesageOnGroup } from '../../../../api/send';
 import { styled, Box } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import {
@@ -79,6 +79,7 @@ const TypingAndSendingAreaWrapper = styled(Box)({
 function TypingArea(props) {
   const {
     currentChatJid,
+    selectedTemplate,
     setSelectedTemplate,
     message,
     setMessage,
@@ -117,7 +118,9 @@ function TypingArea(props) {
       return;
     }
     if (selectedMedia.file === undefined) {
-      sendTextMesage([currentChatJid.split('@')[0]], message, socket);
+      currentChatJid.split('@')[1] === 's.whatsapp.net'
+        ? sendTextMesage([currentChatJid.split('@')[0]], message, socket)
+        : sendTextMesageOnGroup(currentChatJid, message, socket);
     } else if (selectedMedia.file) {
       const formData = new FormData();
       formData.append(
@@ -194,6 +197,7 @@ function TypingArea(props) {
 
 TypingArea.propTypes = {
   currentChatJid: PropTypes.string.isRequired,
+  selectedTemplate: PropTypes.object.isRequired,
   setSelectedTemplate: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   setMessage: PropTypes.func.isRequired,

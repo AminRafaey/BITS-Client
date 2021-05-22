@@ -39,6 +39,25 @@ export async function sendTextMesage(mobileNumbers, message, socket) {
   );
 }
 
+export async function sendTextMesageOnGroup(groupId, message, socket) {
+  socket.emit(
+    'send-text-message-on-group',
+    { groupId, message },
+    {},
+    withTimeout(
+      () => {
+        toastActions.success('Message sent successfully');
+      },
+      () => {
+        toastActions.error(
+          'Connection timed out, Please check your internet connection and try again'
+        );
+      },
+      10000
+    )
+  );
+}
+
 export async function sendMedia(data, socket, tryNo = 1) {
   try {
     const res = await axios.post(endPointApi, data, {

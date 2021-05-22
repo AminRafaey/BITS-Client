@@ -38,6 +38,7 @@ export const formattedTime = (date) => {
     .split(',')[1];
   return (
     convertedTimeInFormat.split(' ')[1].split(':')[0] +
+    ':' +
     convertedTimeInFormat.split(' ')[1].split(':')[1] +
     ' ' +
     convertedTimeInFormat.split(' ')[2]

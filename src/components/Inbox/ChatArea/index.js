@@ -63,10 +63,7 @@ function ChatArea(props) {
         setLoader(false);
         addMessages(chatDispatch, {
           jid: res.jid,
-          messages:
-            currentChatJid.split('@')[1] === 's.whatsapp.net'
-              ? res.messages.messages.reverse()
-              : res.messages.messages.reverse(),
+          messages: res.messages.messages.reverse(),
         });
       });
 

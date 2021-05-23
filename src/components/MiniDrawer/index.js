@@ -16,6 +16,7 @@ import {
   useLeadSourceDispatch,
   loadLeadSource,
 } from '../../Context/LeadSource';
+import { useSocketState } from '../../Context/Socket';
 import { getLabels } from '../../api/Label';
 import { getLeads, getCompanies, getLeadSource } from '../../api/Lead';
 import {
@@ -96,7 +97,22 @@ export default function MiniDrawer() {
   const companyDispatch = useCompanyDispatch();
   const leadSourceState = useLeadSourceState();
   const leadSourceDispatch = useLeadSourceDispatch();
+  const socket = useSocketState();
 
+  useEffect(() => {
+    socket.emit('join-room', {
+      mobileNumber: '+923415511689',
+      userName: 'Amin',
+    });
+    socket.on('room-updates', (res) => console.log(res));
+    socket.on('room-users', (res) => console.log(res));
+
+    return () => {
+      socket.off('join-room');
+      socket.off('room-updates');
+      socket.off('room-users');
+    };
+  }, []);
   useEffect(() => {
     const requests = [];
     setLoader(true);

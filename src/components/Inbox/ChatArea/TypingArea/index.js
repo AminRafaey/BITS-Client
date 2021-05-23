@@ -132,26 +132,7 @@ function TypingArea(props) {
       formData.append('mediaType', selectedMedia.type);
       sendMedia(formData, socket);
     }
-    let convertedMsg = message;
-    selectedLeadRef.current &&
-      keywords.map((k) => {
-        convertedMsg = convertedMsg.replaceAll(
-          `__${k.title}__`,
-          selectedLeadRef.current[k.value]
-        );
-      });
-    addMessage(chatDispatch, {
-      jid: currentChatJid,
-      message: {
-        key: {
-          fromMe: true,
-        },
-        message: {
-          conversation: convertedMsg,
-        },
-        messageTimestamp: new Date().getTime(),
-      },
-    });
+
     setTextAreaVal('');
     setMessage('');
   };

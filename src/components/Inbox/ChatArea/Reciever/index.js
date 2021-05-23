@@ -41,7 +41,7 @@ const NameTyp = styled(Typography)({
 });
 function Reciever(props) {
   const { message, contactType } = props;
-  console.log(message.participant);
+
   return (
     <MessageWrapper>
       <ChatTopWrapper>

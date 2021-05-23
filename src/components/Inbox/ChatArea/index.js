@@ -56,14 +56,19 @@ function ChatArea(props) {
   const contactType =
     currentChatJid.split('@')[1] === 's.whatsapp.net' ? 'contact' : 'group';
   useEffect(() => {
+    console.log('');
     setLoader(true);
     const messages = chatState.find((c) => c.jid === currentChatJid).messages;
     if (messages ? messages.length < 1 : true) {
       socket.on('get-contact-messages', (res) => {
+        console.log('get-contact-messages', res);
         setLoader(false);
         addMessages(chatDispatch, {
           jid: res.jid,
-          messages: res.messages.messages.reverse(),
+          messages:
+            currentChatJid.split('@')[1] === 's.whatsapp.net'
+              ? res.messages.messages.reverse()
+              : res.messages.messages.reverse(),
         });
       });
 

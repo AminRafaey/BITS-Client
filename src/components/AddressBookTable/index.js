@@ -48,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddressBookTable() {
+export default function AddressBookTable(props) {
+  const { openModal, setOpenModal } = props;
   const classes = useStyles();
   const [message, setMessage] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState({});
   const [selectedMedia, setSelectedMedia] = useState({});
-  const [openModal, setOpenModal] = useState(false);
   const connectState = useConnectStatusState();
 
   useEffect(() => {
@@ -117,7 +117,6 @@ export default function AddressBookTable() {
           <CircularProgress color="primary" />
         </LoadingWrapper>
       )}
-      <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
     </div>
   );
 }

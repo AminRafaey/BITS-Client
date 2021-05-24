@@ -20,9 +20,8 @@ const InboxWrapper = styled(Box)({
   width: '100%',
 });
 function Inbox(props) {
-  const { setOpen } = props;
+  const { openModal, setOpenModal, setOpen } = props;
   const [currentChatJid, setCurrentChatJid] = useState('');
-  const [openModal, setOpenModal] = useState(false);
   const connectState = useConnectStatusState();
 
   useEffect(() => {
@@ -61,7 +60,6 @@ function Inbox(props) {
           <CircularProgress color="primary" />
         </LoadingWrapper>
       )}
-      <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
     </InboxWrapper>
   );
 }

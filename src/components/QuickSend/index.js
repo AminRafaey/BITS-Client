@@ -26,11 +26,11 @@ const OptionSelectionWrapper = styled(Box)({
   marginTop: 40,
 });
 function QuickSend(props) {
+  const { openModal, setOpenModal } = props;
   const [message, setMessage] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState({});
   const [selectedMedia, setSelectedMedia] = useState({});
   const [contantList, setContactList] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
   const connectState = useConnectStatusState();
 
   useEffect(() => {
@@ -75,7 +75,6 @@ function QuickSend(props) {
           <CircularProgress color="primary" />
         </LoadingWrapper>
       )}
-      <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
     </div>
   );
 }

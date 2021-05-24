@@ -16,9 +16,10 @@ const LoadingWrapper = styled(Box)({
 });
 
 function ManageContact(props) {
+  const { openModal, setOpenModal } = props;
   const connectState = useConnectStatusState();
   const [sortType, setSortType] = useState(2);
-  const [openModal, setOpenModal] = useState(false);
+
   useEffect(() => {
     !connectState && setOpenModal(true);
   }, [connectState]);
@@ -39,7 +40,6 @@ function ManageContact(props) {
           <CircularProgress color="primary" />
         </LoadingWrapper>
       )}
-      <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
     </React.Fragment>
   );
 }

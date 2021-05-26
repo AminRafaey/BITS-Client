@@ -102,7 +102,6 @@ export default function MiniDrawer() {
   const socket = useSocketState();
 
   const commonProps = {
-    openModal: openModal,
     setOpenModal: setOpenModal,
   };
   useEffect(() => {

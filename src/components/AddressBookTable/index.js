@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ContactsTable from '../Contact/Manage/Table';
 import Filters from '../Contact/Manage/Filters';
-import {
-  TemplateMultiSelect,
-  Template,
-  ConnectionModal,
-} from '../../components';
+import { TemplateMultiSelect, Template } from '../../components';
 import { CheckIcon, CheckAllIcon } from '../../resources';
 import { useConnectStatusState } from '../../Context/ConnectStatus';
 import {
@@ -49,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AddressBookTable(props) {
-  const { openModal, setOpenModal } = props;
+  const { setOpenModal } = props;
   const classes = useStyles();
   const [message, setMessage] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState({});
@@ -120,3 +117,7 @@ export default function AddressBookTable(props) {
     </div>
   );
 }
+
+AddressBookTable.propTypes = {
+  setOpenModal: PropTypes.func.isRequired,
+};

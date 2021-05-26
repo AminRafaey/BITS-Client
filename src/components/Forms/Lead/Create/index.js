@@ -130,11 +130,6 @@ function CreateLead(props) {
       return;
     }
     sendTextMesage([mobileNumber], selectedTemplate.content, socket);
-    console.log(
-      [mobileNumber.replace('+', '')],
-      selectedTemplate.content,
-      socket
-    );
     return true;
   };
 

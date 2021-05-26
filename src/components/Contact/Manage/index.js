@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import FirstHeader from './FirstHeader';
 import ContactsTable from './Table';
-import { ConnectionModal } from '../../../components';
 import Filters from './Filters';
 import { useConnectStatusState } from '../../../Context/ConnectStatus';
 import { Grid, Box, styled, CircularProgress } from '@material-ui/core';
@@ -16,7 +15,7 @@ const LoadingWrapper = styled(Box)({
 });
 
 function ManageContact(props) {
-  const { openModal, setOpenModal } = props;
+  const { setOpenModal } = props;
   const connectState = useConnectStatusState();
   const [sortType, setSortType] = useState(2);
 
@@ -44,6 +43,8 @@ function ManageContact(props) {
   );
 }
 
-ManageContact.propTypes = {};
+ManageContact.propTypes = {
+  setOpenModal: PropTypes.func.isRequired,
+};
 
 export default ManageContact;

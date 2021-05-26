@@ -112,7 +112,6 @@ export default function Modal(props) {
       currentConnRef.current == res.currentConnRef && setQrString(res.qr);
     });
     socket.on('connection-status', (res) => {
-      console.log(res);
       if (res.status === 'success') {
         toastActions.success('Connected to a WhatsApp successfully.');
         currentConnRef.current = res.currentConnRef;
@@ -127,7 +126,6 @@ export default function Modal(props) {
     //   console.log(res);
     // });
     socket.on('chats-received', (res) => {
-      console.log(res);
       res.length !== 0 && toastActions.success('Chats recieved successfully');
       if (chatState.length < 1 && res.length !== 0) {
         loadChats(chatDispatch, {
@@ -139,7 +137,6 @@ export default function Modal(props) {
       });
     });
     socket.on('disconnected', (res) => {
-      console.log(res, currentConnRef.current);
       if (res.currentConnRef == currentConnRef.current) {
         toastActions.warning(res.message);
         updateStatus(connectStatusDispatch, {
@@ -160,7 +157,6 @@ export default function Modal(props) {
       });
     });
     socket.on('new-message', (res) => {
-      console.log(res);
       const chat = chatStateRef.current.find(
         (c) => c.jid === res.key.remoteJid
       );

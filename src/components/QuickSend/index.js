@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-
+import PropTypes from 'prop-types';
 import {
   TemplateMultiSelect,
   Template,
   OptionSelection,
-  ConnectionModal,
 } from '../../components';
 import { useConnectStatusState } from '../../Context/ConnectStatus';
 import { Box, styled, CircularProgress } from '@material-ui/core';
@@ -26,7 +25,7 @@ const OptionSelectionWrapper = styled(Box)({
   marginTop: 40,
 });
 function QuickSend(props) {
-  const { openModal, setOpenModal } = props;
+  const { setOpenModal } = props;
   const [message, setMessage] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState({});
   const [selectedMedia, setSelectedMedia] = useState({});
@@ -78,5 +77,7 @@ function QuickSend(props) {
     </div>
   );
 }
-
+QuickSend.propTypes = {
+  setOpenModal: PropTypes.func.isRequired,
+};
 export default QuickSend;

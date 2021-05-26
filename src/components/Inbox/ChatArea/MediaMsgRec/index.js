@@ -18,6 +18,7 @@ import {
 } from '../../../constants/theme';
 import { formattedTime, formatBytes } from '../../utility';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import { colors } from '../../../constants/AvatarColor.js';
 
 const MessageWrapper = styled(Box)({
   width: '40%',
@@ -53,6 +54,10 @@ const HighlightWrapper = styled(Box)({
   justifyContent: 'space-between',
 });
 
+const NameTyp = styled(Typography)({
+  fontSize: 10,
+});
+
 const StyledInfoOutlinedIcon = withStyles({
   root: {
     fill: BackgroundColor,
@@ -74,7 +79,7 @@ const InfoWrapper = styled(Box)({
   padding: '2px 2px 0px 2px',
 });
 function MediaMsgRec(props) {
-  const { type, message, setOpenInfoAlert } = props;
+  const { type, message, setOpenInfoAlert, contactType } = props;
   const MediaTag =
     type === 'image'
       ? Image
@@ -91,6 +96,20 @@ function MediaMsgRec(props) {
     <MessageWrapper>
       <ChatTopWrapper>
         <MessageBoxWrapper className="tri-right left-top">
+          {contactType === 'group' && (
+            <NameTyp
+              style={{
+                color:
+                  colors[
+                    message.participant.split('@')[0][
+                      message.participant.split('@')[0].length - 1
+                    ]
+                  ],
+              }}
+            >
+              {'+' + message.participant.split('@')[0]}
+            </NameTyp>
+          )}
           <HighlightWrapper>
             <MediaTag />
             <StyledInfoOutlinedIcon onClick={() => setOpenInfoAlert(true)} />
@@ -120,6 +139,7 @@ MediaMsgRec.propTypes = {
   type: PropTypes.string.isRequired,
   message: PropTypes.object.isRequired,
   setOpenInfoAlert: PropTypes.func.isRequired,
+  contactType: PropTypes.string,
 };
 
 export default MediaMsgRec;

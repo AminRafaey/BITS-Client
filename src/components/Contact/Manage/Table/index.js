@@ -94,6 +94,7 @@ const StyledPaper = withStyles({
 })(Paper);
 const StyledTableContainer = withStyles({
   root: {
+    background: '#F5F6F8',
     '& .MuiTableBody-root .MuiTableRow-root': {
       '&:nth-child(odd)': {
         background: '#f5f6f8',

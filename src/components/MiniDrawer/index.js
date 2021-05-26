@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ConnectionModal from '../ConnectionModal';
 import {
   useLabelState,
   useLabelDispatch,
@@ -16,6 +17,7 @@ import {
   useLeadSourceDispatch,
   loadLeadSource,
 } from '../../Context/LeadSource';
+import { useSocketState } from '../../Context/Socket';
 import { getLabels } from '../../api/Label';
 import { getLeads, getCompanies, getLeadSource } from '../../api/Lead';
 import {
@@ -87,6 +89,7 @@ export default function MiniDrawer() {
   const classes = useStyles();
 
   const [open, setOpen] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
   const [loader, setLoader] = useState(false);
   const labelState = useLabelState();
   const labelDispatch = useLabelDispatch();
@@ -96,7 +99,25 @@ export default function MiniDrawer() {
   const companyDispatch = useCompanyDispatch();
   const leadSourceState = useLeadSourceState();
   const leadSourceDispatch = useLeadSourceDispatch();
+  const socket = useSocketState();
 
+  const commonProps = {
+    setOpenModal: setOpenModal,
+  };
+  useEffect(() => {
+    socket.emit('join-room', {
+      mobileNumber: '+923415511689',
+      userName: 'Amin',
+    });
+    socket.on('room-updates', (res) => console.log(res));
+    socket.on('room-users', (res) => console.log(res));
+
+    return () => {
+      socket.off('join-room');
+      socket.off('room-updates');
+      socket.off('room-users');
+    };
+  }, []);
   useEffect(() => {
     const requests = [];
     setLoader(true);
@@ -145,8 +166,15 @@ export default function MiniDrawer() {
   return (
     <Router>
       <div className={classes.root}>
+        <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
         <CssBaseline />
-        {open && <AppBar open={open} handleDrawerOpen={handleDrawerOpen} />}
+        {open && (
+          <AppBar
+            {...commonProps}
+            open={open}
+            handleDrawerOpen={handleDrawerOpen}
+          />
+        )}
         <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
           {loader ? (
@@ -159,25 +187,25 @@ export default function MiniDrawer() {
             <Switch>
               <Route path="/sendSms">
                 <QuickSendWrapper>
-                  <QuickSend />
+                  <QuickSend {...commonProps} />
                 </QuickSendWrapper>
               </Route>
               <Route path="/sendFromAddressBook">
                 <AddressBookWrapper>
                   {' '}
-                  <AddressBookTable />
+                  <AddressBookTable {...commonProps} />
                 </AddressBookWrapper>
               </Route>
               <Route path="/inbox">
                 <InboxWrapper>
                   {' '}
-                  <Inbox setOpen={setOpen} />
+                  <Inbox setOpen={setOpen} {...commonProps} />
                 </InboxWrapper>
               </Route>
 
               <Route path="/manageContacts">
                 <ContactWrapper>
-                  <ManageContact />
+                  <ManageContact {...commonProps} />
                 </ContactWrapper>
               </Route>
               <Route path="/addContacts">

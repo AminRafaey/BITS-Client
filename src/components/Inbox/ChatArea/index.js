@@ -53,21 +53,32 @@ function ChatArea(props) {
   const [selectedMedia, setSelectedMedia] = useState({});
   const [loader, setLoader] = useState(false);
   const [openInfoAlert, setOpenInfoAlert] = useState(false);
-
+  const contactType =
+    currentChatJid.split('@')[1] === 's.whatsapp.net' ? 'contact' : 'group';
   useEffect(() => {
     setLoader(true);
     const messages = chatState.find((c) => c.jid === currentChatJid).messages;
     if (messages ? messages.length < 1 : true) {
       socket.on('get-contact-messages', (res) => {
-        setLoader(false);
         addMessages(chatDispatch, {
           jid: res.jid,
-          messages: res.messages.messages,
+          messages:
+            currentChatJid.split('@')[1] === 's.whatsapp.net'
+              ? res.messages.messages.reverse()
+              : res.messages.messages.reverse(),
         });
+        setLoader(false);
       });
 
       socket.emit('get-contact-messages', currentChatJid);
     } else {
+      addMessages(chatDispatch, {
+        jid: currentChatJid,
+        messages:
+          currentChatJid.split('@')[1] === 's.whatsapp.net'
+            ? messages.reverse()
+            : messages.reverse(),
+      });
       setLoader(false);
     }
     return () => {
@@ -100,7 +111,7 @@ function ChatArea(props) {
               return m.key.fromMe ? (
                 <Sender message={m} key={index} />
               ) : (
-                <Reciever message={m} key={index} />
+                <Reciever message={m} key={index} contactType={contactType} />
               );
             } else if (m.message) {
               return m.key.fromMe ? (
@@ -118,6 +129,7 @@ function ChatArea(props) {
                 <MediaMsgRec
                   message={m}
                   key={index}
+                  contactType={contactType}
                   type={
                     Object.keys(m.message)
                       .find((k) => k.split('M').length === 2)
@@ -132,6 +144,7 @@ function ChatArea(props) {
 
       <TypingAreaWrapper>
         <TypingArea
+          selectedTemplate={selectedTemplate}
           currentChatJid={currentChatJid}
           setSelectedTemplate={setSelectedTemplate}
           message={message}

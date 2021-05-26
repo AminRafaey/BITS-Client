@@ -67,9 +67,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function AppBar(props) {
-  const { open, handleDrawerOpen } = props;
+  const { open, handleDrawerOpen, setOpenModal } = props;
   const classes = useStyles();
-  const [openModal, setOpenModal] = useState(false);
+
   const connectStatusState = useConnectStatusState();
   const connectStatusDispatch = useConnectStatusDispatch();
 
@@ -120,7 +120,6 @@ export default function AppBar(props) {
         <div onClick={() => handleConnectIconClick()}>
           <ConnectIcon status={connectStatusState} />
         </div>
-        <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
       </StyledToolbar>
     </MuiAppBar>
   );

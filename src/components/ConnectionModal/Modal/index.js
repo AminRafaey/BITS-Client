@@ -112,8 +112,9 @@ export default function Modal(props) {
       currentConnRef.current == res.currentConnRef && setQrString(res.qr);
     });
     socket.on('connection-status', (res) => {
-      if (res === 'success') {
+      if (res.status === 'success') {
         toastActions.success('Connected to a WhatsApp successfully.');
+        currentConnRef.current = res.currentConnRef;
         handleClose();
       } else {
         handleAfterScan(false);

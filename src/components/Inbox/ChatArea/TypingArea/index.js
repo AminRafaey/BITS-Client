@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
+import { InfoAlert } from '../../../Assets';
 import { useSocketState } from '../../../../Context/Socket';
 import { useChatDispatch, addMessage } from '../../../../Context/Chat';
 import { useLeadsState } from '../../../../Context/Lead';
 import { useConnectStatusState } from '../../../../Context/ConnectStatus';
-import { sendTextMesage } from '../../../../api/send';
+import { sendTextMesage, sendTextMesageOnGroup } from '../../../../api/send';
 import { styled, Box } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import {
@@ -78,6 +79,7 @@ const TypingAndSendingAreaWrapper = styled(Box)({
 function TypingArea(props) {
   const {
     currentChatJid,
+    selectedTemplate,
     setSelectedTemplate,
     message,
     setMessage,
@@ -89,6 +91,8 @@ function TypingArea(props) {
   const chatDispatch = useChatDispatch();
   const leadsState = useLeadsState();
   const connectStatusState = useConnectStatusState();
+  const [alertMessage, setAlertMessage] = useState('');
+  const [openInfoAlert, setOpenInfoAlert] = useState(false);
   const selectedLeadRef = useRef(
     leadsState.find((l) => l.phone === '+' + currentChatJid.split('@')[0])
   );
@@ -110,10 +114,13 @@ function TypingArea(props) {
       setAlertMessage(
         'Disconnected from WhatsApp, please connect again to continue...'
       );
+      setOpenInfoAlert(true);
       return;
     }
     if (selectedMedia.file === undefined) {
-      sendTextMesage([currentChatJid.split('@')[0]], message, socket);
+      currentChatJid.split('@')[1] === 's.whatsapp.net'
+        ? sendTextMesage([currentChatJid.split('@')[0]], message, socket)
+        : sendTextMesageOnGroup(currentChatJid, message, socket);
     } else if (selectedMedia.file) {
       const formData = new FormData();
       formData.append(
@@ -125,26 +132,7 @@ function TypingArea(props) {
       formData.append('mediaType', selectedMedia.type);
       sendMedia(formData, socket);
     }
-    let convertedMsg = message;
-    selectedLeadRef.current &&
-      keywords.map((k) => {
-        convertedMsg = convertedMsg.replaceAll(
-          `__${k.title}__`,
-          selectedLeadRef.current[k.value]
-        );
-      });
-    addMessage(chatDispatch, {
-      jid: currentChatJid,
-      message: {
-        key: {
-          fromMe: true,
-        },
-        message: {
-          conversation: convertedMsg,
-        },
-        messageTimestamp: new Date().getTime(),
-      },
-    });
+
     setTextAreaVal('');
     setMessage('');
   };
@@ -154,6 +142,7 @@ function TypingArea(props) {
       <TemplateSelectWrapper>
         <TemplateMultiSelect
           type={'inbox'}
+          selectedTemplate={selectedTemplate}
           setSelectedTemplate={setSelectedTemplate}
         />
       </TemplateSelectWrapper>
@@ -177,12 +166,19 @@ function TypingArea(props) {
           </SendWrapper>
         </FotterWrapper>
       </TypingAndSendingAreaWrapper>
+      <InfoAlert
+        open={openInfoAlert}
+        setOpen={setOpenInfoAlert}
+        title={'WhatsApp'}
+        message={alertMessage}
+      />
     </TypingAreaWrapper>
   );
 }
 
 TypingArea.propTypes = {
   currentChatJid: PropTypes.string.isRequired,
+  selectedTemplate: PropTypes.object.isRequired,
   setSelectedTemplate: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
   setMessage: PropTypes.func.isRequired,

@@ -47,7 +47,6 @@ function ChatBox(props) {
       </SearchInputWrapper>
       <Paper>
         {chatState
-          .filter((c) => c.jid.split('@')[1] === 's.whatsapp.net')
           .filter((c) =>
             searchString
               ? c.name
@@ -59,7 +58,13 @@ function ChatBox(props) {
             return (
               <Chat
                 key={index}
-                name={c.name ? c.name : c.jid.split('@')[0]}
+                name={
+                  c.jid.split('@')[1] === 's.whatsapp.net'
+                    ? c.name
+                      ? c.name
+                      : c.jid.split('@')[0]
+                    : c.name
+                }
                 date={c.t}
                 message={'Hello, How are you'} //getMessage(c, c['messages'].length - 1)
                 unreadCount={c.count}

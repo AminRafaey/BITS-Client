@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import ChatBox from './ChatBox';
 import ChatArea from './ChatArea';
 import Info from './Info';
-import { ConnectionModal } from '../../components';
 import WABg from '../../public/images/WABg.png';
 import { useConnectStatusState } from '../../Context/ConnectStatus';
 import { Box, styled, Grid, CircularProgress } from '@material-ui/core';
@@ -20,9 +19,8 @@ const InboxWrapper = styled(Box)({
   width: '100%',
 });
 function Inbox(props) {
-  const { setOpen } = props;
+  const { setOpenModal, setOpen } = props;
   const [currentChatJid, setCurrentChatJid] = useState('');
-  const [openModal, setOpenModal] = useState(false);
   const connectState = useConnectStatusState();
 
   useEffect(() => {
@@ -61,12 +59,12 @@ function Inbox(props) {
           <CircularProgress color="primary" />
         </LoadingWrapper>
       )}
-      <ConnectionModal openModal={openModal} setOpenModal={setOpenModal} />
     </InboxWrapper>
   );
 }
 
 Inbox.propTypes = {
   setOpen: PropTypes.func.isRequired,
+  setOpenModal: PropTypes.func.isRequired,
 };
 export default Inbox;

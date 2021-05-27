@@ -36,3 +36,12 @@ export const initLeadFilters = {
   emails: [],
   phones: [],
 };
+
+export const initEmployeeFilters = {
+  roles: [],
+  statuses: [],
+  firstNames: [],
+  lastNames: [],
+  emails: [],
+  phones: [],
+};

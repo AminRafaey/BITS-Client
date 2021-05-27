@@ -36,6 +36,7 @@ import {
   AddContacts,
   CreateLabel,
   CreateTemplate,
+  ManageTeams,
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -223,7 +224,11 @@ export default function MiniDrawer() {
                   <CreateTemplate />
                 </QuickSendWrapper>
               </Route>
-
+              <Route path="/employeesList">
+                <ContactWrapper>
+                  <ManageTeams {...commonProps} />
+                </ContactWrapper>
+              </Route>
               <Route path="/">
                 <HomePageWrapper>
                   <Home />

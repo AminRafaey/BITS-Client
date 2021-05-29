@@ -8,11 +8,11 @@ import CreateLead from '../../../Forms/Lead/Create';
 import DeleteAlert from '../DeleteAlert';
 import { colors } from '../../../constants/AvatarColor';
 import {
-  useLeadsState,
-  useLeadsDispatch,
-  handleSelectedStatus,
-  handleMultipleSelectedStatus,
-} from '../../../../Context/Lead';
+  useEmployeeState,
+  useEmployeeDispatch,
+  // handleSelectedStatus,
+  // handleMultipleSelectedStatus,
+} from '../../../../Context/Employee';
 import { useLabelState } from '../../../../Context/Label';
 import {
   Table,
@@ -142,8 +142,8 @@ const StyledFormControl = withStyles({
 export default function ContactsTable(props) {
   const { message, selectedMedia, sortType } = props;
   const { pathname } = useLocation();
-  const leadsState = useLeadsState();
-  const leadsDispatch = useLeadsDispatch();
+  const employeeState = useEmployeeState();
+  const employeeDispatch = useEmployeeDispatch();
   const [page, setPage] = useState(0);
   const [selectedCount, setSelectedCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -151,16 +151,17 @@ export default function ContactsTable(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const selectedLead = useRef(null);
+  const selectedemployee = useRef(null);
   const open = Boolean(anchorEl);
 
-  useEffect(() => {
-    setSelectedCount(leadsState.filter((l) => l.selected).length);
-  }, [leadsState]);
+  // useEffect(() => {
+  //   setSelectedCount(leadsState.filter((l) => l.selected).length);
+  // }, [leadsState]);
 
   const handleIconClick = (event, row, index) => {
+    console.log(row, index);
     setAnchorEl(event.currentTarget);
-    selectedLead.current = { lead: { ...row }, index: index };
+    selectedemployee.current = { employee: { ...row }, index: index };
   };
 
   const handleClose = () => {
@@ -168,7 +169,7 @@ export default function ContactsTable(props) {
   };
 
   const handleSelectAllClick = (event) => {
-    handleMultipleSelectedStatus(leadsDispatch, {
+    handleMultipleSelectedStatus(employeeDispatch, {
       selected: event.target.checked,
       startingIndex: page * rowsPerPage,
       endingIndex: page * rowsPerPage + rowsPerPage,
@@ -176,7 +177,7 @@ export default function ContactsTable(props) {
   };
 
   const handleClick = (event, _id) => {
-    handleSelectedStatus(leadsDispatch, {
+    handleSelectedStatus(employeeDispatch, {
       selected: event.target.checked,
       _id: _id,
     });
@@ -192,7 +193,8 @@ export default function ContactsTable(props) {
   };
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, leadsState.length - page * rowsPerPage);
+    rowsPerPage -
+    Math.min(rowsPerPage, employeeState.length - page * rowsPerPage);
 
   return (
     <React.Fragment>
@@ -221,7 +223,7 @@ export default function ContactsTable(props) {
                     <TableHead />
 
                     <TableBody>
-                      {employee
+                      {employeeState
                         .sort((a, b) =>
                           sortType === 2
                             ? new Date(b.createdAt) - new Date(a.createdAt)
@@ -380,13 +382,13 @@ export default function ContactsTable(props) {
                           setOpenModal={setOpenCreateLabelModal}
                           type={'edit'}
                           editingLead={
-                            selectedLead.current
-                              ? selectedLead.current.lead
+                            selectedemployee.current
+                              ? selectedemployee.current.lead
                               : {}
                           }
-                          selectedLeadIndex={
-                            selectedLead.current
-                              ? selectedLead.current.index
+                          selectedemployeeIndex={
+                            selectedemployee.current
+                              ? selectedemployee.current.index
                               : undefined
                           }
                         />
@@ -396,16 +398,8 @@ export default function ContactsTable(props) {
                           open={openDeleteModal}
                           setOpen={setOpenDeleteModal}
                           selectedCount={1}
-                          selectedLead={
-                            selectedLead.current
-                              ? selectedLead.current.lead
-                              : {}
-                          }
-                          selectedLeadIndex={
-                            selectedLead.current
-                              ? selectedLead.current.index
-                              : undefined
-                          }
+                          selectedEmployee={selectedemployee.current.employee}
+                          selectedEmployeeIndex={selectedemployee.current.index}
                         />
                       )}
                       {emptyRows > 0 && (
@@ -420,7 +414,7 @@ export default function ContactsTable(props) {
               <TablePagination
                 rowsPerPageOptions={[10, 20, 30]}
                 component="div"
-                count={leadsState.length}
+                count={employeeState.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}

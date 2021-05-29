@@ -15,8 +15,10 @@ import { LabelProvider } from './Context/Label';
 import { labels } from './Static/Label';
 import { companies } from './Static/Company';
 import { leadSource } from './Static/LeadSource';
+import { employee } from './Static/Employee';
 import { CompanyProvider } from './Context/Company';
 import { LeadSourceProvider } from './Context/LeadSource';
+import { EmployeeProvider } from './Context/Employee';
 
 function App() {
   return (
@@ -29,16 +31,18 @@ function App() {
                 <LabelProvider>
                   <CompanyProvider>
                     <LeadSourceProvider>
-                      <SnackbarProvider
-                        maxSnack={3}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'right',
-                        }}
-                      >
-                        <Toast />
-                        <MiniDrawer />
-                      </SnackbarProvider>
+                      <EmployeeProvider employee={employee}>
+                        <SnackbarProvider
+                          maxSnack={3}
+                          anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                          }}
+                        >
+                          <Toast />
+                          <MiniDrawer />
+                        </SnackbarProvider>
+                      </EmployeeProvider>
                     </LeadSourceProvider>
                   </CompanyProvider>
                 </LabelProvider>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import CreateLead from '../../../Forms/Lead/Create';
+import CreateEmployee from '../../../Forms/Employee/Create';
 import { Button } from '../../../HOC';
-import { useLeadsState } from '../../../../Context/Lead';
+import { useEmployeeState } from '../../../../Context/Employee';
 import {
   styled,
   Box,
@@ -57,14 +57,14 @@ const StyledFormControl = withStyles({
 })(FormControl);
 function FirstHeader(props) {
   const { sortType, setSortType } = props;
-  const leadsState = useLeadsState();
+  const employeeState = useEmployeeState();
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
 
   return (
     <FirstHeaderWrapper>
       <ContactInfoWrapper>
         <ContactTyp>Employee</ContactTyp>
-        <ContactNumTyp>{leadsState.length} Total</ContactNumTyp>
+        <ContactNumTyp>{employeeState.length} Total</ContactNumTyp>
         <SortAreaWrapper>
           <ContactNumTyp>Sort by:</ContactNumTyp>
           <CreatedDateTyp>
@@ -90,7 +90,7 @@ function FirstHeader(props) {
         >
           Add Employee
         </Button>
-        <CreateLead
+        <CreateEmployee
           openModal={openCreateLabelModal}
           setOpenModal={setOpenCreateLabelModal}
         />

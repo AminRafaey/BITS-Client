@@ -7,7 +7,7 @@ const EmployeeDispatch = React.createContext(null);
 function employeeReducer(state, action) {
   const { selected, _id, startingIndex, endingIndex } = action.payload;
   const { selectedLeads, labels } = action.payload;
-  const { leadData, employees, selectedEmployeeIndex } = action.payload;
+  const { employeeData, employees, selectedEmployeeIndex } = action.payload;
   let cloneState = stateCloner(state);
   switch (action.type) {
     case 'LOAD_EMPLOYEES':
@@ -43,17 +43,17 @@ function employeeReducer(state, action) {
     //   return [...cloneState];
     case 'ADD_EMPLOYEES':
       return [...employees, ...cloneState];
-    // case 'ADD_LEAD':
-    //   return [{ ...leadData }, ...cloneState];
+    case 'ADD_EMPLOYEE':
+      return [{ ...employeeData }, ...cloneState];
     case 'REMOVE_EMPLOYEES':
       cloneState = cloneState.filter((c) => !c.selected);
       return [...cloneState];
     case 'REMOVE_EMPLOYEE':
       cloneState.splice(selectedEmployeeIndex, 1);
       return [...cloneState];
-    // case 'UPDATE_LEAD':
-    //   cloneState[selectedLeadIndex] = leadData;
-    //   return [...cloneState];
+    case 'UPDATE_EMPLOYEE':
+      cloneState[selectedEmployeeIndex] = employeeData;
+      return [...cloneState];
 
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -102,10 +102,10 @@ export {
   //   handleMultipleSelectedStatus,
   //   addLabels,
   //   removeLabels,
-  //   addLead,
+  addEmployee,
   //   addLeads,
   removeEmployees,
-  //   updateLead,
+  updateEmployee,
   removeEmployee,
 };
 
@@ -142,12 +142,12 @@ function loadEmployee(dispatch, data) {
 //     payload: data,
 //   });
 // }
-// function addLead(dispatch, data) {
-//   dispatch({
-//     type: 'ADD_LEAD',
-//     payload: data,
-//   });
-// }
+function addEmployee(dispatch, data) {
+  dispatch({
+    type: 'ADD_EMPLOYEE',
+    payload: data,
+  });
+}
 function addEmployees(dispatch, data) {
   dispatch({
     type: 'ADD_EMPLOYEES',
@@ -166,9 +166,9 @@ function removeEmployee(dispatch, data) {
     payload: data,
   });
 }
-// function updateLead(dispatch, data) {
-//   dispatch({
-//     type: 'UPDATE_LEAD',
-//     payload: data,
-//   });
-// }
+function updateEmployee(dispatch, data) {
+  dispatch({
+    type: 'UPDATE_EMPLOYEE',
+    payload: data,
+  });
+}

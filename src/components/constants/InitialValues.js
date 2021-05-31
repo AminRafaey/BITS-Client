@@ -14,6 +14,17 @@ export const initLeadData = {
   country: '',
 };
 
+export const initEmployeeData = {
+  firstName: 'Amin',
+  lastName: 'Rafaey',
+  userName: 'amin',
+  email: 'amin@gmail.com',
+  password: 'Kuku10uku',
+  phone: '',
+  designation: 'MERN Developer',
+  status: 'Active',
+};
+
 export const initLabel = {
   title: '',
   description: '',
@@ -38,7 +49,7 @@ export const initLeadFilters = {
 };
 
 export const initEmployeeFilters = {
-  roles: [],
+  designations: [],
   statuses: [],
   firstNames: [],
   lastNames: [],

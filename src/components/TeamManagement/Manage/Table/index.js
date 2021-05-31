@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { Checkbox, AbsoluteScroll } from '../../../HOC';
 import SecondHeader from '../SecondHeader';
 import TableHead from './TableHead';
-import CreateLead from '../../../Forms/Lead/Create';
+import CreateEmployee from '../../../Forms/Employee/Create';
 import DeleteAlert from '../DeleteAlert';
 import { colors } from '../../../constants/AvatarColor';
 import {
@@ -151,7 +151,7 @@ export default function ContactsTable(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const selectedemployee = useRef(null);
+  const selectedEmployee = useRef(null);
   const open = Boolean(anchorEl);
 
   // useEffect(() => {
@@ -161,7 +161,7 @@ export default function ContactsTable(props) {
   const handleIconClick = (event, row, index) => {
     console.log(row, index);
     setAnchorEl(event.currentTarget);
-    selectedemployee.current = { employee: { ...row }, index: index };
+    selectedEmployee.current = { employee: { ...row }, index: index };
   };
 
   const handleClose = () => {
@@ -269,7 +269,7 @@ export default function ContactsTable(props) {
                                     <TitleTyp>{`${row.firstName} ${
                                       row.lastName || ''
                                     }`}</TitleTyp>
-                                    <EmailTyp>{row.role}</EmailTyp>
+                                    <EmailTyp>{row.designation}</EmailTyp>
                                   </BasicInfoContentWrapper>
                                 </BasicInfoWrapper>
                               </TableCell>
@@ -377,18 +377,18 @@ export default function ContactsTable(props) {
                           );
                         })}
                       {openCreateLabelModal && (
-                        <CreateLead
+                        <CreateEmployee
                           openModal={openCreateLabelModal}
                           setOpenModal={setOpenCreateLabelModal}
                           type={'edit'}
-                          editingLead={
-                            selectedemployee.current
-                              ? selectedemployee.current.lead
+                          editingEmployee={
+                            selectedEmployee.current
+                              ? selectedEmployee.current.employee
                               : {}
                           }
-                          selectedemployeeIndex={
-                            selectedemployee.current
-                              ? selectedemployee.current.index
+                          selectedEmployeeIndex={
+                            selectedEmployee.current
+                              ? selectedEmployee.current.index
                               : undefined
                           }
                         />
@@ -398,8 +398,8 @@ export default function ContactsTable(props) {
                           open={openDeleteModal}
                           setOpen={setOpenDeleteModal}
                           selectedCount={1}
-                          selectedEmployee={selectedemployee.current.employee}
-                          selectedEmployeeIndex={selectedemployee.current.index}
+                          selectedEmployee={selectedEmployee.current.employee}
+                          selectedEmployeeIndex={selectedEmployee.current.index}
                         />
                       )}
                       {emptyRows > 0 && (

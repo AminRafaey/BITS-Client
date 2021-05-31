@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FreeSolo from '../../../../../Contact/Manage/Filters/Filter/FreeSolo';
-import { roles } from '../../../../../../Static/Role';
+import { designations } from '../../../../../../Static/Designation';
 
-function Role(props) {
+function Designation(props) {
   const { filters, setFilters } = props;
 
-  const parentKey = 'roles';
-  const childKey = 'role';
+  const parentKey = 'designations';
+  const childKey = 'designation';
   const commonProps = {
     filters: filters,
     setFilters: setFilters,
     parentKey: parentKey,
     childKey: childKey,
-    freeSoloOptions: roles,
-    filterName: 'Role',
+    freeSoloOptions: designations,
+    filterName: 'Designation',
   };
 
   return <FreeSolo {...commonProps} />;
 }
 
-Role.propTypes = {
+Designation.propTypes = {
   filters: PropTypes.object.isRequired,
   setFilters: PropTypes.func.isRequired,
 };
-export default Role;
+export default Designation;

@@ -6,7 +6,7 @@ import {
   Email,
   Phone,
 } from '../../../Contact/Manage/Filters/Filter';
-import { Role, Status } from './Filter';
+import { Designation, Status } from './Filter';
 import { getFilteredLeads } from '../../../../api/Lead';
 import { useLeadsDispatch, loadLeads } from '../../../../Context/Lead';
 import { styled, Box, Typography } from '@material-ui/core';
@@ -67,7 +67,7 @@ function Filters(props) {
         </ClearTyp>
       </HeaderWrapper>
 
-      <Role {...commonProps} />
+      <Designation {...commonProps} />
 
       <Status {...commonProps} />
 

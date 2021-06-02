@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, SecondaryButton } from '../../../HOC';
-import { removeLeads as removeLeadsFromApi } from '../../../../api/Lead';
+import { removeEmployee as removeEmployeeFromApi } from '../../../../api/Employee';
 import {
-  useEmployeeState,
   useEmployeeDispatch,
   addEmployee,
   removeEmployee,
@@ -17,24 +16,22 @@ import {
 } from '@material-ui/core';
 
 function DeleteAlert(props) {
-  const {
-    open,
-    setOpen,
-    selectedCount,
-    selectedEmployee,
-    selectedEmployeeIndex,
-  } = props;
+  const { open, setOpen, selectedEmployee, selectedEmployeeIndex } = props;
 
   const employeeDispatch = useEmployeeDispatch();
-  const employeeState = useEmployeeState();
+
   const handleSubmit = () => {
-    const employee = [{ ...selectedEmployee }];
-    // removeLeadsFromApi(employees.map((l) => l._id))
-    // .then((res) => {})
-    // .catch((err) => {
-    //   addemployee(employeeDispatch, { employees });
-    // });
-    removeEmployee(employeeDispatch, { selectedEmployee });
+    removeEmployeeFromApi(selectedEmployee._id)
+      .then((res) => {})
+      .catch((err) => {
+        addEmployee(employeeDispatch, {
+          employeeData: selectedEmployee,
+          selectedEmployeeIndex: selectedEmployeeIndex,
+        });
+      });
+    removeEmployee(employeeDispatch, {
+      selectedEmployeeIndex: selectedEmployeeIndex,
+    });
     handleClose();
   };
 
@@ -52,8 +49,7 @@ function DeleteAlert(props) {
       <DialogTitle id="alert-dialog-title">{'Delete?'}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Deleted employee can't be restore. Are you sure you want to delete{' '}
-          {selectedCount} employee?
+          Deleted employee can't be restore. Are you sure you want to delete?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -69,7 +65,6 @@ function DeleteAlert(props) {
 DeleteAlert.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
-  selectedCount: PropTypes.number.isRequired,
   selectedEmployee: PropTypes.object,
   selectedEmployeeIndex: PropTypes.number,
 };

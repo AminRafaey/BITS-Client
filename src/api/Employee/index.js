@@ -85,26 +85,22 @@ export async function updateEmployee(updatedEmployee) {
 //   }
 // }
 
-// export async function removeLeads(leads) {
-//   try {
-//     const res = await axios.delete(endPointApi, {
-//       params: { leads: JSON.stringify(leads) },
-//     });
-//     toastActions.success(
-//       `Lead${leads.length > 1 ? 's ' : ' '}${
-//         leads.length > 1 ? 'are ' : 'is '
-//       } Successfully deleted`
-//     );
-//   } catch (ex) {
-//     if (!ex.response) {
-//       toastActions.error('Please check your internet connection');
-//       throw 'Exception!';
-//     } else {
-//       toastActions.error(ex.response.data.field.message);
-//       throw 'Exception!';
-//     }
-//   }
-// }
+export async function removeEmployee(employeeId) {
+  try {
+    const res = await axios.delete(endPointApi, {
+      params: { employeeId: employeeId },
+    });
+    toastActions.success(`Employee is successfully deleted`);
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+      throw 'Exception!';
+    } else {
+      toastActions.error(ex.response.data.field.message);
+      throw 'Exception!';
+    }
+  }
+}
 
 // export async function updateLeadsLabels(updatedLeads, prevState) {
 //   try {

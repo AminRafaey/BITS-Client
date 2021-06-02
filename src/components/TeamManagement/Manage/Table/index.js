@@ -72,9 +72,9 @@ const EmailTyp = styled(Typography)({
   whiteSpace: 'nowrap',
 });
 const IconWrapper = styled(Box)({
-  marginLeft: 8,
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   cursor: 'pointer',
   '&:hover': {
     background: GrayColor,
@@ -279,7 +279,7 @@ export default function ContactsTable(props) {
                               </TableCell>
 
                               <TableCell align="left">
-                                <ItemTyp>{row.phone || ''}</ItemTyp>
+                                <ItemTyp>{row.mobileNumber || ''}</ItemTyp>
                               </TableCell>
 
                               <TableCell align="left">

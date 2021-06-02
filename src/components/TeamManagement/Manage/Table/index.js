@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
 import { Checkbox, AbsoluteScroll } from '../../../HOC';
 import SecondHeader from '../SecondHeader';
 import TableHead from './TableHead';
@@ -10,10 +9,9 @@ import { colors } from '../../../constants/AvatarColor';
 import {
   useEmployeeState,
   useEmployeeDispatch,
-  // handleSelectedStatus,
-  // handleMultipleSelectedStatus,
+  handleSelectedStatus,
+  handleMultipleSelectedStatus,
 } from '../../../../Context/Employee';
-import { useLabelState } from '../../../../Context/Label';
 import {
   Table,
   TableBody,
@@ -40,7 +38,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import EventIcon from '@material-ui/icons/Event';
-import { employee } from '../../../../Static/Employee';
 import { GrayColor, DelieverStatusColor } from '../../../constants/theme';
 
 const iconsStyle = {
@@ -141,7 +138,6 @@ const StyledFormControl = withStyles({
 })(FormControl);
 export default function ContactsTable(props) {
   const { message, selectedMedia, sortType } = props;
-  const { pathname } = useLocation();
   const employeeState = useEmployeeState();
   const employeeDispatch = useEmployeeDispatch();
   const [page, setPage] = useState(0);
@@ -154,9 +150,9 @@ export default function ContactsTable(props) {
   const selectedEmployee = useRef(null);
   const open = Boolean(anchorEl);
 
-  // useEffect(() => {
-  //   setSelectedCount(leadsState.filter((l) => l.selected).length);
-  // }, [leadsState]);
+  useEffect(() => {
+    setSelectedCount(employeeState.filter((l) => l.selected).length);
+  }, [employeeState]);
 
   const handleIconClick = (event, row, index) => {
     console.log(row, index);
@@ -202,6 +198,8 @@ export default function ContactsTable(props) {
         <SecondHeader
           handleSelectAllClick={handleSelectAllClick}
           selectedCount={selectedCount}
+          rowsPerPage={rowsPerPage}
+          page={page}
         />
       </Grid>
 

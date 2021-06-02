@@ -12,18 +12,18 @@ function employeeReducer(state, action) {
   switch (action.type) {
     case 'LOAD_EMPLOYEE':
       return [...stateCloner(action.payload.employees)];
-    // case 'HANDLE_SELECTED_STATUS':
-    //   return cloneState.map((s) =>
-    //     s._id == _id ? { ...s, selected: selected } : { ...s }
-    //   );
-    // case 'HANDLE_MULTIPLE_SELECTED_STATUS':
-    //   cloneState.slice(startingIndex, endingIndex).map((s, index) => {
-    //     cloneState[startingIndex + index] = {
-    //       ...cloneState[startingIndex + index],
-    //       selected: selected,
-    //     };
-    //   });
-    //   return [...cloneState];
+    case 'HANDLE_SELECTED_STATUS':
+      return cloneState.map((s) =>
+        s._id == _id ? { ...s, selected: selected } : { ...s }
+      );
+    case 'HANDLE_MULTIPLE_SELECTED_STATUS':
+      cloneState.slice(startingIndex, endingIndex).map((s, index) => {
+        cloneState[startingIndex + index] = {
+          ...cloneState[startingIndex + index],
+          selected: selected,
+        };
+      });
+      return [...cloneState];
     // case 'ADD_LABELS':
     //   selectedLeads.map((s) => {
     //     labels.map((l) => {
@@ -98,8 +98,8 @@ export {
   useEmployeeState,
   useEmployeeDispatch,
   loadEmployee,
-  //   handleSelectedStatus,
-  //   handleMultipleSelectedStatus,
+  handleSelectedStatus,
+  handleMultipleSelectedStatus,
   //   addLabels,
   //   removeLabels,
   addEmployee,
@@ -116,18 +116,18 @@ function loadEmployee(dispatch, data) {
   });
 }
 
-// function handleSelectedStatus(dispatch, data) {
-//   dispatch({
-//     type: 'HANDLE_SELECTED_STATUS',
-//     payload: data,
-//   });
-// }
-// function handleMultipleSelectedStatus(dispatch, data) {
-//   dispatch({
-//     type: 'HANDLE_MULTIPLE_SELECTED_STATUS',
-//     payload: data,
-//   });
-// }
+function handleSelectedStatus(dispatch, data) {
+  dispatch({
+    type: 'HANDLE_SELECTED_STATUS',
+    payload: data,
+  });
+}
+function handleMultipleSelectedStatus(dispatch, data) {
+  dispatch({
+    type: 'HANDLE_MULTIPLE_SELECTED_STATUS',
+    payload: data,
+  });
+}
 
 // function addLabels(dispatch, data) {
 //   dispatch({

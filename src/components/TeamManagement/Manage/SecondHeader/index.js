@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import AddLabel from '../../../Forms/Label/Add';
-import DeleteAlert from '../DeleteAlert';
 import { Button, Checkbox } from '../../../HOC';
+import { useEmployeeState } from '../../../../Context/Employee';
+import { calculateHeaderCheckboxState } from '../../../utility/Table';
 import { styled, Box, Typography } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { DarkBackgroundColor, HeadingColor } from '../../../constants/theme';
 
 const SecondHeaderWrapper = styled(Box)({
@@ -26,10 +25,21 @@ const SelectedLeadTyp = styled(Typography)({
 });
 
 function SecondHeader(props) {
-  const { handleSelectAllClick, selectedCount } = props;
+  const { handleSelectAllClick, selectedCount, rowsPerPage, page } = props;
+  const employeeState = useEmployeeState();
+  const checkBoxStatus = calculateHeaderCheckboxState(
+    employeeState,
+    rowsPerPage,
+    page
+  );
+
   return (
     <SecondHeaderWrapper>
-      <Checkbox onChange={handleSelectAllClick} />
+      <Checkbox
+        indeterminate={checkBoxStatus === 'indeterminate'}
+        checked={checkBoxStatus === 'checked'}
+        onChange={handleSelectAllClick}
+      />
       <SelectedLeadTyp>{selectedCount + ' Selected'}</SelectedLeadTyp>
       <ButtonsWrapper>
         <Box pl={1}>
@@ -55,5 +65,7 @@ function SecondHeader(props) {
 SecondHeader.propTypes = {
   handleSelectAllClick: PropTypes.func.isRequired,
   selectedCount: PropTypes.number.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
 };
 export default SecondHeader;

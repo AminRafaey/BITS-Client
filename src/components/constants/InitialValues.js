@@ -20,9 +20,11 @@ export const initEmployeeData = {
   userName: 'amin',
   email: 'amin@gmail.com',
   password: 'Kuku10uku',
-  phone: '',
+  phone: '+923348035644',
   designation: 'MERN Developer',
   status: 'Active',
+  joiningDate: new Date(),
+  adminId: '60a8ef082443683d588c8626',
 };
 
 export const initLabel = {

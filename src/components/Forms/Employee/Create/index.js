@@ -4,7 +4,7 @@ import phone from 'phone';
 
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import PhoneNumber from '../../PhoneNumber';
-import { Designation, InfoAlert } from '../../../Assets';
+import { Designation, InfoAlert, DateField } from '../../../Assets';
 import {
   Button,
   TextField,
@@ -13,7 +13,6 @@ import {
   Checkbox,
 } from '../../../HOC';
 import { Transition } from '../../../ConnectionModal/Modal';
-import { validatePassword } from '../index';
 import { isEmailValid } from '../../Lead';
 import {
   useEmployeeDispatch,
@@ -76,26 +75,21 @@ function CreateEmployee(props) {
     type,
     editingEmployee,
     selectedEmployeeIndex,
-    source,
-    setSelectedEmployee,
   } = props;
   const employeeDispatch = useEmployeeDispatch();
   const connectStatusState = useConnectStatusState();
   const socket = useSocketState();
   const [employeeData, setEmployeeData] = useState(initEmployeeData);
-  const [nameError, setNameError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
   const [selectedTemplate, setSelectedTemplate] = useState({});
   const [openInfoAlert, setOpenInfoAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [clientSideError, setClientSideError] = useState({});
 
   useEffect(() => {
-    if (type === 'edit' || type === 'createWithProvidedInfo') {
+    if (type === 'edit') {
       setEmployeeData({ ...editingEmployee });
-    } else if (window.localStorage.getItem('employeeData')) {
-      setLeadData(JSON.parse(window.localStorage.getItem('employeeData')));
-      localStorage.removeItem('employeeData');
     }
   }, []);
 
@@ -133,17 +127,41 @@ function CreateEmployee(props) {
     return true;
   };
 
+  useEffect(() => {
+    error.name === 'mobileNumber' &&
+      phone(employeeData.phoneCode + employeeData.phone).length !== 0 &&
+      setError({});
+  }, [employeeData.phone]);
   const handleSubmit = (btnType) => {
     const phoneCode = employeeData.phoneCode;
     const mobileNumber = employeeData.phone;
     if (!employeeData.firstName) {
-      setNameError(true);
+      setClientSideError({
+        ...clientSideError,
+        firstName: { message: 'This Field is required' },
+      });
+      return;
+    } else if (!employeeData.userName) {
+      setClientSideError({
+        ...clientSideError,
+        userName: { message: 'This Field is required' },
+      });
       return;
     } else if (!isEmailValid(employeeData.email)) {
-      return;
-    } else if (!validatePassword(employeeData.password)) {
+      !employeeData.email
+        ? setClientSideError({
+            ...clientSideError,
+            email: { message: 'This Field is required' },
+          })
+        : setClientSideError({
+            ...clientSideError,
+            email: { message: 'Invalid Email' },
+          });
       return;
     } else if (phone(phoneCode + mobileNumber).length === 0) {
+      !employeeData.phone
+        ? setError({ name: 'mobileNumber', message: 'This Field is required' })
+        : setError({ name: 'mobileNumber', message: 'Invalid mobile Number' });
       return;
     }
     setLoading(true);
@@ -157,19 +175,16 @@ function CreateEmployee(props) {
 
     const employeeDataClone = { ...employeeData };
     delete employeeDataClone['phoneCode'];
+    delete employeeDataClone['phone'];
 
     selectedApiFunc({
       ...employeeDataClone,
-      phone: phoneCode && mobileNumber ? phoneCode + mobileNumber : '',
+      mobileNumber: phoneCode + mobileNumber,
     })
       .then((res) => {
         console.log(res);
         if (btnType === 'Save-And-Send') {
-          if (
-            !handleSend(
-              phoneCode && mobileNumber ? phoneCode + mobileNumber : ''
-            )
-          ) {
+          if (!handleSend(phoneCode + mobileNumber)) {
             setTimeout(() => setLoading(false), 500);
             return;
           }
@@ -183,7 +198,7 @@ function CreateEmployee(props) {
           : addEmployee(employeeDispatch, {
               employeeData: res,
             });
-        setSelectedEmployee && setSelectedEmployee(res);
+
         setEmployeeData(initEmployeeData);
         setLoading(false);
         setError({});
@@ -207,7 +222,7 @@ function CreateEmployee(props) {
         {error.name &&
           (error.name === name ||
             (name === '' &&
-              !['email', 'phone', 'website'].includes(error.name))) && (
+              !['email', 'mobileNumber', 'userName'].includes(error.name))) && (
             <React.Fragment>
               <Grid item xs={3}></Grid>
               <Grid item xs={9}>
@@ -243,7 +258,7 @@ function CreateEmployee(props) {
         TransitionComponent={Transition}
         aria-describedby="scroll-dialog-description"
       >
-        <DialogTitle>{'New Contact'}</DialogTitle>
+        <DialogTitle>{'Add Employee'}</DialogTitle>
         {loading ? (
           <DialogContent className="Chat-Box-Styled-Scroll">
             <LoadingWrapper>
@@ -260,8 +275,12 @@ function CreateEmployee(props) {
                   <TextField
                     defaultValue={employeeData.firstName}
                     placeholder="First Name(Required)"
-                    error={nameError}
-                    helperText={nameError ? 'This field is required.' : ''}
+                    error={clientSideError.firstName ? true : false}
+                    helperText={
+                      clientSideError.firstName
+                        ? clientSideError.firstName.message
+                        : ''
+                    }
                     onBlur={(e) =>
                       setEmployeeData({
                         ...employeeData,
@@ -269,12 +288,9 @@ function CreateEmployee(props) {
                       })
                     }
                     onChange={(e) => {
-                      if (nameError) {
-                        setEmployeeData({
-                          ...employeeData,
-                          firstName: e.target.value,
-                        });
-                        e.target.value && setNameError(false);
+                      if (e.target.value && clientSideError.firstName) {
+                        const temp = delete clientSideError['firstName'];
+                        setClientSideError(temp);
                       }
                     }}
                   />
@@ -301,8 +317,12 @@ function CreateEmployee(props) {
                   <TextField
                     defaultValue={employeeData.userName}
                     placeholder="User Name(Required)"
-                    error={nameError}
-                    helperText={nameError ? 'This field is required.' : ''}
+                    error={clientSideError.userName ? true : false}
+                    helperText={
+                      clientSideError.userName
+                        ? clientSideError.userName.message
+                        : ''
+                    }
                     onBlur={(e) =>
                       setEmployeeData({
                         ...employeeData,
@@ -310,16 +330,14 @@ function CreateEmployee(props) {
                       })
                     }
                     onChange={(e) => {
-                      if (nameError) {
-                        setEmployeeData({
-                          ...employeeData,
-                          userName: e.target.value,
-                        });
-                        e.target.value && setNameError(false);
+                      if (e.target.value && clientSideError.userName) {
+                        const temp = delete clientSideError['userName'];
+                        setClientSideError(temp);
                       }
                     }}
                   />
                 </Grid>
+                {errorRow('userName')}
                 {emptySpacingRow()}
 
                 {FieldNameRow('Add Email')}
@@ -331,6 +349,8 @@ function CreateEmployee(props) {
                     error={
                       employeeData.email
                         ? !isEmailValid(employeeData.email)
+                        : clientSideError.email
+                        ? true
                         : false
                     }
                     helperText={
@@ -338,6 +358,8 @@ function CreateEmployee(props) {
                         ? isEmailValid(employeeData.email)
                           ? ''
                           : 'Invalid Email'
+                        : clientSideError.email
+                        ? clientSideError.email.message
                         : ''
                     }
                     onBlur={(e) =>
@@ -347,54 +369,20 @@ function CreateEmployee(props) {
                         email: e.target.value,
                       })
                     }
-                    onKeyUp={(e) =>
+                    onKeyUp={(e) => {
                       employeeData.email &&
-                      setEmployeeData({
-                        ...employeeData,
-                        email: e.target.value,
-                      })
-                    }
+                        setEmployeeData({
+                          ...employeeData,
+                          email: e.target.value,
+                        });
+                      if (e.target.value && clientSideError.email) {
+                        const temp = delete clientSideError['email'];
+                        setClientSideError(temp);
+                      }
+                    }}
                   />
                 </Grid>
                 {errorRow('email')}
-
-                {emptySpacingRow()}
-
-                {FieldNameRow('Password')}
-                <Grid item xs={9}>
-                  <TextField
-                    defaultValue={employeeData.password}
-                    placeholder="Password"
-                    type="password"
-                    error={
-                      employeeData.password
-                        ? !validatePassword(employeeData.password)
-                        : false
-                    }
-                    helperText={
-                      employeeData.password
-                        ? validatePassword(employeeData.password)
-                          ? ''
-                          : 'Invalid Password'
-                        : ''
-                    }
-                    onBlur={(e) =>
-                      !employeeData.password &&
-                      setEmployeeData({
-                        ...employeeData,
-                        password: e.target.value,
-                      })
-                    }
-                    onKeyUp={(e) =>
-                      employeeData.password &&
-                      setEmployeeData({
-                        ...employeeData,
-                        password: e.target.value,
-                      })
-                    }
-                  />
-                </Grid>
-                {errorRow('password')}
 
                 {emptySpacingRow()}
                 {FieldNameRow('Designation')}
@@ -408,7 +396,7 @@ function CreateEmployee(props) {
                         designation: e.target.value,
                       })
                     }
-                    placeholder={'Facebook, WhatsApp'}
+                    placeholder={'MERN Developer, ROR Developer'}
                   />
                 </Grid>
 
@@ -418,10 +406,16 @@ function CreateEmployee(props) {
                   <PhoneNumber
                     personInfo={employeeData}
                     setPersonInfo={setEmployeeData}
-                    source={source}
                   />
                 </Grid>
-                {errorRow('phone')}
+                {errorRow('mobileNumber')}
+                {emptySpacingRow()}
+
+                {FieldNameRow('Joining Date')}
+                <Grid item xs={9}>
+                  <DateField data={employeeData} setData={setEmployeeData} />
+                </Grid>
+                {errorRow('joiningDate')}
                 {emptySpacingRow()}
 
                 <Grid item xs={3}></Grid>
@@ -449,7 +443,7 @@ function CreateEmployee(props) {
               >
                 {type === 'edit' ? 'Save' : 'Add'}
               </Button>
-              {type !== 'edit' && type !== 'createWithProvidedInfo' && (
+              {type !== 'edit' && (
                 <Button
                   onClick={() => {
                     handleSubmit('Continue');
@@ -483,9 +477,7 @@ CreateEmployee.propTypes = {
   openModal: PropTypes.bool.isRequired,
   setOpenModal: PropTypes.func.isRequired,
   type: PropTypes.string,
-  editingLead: PropTypes.object,
-  selectedLeadIndex: PropTypes.number,
-  source: PropTypes.string,
-  setSelectedLead: PropTypes.func,
+  editingEmployee: PropTypes.object,
+  selectedEmployeeIndex: PropTypes.number,
 };
 export default CreateEmployee;

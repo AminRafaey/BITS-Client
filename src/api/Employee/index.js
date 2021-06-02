@@ -4,20 +4,20 @@ import { toastActions } from '../../components/Toast';
 import { updateLead as updateLeadInContext } from '../../Context/Employee';
 const endPointApi = `${config.baseUrl}employee`;
 
-// export async function getLeads(leadData) {
-//   try {
-//     const res = await axios.get(endPointApi + '/all');
-//     return res.data.field.data;
-//   } catch (ex) {
-//     if (!ex.response) {
-//       toastActions.error('Please check your internet connection');
-//       throw new Error('Please check your internet connection');
-//     } else {
-//       toastActions.error(ex.response.data.field.message);
-//       throw new Error('Server Error!');
-//     }
-//   }
-// }
+export async function getEmployees() {
+  try {
+    const res = await axios.get(endPointApi + '/all');
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+      throw new Error('Please check your internet connection');
+    } else {
+      toastActions.error(ex.response.data.field.message);
+      throw new Error('Server Error!');
+    }
+  }
+}
 
 // export async function getLeadByPhone(phone) {
 //   try {
@@ -36,9 +36,8 @@ const endPointApi = `${config.baseUrl}employee`;
 
 export async function createEmployee(employeeData) {
   try {
-    // const res = await axios.post(endPointApi + '/create', employeeData);
-    // return res.data.field.data;
-    return { ...employeeData, _id: 100 };
+    const res = await axios.post(endPointApi, employeeData);
+    return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
       toastActions.error('Please check your internet connection');
@@ -52,9 +51,8 @@ export async function createEmployee(employeeData) {
 
 export async function updateEmployee(updatedEmployee) {
   try {
-    // const res = await axios.put(endPointApi, updatedEmployee);
-    // return res.data.field.data;
-    return updatedEmployee;
+    const res = await axios.put(endPointApi, updatedEmployee);
+    return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
       throw new Error('Please check your internet connection');

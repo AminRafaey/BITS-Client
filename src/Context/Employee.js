@@ -10,7 +10,7 @@ function employeeReducer(state, action) {
   const { employeeData, employees, selectedEmployeeIndex } = action.payload;
   let cloneState = stateCloner(state);
   switch (action.type) {
-    case 'LOAD_EMPLOYEES':
+    case 'LOAD_EMPLOYEE':
       return [...stateCloner(action.payload.employees)];
     // case 'HANDLE_SELECTED_STATUS':
     //   return cloneState.map((s) =>
@@ -111,7 +111,7 @@ export {
 
 function loadEmployee(dispatch, data) {
   dispatch({
-    type: 'LOAD_LEADS',
+    type: 'LOAD_EMPLOYEE',
     payload: data,
   });
 }

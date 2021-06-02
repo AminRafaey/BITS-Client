@@ -31,7 +31,7 @@ function App() {
                 <LabelProvider>
                   <CompanyProvider>
                     <LeadSourceProvider>
-                      <EmployeeProvider employee={employee}>
+                      <EmployeeProvider>
                         <SnackbarProvider
                           maxSnack={3}
                           anchorOrigin={{

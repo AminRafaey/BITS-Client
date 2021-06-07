@@ -15,4 +15,4 @@ export { default as ManageContact } from './Contact/Manage';
 export { default as AddContacts } from './Contact/Add';
 export { default as CreateLabel } from './Forms/Label/Create';
 export { default as CreateTemplate } from './Template/Create';
-export { default as ManageTeams } from './TeamManagement/Manage';
+export { default as ManageEmployee } from './Employee/Manage';

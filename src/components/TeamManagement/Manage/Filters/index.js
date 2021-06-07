@@ -4,11 +4,13 @@ import {
   FirstName,
   LastName,
   Email,
-  Phone,
 } from '../../../Contact/Manage/Filters/Filter';
-import { Designation, Status } from './Filter';
-import { getFilteredLeads } from '../../../../api/Lead';
-import { useLeadsDispatch, loadLeads } from '../../../../Context/Lead';
+import { Designation, Status, MobileNumber } from './Filter';
+import { getFilteredEmployees } from '../../../../api/Employee';
+import {
+  useEmployeeDispatch,
+  loadEmployee,
+} from '../../../../Context/Employee';
 import { styled, Box, Typography } from '@material-ui/core';
 import { LinkColor } from '../../../constants/theme';
 import { initEmployeeFilters } from '../../../constants/InitialValues';
@@ -36,27 +38,28 @@ const ClearTyp = styled(Typography)({
 
 function Filters(props) {
   const [filters, setFilters] = useState(initEmployeeFilters);
-  const leadsDispatch = useLeadsDispatch();
+  const employeeDispatch = useEmployeeDispatch();
   const prevFilters = useRef(JSON.stringify(filters));
 
   useEffect(() => {
+    console.log(filters);
     if (prevFilters.current !== JSON.stringify(filters)) {
-      getFilteredLeads(filters).then(
-        (res) => res && loadLeads(leadsDispatch, { leads: res })
+      getFilteredEmployees(filters).then(
+        (res) => res && loadEmployee(employeeDispatch, { employees: res })
       );
       prevFilters.current = JSON.stringify(filters);
     }
   }, [filters]);
 
-  // useEffect(() => {
-  //   if (localStorage.getItem('filters')) {
-  //     prevFilters.current = localStorage.getItem('filters');
-  //     setFilters(JSON.parse(localStorage.getItem('filters')));
-  //   }
-  //   return () => {
-  //     localStorage.setItem('filters', prevFilters.current);
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem('employeeFilters')) {
+      prevFilters.current = localStorage.getItem('employeeFilters');
+      setFilters(JSON.parse(localStorage.getItem('employeeFilters')));
+    }
+    return () => {
+      localStorage.setItem('employeeFilters', prevFilters.current);
+    };
+  }, []);
   const commonProps = { filters: filters, setFilters: setFilters };
   return (
     <FiltersWrapper>
@@ -74,7 +77,7 @@ function Filters(props) {
       <FirstName {...commonProps} />
       <LastName {...commonProps} />
       <Email {...commonProps} />
-      <Phone {...commonProps} />
+      <MobileNumber {...commonProps} />
     </FiltersWrapper>
   );
 }

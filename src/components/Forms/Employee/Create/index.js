@@ -141,12 +141,6 @@ function CreateEmployee(props) {
         firstName: { message: 'This Field is required' },
       });
       return;
-    } else if (!employeeData.userName) {
-      setClientSideError({
-        ...clientSideError,
-        userName: { message: 'This Field is required' },
-      });
-      return;
     } else if (!isEmailValid(employeeData.email)) {
       !employeeData.email
         ? setClientSideError({
@@ -222,7 +216,7 @@ function CreateEmployee(props) {
         {error.name &&
           (error.name === name ||
             (name === '' &&
-              !['email', 'mobileNumber', 'userName'].includes(error.name))) && (
+              !['email', 'mobileNumber'].includes(error.name))) && (
             <React.Fragment>
               <Grid item xs={3}></Grid>
               <Grid item xs={9}>
@@ -310,34 +304,6 @@ function CreateEmployee(props) {
                   />
                 </Grid>
 
-                {emptySpacingRow()}
-
-                {FieldNameRow('User Name')}
-                <Grid item xs={9}>
-                  <TextField
-                    defaultValue={employeeData.userName}
-                    placeholder="User Name(Required)"
-                    error={clientSideError.userName ? true : false}
-                    helperText={
-                      clientSideError.userName
-                        ? clientSideError.userName.message
-                        : ''
-                    }
-                    onBlur={(e) =>
-                      setEmployeeData({
-                        ...employeeData,
-                        userName: e.target.value,
-                      })
-                    }
-                    onChange={(e) => {
-                      if (e.target.value && clientSideError.userName) {
-                        const temp = delete clientSideError['userName'];
-                        setClientSideError(temp);
-                      }
-                    }}
-                  />
-                </Grid>
-                {errorRow('userName')}
                 {emptySpacingRow()}
 
                 {FieldNameRow('Add Email')}

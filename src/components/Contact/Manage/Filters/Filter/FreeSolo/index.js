@@ -40,7 +40,7 @@ function FreeSolo(props) {
     childKey: childKey,
     freeSoloOptions: freeSoloOptions,
   };
-  console.log(filters, parentKey);
+
   return (
     <Box mt={1.5}>
       <Accordion>

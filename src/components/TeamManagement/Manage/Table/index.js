@@ -155,7 +155,6 @@ export default function ContactsTable(props) {
   }, [employeeState]);
 
   const handleIconClick = (event, row, index) => {
-    console.log(row, index);
     setAnchorEl(event.currentTarget);
     selectedEmployee.current = { employee: { ...row }, index: index };
   };
@@ -381,7 +380,12 @@ export default function ContactsTable(props) {
                           type={'edit'}
                           editingEmployee={
                             selectedEmployee.current
-                              ? selectedEmployee.current.employee
+                              ? {
+                                  ...selectedEmployee.current.employee,
+                                  phone:
+                                    selectedEmployee.current.employee
+                                      .mobileNumber,
+                                }
                               : {}
                           }
                           selectedEmployeeIndex={

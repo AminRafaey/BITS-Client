@@ -42,7 +42,6 @@ function ManageEmployee(props) {
     }
   }, []);
 
-  console.log(loader);
   return (
     <React.Fragment>
       {!loader ? (

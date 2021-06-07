@@ -1,5 +1,4 @@
 export function validatePassword(password) {
-  console.log(password);
   const errors = [];
   if (password.length < 8) {
     errors.push('Your password must be at least 8 characters');

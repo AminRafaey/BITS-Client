@@ -6,12 +6,20 @@ import {
   Email,
 } from '../../../Contact/Manage/Filters/Filter';
 import { Designation, Status, MobileNumber } from './Filter';
-import { getFilteredEmployees } from '../../../../api/Employee';
+import {
+  getFilteredEmployees,
+  getDesignations,
+} from '../../../../api/Employee';
 import {
   useEmployeeDispatch,
   loadEmployee,
 } from '../../../../Context/Employee';
-import { styled, Box, Typography } from '@material-ui/core';
+import {
+  useDesignationState,
+  useDesignationDispatch,
+  loadDesignations,
+} from '../../../../Context/Designation';
+import { styled, Box, Typography, CircularProgress } from '@material-ui/core';
 import { LinkColor } from '../../../constants/theme';
 import { initEmployeeFilters } from '../../../constants/InitialValues';
 
@@ -22,7 +30,12 @@ const HeaderWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
 });
-
+const LoaderWrapper = styled(Box)({
+  height: '65vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
 const FiltersTyp = styled(Typography)({
   fontSize: 16,
   fontFamily: 'medium',
@@ -39,10 +52,24 @@ const ClearTyp = styled(Typography)({
 function Filters(props) {
   const [filters, setFilters] = useState(initEmployeeFilters);
   const employeeDispatch = useEmployeeDispatch();
+  const designationState = useDesignationState();
+  const designationDispatch = useDesignationDispatch();
+  const [loader, setLoader] = useState(false);
   const prevFilters = useRef(JSON.stringify(filters));
 
   useEffect(() => {
-    console.log(filters);
+    if (designationState.length < 1) {
+      setLoader(true);
+      getDesignations()
+        .then((res) => {
+          loadDesignations(designationDispatch, { designations: res });
+          setLoader(false);
+        })
+        .catch((err) => setLoader(false));
+    }
+  }, []);
+
+  useEffect(() => {
     if (prevFilters.current !== JSON.stringify(filters)) {
       getFilteredEmployees(filters).then(
         (res) => res && loadEmployee(employeeDispatch, { employees: res })
@@ -63,21 +90,29 @@ function Filters(props) {
   const commonProps = { filters: filters, setFilters: setFilters };
   return (
     <FiltersWrapper>
-      <HeaderWrapper>
-        <FiltersTyp>Filters</FiltersTyp>
-        <ClearTyp onClick={() => setFilters(initEmployeeFilters)}>
-          Clear
-        </ClearTyp>
-      </HeaderWrapper>
+      {loader ? (
+        <LoaderWrapper>
+          <CircularProgress />
+        </LoaderWrapper>
+      ) : (
+        <>
+          <HeaderWrapper>
+            <FiltersTyp>Filters</FiltersTyp>
+            <ClearTyp onClick={() => setFilters(initEmployeeFilters)}>
+              Clear
+            </ClearTyp>
+          </HeaderWrapper>
 
-      <Designation {...commonProps} />
+          <Designation {...commonProps} />
 
-      <Status {...commonProps} />
+          <Status {...commonProps} />
 
-      <FirstName {...commonProps} />
-      <LastName {...commonProps} />
-      <Email {...commonProps} />
-      <MobileNumber {...commonProps} />
+          <FirstName {...commonProps} />
+          <LastName {...commonProps} />
+          <Email {...commonProps} />
+          <MobileNumber {...commonProps} />
+        </>
+      )}
     </FiltersWrapper>
   );
 }

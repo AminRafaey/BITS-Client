@@ -19,6 +19,7 @@ import { employee } from './Static/Employee';
 import { CompanyProvider } from './Context/Company';
 import { LeadSourceProvider } from './Context/LeadSource';
 import { EmployeeProvider } from './Context/Employee';
+import { DesignationProvider } from './Context/Designation';
 
 function App() {
   return (
@@ -32,16 +33,18 @@ function App() {
                   <CompanyProvider>
                     <LeadSourceProvider>
                       <EmployeeProvider>
-                        <SnackbarProvider
-                          maxSnack={3}
-                          anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                          }}
-                        >
-                          <Toast />
-                          <MiniDrawer />
-                        </SnackbarProvider>
+                        <DesignationProvider>
+                          <SnackbarProvider
+                            maxSnack={3}
+                            anchorOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'right',
+                            }}
+                          >
+                            <Toast />
+                            <MiniDrawer />
+                          </SnackbarProvider>
+                        </DesignationProvider>
                       </EmployeeProvider>
                     </LeadSourceProvider>
                   </CompanyProvider>

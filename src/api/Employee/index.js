@@ -131,18 +131,18 @@ export async function removeEmployee(employeeId) {
 //   }
 // }
 
-// export async function getCompanies() {
-//   try {
-//     const res = await axios.get(`${endPointApi}/allCompanies`);
-//     return res.data.field.data;
-//   } catch (ex) {
-//     if (!ex.response) {
-//       toastActions.error('Please check your internet connection');
-//     } else {
-//       toastActions.error('Server Error!');
-//     }
-//   }
-// }
+export async function getDesignations() {
+  try {
+    const res = await axios.get(`${endPointApi}/allDesignations`);
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+    } else {
+      toastActions.error('Server Error!');
+    }
+  }
+}
 
 // export async function getLeadSource() {
 //   try {

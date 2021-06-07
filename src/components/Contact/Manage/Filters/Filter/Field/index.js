@@ -33,7 +33,7 @@ function Field(props) {
     childKey: childKey,
     filterName: filterName,
   };
-  console.log(filters[parentKey], filters, parentKey);
+
   return (
     <Box mt={1.5}>
       <Accordion>

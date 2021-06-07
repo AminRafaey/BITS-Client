@@ -19,7 +19,7 @@ import {
   addEmployee,
   updateEmployee as updateEmployeeInContext,
 } from '../../../../Context/Employee';
-import { designations } from '../../../../Static/Designation';
+import { useDesignationState } from '../../../../Context/Designation';
 import { useConnectStatusState } from '../../../../Context/ConnectStatus';
 import { useSocketState } from '../../../../Context/Socket';
 import {
@@ -78,6 +78,7 @@ function CreateEmployee(props) {
   } = props;
   const employeeDispatch = useEmployeeDispatch();
   const connectStatusState = useConnectStatusState();
+  const designationState = useDesignationState();
   const socket = useSocketState();
   const [employeeData, setEmployeeData] = useState(initEmployeeData);
   const [loading, setLoading] = useState(false);
@@ -176,7 +177,6 @@ function CreateEmployee(props) {
       mobileNumber: phoneCode + mobileNumber,
     })
       .then((res) => {
-        console.log(res);
         if (btnType === 'Save-And-Send') {
           if (!handleSend(phoneCode + mobileNumber)) {
             setTimeout(() => setLoading(false), 500);
@@ -354,7 +354,7 @@ function CreateEmployee(props) {
                 {FieldNameRow('Designation')}
                 <Grid item xs={9}>
                   <Designation
-                    options={designations}
+                    options={designationState}
                     value={employeeData.designation}
                     onBlur={(e) =>
                       setEmployeeData({

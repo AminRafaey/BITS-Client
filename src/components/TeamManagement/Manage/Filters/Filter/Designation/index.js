@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FreeSolo from '../../../../../Contact/Manage/Filters/Filter/FreeSolo';
-import { designations } from '../../../../../../Static/Designation';
+import { useDesignationState } from '../../../../../../Context/Designation';
 
 function Designation(props) {
   const { filters, setFilters } = props;
+  const designationState = useDesignationState();
 
   const parentKey = 'designations';
   const childKey = 'designation';
@@ -13,7 +14,7 @@ function Designation(props) {
     setFilters: setFilters,
     parentKey: parentKey,
     childKey: childKey,
-    freeSoloOptions: designations,
+    freeSoloOptions: designationState,
     filterName: 'Designation',
   };
 

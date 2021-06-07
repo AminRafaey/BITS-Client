@@ -1,7 +1,6 @@
 import config from '../../config.json';
 import axios from 'axios';
 import { toastActions } from '../../components/Toast';
-import { updateLead as updateLeadInContext } from '../../Context/Employee';
 const endPointApi = `${config.baseUrl}employee`;
 
 export async function getEmployees() {
@@ -18,21 +17,6 @@ export async function getEmployees() {
     }
   }
 }
-
-// export async function getLeadByPhone(phone) {
-//   try {
-//     const res = await axios.get(endPointApi + '/phone', { params: { phone } });
-//     return res.data.field.data;
-//   } catch (ex) {
-//     if (!ex.response) {
-//       toastActions.error('Please check your internet connection');
-//       throw 'Please check your internet connection';
-//     } else {
-//       toastActions.error(ex.response.data.field.message);
-//       throw ex.response.data.field.message;
-//     }
-//   }
-// }
 
 export async function createEmployee(employeeData) {
   try {
@@ -62,29 +46,6 @@ export async function updateEmployee(updatedEmployee) {
   }
 }
 
-// export async function updateLeadWithContext(
-//   updatedLead,
-//   leadsDispatch,
-//   selectedLeadIndex
-// ) {
-//   try {
-//     const res = await axios.put(endPointApi, updatedLead);
-//     updateLeadInContext(leadsDispatch, {
-//       leadData: { ...res.data.field.data },
-//       selectedLeadIndex: selectedLeadIndex,
-//     });
-//     toastActions.success('Previous lead updated successfully');
-//   } catch (ex) {
-//     if (!ex.response) {
-//       toastActions.error('Please check your internet connection');
-//     } else {
-//       toastActions.error(
-//         ex.response.data.field.message + "So, previous lead isn't updated."
-//       );
-//     }
-//   }
-// }
-
 export async function removeEmployee(employeeId) {
   try {
     const res = await axios.delete(endPointApi, {
@@ -102,35 +63,6 @@ export async function removeEmployee(employeeId) {
   }
 }
 
-// export async function updateLeadsLabels(updatedLeads, prevState) {
-//   try {
-//     const res = await axios.put(endPointApi + '/labels', {
-//       leads: updatedLeads,
-//     });
-//     return res.data.field.data;
-//   } catch (ex) {
-//     if (!ex.response) {
-//       alert('Please check your internet connection');
-//       throw new Error('Please check your internet connection');
-//     } else {
-//       throw { prevState, error: ex.response.data.field };
-//     }
-//   }
-// }
-
-// export async function sendCSV(file) {
-//   try {
-//     const res = await axios.post(`${endPointApi}/csvUpload`, file);
-//     return res.data.field.message;
-//   } catch (ex) {
-//     if (!ex.response) {
-//       throw 'Please check your internet connection or close a file before uploading';
-//     } else {
-//       throw ex.response.data.field.message;
-//     }
-//   }
-// }
-
 export async function getDesignations() {
   try {
     const res = await axios.get(`${endPointApi}/allDesignations`);
@@ -143,19 +75,6 @@ export async function getDesignations() {
     }
   }
 }
-
-// export async function getLeadSource() {
-//   try {
-//     const res = await axios.get(`${endPointApi}/allLeadSources`);
-//     return res.data.field.data;
-//   } catch (ex) {
-//     if (!ex.response) {
-//       toastActions.error('Please check your internet connection');
-//     } else {
-//       toastActions.error('Server Error!');
-//     }
-//   }
-// }
 
 export async function getFilteredEmployees(filters) {
   try {

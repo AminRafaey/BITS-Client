@@ -5,13 +5,7 @@ import phone from 'phone';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import PhoneNumber from '../../PhoneNumber';
 import { Designation, InfoAlert, DateField } from '../../../Assets';
-import {
-  Button,
-  TextField,
-  SecondaryButton,
-  Alert,
-  Checkbox,
-} from '../../../HOC';
+import { Button, TextField, SecondaryButton, Checkbox } from '../../../HOC';
 import { Transition } from '../../../ConnectionModal/Modal';
 import { isEmailValid } from '../../Lead';
 import {
@@ -27,13 +21,13 @@ import {
   updateEmployee,
 } from '../../../../api/Employee';
 import { sendTextMesage } from '../../../../api/send';
+import { emptySpacingRow, FieldNameRow, errorRow } from '../../Lead';
 import {
   Dialog,
   DialogTitle,
   DialogActions,
   DialogContent,
   Box,
-  Typography,
   styled,
   Grid,
   CircularProgress,
@@ -41,28 +35,13 @@ import {
 import { initEmployeeData } from '../../../constants/InitialValues';
 import { toastActions } from '../../../Toast';
 
-const FieldWrapper = styled(Box)({
-  display: 'flex',
-  height: '100%',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-});
-
-const FieldLabelNameTyp = styled(Typography)({
-  fontSize: 14,
-  paddingRight: 32,
-});
-
 const LoadingWrapper = styled(Box)({
   minHeight: window.innerHeight - 150,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 });
-const MediaErorWrapper = styled(Box)({
-  paddingTop: 10,
-  fontSize: 14,
-});
+
 const SendMsgWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
@@ -107,24 +86,24 @@ function CreateEmployee(props) {
     setOpenModal(false);
   };
   const handleSend = (mobileNumber) => {
-    //   if (!connectStatusState) {
-    //     setAlertMessage(
-    //       'Disconnected from WhatsApp, please connect again to continue...'
-    //     );
-    //     setOpenInfoAlert(true);
-    //     return;
-    //   }
-    //   if (!selectedTemplate.content) {
-    //     toastActions.warning('Please Select template to send WhatsApp');
-    //     return;
-    //   }
-    //   if (!mobileNumber) {
-    //     toastActions.warning(
-    //       'Please Select valid mobile number to send WhatsApp'
-    //     );
-    //     return;
-    //   }
-    //   sendTextMesage([mobileNumber], selectedTemplate.content, socket);
+    if (!connectStatusState) {
+      setAlertMessage(
+        'Disconnected from WhatsApp, please connect again to continue...'
+      );
+      setOpenInfoAlert(true);
+      return;
+    }
+    if (!selectedTemplate.content) {
+      toastActions.warning('Please Select template to send WhatsApp');
+      return;
+    }
+    if (!mobileNumber) {
+      toastActions.warning(
+        'Please Select valid mobile number to send WhatsApp'
+      );
+      return;
+    }
+    sendTextMesage([mobileNumber], selectedTemplate.content, socket);
     return true;
   };
 
@@ -203,42 +182,6 @@ function CreateEmployee(props) {
         setError({ ...err });
       });
   };
-  const emptySpacingRow = () => {
-    return (
-      <Grid item xs={12}>
-        <Box pt={1.5} pb={1.5} />
-      </Grid>
-    );
-  };
-  const errorRow = (name) => {
-    return (
-      <React.Fragment>
-        {error.name &&
-          (error.name === name ||
-            (name === '' &&
-              !['email', 'mobileNumber'].includes(error.name))) && (
-            <React.Fragment>
-              <Grid item xs={3}></Grid>
-              <Grid item xs={9}>
-                <MediaErorWrapper pb={name === '' ? 1.5 : 0}>
-                  <Alert severity="error">{error.message}</Alert>
-                </MediaErorWrapper>
-              </Grid>
-            </React.Fragment>
-          )}
-      </React.Fragment>
-    );
-  };
-
-  const FieldNameRow = (name) => {
-    return (
-      <Grid item xs={3}>
-        <FieldWrapper>
-          <FieldLabelNameTyp>{name}</FieldLabelNameTyp>
-        </FieldWrapper>
-      </Grid>
-    );
-  };
   return (
     <React.Fragment>
       <Dialog
@@ -263,7 +206,7 @@ function CreateEmployee(props) {
           <>
             <DialogContent className="Chat-Box-Styled-Scroll">
               <Grid container id="scroll-dialog-description">
-                {errorRow('')}
+                {errorRow('', error, ['email', 'mobileNumber'])}
                 {FieldNameRow('Name')}
                 <Grid item xs={9}>
                   <TextField
@@ -348,7 +291,7 @@ function CreateEmployee(props) {
                     }}
                   />
                 </Grid>
-                {errorRow('email')}
+                {errorRow('email', error, ['email', 'mobileNumber'])}
 
                 {emptySpacingRow()}
                 {FieldNameRow('Designation')}
@@ -374,14 +317,14 @@ function CreateEmployee(props) {
                     setPersonInfo={setEmployeeData}
                   />
                 </Grid>
-                {errorRow('mobileNumber')}
+                {errorRow('mobileNumber', error, ['email', 'mobileNumber'])}
                 {emptySpacingRow()}
 
                 {FieldNameRow('Joining Date')}
                 <Grid item xs={9}>
                   <DateField data={employeeData} setData={setEmployeeData} />
                 </Grid>
-                {errorRow('joiningDate')}
+                {errorRow('joiningDate', error, ['email', 'mobileNumber'])}
                 {emptySpacingRow()}
 
                 <Grid item xs={3}></Grid>

@@ -137,13 +137,12 @@ const StyledFormControl = withStyles({
   },
 })(FormControl);
 export default function ContactsTable(props) {
-  const { message, selectedMedia, sortType } = props;
+  const { sortType } = props;
   const employeeState = useEmployeeState();
   const employeeDispatch = useEmployeeDispatch();
   const [page, setPage] = useState(0);
   const [selectedCount, setSelectedCount] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [leadLoader, setLeadloader] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -203,228 +202,218 @@ export default function ContactsTable(props) {
       </Grid>
 
       <Grid item xs={12} md={9}>
-        {leadLoader ? (
-          <LoaderWrapper>
-            <CircularProgress color="primary" />
-          </LoaderWrapper>
-        ) : (
-          <React.Fragment>
-            <StyledPaper>
-              <StyledTableContainer className="scrollElement">
-                <AbsoluteScroll>
-                  <Table
-                    aria-labelledby="tableTitle"
-                    size={'medium'}
-                    aria-label="enhanced table"
-                  >
-                    <TableHead />
+        <React.Fragment>
+          <StyledPaper>
+            <StyledTableContainer className="scrollElement">
+              <AbsoluteScroll>
+                <Table
+                  aria-labelledby="tableTitle"
+                  size={'medium'}
+                  aria-label="enhanced table"
+                >
+                  <TableHead />
 
-                    <TableBody>
-                      {employeeState
-                        .sort((a, b) =>
-                          sortType === 2
-                            ? new Date(b.createdAt) - new Date(a.createdAt)
-                            : new Date(a.createdAt) - new Date(b.createdAt)
-                        )
-                        .slice(
-                          page * rowsPerPage,
-                          page * rowsPerPage + rowsPerPage
-                        )
-                        .map((row, index) => {
-                          return (
-                            <TableRow hover key={row._id}>
-                              <StickyLeftTableCell padding="checkbox">
-                                <Checkbox
-                                  checked={row.selected ? true : false}
-                                  onChange={(event) =>
-                                    handleClick(event, row._id)
-                                  }
-                                />
-                              </StickyLeftTableCell>
-                              <TableCell padding="none" align="left">
-                                <BasicInfoWrapper>
-                                  <Avatar
-                                    style={{
-                                      color: '#ffff',
-                                      background:
-                                        colors[
-                                          `${row.firstName} ${
-                                            row.lastName ? row.lastName : ''
-                                          }`
-                                            .split(' ')
-                                            .map((char) => char.charCodeAt(0))
-                                            .join('') % colors.length
-                                        ],
-                                    }}
-                                  >
-                                    {`${row.firstName} ${row.lastName || ''}`
-                                      .split(' ')
-                                      .map((c) => c.charAt(0))
-                                      .join('')}
-                                  </Avatar>
-                                  <BasicInfoContentWrapper>
-                                    <TitleTyp>{`${row.firstName} ${
-                                      row.lastName || ''
-                                    }`}</TitleTyp>
-                                    <EmailTyp>{row.designation}</EmailTyp>
-                                  </BasicInfoContentWrapper>
-                                </BasicInfoWrapper>
-                              </TableCell>
-
-                              <TableCell align="left">
-                                <ItemTyp>{row.email || ''}</ItemTyp>
-                              </TableCell>
-
-                              <TableCell align="left">
-                                <ItemTyp>{row.mobileNumber || ''}</ItemTyp>
-                              </TableCell>
-
-                              <TableCell align="left">
-                                <ItemTyp>
-                                  {row.joiningDate
-                                    ? new Date(
-                                        row.joiningDate
-                                      ).toLocaleDateString()
-                                    : ''}
-                                </ItemTyp>
-                              </TableCell>
-
-                              <TableCell align="left">
-                                <StyledFormControl>
-                                  <Select
-                                    value={row.status}
-                                    onChange={(e) =>
-                                      console.log(e.target.value)
-                                    }
-                                    variant="outlined"
-                                  >
-                                    <MenuItem value={row.status}>
-                                      {row.status}
-                                    </MenuItem>
-                                    <MenuItem
-                                      value={
-                                        row.status === 'Active'
-                                          ? 'Blocked'
-                                          : 'Active'
-                                      }
-                                    >
-                                      {row.status === 'Active'
-                                        ? 'Blocked'
-                                        : 'Active'}
-                                    </MenuItem>
-                                  </Select>
-                                </StyledFormControl>
-                              </TableCell>
-
-                              <StickyRightTableCell align="left">
-                                <IconWrapper
-                                  aria-controls="fade-menu"
-                                  aria-haspopup="true"
-                                  onClick={(e) =>
-                                    handleIconClick(e, row, index)
-                                  }
-                                >
-                                  {' '}
-                                  <MoreVertIcon style={{ height: 18 }} />
-                                </IconWrapper>
-
-                                <Menu
-                                  elevation={1}
-                                  transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                  }}
-                                  id="fade-menu"
-                                  anchorEl={anchorEl}
-                                  keepMounted
-                                  open={open}
-                                  onClose={handleClose}
-                                  TransitionComponent={Fade}
-                                >
-                                  <MenuItem
-                                    onClick={() => {
-                                      setOpenCreateLabelModal(true);
-                                      handleClose();
-                                    }}
-                                  >
-                                    <EditIcon style={{ ...iconsStyle }} />
-                                    <ItemTyp>Edit</ItemTyp>
-                                  </MenuItem>
-                                  <MenuItem
-                                    onClick={() => {
-                                      setOpenDeleteModal(true);
-                                      handleClose();
-                                    }}
-                                  >
-                                    <DeleteIcon style={{ ...iconsStyle }} />
-                                    <ItemTyp>Delete</ItemTyp>
-                                  </MenuItem>
-
-                                  <MenuItem onClick={handleClose}>
-                                    <NoteAddIcon style={{ ...iconsStyle }} />
-                                    <ItemTyp>Add Note</ItemTyp>
-                                  </MenuItem>
-                                  <MenuItem onClick={handleClose}>
-                                    <EventIcon style={{ ...iconsStyle }} />
-                                    <ItemTyp>Schedule an appointment</ItemTyp>
-                                  </MenuItem>
-                                </Menu>
-                              </StickyRightTableCell>
-                            </TableRow>
-                          );
-                        })}
-                      {openCreateLabelModal && (
-                        <CreateEmployee
-                          openModal={openCreateLabelModal}
-                          setOpenModal={setOpenCreateLabelModal}
-                          type={'edit'}
-                          editingEmployee={
-                            selectedEmployee.current
-                              ? {
-                                  ...selectedEmployee.current.employee,
-                                  phone:
-                                    selectedEmployee.current.employee
-                                      .mobileNumber,
+                  <TableBody>
+                    {employeeState
+                      .sort((a, b) =>
+                        sortType === 2
+                          ? new Date(b.createdAt) - new Date(a.createdAt)
+                          : new Date(a.createdAt) - new Date(b.createdAt)
+                      )
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, index) => {
+                        return (
+                          <TableRow hover key={row._id}>
+                            <StickyLeftTableCell padding="checkbox">
+                              <Checkbox
+                                checked={row.selected ? true : false}
+                                onChange={(event) =>
+                                  handleClick(event, row._id)
                                 }
-                              : {}
-                          }
-                          selectedEmployeeIndex={
-                            selectedEmployee.current
-                              ? selectedEmployee.current.index
-                              : undefined
-                          }
-                        />
-                      )}
-                      {openDeleteModal && (
-                        <DeleteAlert
-                          open={openDeleteModal}
-                          setOpen={setOpenDeleteModal}
-                          selectedCount={1}
-                          selectedEmployee={selectedEmployee.current.employee}
-                          selectedEmployeeIndex={selectedEmployee.current.index}
-                        />
-                      )}
-                      {emptyRows > 0 && (
-                        <TableRow style={{ height: 53 * emptyRows }}>
-                          <TableCell colSpan={6} />
-                        </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </AbsoluteScroll>
-              </StyledTableContainer>
-              <TablePagination
-                rowsPerPageOptions={[10, 20, 30]}
-                component="div"
-                count={employeeState.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-              />
-            </StyledPaper>
-          </React.Fragment>
-        )}
+                              />
+                            </StickyLeftTableCell>
+                            <TableCell padding="none" align="left">
+                              <BasicInfoWrapper>
+                                <Avatar
+                                  style={{
+                                    color: '#ffff',
+                                    background:
+                                      colors[
+                                        `${row.firstName} ${
+                                          row.lastName ? row.lastName : ''
+                                        }`
+                                          .split(' ')
+                                          .map((char) => char.charCodeAt(0))
+                                          .join('') % colors.length
+                                      ],
+                                  }}
+                                >
+                                  {`${row.firstName} ${row.lastName || ''}`
+                                    .split(' ')
+                                    .map((c) => c.charAt(0))
+                                    .join('')}
+                                </Avatar>
+                                <BasicInfoContentWrapper>
+                                  <TitleTyp>{`${row.firstName} ${
+                                    row.lastName || ''
+                                  }`}</TitleTyp>
+                                  <EmailTyp>{row.designation}</EmailTyp>
+                                </BasicInfoContentWrapper>
+                              </BasicInfoWrapper>
+                            </TableCell>
+
+                            <TableCell align="left">
+                              <ItemTyp>{row.email || ''}</ItemTyp>
+                            </TableCell>
+
+                            <TableCell align="left">
+                              <ItemTyp>{row.mobileNumber || ''}</ItemTyp>
+                            </TableCell>
+
+                            <TableCell align="left">
+                              <ItemTyp>
+                                {row.joiningDate
+                                  ? new Date(
+                                      row.joiningDate
+                                    ).toLocaleDateString()
+                                  : ''}
+                              </ItemTyp>
+                            </TableCell>
+
+                            <TableCell align="left">
+                              <StyledFormControl>
+                                <Select
+                                  value={row.status}
+                                  onChange={(e) => console.log(e.target.value)}
+                                  variant="outlined"
+                                >
+                                  <MenuItem value={row.status}>
+                                    {row.status}
+                                  </MenuItem>
+                                  <MenuItem
+                                    value={
+                                      row.status === 'Active'
+                                        ? 'Blocked'
+                                        : 'Active'
+                                    }
+                                  >
+                                    {row.status === 'Active'
+                                      ? 'Blocked'
+                                      : 'Active'}
+                                  </MenuItem>
+                                </Select>
+                              </StyledFormControl>
+                            </TableCell>
+
+                            <StickyRightTableCell align="left">
+                              <IconWrapper
+                                aria-controls="fade-menu"
+                                aria-haspopup="true"
+                                onClick={(e) => handleIconClick(e, row, index)}
+                              >
+                                {' '}
+                                <MoreVertIcon style={{ height: 18 }} />
+                              </IconWrapper>
+
+                              <Menu
+                                elevation={1}
+                                transformOrigin={{
+                                  vertical: 'top',
+                                  horizontal: 'right',
+                                }}
+                                id="fade-menu"
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={open}
+                                onClose={handleClose}
+                                TransitionComponent={Fade}
+                              >
+                                <MenuItem
+                                  onClick={() => {
+                                    setOpenCreateLabelModal(true);
+                                    handleClose();
+                                  }}
+                                >
+                                  <EditIcon style={{ ...iconsStyle }} />
+                                  <ItemTyp>Edit</ItemTyp>
+                                </MenuItem>
+                                <MenuItem
+                                  onClick={() => {
+                                    setOpenDeleteModal(true);
+                                    handleClose();
+                                  }}
+                                >
+                                  <DeleteIcon style={{ ...iconsStyle }} />
+                                  <ItemTyp>Delete</ItemTyp>
+                                </MenuItem>
+
+                                <MenuItem onClick={handleClose}>
+                                  <NoteAddIcon style={{ ...iconsStyle }} />
+                                  <ItemTyp>Add Note</ItemTyp>
+                                </MenuItem>
+                                <MenuItem onClick={handleClose}>
+                                  <EventIcon style={{ ...iconsStyle }} />
+                                  <ItemTyp>Schedule an appointment</ItemTyp>
+                                </MenuItem>
+                              </Menu>
+                            </StickyRightTableCell>
+                          </TableRow>
+                        );
+                      })}
+                    {openCreateLabelModal && (
+                      <CreateEmployee
+                        openModal={openCreateLabelModal}
+                        setOpenModal={setOpenCreateLabelModal}
+                        type={'edit'}
+                        editingEmployee={
+                          selectedEmployee.current
+                            ? {
+                                ...selectedEmployee.current.employee,
+                                phone:
+                                  selectedEmployee.current.employee
+                                    .mobileNumber,
+                              }
+                            : {}
+                        }
+                        selectedEmployeeIndex={
+                          selectedEmployee.current
+                            ? selectedEmployee.current.index
+                            : undefined
+                        }
+                      />
+                    )}
+                    {openDeleteModal && (
+                      <DeleteAlert
+                        open={openDeleteModal}
+                        setOpen={setOpenDeleteModal}
+                        selectedCount={1}
+                        selectedEmployee={selectedEmployee.current.employee}
+                        selectedEmployeeIndex={selectedEmployee.current.index}
+                      />
+                    )}
+                    {emptyRows > 0 && (
+                      <TableRow style={{ height: 53 * emptyRows }}>
+                        <TableCell colSpan={6} />
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </AbsoluteScroll>
+            </StyledTableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 20, 30]}
+              component="div"
+              count={employeeState.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </StyledPaper>
+        </React.Fragment>
       </Grid>
     </React.Fragment>
   );

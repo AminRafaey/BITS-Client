@@ -104,9 +104,7 @@ function Filters(props) {
           </HeaderWrapper>
 
           <Designation {...commonProps} />
-
           <Status {...commonProps} />
-
           <FirstName {...commonProps} />
           <LastName {...commonProps} />
           <Email {...commonProps} />

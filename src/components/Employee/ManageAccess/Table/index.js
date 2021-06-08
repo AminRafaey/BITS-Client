@@ -71,7 +71,7 @@ const StickyLeftTableCell = withStyles({
 })(TableCell);
 
 export default function AccessTable(props) {
-  const {} = props;
+  const { employeeStateRef } = props;
   const employeeState = useEmployeeState();
   const employeeDispatch = useEmployeeDispatch();
 
@@ -84,7 +84,7 @@ export default function AccessTable(props) {
   };
   return (
     <React.Fragment>
-      <SecondHeader />
+      <SecondHeader employeeStateRef={employeeStateRef} />
 
       <React.Fragment>
         <StyledPaper>
@@ -209,4 +209,6 @@ export default function AccessTable(props) {
   );
 }
 
-AccessTable.prototypes = {};
+AccessTable.prototypes = {
+  employeeStateRef: PropTypes.object.isRequired,
+};

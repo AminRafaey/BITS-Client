@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import FirstHeader from './FirstHeader';
 import AccessTable from './Table';
@@ -24,6 +24,7 @@ function ManageEmployeeAccess(props) {
   const employeeState = useEmployeeState();
   const employeeDispatch = useEmployeeDispatch();
   const [loader, setLoader] = useState(false);
+  const employeeStateRef = useRef(employeeState);
 
   useEffect(() => {
     if (employeeState.length === 0) {
@@ -31,6 +32,7 @@ function ManageEmployeeAccess(props) {
       getEmployees()
         .then((res) => {
           loadEmployee(employeeDispatch, { employees: res });
+          employeeStateRef.current = res;
           setLoader(false);
         })
         .catch((err) => {
@@ -44,7 +46,7 @@ function ManageEmployeeAccess(props) {
       {!loader ? (
         <Box mb={6}>
           <FirstHeader />
-          <AccessTable />
+          <AccessTable employeeStateRef={employeeStateRef} />
         </Box>
       ) : (
         <LoadingWrapper>

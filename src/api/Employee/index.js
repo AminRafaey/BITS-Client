@@ -39,8 +39,26 @@ export async function updateEmployee(updatedEmployee) {
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {
+      toastActions.error('Please check your internet connection');
       throw new Error('Please check your internet connection');
     } else {
+      throw ex.response.data.field;
+    }
+  }
+}
+
+export async function updateEmployeeAccess(updatedEmployees) {
+  try {
+    const res = await axios.put(endPointApi + '/access', {
+      employees: updatedEmployees,
+    });
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+      throw new Error('Please check your internet connection');
+    } else {
+      toastActions.error(ex.response.data.field.message);
       throw ex.response.data.field;
     }
   }

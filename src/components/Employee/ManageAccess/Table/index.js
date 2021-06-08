@@ -52,10 +52,10 @@ const StyledTableContainer = withStyles({
     background: '#F5F6F8',
     '& .MuiTableBody-root .MuiTableRow-root': {
       '&:nth-child(odd)': {
-        background: '#f5f6f8',
+        background: '#ffff',
       },
       '&:nth-child(even)': {
-        background: '#ffff',
+        background: '#f5f6f8',
       },
     },
   },

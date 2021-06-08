@@ -9,6 +9,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 2,
@@ -19,6 +36,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 3,
@@ -29,6 +63,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 4,
@@ -39,6 +90,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 5,
@@ -50,6 +118,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 6,
@@ -61,6 +146,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 7,
@@ -72,6 +174,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 8,
@@ -83,6 +202,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 9,
@@ -94,6 +230,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 10,
@@ -105,6 +258,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 11,
@@ -116,6 +286,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 12,
@@ -127,6 +314,23 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
   {
     _id: 13,
@@ -138,5 +342,22 @@ export const employee = [
     createdAt: 'Thu May 27 2021 23:59:00 GMT+0500 (Pakistan Standard Time)',
     designation: 'MERN Developer',
     status: 'Active',
+    access: {
+      quickSend: {
+        status: 'Allow',
+      },
+      templateManagement: {
+        status: 'Allow',
+      },
+      contactManagement: {
+        status: 'Allow',
+      },
+      labelManagement: {
+        status: 'Allow',
+      },
+      inbox: {
+        status: 'Allow',
+      },
+    },
   },
 ];

@@ -7,6 +7,7 @@ import { colors } from '../../../constants/AvatarColor';
 import {
   useEmployeeState,
   useEmployeeDispatch,
+  updateEmployeeAccess,
 } from '../../../../Context/Employee';
 import {
   Table,
@@ -21,7 +22,6 @@ import {
   Avatar,
   withStyles,
 } from '@material-ui/core';
-
 
 const BasicInfoWrapper = styled(Box)({
   display: 'flex',
@@ -75,6 +75,13 @@ export default function AccessTable(props) {
   const employeeState = useEmployeeState();
   const employeeDispatch = useEmployeeDispatch();
 
+  const handleCheckboxChange = (index, propertyName, propertyValue) => {
+    updateEmployeeAccess(employeeDispatch, {
+      selectedEmployeeIndex: index,
+      propertyName,
+      propertyValue,
+    });
+  };
   return (
     <React.Fragment>
       <SecondHeader />
@@ -127,36 +134,72 @@ export default function AccessTable(props) {
 
                         <TableCell align="center">
                           <Checkbox
-                            checked={false}
-                            onChange={(event) => console.log(event, row._id)}
+                            checked={row.access.quickSend.status === 'Allow'}
+                            onChange={(event) =>
+                              handleCheckboxChange(
+                                index,
+                                'quickSend',
+                                event.target.checked
+                              )
+                            }
                           />
                         </TableCell>
 
                         <TableCell align="center">
                           <Checkbox
-                            checked={true}
-                            onChange={(event) => console.log(event, row._id)}
+                            checked={
+                              row.access.contactManagement.status === 'Allow'
+                            }
+                            onChange={(event) =>
+                              handleCheckboxChange(
+                                index,
+                                'contactManagement',
+                                event.target.checked
+                              )
+                            }
                           />
                         </TableCell>
 
                         <TableCell align="center">
                           <Checkbox
-                            checked={true}
-                            onChange={(event) => console.log(event, row._id)}
+                            checked={
+                              row.access.templateManagement.status === 'Allow'
+                            }
+                            onChange={(event) =>
+                              handleCheckboxChange(
+                                index,
+                                'templateManagement',
+                                event.target.checked
+                              )
+                            }
                           />
                         </TableCell>
 
                         <TableCell align="center">
                           <Checkbox
-                            checked={true}
-                            onChange={(event) => console.log(event, row._id)}
+                            checked={
+                              row.access.labelManagement.status === 'Allow'
+                            }
+                            onChange={(event) =>
+                              handleCheckboxChange(
+                                index,
+                                'labelManagement',
+                                event.target.checked
+                              )
+                            }
                           />
                         </TableCell>
                         <TableCell align="center">
                           {' '}
                           <Checkbox
-                            checked={true}
-                            onChange={(event) => console.log(event, row._id)}
+                            checked={row.access.inbox.status === 'Allow'}
+                            onChange={(event) =>
+                              handleCheckboxChange(
+                                index,
+                                'inbox',
+                                event.target.checked
+                              )
+                            }
                           />
                         </TableCell>
                       </TableRow>

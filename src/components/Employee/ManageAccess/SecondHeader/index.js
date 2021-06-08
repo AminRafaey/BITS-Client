@@ -25,7 +25,7 @@ function SecondHeader(props) {
     <SecondHeaderWrapper>
       <ButtonsWrapper>
         <Box pr={3}>
-          <Button>Save</Button>
+          <Button onClick={() => {}}>Save</Button>
         </Box>
       </ButtonsWrapper>
     </SecondHeaderWrapper>

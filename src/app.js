@@ -32,7 +32,7 @@ function App() {
                 <LabelProvider>
                   <CompanyProvider>
                     <LeadSourceProvider>
-                      <EmployeeProvider>
+                      <EmployeeProvider employee={employee}>
                         <DesignationProvider>
                           <SnackbarProvider
                             maxSnack={3}

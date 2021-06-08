@@ -6,8 +6,8 @@ const EmployeeDispatch = React.createContext(null);
 
 function employeeReducer(state, action) {
   const { selected, _id, startingIndex, endingIndex } = action.payload;
-  const { selectedLeads, labels } = action.payload;
   const { employeeData, employees, selectedEmployeeIndex } = action.payload;
+  const { propertyName, propertyValue } = action.payload;
   let cloneState = stateCloner(state);
   switch (action.type) {
     case 'LOAD_EMPLOYEE':
@@ -24,23 +24,6 @@ function employeeReducer(state, action) {
         };
       });
       return [...cloneState];
-    // case 'ADD_LABELS':
-    //   selectedLeads.map((s) => {
-    //     labels.map((l) => {
-    //       !cloneState[s.index]['labels'].find((c) => c == l._id) &&
-    //         cloneState[s.index]['labels'].push(l._id);
-    //     });
-    //   });
-    //   return [...cloneState];
-    // case 'REMOVE_LABELS':
-    //   selectedLeads.map((s) => {
-    //     labels.map((l) => {
-    //       cloneState[s.index]['labels'] = cloneState[s.index]['labels'].filter(
-    //         (c) => c !== l._id
-    //       );
-    //     });
-    //   });
-    //   return [...cloneState];
     case 'ADD_EMPLOYEES':
       return [...employees, ...cloneState];
     case 'ADD_EMPLOYEE':
@@ -53,6 +36,11 @@ function employeeReducer(state, action) {
       return [...cloneState];
     case 'UPDATE_EMPLOYEE':
       cloneState[selectedEmployeeIndex] = employeeData;
+      return [...cloneState];
+    case 'UPDATE_EMPLOYEE_ACCESS':
+      cloneState[selectedEmployeeIndex]['access'][propertyName][
+        'status'
+      ] = propertyValue;
       return [...cloneState];
 
     default: {
@@ -100,13 +88,12 @@ export {
   loadEmployee,
   handleSelectedStatus,
   handleMultipleSelectedStatus,
-  //   addLabels,
-  //   removeLabels,
   addEmployee,
-  //   addLeads,
+  addEmployees,
   removeEmployees,
   updateEmployee,
   removeEmployee,
+  updateEmployeeAccess,
 };
 
 function loadEmployee(dispatch, data) {
@@ -129,19 +116,6 @@ function handleMultipleSelectedStatus(dispatch, data) {
   });
 }
 
-// function addLabels(dispatch, data) {
-//   dispatch({
-//     type: 'ADD_LABELS',
-//     payload: data,
-//   });
-// }
-
-// function removeLabels(dispatch, data) {
-//   dispatch({
-//     type: 'REMOVE_LABELS',
-//     payload: data,
-//   });
-// }
 function addEmployee(dispatch, data) {
   dispatch({
     type: 'ADD_EMPLOYEE',
@@ -169,6 +143,13 @@ function removeEmployee(dispatch, data) {
 function updateEmployee(dispatch, data) {
   dispatch({
     type: 'UPDATE_EMPLOYEE',
+    payload: data,
+  });
+}
+
+function updateEmployeeAccess(dispatch, data) {
+  dispatch({
+    type: 'UPDATE_EMPLOYEE_ACCESS',
     payload: data,
   });
 }

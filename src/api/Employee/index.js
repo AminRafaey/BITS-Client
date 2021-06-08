@@ -88,8 +88,10 @@ export async function getDesignations() {
   } catch (ex) {
     if (!ex.response) {
       toastActions.error('Please check your internet connection');
+      throw 'Exception!';
     } else {
       toastActions.error('Server Error!');
+      throw 'Exception!';
     }
   }
 }

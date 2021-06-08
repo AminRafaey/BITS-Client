@@ -29,6 +29,10 @@ function ManageEmployee(props) {
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
+    !connectState && setOpenModal(true);
+  }, [connectState]);
+
+  useEffect(() => {
     if (employeeState.length === 0) {
       setLoader(true);
       getEmployees()
@@ -44,7 +48,11 @@ function ManageEmployee(props) {
 
   return (
     <React.Fragment>
-      {!loader ? (
+      {loader || !connectState ? (
+        <LoadingWrapper>
+          <CircularProgress color="primary" />
+        </LoadingWrapper>
+      ) : (
         <Box mb={6}>
           <FirstHeader sortType={sortType} setSortType={setSortType} />
           <Grid container>
@@ -54,10 +62,6 @@ function ManageEmployee(props) {
             </Grid>
           </Grid>
         </Box>
-      ) : (
-        <LoadingWrapper>
-          <CircularProgress color="primary" />
-        </LoadingWrapper>
       )}
     </React.Fragment>
   );

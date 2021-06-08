@@ -79,7 +79,7 @@ export default function AccessTable(props) {
     updateEmployeeAccess(employeeDispatch, {
       selectedEmployeeIndex: index,
       propertyName,
-      propertyValue,
+      propertyValue: propertyValue ? 'allow' : 'not-allow',
     });
   };
   return (
@@ -134,7 +134,7 @@ export default function AccessTable(props) {
 
                         <TableCell align="center">
                           <Checkbox
-                            checked={row.access.quickSend.status === 'Allow'}
+                            checked={row.quickSend === 'allow'}
                             onChange={(event) =>
                               handleCheckboxChange(
                                 index,
@@ -147,9 +147,7 @@ export default function AccessTable(props) {
 
                         <TableCell align="center">
                           <Checkbox
-                            checked={
-                              row.access.contactManagement.status === 'Allow'
-                            }
+                            checked={row.contactManagement === 'allow'}
                             onChange={(event) =>
                               handleCheckboxChange(
                                 index,
@@ -162,9 +160,7 @@ export default function AccessTable(props) {
 
                         <TableCell align="center">
                           <Checkbox
-                            checked={
-                              row.access.templateManagement.status === 'Allow'
-                            }
+                            checked={row.templateManagement === 'allow'}
                             onChange={(event) =>
                               handleCheckboxChange(
                                 index,
@@ -177,9 +173,7 @@ export default function AccessTable(props) {
 
                         <TableCell align="center">
                           <Checkbox
-                            checked={
-                              row.access.labelManagement.status === 'Allow'
-                            }
+                            checked={row.labelManagement === 'allow'}
                             onChange={(event) =>
                               handleCheckboxChange(
                                 index,
@@ -192,7 +186,7 @@ export default function AccessTable(props) {
                         <TableCell align="center">
                           {' '}
                           <Checkbox
-                            checked={row.access.inbox.status === 'Allow'}
+                            checked={row.inbox === 'allow'}
                             onChange={(event) =>
                               handleCheckboxChange(
                                 index,

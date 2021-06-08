@@ -38,9 +38,7 @@ function employeeReducer(state, action) {
       cloneState[selectedEmployeeIndex] = employeeData;
       return [...cloneState];
     case 'UPDATE_EMPLOYEE_ACCESS':
-      cloneState[selectedEmployeeIndex]['access'][propertyName][
-        'status'
-      ] = propertyValue;
+      cloneState[selectedEmployeeIndex][propertyName] = propertyValue;
       return [...cloneState];
 
     default: {

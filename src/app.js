@@ -1,6 +1,7 @@
 import React from 'react';
 import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from '@material-ui/styles';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { theme } from './theme';
 import { MiniDrawer } from './components';
 import Toast from './components/Toast';
@@ -20,6 +21,7 @@ import { CompanyProvider } from './Context/Company';
 import { LeadSourceProvider } from './Context/LeadSource';
 import { EmployeeProvider } from './Context/Employee';
 import { DesignationProvider } from './Context/Designation';
+import { SignIn } from './components';
 
 function App() {
   return (
@@ -42,7 +44,16 @@ function App() {
                             }}
                           >
                             <Toast />
-                            <MiniDrawer />
+                            <Router>
+                              <Switch>
+                                <Route path="/signIn">
+                                  <SignIn />
+                                </Route>
+                                <Route path="/">
+                                  <MiniDrawer />
+                                </Route>
+                              </Switch>
+                            </Router>
                           </SnackbarProvider>
                         </DesignationProvider>
                       </EmployeeProvider>

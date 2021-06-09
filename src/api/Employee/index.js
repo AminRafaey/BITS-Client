@@ -108,3 +108,21 @@ export async function getFilteredEmployees(filters) {
     }
   }
 }
+
+export async function updateEmployeeStatus(_id, status) {
+  try {
+    const res = await axios.put(endPointApi + '/status', {
+      _id,
+      status,
+    });
+    return res.data.field.data;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+      throw new Error('Please check your internet connection');
+    } else {
+      toastActions.error(ex.response.data.field.message);
+      throw ex.response.data.field;
+    }
+  }
+}

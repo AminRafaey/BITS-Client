@@ -5,6 +5,7 @@ import SecondHeader from '../SecondHeader';
 import TableHead from './TableHead';
 import CreateEmployee from '../../../Forms/Employee/Create';
 import DeleteAlert from '../DeleteAlert';
+import StatusSelect from './StatusSelect';
 import { colors } from '../../../constants/AvatarColor';
 import {
   useEmployeeState,
@@ -29,13 +30,10 @@ import {
   MenuItem,
   Fade,
   Grid,
-  Select,
-  FormControl,
 } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import EventIcon from '@material-ui/icons/Event';
 import { GrayColor, DelieverStatusColor } from '../../../constants/theme';
 
@@ -114,20 +112,7 @@ const StickyRightTableCell = withStyles({
     background: 'inherit',
   },
 })(TableCell);
-const StyledFormControl = withStyles({
-  root: {
-    '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: '#f5f6f8',
-    },
-    '& .MuiSelect-select:focus': {
-      background: '#f5f6f8',
-    },
 
-    '& .MuiInputBase-root .MuiSelect-root': {
-      padding: '6px 32px 6px 14px',
-    },
-  },
-})(FormControl);
 export default function ContactsTable(props) {
   const { sortType } = props;
   const employeeState = useEmployeeState();
@@ -275,29 +260,8 @@ export default function ContactsTable(props) {
                               </ItemTyp>
                             </TableCell>
 
-                            <TableCell align="left">
-                              <StyledFormControl>
-                                <Select
-                                  value={row.status}
-                                  onChange={(e) => console.log(e.target.value)}
-                                  variant="outlined"
-                                >
-                                  <MenuItem value={row.status}>
-                                    {row.status}
-                                  </MenuItem>
-                                  <MenuItem
-                                    value={
-                                      row.status === 'Active'
-                                        ? 'Blocked'
-                                        : 'Active'
-                                    }
-                                  >
-                                    {row.status === 'Active'
-                                      ? 'Blocked'
-                                      : 'Active'}
-                                  </MenuItem>
-                                </Select>
-                              </StyledFormControl>
+                            <TableCell align="center">
+                              <StatusSelect row={row} index={index} />
                             </TableCell>
 
                             <StickyRightTableCell align="left">

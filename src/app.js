@@ -15,30 +15,37 @@ import { LabelProvider } from './Context/Label';
 import { labels } from './Static/Label';
 import { companies } from './Static/Company';
 import { leadSource } from './Static/LeadSource';
+import { employee } from './Static/Employee';
 import { CompanyProvider } from './Context/Company';
 import { LeadSourceProvider } from './Context/LeadSource';
+import { EmployeeProvider } from './Context/Employee';
+import { DesignationProvider } from './Context/Designation';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <ConnectStatusProvider>
+        <ConnectStatusProvider connectStatus={true}>
           <TemplateProvider>
             <LeadsProvider>
-              <ChatProvider>
+              <ChatProvider chat={chat}>
                 <LabelProvider>
                   <CompanyProvider>
                     <LeadSourceProvider>
-                      <SnackbarProvider
-                        maxSnack={3}
-                        anchorOrigin={{
-                          vertical: 'bottom',
-                          horizontal: 'right',
-                        }}
-                      >
-                        <Toast />
-                        <MiniDrawer />
-                      </SnackbarProvider>
+                      <EmployeeProvider>
+                        <DesignationProvider>
+                          <SnackbarProvider
+                            maxSnack={3}
+                            anchorOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'right',
+                            }}
+                          >
+                            <Toast />
+                            <MiniDrawer />
+                          </SnackbarProvider>
+                        </DesignationProvider>
+                      </EmployeeProvider>
                     </LeadSourceProvider>
                   </CompanyProvider>
                 </LabelProvider>

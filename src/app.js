@@ -25,10 +25,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <ConnectStatusProvider>
+        <ConnectStatusProvider connectStatus={true}>
           <TemplateProvider>
             <LeadsProvider>
-              <ChatProvider>
+              <ChatProvider chat={chat}>
                 <LabelProvider>
                   <CompanyProvider>
                     <LeadSourceProvider>

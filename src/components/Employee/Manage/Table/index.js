@@ -29,7 +29,6 @@ import {
   MenuItem,
   Fade,
   Grid,
-  CircularProgress,
   Select,
   FormControl,
 } from '@material-ui/core';
@@ -77,13 +76,6 @@ const IconWrapper = styled(Box)({
     background: GrayColor,
     borderRadius: '50%',
   },
-});
-
-const LoaderWrapper = styled(Box)({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '70vh',
 });
 
 const StyledPaper = withStyles({
@@ -348,11 +340,6 @@ export default function ContactsTable(props) {
                                 >
                                   <DeleteIcon style={{ ...iconsStyle }} />
                                   <ItemTyp>Delete</ItemTyp>
-                                </MenuItem>
-
-                                <MenuItem onClick={handleClose}>
-                                  <NoteAddIcon style={{ ...iconsStyle }} />
-                                  <ItemTyp>Add Note</ItemTyp>
                                 </MenuItem>
                                 <MenuItem onClick={handleClose}>
                                   <EventIcon style={{ ...iconsStyle }} />

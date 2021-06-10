@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { auth } from '../../../api/Auth';
 import {
   Box,
   Typography,
@@ -8,12 +8,12 @@ import {
   Grid,
   CircularProgress,
   IconButton,
-  OutlinedInput,
   InputAdornment,
-  FormControl,
   withStyles,
   Button as MuiButton,
+  TextField,
 } from '@material-ui/core';
+
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import EmailIcon from '@material-ui/icons/Email';
@@ -93,13 +93,11 @@ const SignUpTyp = styled(Typography)({
     cursor: 'pointer',
   },
 });
-
-const StyledFormControl = withStyles({
-  root: {
-    width: '100%',
-    paddingBottom: 10,
-  },
-})(FormControl);
+const ErrorTyp = styled(Typography)({
+  color: '#EB4137',
+  paddingBottom: 4,
+  fontSize: 12,
+});
 
 const StyledEmailIcon = withStyles({
   root: {
@@ -128,25 +126,41 @@ const StyledButton = withStyles({
   },
 })(MuiButton);
 
-function SignIn(props) {
-  const [values, setValues] = React.useState({
-    email: '',
-    password: '',
-    showPassword: false,
-  });
+const StyledIconButton = withStyles({
+  root: {
+    padding: 0,
+  },
+})(IconButton);
 
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+function SignIn(props) {
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [isSubmitCicked, setIsSubmitClicked] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
+    setShowPassword(!showPassword);
   };
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
+  const handleSubmit = () => {
+    !isSubmitCicked && setIsSubmitClicked(true);
+    if (!password || !email) return;
+    setLoading(true);
+    auth(email, password)
+      .then((res) => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setLoading(false);
+      });
+  };
   return (
     <SignInWrapper>
       <Grid container>
@@ -157,42 +171,64 @@ function SignIn(props) {
         <Grid item xs={3}>
           <RightWrapper>
             <SignInTyp>Sign In</SignInTyp>
-            <StyledFormControl size="small" variant="outlined">
-              <OutlinedInput
-                placeholder="email or username"
-                value={values.email}
-                onChange={handleChange('email')}
-                endAdornment={
+            {error && <ErrorTyp>{error}</ErrorTyp>}
+            <TextField
+              variant="outlined"
+              size="small"
+              placeholder="email or username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyUp={(e) => e.key === 'Enter' && handleSubmit()}
+              error={isSubmitCicked ? (email ? false : true) : false}
+              helperText={
+                isSubmitCicked ? (email ? '' : 'This field is required') : ''
+              }
+              InputProps={{
+                endAdornment: (
                   <InputAdornment position="end">
                     <StyledEmailIcon />
                   </InputAdornment>
-                }
-                labelWidth={0}
-              />
-            </StyledFormControl>
+                ),
+              }}
+            />
 
-            <StyledFormControl size="small" variant="outlined">
-              <OutlinedInput
-                placeholder="Password"
-                type={values.showPassword ? 'text' : 'password'}
-                value={values.password}
-                onChange={handleChange('password')}
-                endAdornment={
+            <Box p={0.75} />
+
+            <TextField
+              variant="outlined"
+              size="small"
+              placeholder="Password"
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyUp={(e) => e.key === 'Enter' && handleSubmit()}
+              error={isSubmitCicked ? (password ? false : true) : false}
+              helperText={
+                isSubmitCicked ? (password ? '' : 'This field is required') : ''
+              }
+              InputProps={{
+                endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton
+                    <StyledIconButton
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
-                      edge="end"
                     >
-                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </StyledIconButton>
                   </InputAdornment>
-                }
-              />
-            </StyledFormControl>
+                ),
+              }}
+            />
+
             <ForgotTyp>Forgot Passowrd</ForgotTyp>
-            <StyledButton>Sign In</StyledButton>
+            {loading ? (
+              <Box display="flex" justifyContent="center">
+                <CircularProgress color="primary" size={28} />
+              </Box>
+            ) : (
+              <StyledButton onClick={handleSubmit}>Sign In</StyledButton>
+            )}
             <SignUpWrapper>
               <SignUpHelperTyp>Do not have an account?</SignUpHelperTyp>
               <SignUpTyp> Sign Up</SignUpTyp>

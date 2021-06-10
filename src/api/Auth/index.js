@@ -16,7 +16,7 @@ export async function auth(email, password) {
   } catch (ex) {
     if (!ex.response) {
       toastActions.error('Please check your internet connection');
-      throw new Error('Please check your internet connection');
+      throw 'Please check your internet connection';
     } else {
       throw ex.response.data.field.message;
     }

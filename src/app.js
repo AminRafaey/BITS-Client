@@ -21,49 +21,52 @@ import { CompanyProvider } from './Context/Company';
 import { LeadSourceProvider } from './Context/LeadSource';
 import { EmployeeProvider } from './Context/Employee';
 import { DesignationProvider } from './Context/Designation';
+import { UserProvider } from './Context/User';
 import { SignIn } from './components';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <ConnectStatusProvider connectStatus={true}>
-          <TemplateProvider>
-            <LeadsProvider>
-              <ChatProvider chat={chat}>
-                <LabelProvider>
-                  <CompanyProvider>
-                    <LeadSourceProvider>
-                      <EmployeeProvider>
-                        <DesignationProvider>
-                          <SnackbarProvider
-                            maxSnack={3}
-                            anchorOrigin={{
-                              vertical: 'bottom',
-                              horizontal: 'right',
-                            }}
-                          >
-                            <Toast />
-                            <Router>
-                              <Switch>
-                                <Route path="/signIn">
-                                  <SignIn />
-                                </Route>
-                                <Route path="/">
-                                  <MiniDrawer />
-                                </Route>
-                              </Switch>
-                            </Router>
-                          </SnackbarProvider>
-                        </DesignationProvider>
-                      </EmployeeProvider>
-                    </LeadSourceProvider>
-                  </CompanyProvider>
-                </LabelProvider>
-              </ChatProvider>
-            </LeadsProvider>
-          </TemplateProvider>
-        </ConnectStatusProvider>
+        <UserProvider>
+          <ConnectStatusProvider connectStatus={true}>
+            <TemplateProvider>
+              <LeadsProvider>
+                <ChatProvider chat={chat}>
+                  <LabelProvider>
+                    <CompanyProvider>
+                      <LeadSourceProvider>
+                        <EmployeeProvider>
+                          <DesignationProvider>
+                            <SnackbarProvider
+                              maxSnack={3}
+                              anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                              }}
+                            >
+                              <Toast />
+                              <Router>
+                                <Switch>
+                                  <Route path="/signIn">
+                                    <SignIn />
+                                  </Route>
+                                  <Route path="/">
+                                    <MiniDrawer />
+                                  </Route>
+                                </Switch>
+                              </Router>
+                            </SnackbarProvider>
+                          </DesignationProvider>
+                        </EmployeeProvider>
+                      </LeadSourceProvider>
+                    </CompanyProvider>
+                  </LabelProvider>
+                </ChatProvider>
+              </LeadsProvider>
+            </TemplateProvider>
+          </ConnectStatusProvider>
+        </UserProvider>
       </SocketProvider>
     </ThemeProvider>
   );

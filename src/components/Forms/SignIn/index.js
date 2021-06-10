@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { auth } from '../../../api/Auth';
+import { useUserState, useUserDispatch, loadUser } from '../../../Context/User';
 import {
   Box,
   Typography,
@@ -139,6 +140,9 @@ function SignIn(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const userDispatch = useUserDispatch();
+  const userState = useUserState();
+  console.log(userState);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -154,6 +158,7 @@ function SignIn(props) {
     setLoading(true);
     auth(email, password)
       .then((res) => {
+        loadUser(userDispatch, { token: res.token });
         setLoading(false);
       })
       .catch((err) => {

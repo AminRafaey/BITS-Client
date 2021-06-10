@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory, useLocation } from 'react-router-dom';
 import { auth } from '../../../api/Auth';
-import { useUserState, useUserDispatch, loadUser } from '../../../Context/User';
+import { useUserDispatch, loadUser } from '../../../Context/User';
 import {
   Box,
   Typography,
@@ -141,8 +142,9 @@ function SignIn(props) {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const userDispatch = useUserDispatch();
-  const userState = useUserState();
-  console.log(userState);
+  const location = useLocation();
+  const history = useHistory();
+  const { from } = location.state || { from: { pathname: '/' } };
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -160,6 +162,7 @@ function SignIn(props) {
       .then((res) => {
         loadUser(userDispatch, { token: res.token });
         setLoading(false);
+        history.push(from.pathname);
       })
       .catch((err) => {
         setError(err);

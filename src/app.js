@@ -23,6 +23,7 @@ import { EmployeeProvider } from './Context/Employee';
 import { DesignationProvider } from './Context/Designation';
 import { UserProvider } from './Context/User';
 import { SignIn } from './components';
+import { PrivateRoute } from './components/Assets';
 
 function App() {
   return (
@@ -51,9 +52,9 @@ function App() {
                                   <Route path="/signIn">
                                     <SignIn />
                                   </Route>
-                                  <Route path="/">
+                                  <PrivateRoute path="/" userType={'Employee'}>
                                     <MiniDrawer />
-                                  </Route>
+                                  </PrivateRoute>
                                 </Switch>
                               </Router>
                             </SnackbarProvider>

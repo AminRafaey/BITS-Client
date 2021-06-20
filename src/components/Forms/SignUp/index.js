@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { TextField } from '../../HOC';
+import phone from 'phone';
+import PhoneNumber from '../PhoneNumber';
+import { isEmailValid } from '../Lead';
+import { TextField, Alert } from '../../HOC';
+import { createAdmin } from '../../../api/Admin';
 import {
   Box,
   Typography,
   styled,
-  Grid,
   CircularProgress,
   IconButton,
   InputAdornment,
@@ -114,6 +116,11 @@ const StyledEmailIcon = withStyles({
   },
 })(EmailIcon);
 
+const TextFieldErrorTyp = styled(Typography)({
+  color: '#f44336',
+  margin: '4px 14px 0px',
+  fontSize: '0.75rem',
+});
 const StyledButton = withStyles({
   root: {
     width: '100%',
@@ -143,14 +150,14 @@ const StyledIconButton = withStyles({
 
 function SignUp(props) {
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState({});
   const [isSubmitCicked, setIsSubmitClicked] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [userName, setUserName] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('aminrafaey543@gmail.com');
+  const [password, setPassword] = useState('1234');
+  const [userName, setUserName] = useState('amin');
+  const [fullName, setFullName] = useState('Amin');
   const [loading, setLoading] = useState(false);
-
+  const [phoneDetails, setPhoneDetails] = useState({});
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -159,28 +166,39 @@ function SignUp(props) {
     event.preventDefault();
   };
 
-  //   const validateEmail = () => {
-  //     const re = /\S+@\S+\.\S+/;
-  //     if (re.test(email)) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   };
   const handleSubmit = () => {
     !isSubmitCicked && setIsSubmitClicked(true);
-    if (!password || !email) return;
+    if (!password || !email || !fullName || !userName || !phoneDetails.phone)
+      return;
+    const phoneCode = phoneDetails.phoneCode;
+    const mobileNumber = phoneDetails.phone;
+
+    if (!isEmailValid(email)) {
+      setError({
+        name: 'email',
+        message: 'Invalid Email',
+      });
+      return;
+    } else if (phone(phoneCode + mobileNumber).length === 0) {
+      setError({ name: 'mobileNumber', message: 'Invalid mobile Number' });
+      return;
+    }
     setLoading(true);
-    // auth(email, password)
-    //   .then((res) => {
-    //     loadUser(userDispatch, { token: res.token });
-    //     setLoading(false);
-    //     history.push(from.pathname);
-    //   })
-    //   .catch((err) => {
-    //     setError(err);
-    //     setLoading(false);
-    //   });
+
+    createAdmin({
+      email,
+      userName,
+      fullName,
+      password,
+      mobileNumber: phoneCode + mobileNumber,
+    })
+      .then((res) => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+        setLoading(false);
+      });
   };
   return (
     <ImageWrapper>
@@ -188,19 +206,20 @@ function SignUp(props) {
         <FormWrapper>
           <LogoTyp>BITS</LogoTyp>
           <FreeAccountTyp>Register your free account</FreeAccountTyp>
-          {error && <ErrorTyp>{error}</ErrorTyp>}
-          <TextField
-            variant="outlined"
-            size="medium"
-            placeholder="Mobile Number"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onKeyUp={(e) => e.key === 'Enter' && handleSubmit()}
-            error={isSubmitCicked ? (email ? false : true) : false}
-            helperText={
-              isSubmitCicked ? (email ? '' : 'This field is required') : ''
-            }
+          {Object.entries(error).length > 0 && (
+            <>
+              <Alert severity="error">{error.message}</Alert> <Box p={0.75} />
+            </>
+          )}
+          <PhoneNumber
+            personInfo={phoneDetails}
+            setPersonInfo={setPhoneDetails}
           />
+          <TextFieldErrorTyp>
+            {isSubmitCicked && !phoneDetails.phone
+              ? 'This field is required.'
+              : ''}
+          </TextFieldErrorTyp>
           <MobileNumberTyp>
             This will be the mobile number you and your team will use to log in
             to WhatsApp
@@ -211,11 +230,10 @@ function SignUp(props) {
             placeholder="Full Name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
-            error={isSubmitCicked ? (fullName ? false : true) : false}
-            helperText={
-              isSubmitCicked ? (fullName ? '' : 'This field is required') : ''
-            }
           />
+          <TextFieldErrorTyp>
+            {isSubmitCicked && !fullName ? 'This field is required.' : ''}
+          </TextFieldErrorTyp>
           <Box p={0.75} />
           <TextField
             variant="outlined"
@@ -223,11 +241,10 @@ function SignUp(props) {
             placeholder="username"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
-            error={isSubmitCicked ? (userName ? false : true) : false}
-            helperText={
-              isSubmitCicked ? (userName ? '' : 'This field is required') : ''
-            }
           />
+          <TextFieldErrorTyp>
+            {isSubmitCicked && !userName ? 'This field is required.' : ''}
+          </TextFieldErrorTyp>
           <Box p={0.75} />
           <TextField
             variant="outlined"
@@ -236,10 +253,6 @@ function SignUp(props) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onKeyUp={(e) => e.key === 'Enter' && handleSubmit()}
-            error={isSubmitCicked ? (email ? false : true) : false}
-            helperText={
-              isSubmitCicked ? (email ? '' : 'This field is required') : ''
-            }
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -248,6 +261,10 @@ function SignUp(props) {
               ),
             }}
           />
+          <TextFieldErrorTyp>
+            {isSubmitCicked && !email ? 'This field is required.' : ''}
+            {email && !isEmailValid(email) ? 'Invalid Email' : ''}
+          </TextFieldErrorTyp>
           <Box p={0.75} />
           <TextField
             variant="outlined"
@@ -257,10 +274,6 @@ function SignUp(props) {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyUp={(e) => e.key === 'Enter' && handleSubmit()}
-            error={isSubmitCicked ? (password ? false : true) : false}
-            helperText={
-              isSubmitCicked ? (password ? '' : 'This field is required') : ''
-            }
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -275,6 +288,9 @@ function SignUp(props) {
               ),
             }}
           />
+          <TextFieldErrorTyp>
+            {isSubmitCicked && !password ? 'This field is required.' : ''}
+          </TextFieldErrorTyp>
           <AgreeTyp>By clicking sign up, I agree to Agile BITS's</AgreeTyp>
           <PolicyTyp>Terms of Service & Privacy Policy</PolicyTyp>
           {loading ? (

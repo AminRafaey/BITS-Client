@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { auth } from '../../../api/Auth';
 import { useUserDispatch, loadUser } from '../../../Context/User';
 import {
@@ -239,7 +239,15 @@ function SignIn(props) {
             )}
             <SignUpWrapper>
               <SignUpHelperTyp>Do not have an account?</SignUpHelperTyp>
-              <SignUpTyp> Sign Up</SignUpTyp>
+              <Link
+                to={'signUp'}
+                style={{
+                  textDecoration: 'none',
+                  color: 'rgba(0, 0, 0, 0.87)',
+                }}
+              >
+                <SignUpTyp> Sign Up</SignUpTyp>
+              </Link>
             </SignUpWrapper>
           </RightWrapper>
         </Grid>

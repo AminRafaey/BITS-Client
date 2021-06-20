@@ -21,6 +21,7 @@ export async function getEmployees() {
 export async function createEmployee(employeeData) {
   try {
     const res = await axios.post(endPointApi, employeeData);
+    toastActions.success(res.data.field.message);
     return res.data.field.data;
   } catch (ex) {
     if (!ex.response) {

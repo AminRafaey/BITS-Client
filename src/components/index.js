@@ -20,3 +20,4 @@ export { default as ManageEmployeeAccess } from './Employee/ManageAccess';
 export { default as SignIn } from './Forms/SignIn';
 export { default as SignUp } from './Forms/SignUp';
 export { default as AccountVerification } from './Forms/AccountVerification';
+export { default as AdminAccountVerification } from './Forms/SignUp/AdminAccountVerification';

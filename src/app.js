@@ -22,9 +22,15 @@ import { LeadSourceProvider } from './Context/LeadSource';
 import { EmployeeProvider } from './Context/Employee';
 import { DesignationProvider } from './Context/Designation';
 import { UserProvider } from './Context/User';
-import { SignIn, SignUp, AccountVerification } from './components';
+import {
+  SignIn,
+  SignUp,
+  AccountVerification,
+  AdminAccountVerification,
+} from './components';
 import { PrivateRoute } from './components/Assets';
 import { EmailValidation } from './InfoPages';
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -56,11 +62,14 @@ function App() {
                                     <SignUp />
                                   </Route>
 
-                                  <Route path="/employeeAccount/verify-email">
+                                  <Route path="/employeeAccount/verifyEmail">
                                     <AccountVerification />
                                   </Route>
                                   <Route path="/validateEmail">
                                     <EmailValidation />
+                                  </Route>
+                                  <Route path="/adminAccount/verifyEmail">
+                                    <AdminAccountVerification />
                                   </Route>
 
                                   <PrivateRoute userType={'Employee'}>

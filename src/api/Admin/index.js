@@ -18,3 +18,21 @@ export async function createAdmin(adminData) {
     }
   }
 }
+
+export async function resendVerificationEmail(userId) {
+  try {
+    const res = await axios.post(endPointApi + '/resendVerificationEmail', {
+      userId,
+    });
+    toastActions.success(res.data.field.message);
+    return res.data.field;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+      throw 'Please check your internet connection';
+    } else {
+      toastActions.error(ex.response.data.field.message);
+      throw ex.response.data.field;
+    }
+  }
+}

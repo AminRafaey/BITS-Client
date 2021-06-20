@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import phone from 'phone';
+import { useHistory } from 'react-router-dom';
 import PhoneNumber from '../PhoneNumber';
 import { isEmailValid } from '../Lead';
 import { TextField, Alert } from '../../HOC';
@@ -80,7 +81,7 @@ const PolicyTyp = styled(Typography)({
 const MobileNumberTyp = styled(Typography)({
   paddingBlock: 12,
   color: '#ffff',
-  fontSize: 14,
+  fontSize: 12,
   textAlign: 'center',
 });
 
@@ -149,6 +150,7 @@ const StyledIconButton = withStyles({
 })(IconButton);
 
 function SignUp(props) {
+  const history = useHistory();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState({});
   const [isSubmitCicked, setIsSubmitClicked] = useState(false);
@@ -194,6 +196,7 @@ function SignUp(props) {
     })
       .then((res) => {
         setLoading(false);
+        history.push(`/validateEmail/?email=${email}&userId=${res.data._id}`);
       })
       .catch((err) => {
         setError(err);

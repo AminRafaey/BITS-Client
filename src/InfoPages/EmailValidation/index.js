@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   Card,
@@ -7,7 +7,9 @@ import {
   Typography,
   CardContent,
   withStyles,
+  CircularProgress,
 } from '@material-ui/core';
+import { resendVerificationEmail } from '../../api/Admin';
 import { Button } from '../../components/HOC';
 import { BackgroundColor } from '../../components/constants/theme';
 
@@ -39,6 +41,11 @@ const TitleTyp = styled(Typography)({
   color: 'rgba(0, 0, 0, 0.54)',
   paddingBottom: 16,
 });
+const LoadingWrapper = styled(Box)({
+  minWidth: 130,
+  display: 'flex',
+  justifyContent: 'center',
+});
 const StyledCard = withStyles({
   root: {
     maxWidth: '50%',
@@ -53,12 +60,19 @@ function EmailValidation() {
   const search = useLocation().search;
   const email = new URLSearchParams(search).get('email');
   const userId = new URLSearchParams(search).get('userId');
+  const [loading, setLoading] = useState(false);
 
-  const handleResendEmail = () => {};
+  const handleResendEmail = () => {
+    setLoading(true);
+    resendVerificationEmail(userId).then((res) => {
+      console.log(res);
+      setLoading(false);
+    });
+  };
 
   return (
     <EmailValidationWrapper>
-      <StyledCard variant="outlined">
+      <StyledCard elevation={2}>
         <CardContent>
           <TitleTyp>Please Confirm your email address</TitleTyp>
           <ContentTyp>
@@ -73,9 +87,15 @@ function EmailValidation() {
           </ContentTyp>
           <ActionWrapper>
             <ContentTyp>Didn't receive the email? </ContentTyp>
-            <Button onClick={handleResendEmail} style={{ marginLeft: 24 }}>
-              Send it again
-            </Button>
+            {loading ? (
+              <LoadingWrapper>
+                <CircularProgress color="primary" size={26} />
+              </LoadingWrapper>
+            ) : (
+              <Button onClick={handleResendEmail} style={{ marginLeft: 24 }}>
+                Send it again
+              </Button>
+            )}
           </ActionWrapper>
         </CardContent>
       </StyledCard>

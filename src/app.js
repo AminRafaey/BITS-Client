@@ -24,7 +24,7 @@ import { DesignationProvider } from './Context/Designation';
 import { UserProvider } from './Context/User';
 import { SignIn, SignUp, AccountVerification } from './components';
 import { PrivateRoute } from './components/Assets';
-
+import { EmailValidation } from './InfoPages';
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -59,6 +59,10 @@ function App() {
                                   <Route path="/employeeAccount/verify-email">
                                     <AccountVerification />
                                   </Route>
+                                  <Route path="/validateEmail">
+                                    <EmailValidation />
+                                  </Route>
+
                                   <PrivateRoute userType={'Employee'}>
                                     <MiniDrawer />
                                   </PrivateRoute>

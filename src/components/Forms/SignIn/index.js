@@ -138,8 +138,8 @@ function SignIn(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitCicked, setIsSubmitClicked] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('amin@gmail.com');
+  const [password, setPassword] = useState('1234');
   const [loading, setLoading] = useState(false);
   const userDispatch = useUserDispatch();
   const location = useLocation();

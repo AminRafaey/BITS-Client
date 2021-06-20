@@ -22,7 +22,7 @@ import { LeadSourceProvider } from './Context/LeadSource';
 import { EmployeeProvider } from './Context/Employee';
 import { DesignationProvider } from './Context/Designation';
 import { UserProvider } from './Context/User';
-import { SignIn } from './components';
+import { SignIn, SignUp, AccountVerification } from './components';
 import { PrivateRoute } from './components/Assets';
 
 function App() {
@@ -52,7 +52,14 @@ function App() {
                                   <Route path="/signIn">
                                     <SignIn />
                                   </Route>
-                                  <PrivateRoute path="/" userType={'Employee'}>
+                                  <Route path="/signUp">
+                                    <SignUp />
+                                  </Route>
+
+                                  <Route path="/employeeAccount/verify-email">
+                                    <AccountVerification />
+                                  </Route>
+                                  <PrivateRoute userType={'Employee'}>
                                     <MiniDrawer />
                                   </PrivateRoute>
                                 </Switch>

@@ -6,13 +6,7 @@ import CountrySelect from '../../CountrySelect';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import PhoneNumber from '../../PhoneNumber';
 import { CompanySelect, LeadSource, InfoAlert } from '../../../Assets';
-import {
-  Button,
-  TextField,
-  SecondaryButton,
-  Alert,
-  Checkbox,
-} from '../../../HOC';
+import { Button, TextField, SecondaryButton, Checkbox } from '../../../HOC';
 import { Transition } from '../../../ConnectionModal/Modal';
 import { isUrlValid, isEmailValid } from '../index';
 import {
@@ -26,6 +20,7 @@ import { useConnectStatusState } from '../../../../Context/ConnectStatus';
 import { useSocketState } from '../../../../Context/Socket';
 import { createLead, updateLead } from '../../../../api/Lead';
 import { sendTextMesage } from '../../../../api/send';
+import { emptySpacingRow, FieldNameRow, errorRow } from '../index';
 import {
   Dialog,
   DialogTitle,
@@ -40,28 +35,13 @@ import {
 import { initLeadData } from '../../../constants/InitialValues';
 import { toastActions } from '../../../Toast';
 
-const FieldWrapper = styled(Box)({
-  display: 'flex',
-  height: '100%',
-  alignItems: 'center',
-  justifyContent: 'flex-end',
-});
-
-const FieldLabelNameTyp = styled(Typography)({
-  fontSize: 14,
-  paddingRight: 32,
-});
-
 const LoadingWrapper = styled(Box)({
   minHeight: window.innerHeight - 150,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 });
-const MediaErorWrapper = styled(Box)({
-  paddingTop: 10,
-  fontSize: 14,
-});
+
 const SendMsgWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'space-between',
@@ -198,42 +178,7 @@ function CreateLead(props) {
         setError({ ...err });
       });
   };
-  const emptySpacingRow = () => {
-    return (
-      <Grid item xs={12}>
-        <Box pt={1.5} pb={1.5} />
-      </Grid>
-    );
-  };
-  const errorRow = (name) => {
-    return (
-      <React.Fragment>
-        {error.name &&
-          (error.name === name ||
-            (name === '' &&
-              !['email', 'phone', 'website'].includes(error.name))) && (
-            <React.Fragment>
-              <Grid item xs={3}></Grid>
-              <Grid item xs={9}>
-                <MediaErorWrapper pb={name === '' ? 1.5 : 0}>
-                  <Alert severity="error">{error.message}</Alert>
-                </MediaErorWrapper>
-              </Grid>
-            </React.Fragment>
-          )}
-      </React.Fragment>
-    );
-  };
 
-  const FieldNameRow = (name) => {
-    return (
-      <Grid item xs={3}>
-        <FieldWrapper>
-          <FieldLabelNameTyp>{name}</FieldLabelNameTyp>
-        </FieldWrapper>
-      </Grid>
-    );
-  };
   return (
     <React.Fragment>
       <Dialog
@@ -258,7 +203,7 @@ function CreateLead(props) {
           <>
             <DialogContent className="Chat-Box-Styled-Scroll">
               <Grid container id="scroll-dialog-description">
-                {errorRow('')}
+                {errorRow('', error, ['email', 'phone', 'website'])}
                 {FieldNameRow('Name')}
                 <Grid item xs={9}>
                   <TextField
@@ -350,7 +295,7 @@ function CreateLead(props) {
                     }
                   />
                 </Grid>
-                {errorRow('email')}
+                {errorRow('email', error, ['email', 'phone', 'website'])}
                 {emptySpacingRow()}
                 {FieldNameRow('Add Phone')}
                 <Grid item xs={9}>
@@ -360,7 +305,7 @@ function CreateLead(props) {
                     source={source}
                   />
                 </Grid>
-                {errorRow('phone')}
+                {errorRow('phone', error, ['email', 'phone', 'website'])}
                 {emptySpacingRow()}
 
                 {FieldNameRow('Website')}
@@ -387,7 +332,7 @@ function CreateLead(props) {
                     }
                   />
                 </Grid>
-                {errorRow('website')}
+                {errorRow('website', error, ['email', 'phone', 'website'])}
                 {emptySpacingRow()}
 
                 {FieldNameRow('Address')}

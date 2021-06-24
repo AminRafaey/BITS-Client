@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { AbsoluteScroll } from '../../../HOC';
 
 import TableHead from './TableHead';
@@ -162,9 +163,17 @@ export default function ContactsTable(props) {
                           </TableCell>
                           <TableCell align="left">
                             <IconsWrapper>
-                              <EditIconWrapper>
-                                <EditIcon style={{ ...iconsStyle }} />
-                              </EditIconWrapper>
+                              <Link
+                                to={`/addTemplate?edit=true&&_id=${row._id}`}
+                                style={{
+                                  textDecoration: 'none',
+                                  color: 'black',
+                                }}
+                              >
+                                <EditIconWrapper>
+                                  <EditIcon style={{ ...iconsStyle }} />
+                                </EditIconWrapper>
+                              </Link>
                               <DeleteIconWrapper
                                 onClick={(e) => {
                                   handleIconClick(row, index);

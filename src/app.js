@@ -11,6 +11,7 @@ import { SocketProvider } from './Context/Socket';
 import { chat } from './Static/Chat';
 import { LeadsProvider } from './Context/Lead';
 import { leads } from './Static/Lead';
+import { templates } from './Static/Template';
 import { LabelProvider } from './Context/Label';
 import { labels } from './Static/Label';
 import { companies } from './Static/Company';
@@ -26,7 +27,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <SocketProvider>
         <ConnectStatusProvider connectStatus={true}>
-          <TemplateProvider>
+          <TemplateProvider template={templates}>
             <LeadsProvider>
               <ChatProvider chat={chat}>
                 <LabelProvider>

@@ -7,3 +7,9 @@ export const headCells = [
   { label: 'Country' },
   { label: '' },
 ];
+export const manageTemplates = [
+  { label: 'Title' },
+  { label: 'Content' },
+  { label: 'Created At' },
+  { label: 'Actions' },
+];

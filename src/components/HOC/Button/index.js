@@ -30,10 +30,10 @@ function Button(props) {
   return (
     <div>
       <StyledButton
+        {...props}
         size="small"
         variant="contained"
         disableElevation={true}
-        {...props}
       />
     </div>
   );

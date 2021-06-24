@@ -27,7 +27,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <SocketProvider>
         <ConnectStatusProvider connectStatus={true}>
-          <TemplateProvider template={templates}>
+          <TemplateProvider>
             <LeadsProvider>
               <ChatProvider chat={chat}>
                 <LabelProvider>

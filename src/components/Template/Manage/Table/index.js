@@ -1,10 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { AbsoluteScroll } from '../../../HOC';
 
 import TableHead from './TableHead';
 import DeleteAlert from '../DeleteAlert';
-import { useTemplateState } from '../../../../Context/Template';
+import {
+  useTemplateDispatch,
+  useTemplateState,
+  loadTemplates,
+} from '../../../../Context/Template';
+import { getTemplates } from '../../../../api/template';
 import {
   Table,
   TableBody,
@@ -94,13 +99,27 @@ const StyledTableContainer = withStyles({
 export default function ContactsTable(props) {
   const { sortType } = props;
   const templateState = useTemplateState();
-  const [loader, setLoader] = useState(false);
+  const templateDispatch = useTemplateDispatch();
+  const [loader, setLoader] = useState(true);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const selectedTemplate = useRef(null);
 
   const handleIconClick = (row, index) => {
     selectedTemplate.current = { template: { ...row }, index: index };
   };
+
+  useEffect(() => {
+    if (templateState.length === 0) {
+      getTemplates()
+        .then((res) => {
+          setLoader(false);
+          loadTemplates(templateDispatch, { templates: res });
+        })
+        .catch((err) => {});
+    } else {
+      setLoader(false);
+    }
+  }, []);
 
   return (
     <React.Fragment>
@@ -137,10 +156,9 @@ export default function ContactsTable(props) {
                           </TableCell>
 
                           <TableCell align="left" style={{ minWidth: 150 }}>
-                            <ItemTyp>{new Date().toDateString()}</ItemTyp>
-                            {
-                              //Place Correct Date here
-                            }
+                            <ItemTyp>
+                              {new Date(row.createdAt).toDateString()}
+                            </ItemTyp>
                           </TableCell>
                           <TableCell align="left">
                             <IconsWrapper>

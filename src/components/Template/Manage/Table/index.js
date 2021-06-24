@@ -23,8 +23,8 @@ import { GrayColor, DelieverStatusColor } from '../../../constants/theme';
 
 const iconsStyle = {
   height: 20,
-  //color: DelieverStatusColor,
 };
+
 const ItemTyp = styled(Typography)({
   fontSize: 14,
   display: 'inline',
@@ -48,6 +48,9 @@ const EditIconWrapper = styled(Box)({
   alignItems: 'center',
   marginRight: 12,
   '&:hover': {
+    background: DelieverStatusColor,
+  },
+  '&:active': {
     background: GrayColor,
   },
 });
@@ -61,6 +64,9 @@ const DeleteIconWrapper = styled(Box)({
   alignItems: 'center',
   marginRight: 12,
   '&:hover': {
+    background: DelieverStatusColor,
+  },
+  '&:active': {
     background: GrayColor,
   },
 });
@@ -90,7 +96,11 @@ export default function ContactsTable(props) {
   const templateState = useTemplateState();
   const [loader, setLoader] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const selectedLead = useRef(null);
+  const selectedTemplate = useRef(null);
+
+  const handleIconClick = (row, index) => {
+    selectedTemplate.current = { template: { ...row }, index: index };
+  };
 
   return (
     <React.Fragment>
@@ -127,7 +137,10 @@ export default function ContactsTable(props) {
                           </TableCell>
 
                           <TableCell align="left" style={{ minWidth: 150 }}>
-                            <ItemTyp>{row.createdAt.toDateString()}</ItemTyp>
+                            <ItemTyp>{new Date().toDateString()}</ItemTyp>
+                            {
+                              //Place Correct Date here
+                            }
                           </TableCell>
                           <TableCell align="left">
                             <IconsWrapper>
@@ -135,7 +148,8 @@ export default function ContactsTable(props) {
                                 <EditIcon style={{ ...iconsStyle }} />
                               </EditIconWrapper>
                               <DeleteIconWrapper
-                                onClick={() => {
+                                onClick={(e) => {
+                                  handleIconClick(row, index);
                                   setOpenDeleteModal(true);
                                 }}
                               >
@@ -150,13 +164,14 @@ export default function ContactsTable(props) {
                     <DeleteAlert
                       open={openDeleteModal}
                       setOpen={setOpenDeleteModal}
-                      selectedCount={1}
-                      selectedLead={
-                        selectedLead.current ? selectedLead.current.lead : {}
+                      selectedTemplate={
+                        selectedTemplate.current
+                          ? selectedTemplate.current.template
+                          : {}
                       }
-                      selectedLeadIndex={
-                        selectedLead.current
-                          ? selectedLead.current.index
+                      selectedTemplateIndex={
+                        selectedTemplate.current
+                          ? selectedTemplate.current.index
                           : undefined
                       }
                     />

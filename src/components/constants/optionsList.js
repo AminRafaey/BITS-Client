@@ -5,7 +5,6 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
 import GroupIcon from '@material-ui/icons/Group';
 import ReportIcon from '@material-ui/icons/Report';
-import LabelIcon from '@material-ui/icons/Label';
 
 export const optionsList = [
   {
@@ -40,21 +39,12 @@ export const optionsList = [
   ,
   {
     title: 'Label Management',
-    icon: <LabelIcon style={{ color: '#FFFF' }} />,
+    icon: <GroupIcon style={{ color: '#FFFF' }} />,
     menuArr: [
       { title: 'Manage', link: 'managelabels' },
       { title: 'Add', link: 'addlabel' },
     ],
     defaultPath: 'managelabels',
-  },
-  {
-    title: 'Employee',
-    icon: <GroupIcon style={{ color: '#FFFF' }} />,
-    menuArr: [
-      { title: 'All Employees', link: 'employeesList' },
-      { title: 'Manage Access', link: 'manageEmployeeAccess' },
-    ],
-    defaultPath: 'employeesList',
   },
 ];
 

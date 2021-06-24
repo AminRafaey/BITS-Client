@@ -48,10 +48,10 @@ const EditIconWrapper = styled(Box)({
   alignItems: 'center',
   marginRight: 12,
   '&:hover': {
-    background: DelieverStatusColor,
+    background: GrayColor,
   },
   '&:active': {
-    background: GrayColor,
+    background: DelieverStatusColor,
   },
 });
 
@@ -64,10 +64,10 @@ const DeleteIconWrapper = styled(Box)({
   alignItems: 'center',
   marginRight: 12,
   '&:hover': {
-    background: DelieverStatusColor,
+    background: GrayColor,
   },
   '&:active': {
-    background: GrayColor,
+    background: DelieverStatusColor,
   },
 });
 const LoaderWrapper = styled(Box)({

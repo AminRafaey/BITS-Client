@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../HOC';
-import { useLeadsState } from '../../../../Context/Lead';
+import { useTemplateState } from '../../../../Context/Template';
 import {
   styled,
   Box,
@@ -57,14 +57,13 @@ const StyledFormControl = withStyles({
 })(FormControl);
 function FirstHeader(props) {
   const { sortType, setSortType } = props;
-  const leadsState = useLeadsState();
-  const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
+  const templateState = useTemplateState();
 
   return (
     <FirstHeaderWrapper>
       <ContactInfoWrapper>
         <ContactTyp>Templates</ContactTyp>
-        <ContactNumTyp>{leadsState.length} Total</ContactNumTyp>
+        <ContactNumTyp>{templateState.length} Total</ContactNumTyp>
         <SortAreaWrapper>
           <ContactNumTyp>Sort by:</ContactNumTyp>
           <CreatedDateTyp>
@@ -88,12 +87,7 @@ function FirstHeader(props) {
           to={'/addContacts'}
           style={{ textDecoration: 'none', width: '100%' }}
         >
-          <Button
-            startIcon={<AddCircleIcon />}
-            onClick={() => setOpenCreateLabelModal(!openCreateLabelModal)}
-          >
-            Add Template
-          </Button>
+          <Button startIcon={<AddCircleIcon />}>Add Template</Button>
         </Link>
       </Box>
     </FirstHeaderWrapper>

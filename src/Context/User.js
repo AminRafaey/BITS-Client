@@ -3,6 +3,7 @@ import jwtDecode from 'jwt-decode';
 
 const UserState = React.createContext(null);
 const UserDispatch = React.createContext(null);
+let UserStateRef;
 
 function UserReducer(state, action) {
   const { token } = action.payload;
@@ -30,10 +31,15 @@ function UserProvider({ children, user }) {
 
 function useUserState() {
   const context = React.useContext(UserState);
+  UserStateRef = context;
   if (context === undefined) {
     throw new Error('useUserState must be used inside a UserProvider');
   }
   return context;
+}
+
+function getUserStateRef() {
+  return UserStateRef;
 }
 
 function useUserDispatch() {
@@ -44,7 +50,13 @@ function useUserDispatch() {
   return context;
 }
 
-export { UserProvider, useUserState, useUserDispatch, loadUser };
+export {
+  UserProvider,
+  useUserState,
+  getUserStateRef,
+  useUserDispatch,
+  loadUser,
+};
 
 function loadUser(dispatch, data) {
   dispatch({

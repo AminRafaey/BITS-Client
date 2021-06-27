@@ -199,7 +199,7 @@ function SignUp(props) {
         history.push(`/validateEmail/?email=${email}&userId=${res.data._id}`);
       })
       .catch((err) => {
-        setError(err);
+        err && setError(err);
         setLoading(false);
       });
   };

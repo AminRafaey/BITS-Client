@@ -182,7 +182,7 @@ function CreateEmployee(props) {
       })
       .catch((err) => {
         setLoading(false);
-        setError({ ...err });
+        err && setError({ ...err });
       });
   };
   return (

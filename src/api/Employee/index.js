@@ -1,129 +1,129 @@
 import config from '../../config.json';
-import axios from 'axios';
 import { toastActions } from '../../components/Toast';
 const endPointApi = `${config.baseUrl}employee`;
+import axiosConfig from '../AxiosConfig';
 
 export async function getEmployees() {
   try {
-    const res = await axios.get(endPointApi + '/all');
+    const res = await axiosConfig(endPointApi + '/all', 'get');
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw new Error('Please check your internet connection');
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw new Error('Server Error!');
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex.message;
     }
+    throw '';
   }
 }
 
 export async function createEmployee(employeeData) {
   try {
-    const res = await axios.post(endPointApi, employeeData);
+    const res = await axiosConfig(endPointApi, 'post', undefined, employeeData);
+
     toastActions.success(res.data.field.message);
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw 'Please check your internet connection';
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw ex.response.data.field;
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function updateEmployee(updatedEmployee) {
   try {
-    const res = await axios.put(endPointApi, updatedEmployee);
+    const res = await axiosConfig(
+      endPointApi,
+      'put',
+      undefined,
+      updatedEmployee
+    );
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw new Error('Please check your internet connection');
-    } else {
-      throw ex.response.data.field;
+    if (ex !== 'Error Handled') {
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function updateEmployeeAccess(updatedEmployees) {
   try {
-    const res = await axios.put(endPointApi + '/access', {
+    const res = await axiosConfig(endPointApi + '/access', 'put', undefined, {
       employees: updatedEmployees,
     });
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw new Error('Please check your internet connection');
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw ex.response.data.field;
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function removeEmployee(employeeId) {
   try {
-    const res = await axios.delete(endPointApi, {
-      params: { employeeId: employeeId },
+    const res = await axiosConfig(endPointApi, 'delete', {
+      employeeId: employeeId,
     });
     toastActions.success(`Employee is successfully deleted`);
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw 'Exception!';
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw 'Exception!';
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function getDesignations() {
   try {
-    const res = await axios.get(`${endPointApi}/allDesignations`);
+    const res = await axiosConfig(`${endPointApi}/allDesignations`, 'get');
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw 'Exception!';
-    } else {
-      toastActions.error('Server Error!');
-      throw 'Exception!';
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function getFilteredEmployees(filters) {
   try {
-    const res = await axios.get(`${endPointApi}/filter`, { params: filters });
+    const res = await axiosConfig(`${endPointApi}/filter`, 'get', {
+      filters: filters,
+    });
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-    } else {
-      toastActions.error('Server Error!');
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function updateEmployeeStatus(_id, status) {
   try {
-    const res = await axios.put(endPointApi + '/status', {
+    const res = await axiosConfig(endPointApi + '/status', 'put', undefined, {
       _id,
       status,
     });
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw new Error('Please check your internet connection');
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw ex.response.data.field;
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }

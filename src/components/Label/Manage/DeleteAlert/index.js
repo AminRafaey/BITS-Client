@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Button, SecondaryButton } from '../../../HOC';
 import { removeLeads as removeLeadsFromApi } from '../../../../api/Lead';
 import {
-  useTemplateDispatch,
-  addTemplate,
-  removeTemplate,
-} from '../../../../Context/Template';
+  useLabelDispatch,
+  addLabel,
+  removeLabel,
+} from '../../../../Context/Label';
 import {
   Dialog,
   DialogActions,
@@ -16,17 +16,17 @@ import {
 } from '@material-ui/core';
 
 function DeleteAlert(props) {
-  const { open, setOpen, selectedTemplate, selectedTemplateIndex } = props;
+  const { open, setOpen, selectedLabel, selectedLabelId } = props;
 
-  const templateDispatch = useTemplateDispatch();
+  const labelDispatch = useLabelDispatch();
 
   const handleSubmit = () => {
-    // removeLeadsFromApi(selectedTemplate._id)
+    // removeLeadsFromApi(selectedLabel._id)
     //   .then((res) => {})
     //   .catch((err) => {
-    //     addTemplate(templateDispatch, { selectedTemplate });
+    //     addTemplate(labelDispatch, { selectedLabel });
     //   });
-    removeTemplate(templateDispatch, { selectedTemplateIndex });
+    removeLabel(labelDispatch, { selectedLabelId });
     handleClose();
   };
 
@@ -60,7 +60,7 @@ function DeleteAlert(props) {
 DeleteAlert.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
-  selectedTemplate: PropTypes.object,
-  selectedTemplateIndex: PropTypes.number,
+  selectedLabel: PropTypes.object,
+  selectedLabelId: PropTypes.string,
 };
 export default DeleteAlert;

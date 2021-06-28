@@ -94,8 +94,8 @@ export default function ContactsTable(props) {
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const selectedLabel = useRef(null);
 
-  const handleIconClick = (row, index) => {
-    selectedLabel.current = { label: { ...row }, index: index };
+  const handleIconClick = (row, _id) => {
+    selectedLabel.current = { label: { ...row }, _id: _id };
   };
 
   return (
@@ -149,7 +149,7 @@ export default function ContactsTable(props) {
                           </Link>
                           <DeleteIconWrapper
                             onClick={(e) => {
-                              handleIconClick(row, index);
+                              handleIconClick(row, l);
                               setOpenDeleteModal(true);
                             }}
                           >
@@ -167,9 +167,9 @@ export default function ContactsTable(props) {
                   selectedLabel={
                     selectedLabel.current ? selectedLabel.current.label : {}
                   }
-                  selectedLabelIndex={
+                  selectedLabelId={
                     selectedLabel.current
-                      ? selectedLabel.current.index
+                      ? selectedLabel.current._id
                       : undefined
                   }
                 />

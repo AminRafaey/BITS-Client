@@ -97,9 +97,7 @@ export async function getDesignations() {
 
 export async function getFilteredEmployees(filters) {
   try {
-    const res = await axiosConfig(`${endPointApi}/filter`, 'get', {
-      filters: filters,
-    });
+    const res = await axiosConfig(`${endPointApi}/filter`, 'get', filters);
 
     return res.data.field.data;
   } catch (ex) {

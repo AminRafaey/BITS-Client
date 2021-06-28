@@ -1,7 +1,7 @@
 import config from '../../config.json';
-import axios from 'axios';
 import { toastActions } from '../../components/Toast';
 const endPointApi = `${config.baseUrl}template`;
+import axiosConfig from '../AxiosConfig';
 
 export async function getTemplates() {
   try {

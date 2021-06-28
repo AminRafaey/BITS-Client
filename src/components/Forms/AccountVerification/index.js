@@ -131,7 +131,6 @@ function AccountVerification(props) {
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
   const [loading, setLoading] = useState(false);
-  const _id = useRef('');
 
   useEffect(() => {
     if (!token) {
@@ -141,7 +140,6 @@ function AccountVerification(props) {
     const decoded = jwtDecode(token);
     if (decoded.email && decoded._id) {
       setEmail(decoded.email);
-      _id.current = decoded._id;
     } else {
       window.location.href = config.baseUrl + 'signIn/';
     }
@@ -160,7 +158,7 @@ function AccountVerification(props) {
     if (!password || !userName) return;
     setLoading(true);
 
-    verifyEmployeeAccount(_id.current, userName, password)
+    verifyEmployeeAccount(token, userName, password)
       .then((res) => {
         loadUser(userDispatch, { token: res.token });
         setLoading(false);

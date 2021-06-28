@@ -65,7 +65,6 @@ function EmailValidation() {
   const handleResendEmail = () => {
     setLoading(true);
     resendVerificationEmail(userId).then((res) => {
-      console.log(res);
       setLoading(false);
     });
   };

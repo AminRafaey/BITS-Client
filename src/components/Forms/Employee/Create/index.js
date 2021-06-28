@@ -16,7 +16,6 @@ import {
 import { useDesignationState } from '../../../../Context/Designation';
 import { useConnectStatusState } from '../../../../Context/ConnectStatus';
 import { useSocketState } from '../../../../Context/Socket';
-import { useUserState } from '../../../../Context/User';
 import {
   createEmployee as createEmployeeApi,
   updateEmployee,
@@ -60,7 +59,6 @@ function CreateEmployee(props) {
   const connectStatusState = useConnectStatusState();
   const designationState = useDesignationState();
   const socket = useSocketState();
-  const user = useUserState();
   const [employeeData, setEmployeeData] = useState(initEmployeeData);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({});
@@ -68,7 +66,6 @@ function CreateEmployee(props) {
   const [openInfoAlert, setOpenInfoAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [clientSideError, setClientSideError] = useState({});
-  console.log(user);
   useEffect(() => {
     if (type === 'edit') {
       setEmployeeData({ ...editingEmployee });
@@ -156,7 +153,6 @@ function CreateEmployee(props) {
     selectedApiFunc({
       ...employeeDataClone,
       mobileNumber: phoneCode + mobileNumber,
-      adminId: user.user.adminId,
     })
       .then((res) => {
         if (btnType === 'Save-And-Send') {

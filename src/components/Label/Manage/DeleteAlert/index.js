@@ -44,7 +44,7 @@ function DeleteAlert(props) {
       <DialogTitle id="alert-dialog-title">{'Delete?'}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Deleted template can't be restore. Are you sure you want to delete?
+          Deleted label can't be restore. Are you sure you want to delete?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

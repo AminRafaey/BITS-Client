@@ -5,7 +5,7 @@ import { AbsoluteScroll, Chip } from '../../../HOC';
 
 import TableHead from './TableHead';
 import DeleteAlert from '../DeleteAlert';
-import { useLabelDispatch, useLabelState } from '../../../../Context/Label';
+import { useLabelState } from '../../../../Context/Label';
 
 import {
   Table,
@@ -17,7 +17,6 @@ import {
   styled,
   Box,
   withStyles,
-  CircularProgress,
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -67,12 +66,6 @@ const DeleteIconWrapper = styled(Box)({
     background: DelieverStatusColor,
   },
 });
-const LoaderWrapper = styled(Box)({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  minHeight: '70vh',
-});
 
 const StyledTableContainer = withStyles({
   root: {
@@ -117,11 +110,11 @@ export default function ContactsTable(props) {
                     : new Date(labelState[a].createdAt) -
                       new Date(labelState[b].createdAt)
                 )
-                .map((l, index) => {
+                .map((l) => {
                   const row = labelState[l];
                   return (
                     <TableRow hover key={row._id}>
-                      <TableCell padding="checkbox" align="left">
+                      <TableCell align="left">
                         <Chip avatarBackground={row.color} label={row.title} />
                       </TableCell>
 

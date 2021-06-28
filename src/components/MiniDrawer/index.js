@@ -72,7 +72,7 @@ const ContactWrapper = styled(Box)({
 const ManageTemplateWrapper = styled(Box)({
   padding: '100px 50px 0px 50px',
   background: '#E9EEF5',
-  minHeight: '150vh',
+  minHeight: '100vh',
 });
 const LoaderWrapper = styled(Box)({
   display: 'flex',

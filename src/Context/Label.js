@@ -17,9 +17,7 @@ function LabelReducer(state, action) {
       delete cloneState[selectedLabelId];
       return { ...cloneState };
     case 'UPDATE_LABEL':
-      cloneState = cloneState.map((c) =>
-        c._id == _id ? { ...updatedLabel } : c
-      );
+      cloneState[_id] = { ...updatedLabel };
       return { ...cloneState };
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);

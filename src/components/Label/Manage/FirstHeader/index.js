@@ -84,10 +84,10 @@ function FirstHeader(props) {
 
       <Box display="inline-flex" alignItems="center">
         <Link
-          to={'/addTemplate'}
+          to={'/addLabel'}
           style={{ textDecoration: 'none', width: '100%' }}
         >
-          <Button startIcon={<AddCircleIcon />}>Add Template</Button>
+          <Button startIcon={<AddCircleIcon />}>Add Label</Button>
         </Link>
       </Box>
     </FirstHeaderWrapper>

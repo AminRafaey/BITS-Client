@@ -100,7 +100,6 @@ function CreateTemplate(props) {
       templateTemp &&
         setTemplate({
           ...template,
-          title: templateTemp.content,
           title: templateTemp.title,
         });
       templateTemp && setTextAreaVal(templateTemp.content);

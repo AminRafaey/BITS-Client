@@ -33,3 +33,20 @@ export async function createLabel(label) {
     }
   }
 }
+
+export async function updateLabel(label) {
+  try {
+    //const res = await axios.put(endPointApi, label);
+    toastActions.success('Label updated successfully!');
+    //return res.data.field.data;
+    return label;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+      throw 'Please check your internet connection';
+    } else {
+      toastActions.error(ex.response.data.field.message);
+      throw ex.response.data.field.message;
+    }
+  }
+}

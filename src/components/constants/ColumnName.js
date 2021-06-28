@@ -13,3 +13,10 @@ export const manageTemplates = [
   { label: 'Created At' },
   { label: 'Actions' },
 ];
+
+export const manageLabels = [
+  { label: 'Label' },
+  { label: 'Description' },
+  { label: 'Created At' },
+  { label: 'Actions' },
+];

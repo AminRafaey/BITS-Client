@@ -39,6 +39,7 @@ import {
   ManageEmployee,
   ManageEmployeeAccess,
   ManageTemplates,
+  ManageLabels,
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -225,6 +226,11 @@ export default function MiniDrawer() {
                 <QuickSendWrapper>
                   <CreateLabel />
                 </QuickSendWrapper>
+              </Route>
+              <Route path="/manageLabels">
+                <ManageTemplateWrapper>
+                  <ManageLabels />
+                </ManageTemplateWrapper>
               </Route>
 
               <Route path="/addTemplate">

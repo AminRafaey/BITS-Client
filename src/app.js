@@ -36,10 +36,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <SocketProvider>
         <UserProvider>
-          <ConnectStatusProvider connectStatus={true}>
+          <ConnectStatusProvider>
             <TemplateProvider>
               <LeadsProvider>
-                <ChatProvider chat={chat}>
+                <ChatProvider>
                   <LabelProvider>
                     <CompanyProvider>
                       <LeadSourceProvider>

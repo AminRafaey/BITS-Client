@@ -81,7 +81,7 @@ const StyledTableContainer = withStyles({
   },
 })(TableContainer);
 
-export default function ContactsTable(props) {
+function ManageLabelTable(props) {
   const { sortType } = props;
   const labelState = useLabelState();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -175,6 +175,8 @@ export default function ContactsTable(props) {
   );
 }
 
-ContactsTable.propTypes = {
+ManageLabelTable.propTypes = {
   sortType: PropTypes.number.isRequired,
 };
+
+export default ManageLabelTable;

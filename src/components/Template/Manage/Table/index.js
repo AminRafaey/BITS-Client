@@ -164,7 +164,7 @@ export default function ContactsTable(props) {
                           <TableCell align="left">
                             <IconsWrapper>
                               <Link
-                                to={`/addTemplate?edit=true&&_id=${row._id}`}
+                                to={`/addTemplate?edit=true&&index=${index}`}
                                 style={{
                                   textDecoration: 'none',
                                   color: 'black',

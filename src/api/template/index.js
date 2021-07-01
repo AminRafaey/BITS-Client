@@ -33,7 +33,7 @@ export async function createTemplate(template) {
 
 export async function updateTemplate(_id, template) {
   try {
-    const res = await axiosConfig(endPointApi, 'put', { _id }, template);
+    const res = await axiosConfig(endPointApi, 'put', undefined, template);
     toastActions.success('Template updated successfully');
     return res.data.field.data;
   } catch (ex) {

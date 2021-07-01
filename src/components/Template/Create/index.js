@@ -84,7 +84,7 @@ function CreateTemplate(props) {
   const history = useHistory();
   const search = useLocation().search;
   const edit = new URLSearchParams(search).get('edit');
-  const _id = new URLSearchParams(search).get('_id');
+  const index = new URLSearchParams(search).get('index');
   const templateDispatch = useTemplateDispatch();
   const templateState = useTemplateState();
   const [template, setTemplate] = useState(initTemplate);
@@ -95,12 +95,13 @@ function CreateTemplate(props) {
   const templateTextAreaRef = useRef();
 
   useEffect(() => {
-    if (edit && _id) {
-      const templateTemp = templateState.find((t) => t._id == _id);
+    if (edit && index) {
+      const templateTemp = templateState[index];
       templateTemp &&
         setTemplate({
           ...template,
           title: templateTemp.title,
+          ...templateTemp,
         });
       templateTemp && setTextAreaVal(templateTemp.content);
     }
@@ -134,15 +135,14 @@ function CreateTemplate(props) {
       return;
     }
     setLoading(true);
-    if (edit && _id) {
-      console.log(template, templateTextAreaRef.current.value);
-      updateTemplateApi(_id, {
+    if (edit && index) {
+      updateTemplateApi(template._id, {
         ...template,
         content: templateTextAreaRef.current.value,
       })
         .then((res) => {
           updateTemplate(templateDispatch, {
-            _id: res._id,
+            selectedTemplateIndex: index,
             updatedTemplate: res,
           });
           setTemplate(initTemplate);
@@ -244,7 +244,7 @@ function CreateTemplate(props) {
                 <CircularProgress size={24} color="primary" />
               ) : (
                 <Button onClick={handleSubmit}>
-                  {edit && _id ? 'Update' : 'Create Template'}
+                  {edit && index ? 'Update' : 'Create Template'}
                 </Button>
               )}
             </ButtonsWrapper>

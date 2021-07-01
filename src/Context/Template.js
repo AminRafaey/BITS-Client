@@ -21,9 +21,7 @@ function TemplateReducer(state, action) {
       cloneState.splice(selectedTemplateIndex, 1);
       return [...cloneState];
     case 'UPDATE_TEMPLATE':
-      cloneState = cloneState.map((c) =>
-        c._id == _id ? { ...updatedTemplate } : c
-      );
+      cloneState[selectedTemplateIndex] = { ...updatedTemplate };
       return [...cloneState];
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);

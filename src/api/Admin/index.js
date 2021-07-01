@@ -5,7 +5,6 @@ import axiosConfig from '../AxiosConfig';
 
 export async function createAdmin(adminData) {
   try {
-    console.log(adminData);
     const res = await axiosConfig(
       endPointApi,
       'post',
@@ -31,7 +30,8 @@ export async function resendVerificationEmail(userId) {
       endPointApi + '/resendVerificationEmail',
       'post',
       undefined,
-      userId
+      userId,
+      false
     );
 
     toastActions.success(res.data.field.message);

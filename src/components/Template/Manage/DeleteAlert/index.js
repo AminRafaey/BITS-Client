@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, SecondaryButton } from '../../../HOC';
-import { removeLeads as removeLeadsFromApi } from '../../../../api/Lead';
+import { removeTemplate as removeTemplateFromApi } from '../../../../api/template';
 import {
   useTemplateDispatch,
   addTemplate,
@@ -17,15 +17,14 @@ import {
 
 function DeleteAlert(props) {
   const { open, setOpen, selectedTemplate, selectedTemplateIndex } = props;
-
   const templateDispatch = useTemplateDispatch();
 
   const handleSubmit = () => {
-    // removeLeadsFromApi(selectedTemplate._id)
-    //   .then((res) => {})
-    //   .catch((err) => {
-    //     addTemplate(templateDispatch, { selectedTemplate });
-    //   });
+    removeTemplateFromApi(selectedTemplate._id)
+      .then((res) => {})
+      .catch((err) => {
+        addTemplate(templateDispatch, { template: selectedTemplate });
+      });
     removeTemplate(templateDispatch, { selectedTemplateIndex });
     handleClose();
   };

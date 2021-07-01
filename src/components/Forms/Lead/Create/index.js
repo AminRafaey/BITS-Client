@@ -175,7 +175,7 @@ function CreateLead(props) {
       })
       .catch((err) => {
         setLoading(false);
-        setError({ ...err });
+        err && setError({ ...err });
       });
   };
 

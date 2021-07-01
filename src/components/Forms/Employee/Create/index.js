@@ -66,7 +66,6 @@ function CreateEmployee(props) {
   const [openInfoAlert, setOpenInfoAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [clientSideError, setClientSideError] = useState({});
-
   useEffect(() => {
     if (type === 'edit') {
       setEmployeeData({ ...editingEmployee });
@@ -179,7 +178,7 @@ function CreateEmployee(props) {
       })
       .catch((err) => {
         setLoading(false);
-        setError({ ...err });
+        err && setError({ ...err });
       });
   };
   return (

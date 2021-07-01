@@ -3,62 +3,65 @@ import axios from 'axios';
 import { toastActions } from '../../components/Toast';
 import { updateLead as updateLeadInContext } from '../../Context/Lead';
 const endPointApi = `${config.baseUrl}lead`;
+import axiosConfig from '../AxiosConfig';
 
-export async function getLeads(leadData) {
+export async function getLeads() {
   try {
-    const res = await axios.get(endPointApi + '/all');
+    const res = await axiosConfig(endPointApi + '/all', 'get');
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw new Error('Please check your internet connection');
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw new Error('Server Error!');
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex.message;
     }
+    throw '';
   }
 }
 
 export async function getLeadByPhone(phone) {
   try {
-    const res = await axios.get(endPointApi + '/phone', { params: { phone } });
+    const res = await axiosConfig(endPointApi + '/phone', 'get', phone);
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw 'Please check your internet connection';
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw ex.response.data.field.message;
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex.message;
     }
+    throw '';
   }
 }
 
 export async function createLead(leadData) {
   try {
-    const res = await axios.post(endPointApi + '/create', leadData);
+    const res = await axiosConfig(
+      endPointApi + '/create',
+      'post',
+      undefined,
+      leadData
+    );
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw 'Please check your internet connection';
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw ex.response.data.field;
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function updateLead(updatedLead) {
   try {
-    const res = await axios.put(endPointApi, updatedLead);
+    const res = await axiosConfig(endPointApi, 'put', undefined, updatedLead);
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      throw new Error('Please check your internet connection');
-    } else {
-      throw ex.response.data.field;
+    if (ex !== 'Error Handled') {
+      throw ex;
     }
+    throw '';
   }
 }
 
@@ -68,60 +71,59 @@ export async function updateLeadWithContext(
   selectedLeadIndex
 ) {
   try {
-    const res = await axios.put(endPointApi, updatedLead);
+    const res = await axiosConfig(endPointApi, 'put', undefined, updatedLead);
+
     updateLeadInContext(leadsDispatch, {
       leadData: { ...res.data.field.data },
       selectedLeadIndex: selectedLeadIndex,
     });
     toastActions.success('Previous lead updated successfully');
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-    } else {
-      toastActions.error(
-        ex.response.data.field.message + "So, previous lead isn't updated."
-      );
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message + "So, previous lead isn't updated.");
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function removeLeads(leads) {
   try {
-    const res = await axios.delete(endPointApi, {
-      params: { leads: JSON.stringify(leads) },
+    const res = await axiosConfig(endPointApi, 'delete', {
+      leads: JSON.stringify(leads),
     });
+
     toastActions.success(
       `Lead${leads.length > 1 ? 's ' : ' '}${
         leads.length > 1 ? 'are ' : 'is '
       } Successfully deleted`
     );
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw 'Exception!';
-    } else {
-      toastActions.error(ex.response.data.field.message);
-      throw 'Exception!';
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function updateLeadsLabels(updatedLeads, prevState) {
   try {
-    const res = await axios.put(endPointApi + '/labels', {
+    const res = await axiosConfig(endPointApi + '/labels', 'put', undefined, {
       leads: updatedLeads,
     });
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      alert('Please check your internet connection');
-      throw new Error('Please check your internet connection');
-    } else {
-      throw { prevState, error: ex.response.data.field };
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw { prevState, error: ex };
     }
+    throw '';
   }
 }
 
+// Use header of multistream as it is sending a file
 export async function sendCSV(file) {
   try {
     const res = await axios.post(`${endPointApi}/csvUpload`, file);
@@ -137,39 +139,41 @@ export async function sendCSV(file) {
 
 export async function getCompanies() {
   try {
-    const res = await axios.get(`${endPointApi}/allCompanies`);
+    const res = await axiosConfig(`${endPointApi}/allCompanies`, 'get');
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-    } else {
-      toastActions.error('Server Error!');
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function getLeadSource() {
   try {
-    const res = await axios.get(`${endPointApi}/allLeadSources`);
+    const res = await axiosConfig(`${endPointApi}/allLeadSources`, 'get');
+
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-    } else {
-      toastActions.error('Server Error!');
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }
 
 export async function getFilteredLeads(filters) {
   try {
-    const res = await axios.get(`${endPointApi}/filter`, { params: filters });
+    const res = await axiosConfig(`${endPointApi}/filter`, 'get', filters);
     return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-    } else {
-      toastActions.error('Server Error!');
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+      throw ex;
     }
+    throw '';
   }
 }

@@ -115,6 +115,7 @@ export default function Modal(props) {
       if (res.status === 'success') {
         toastActions.success('Connected to a WhatsApp successfully.');
         currentConnRef.current = res.currentConnRef;
+        openInfoAlert && setOpenInfoAlert(false);
         handleClose();
       } else {
         handleAfterScan(false);

@@ -168,6 +168,12 @@ function PhoneNumber(props) {
       <StyledTextField
         value={personInfo.phone && selectedCountry ? personInfo.phone : ''}
         type="tel"
+        style={{
+          background: '#ffff',
+          width: '100%',
+          borderTopRightRadius: 5,
+          borderBottomRightRadius: 5,
+        }}
         disabled={
           source === 'From-Inbox' ? true : selectedCountry ? false : true
         }

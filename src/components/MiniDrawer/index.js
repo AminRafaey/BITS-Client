@@ -18,6 +18,7 @@ import {
   loadLeadSource,
 } from '../../Context/LeadSource';
 import { useSocketState } from '../../Context/Socket';
+import { useUserState } from '../../Context/User';
 import { getLabels } from '../../api/Label';
 import { getLeads, getCompanies, getLeadSource } from '../../api/Lead';
 import {
@@ -102,13 +103,14 @@ export default function MiniDrawer() {
   const leadSourceState = useLeadSourceState();
   const leadSourceDispatch = useLeadSourceDispatch();
   const socket = useSocketState();
+  const user = useUserState();
 
   const commonProps = {
     setOpenModal: setOpenModal,
   };
   useEffect(() => {
     socket.emit('join-room', {
-      mobileNumber: '+923415511689',
+      mobileNumber: user.user.mobileNumber,
       userName: 'Amin',
     });
     socket.on('room-updates', (res) => console.log(res));

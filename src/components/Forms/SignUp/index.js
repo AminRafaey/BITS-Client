@@ -185,6 +185,7 @@ function SignUp(props) {
       setError({ name: 'mobileNumber', message: 'Invalid mobile Number' });
       return;
     }
+    console.log('here');
     setLoading(true);
 
     createAdmin({

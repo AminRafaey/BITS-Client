@@ -8,7 +8,8 @@ export default async function axiosConfig(
   method,
   params,
   data,
-  tokenCheckReq = true
+  tokenCheckReq = true,
+  token
 ) {
   try {
     if (tokenCheckReq) {
@@ -21,6 +22,8 @@ export default async function axiosConfig(
         return;
       }
     }
+    console.log(token);
+    if (token) axios.defaults.headers.common['x-auth-token'] = token;
     const res = await axios({
       method: method,
       url: url,
@@ -34,6 +37,7 @@ export default async function axiosConfig(
     });
     return res;
   } catch (ex) {
+    console.log(ex);
     if (!ex.response) {
       toastActions.error('Please check your internet connection');
     } else if (ex.response.status === 401 || ex.response.status === 500) {

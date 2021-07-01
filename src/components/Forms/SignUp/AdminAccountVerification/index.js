@@ -31,7 +31,7 @@ function AdminAccountVerification(props) {
     }
     const decoded = jwtDecode(token);
     if (decoded._id) {
-      accountVerification(decoded._id).then((res) => {
+      accountVerification(decoded._id, token).then((res) => {
         loadUser(userDispatch, { token: res.token });
         history.push('/');
       });

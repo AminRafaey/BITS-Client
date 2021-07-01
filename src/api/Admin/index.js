@@ -5,7 +5,14 @@ import axiosConfig from '../AxiosConfig';
 
 export async function createAdmin(adminData) {
   try {
-    const res = await axiosConfig(endPointApi, 'post', undefined, adminData);
+    console.log(adminData);
+    const res = await axiosConfig(
+      endPointApi,
+      'post',
+      undefined,
+      adminData,
+      false
+    );
 
     toastActions.success(res.data.field.message);
     return res.data.field;
@@ -38,13 +45,15 @@ export async function resendVerificationEmail(userId) {
   }
 }
 
-export async function accountVerification(userId) {
+export async function accountVerification(userId, token) {
   try {
     const res = await axiosConfig(
       endPointApi + '/accountVerification',
       'put',
       undefined,
-      userId
+      userId,
+      false,
+      token
     );
 
     toastActions.success(res.data.field.message);

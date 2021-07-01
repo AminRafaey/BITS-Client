@@ -91,13 +91,17 @@ function Info(props) {
         const orignalData = leadsState.find(
           (l) => l._id === selectedLeadRef.current._id
         );
-        JSON.stringify(orignalData) !==
-          JSON.stringify(selectedLeadRef.current) &&
+        if (
+          JSON.stringify(orignalData) !==
+          JSON.stringify(selectedLeadRef.current)
+        ) {
           updateLeadWithContext(
             selectedLeadRef.current,
             leadsDispatch,
             leadsState.findIndex((l) => l._id === selectedLeadRef.current._id)
           );
+          selectedLeadRef.current = {};
+        }
       }
     };
   }, [currentChatJid]);

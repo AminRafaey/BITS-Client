@@ -103,7 +103,7 @@ export default function MiniDrawer() {
   const leadSourceState = useLeadSourceState();
   const leadSourceDispatch = useLeadSourceDispatch();
   const socket = useSocketState();
-  const user = useUserState()
+  const user = useUserState();
 
   const commonProps = {
     setOpenModal: setOpenModal,

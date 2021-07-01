@@ -21,9 +21,7 @@ const MediaErorWrapper = styled(Box)({
 
 export const isEmailValid = (email) => {
   if (email) {
-    return /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-      email
-    );
+    return /\S+@\S+\.\S+/.test(email);
   }
 };
 export const isUrlValid = (url) => {

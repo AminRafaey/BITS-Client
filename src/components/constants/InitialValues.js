@@ -20,7 +20,6 @@ export const initEmployeeData = {
   email: 'amin@gmail.com',
   phone: '',
   designation: 'MERN Developer',
-  status: 'Active',
   joiningDate: new Date(),
 };
 

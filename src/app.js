@@ -1,6 +1,7 @@
 import React from 'react';
 import { SnackbarProvider } from 'notistack';
 import { ThemeProvider } from '@material-ui/styles';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { theme } from './theme';
 import { MiniDrawer } from './components';
 import Toast from './components/Toast';
@@ -21,39 +22,73 @@ import { CompanyProvider } from './Context/Company';
 import { LeadSourceProvider } from './Context/LeadSource';
 import { EmployeeProvider } from './Context/Employee';
 import { DesignationProvider } from './Context/Designation';
+import { UserProvider } from './Context/User';
+import {
+  SignIn,
+  SignUp,
+  AccountVerification,
+  AdminAccountVerification,
+} from './components';
+import { PrivateRoute } from './components/Assets';
+import { EmailValidation } from './InfoPages';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <ConnectStatusProvider connectStatus={true}>
-          <TemplateProvider>
-            <LeadsProvider>
-              <ChatProvider chat={chat}>
-                <LabelProvider>
-                  <CompanyProvider>
-                    <LeadSourceProvider>
-                      <EmployeeProvider>
-                        <DesignationProvider>
-                          <SnackbarProvider
-                            maxSnack={3}
-                            anchorOrigin={{
-                              vertical: 'bottom',
-                              horizontal: 'right',
-                            }}
-                          >
-                            <Toast />
-                            <MiniDrawer />
-                          </SnackbarProvider>
-                        </DesignationProvider>
-                      </EmployeeProvider>
-                    </LeadSourceProvider>
-                  </CompanyProvider>
-                </LabelProvider>
-              </ChatProvider>
-            </LeadsProvider>
-          </TemplateProvider>
-        </ConnectStatusProvider>
+        <UserProvider>
+          <ConnectStatusProvider>
+            <TemplateProvider>
+              <LeadsProvider>
+                <ChatProvider>
+                  <LabelProvider>
+                    <CompanyProvider>
+                      <LeadSourceProvider>
+                        <EmployeeProvider>
+                          <DesignationProvider>
+                            <SnackbarProvider
+                              maxSnack={3}
+                              anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                              }}
+                            >
+                              <Toast />
+                              <Router>
+                                <Switch>
+                                  <Route path="/signIn">
+                                    <SignIn />
+                                  </Route>
+                                  <Route path="/signUp">
+                                    <SignUp />
+                                  </Route>
+
+                                  <Route path="/employeeAccount/verifyEmail">
+                                    <AccountVerification />
+                                  </Route>
+                                  <Route path="/validateEmail">
+                                    <EmailValidation />
+                                  </Route>
+                                  <Route path="/adminAccount/verifyEmail">
+                                    <AdminAccountVerification />
+                                  </Route>
+
+                                  <PrivateRoute userType={'Employee'}>
+                                    <MiniDrawer />
+                                  </PrivateRoute>
+                                </Switch>
+                              </Router>
+                            </SnackbarProvider>
+                          </DesignationProvider>
+                        </EmployeeProvider>
+                      </LeadSourceProvider>
+                    </CompanyProvider>
+                  </LabelProvider>
+                </ChatProvider>
+              </LeadsProvider>
+            </TemplateProvider>
+          </ConnectStatusProvider>
+        </UserProvider>
       </SocketProvider>
     </ThemeProvider>
   );

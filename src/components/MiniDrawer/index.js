@@ -19,7 +19,7 @@ import {
 } from '../../Context/LeadSource';
 import { useSocketState } from '../../Context/Socket';
 import { useUserState } from '../../Context/User';
-import { getLabels } from '../../api/Label';
+import { getLabels } from '../../api/label';
 import { getLeads, getCompanies, getLeadSource } from '../../api/Lead';
 import {
   Box,

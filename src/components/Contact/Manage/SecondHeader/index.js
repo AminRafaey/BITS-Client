@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import AddLabel from '../../../Forms/Label/Add';
+import AddLabel from '../../../Forms/BulkLabelOp/Add';
 import DeleteAlert from '../DeleteAlert';
 import { Button, Checkbox } from '../../../HOC';
 import { styled, Box, Typography } from '@material-ui/core';

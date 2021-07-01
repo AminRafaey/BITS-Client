@@ -135,6 +135,7 @@ function CreateTemplate(props) {
     }
     setLoading(true);
     if (edit && _id) {
+      console.log(template, templateTextAreaRef.current.value);
       updateTemplateApi(_id, {
         ...template,
         content: templateTextAreaRef.current.value,

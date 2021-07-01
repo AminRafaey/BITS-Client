@@ -33,16 +33,12 @@ export async function createTemplate(template) {
 
 export async function updateTemplate(_id, template) {
   try {
-    // const res = await axios.put(endPointApi, template);
-    // toastActions.success('Template updated successfully');
-    // return res.data.field.data;
-    return { _id, ...template, createdAt: new Date() };
+    const res = await axiosConfig(endPointApi, 'put', { _id }, template);
+    toastActions.success('Template updated successfully');
+    return res.data.field.data;
   } catch (ex) {
-    if (!ex.response) {
-      toastActions.error('Please check your internet connection');
-      throw 'Please check your internet connection';
-    } else {
-      throw ex.response.data.field;
+    if (ex !== 'Error Handled') {
+      throw ex;
     }
   }
 }

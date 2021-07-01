@@ -13,7 +13,7 @@ export { default as Inbox } from './Inbox';
 export { default as ConnectionModal } from './ConnectionModal';
 export { default as ManageContact } from './Contact/Manage';
 export { default as AddContacts } from './Contact/Add';
-export { default as CreateLabel } from './Forms/Label/Create';
+export { default as CreateLabel } from './Label/Create';
 export { default as CreateTemplate } from './Template/Create';
 export { default as ManageEmployee } from './Employee/Manage';
 export { default as ManageEmployeeAccess } from './Employee/ManageAccess';

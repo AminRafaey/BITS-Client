@@ -7,18 +7,18 @@ import {
   Chip,
   SecondaryButton,
   TextArea,
-} from '../../../HOC';
-import { isColorCodeValid } from '../utility';
+} from '../../HOC';
+import { isColorCodeValid } from '../../Forms/BulkLabelOp/utility';
 import {
   createLabel,
   updateLabel as updateLabelApi,
-} from '../../../../api/Label';
+} from '../../../api/label';
 import {
   useLabelState,
   useLabelDispatch,
   addLabel,
   updateLabel,
-} from '../../../../Context/Label';
+} from '../../../Context/Label';
 import {
   Box,
   styled,
@@ -27,9 +27,9 @@ import {
   CircularProgress,
   InputAdornment,
 } from '@material-ui/core';
-import { DarkBackgroundColor } from '../../../constants/theme';
-import { colors } from '../../../constants/AvatarColor';
-import { initLabel } from '../../../constants/InitialValues';
+import { DarkBackgroundColor } from '../../constants/theme';
+import { colors } from '../../constants/AvatarColor';
+import { initLabel } from '../../constants/InitialValues';
 
 const CircleWrapper = styled(Box)({
   width: 15,

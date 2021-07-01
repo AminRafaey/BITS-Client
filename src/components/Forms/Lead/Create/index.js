@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import phone from 'phone';
-import LabelMultiSelect from '../../Label/index';
+import LabelMultiSelect from '../../BulkLabelOp/index';
 import CountrySelect from '../../CountrySelect';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import PhoneNumber from '../../PhoneNumber';

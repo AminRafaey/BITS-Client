@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, SecondaryButton } from '../../../HOC';
-import { removeLeads as removeLeadsFromApi } from '../../../../api/Lead';
+import { removeLabel as removeLabelFromApi } from '../../../../api/label';
 import {
   useLabelDispatch,
   addLabel,
@@ -21,11 +21,14 @@ function DeleteAlert(props) {
   const labelDispatch = useLabelDispatch();
 
   const handleSubmit = () => {
-    // removeLeadsFromApi(selectedLabel._id)
-    //   .then((res) => {})
-    //   .catch((err) => {
-    //     addTemplate(labelDispatch, { selectedLabel });
-    //   });
+    removeLabelFromApi(selectedLabel._id)
+      .then((res) => {})
+      .catch((err) => {
+        addLabel(labelDispatch, {
+          label: selectedLabel,
+          _id: selectedLabel._id,
+        });
+      });
     removeLabel(labelDispatch, { selectedLabelId });
     handleClose();
   };

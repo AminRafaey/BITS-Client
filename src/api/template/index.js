@@ -49,7 +49,7 @@ export async function removeTemplate(_id) {
   } catch (ex) {
     if (ex !== 'Error Handled') {
       toastActions.error(ex.message);
-      throw '';
     }
+    throw '';
   }
 }

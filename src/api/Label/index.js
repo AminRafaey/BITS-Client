@@ -40,3 +40,14 @@ export async function updateLabel(label) {
     }
   }
 }
+
+export async function removeLabel(_id) {
+  try {
+    await axiosConfig(endPointApi, 'delete', { _id });
+  } catch (ex) {
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+    }
+    throw '';
+  }
+}

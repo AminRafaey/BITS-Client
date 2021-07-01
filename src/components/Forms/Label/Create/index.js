@@ -122,7 +122,7 @@ function CreateLabel(props) {
         })
         .catch((err) => {
           setLoading(false);
-          // err.message && setError(err);
+          err.message && setError(err);
         });
     } else {
       createLabel(label)

@@ -17,6 +17,8 @@ export { default as CreateLabel } from './Forms/Label/Create';
 export { default as CreateTemplate } from './Template/Create';
 export { default as ManageEmployee } from './Employee/Manage';
 export { default as ManageEmployeeAccess } from './Employee/ManageAccess';
+export { default as ManageTemplates } from './Template/Manage';
+export { default as ManageLabels } from './Label/Manage';
 export { default as SignIn } from './Forms/SignIn';
 export { default as SignUp } from './Forms/SignUp';
 export { default as AccountVerification } from './Forms/AccountVerification';

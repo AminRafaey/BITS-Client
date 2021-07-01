@@ -1,13 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation, useHistory } from 'react-router-dom';
 import KeywordSelect from '../../QuickSend/Template/KeywordSelect';
 import { Button, Alert, SecondaryButton } from '../../HOC';
-import { createTemplate, getTemplates } from '../../../api/template';
+import {
+  createTemplate,
+  getTemplates,
+  updateTemplate as updateTemplateApi,
+} from '../../../api/template';
 import {
   useTemplateState,
   useTemplateDispatch,
   addTemplate,
   loadTemplates,
+  updateTemplate,
 } from '../../../Context/Template';
 import {
   Box,
@@ -75,6 +81,10 @@ const LoaderWrapper = styled(Box)({
 });
 
 function CreateTemplate(props) {
+  const history = useHistory();
+  const search = useLocation().search;
+  const edit = new URLSearchParams(search).get('edit');
+  const index = new URLSearchParams(search).get('index');
   const templateDispatch = useTemplateDispatch();
   const templateState = useTemplateState();
   const [template, setTemplate] = useState(initTemplate);
@@ -84,6 +94,18 @@ function CreateTemplate(props) {
   const [textAreaVal, setTextAreaVal] = useState('');
   const templateTextAreaRef = useRef();
 
+  useEffect(() => {
+    if (edit && index) {
+      const templateTemp = templateState[index];
+      templateTemp &&
+        setTemplate({
+          ...template,
+          title: templateTemp.title,
+          ...templateTemp,
+        });
+      templateTemp && setTextAreaVal(templateTemp.content);
+    }
+  }, []);
   useEffect(() => {
     if (templateState.length === 0) {
       getTemplates()
@@ -113,17 +135,41 @@ function CreateTemplate(props) {
       return;
     }
     setLoading(true);
-    createTemplate({ ...template, content: templateTextAreaRef.current.value })
-      .then((res) => {
-        addTemplate(templateDispatch, { template: res });
-        setTemplate(initTemplate);
-        templateTextAreaRef.current.value = '';
-        setLoading(false);
+    if (edit && index) {
+      updateTemplateApi(template._id, {
+        ...template,
+        content: templateTextAreaRef.current.value,
       })
-      .catch((err) => {
-        setLoading(false);
-        err.message && setError(err);
-      });
+        .then((res) => {
+          updateTemplate(templateDispatch, {
+            selectedTemplateIndex: index,
+            updatedTemplate: res,
+          });
+          setTemplate(initTemplate);
+          templateTextAreaRef.current.value = '';
+          setLoading(false);
+          history.push('/manageTemplate');
+        })
+        .catch((err) => {
+          setLoading(false);
+          err.message && setError(err);
+        });
+    } else {
+      createTemplate({
+        ...template,
+        content: templateTextAreaRef.current.value,
+      })
+        .then((res) => {
+          addTemplate(templateDispatch, { template: res });
+          setTemplate(initTemplate);
+          templateTextAreaRef.current.value = '';
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+          err.message && setError(err);
+        });
+    }
   };
   return (
     <CreateTemplateWrapper>
@@ -197,7 +243,9 @@ function CreateTemplate(props) {
               {loading ? (
                 <CircularProgress size={24} color="primary" />
               ) : (
-                <Button onClick={handleSubmit}>Create Template</Button>
+                <Button onClick={handleSubmit}>
+                  {edit && index ? 'Update' : 'Create Template'}
+                </Button>
               )}
             </ButtonsWrapper>
           </Grid>

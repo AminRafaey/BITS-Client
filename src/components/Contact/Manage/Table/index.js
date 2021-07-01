@@ -424,7 +424,7 @@ export default function ContactsTable(props) {
   );
 }
 
-ContactsTable.prototypes = {
+ContactsTable.propTypes = {
   message: PropTypes.string,
   selectedMedia: PropTypes.object,
   sortType: PropTypes.number.isRequired,

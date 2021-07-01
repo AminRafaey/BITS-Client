@@ -12,6 +12,7 @@ import { SocketProvider } from './Context/Socket';
 import { chat } from './Static/Chat';
 import { LeadsProvider } from './Context/Lead';
 import { leads } from './Static/Lead';
+import { templates } from './Static/Template';
 import { LabelProvider } from './Context/Label';
 import { labels } from './Static/Label';
 import { companies } from './Static/Company';

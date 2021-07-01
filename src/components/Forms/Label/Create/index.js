@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation, useHistory } from 'react-router-dom';
 import {
   Button,
   TextField,
@@ -8,8 +9,16 @@ import {
   TextArea,
 } from '../../../HOC';
 import { isColorCodeValid } from '../utility';
-import { createLabel } from '../../../../api/Label';
-import { useLabelDispatch, addLabel } from '../../../../Context/Label';
+import {
+  createLabel,
+  updateLabel as updateLabelApi,
+} from '../../../../api/Label';
+import {
+  useLabelState,
+  useLabelDispatch,
+  addLabel,
+  updateLabel,
+} from '../../../../Context/Label';
 import {
   Box,
   styled,
@@ -68,11 +77,27 @@ const NameErrorTyp = styled(Typography)({
 });
 
 function CreateLabel(props) {
+  const history = useHistory();
+  const search = useLocation().search;
+  const edit = new URLSearchParams(search).get('edit');
+  const _id = new URLSearchParams(search).get('_id');
+
+  const labelState = useLabelState();
   const labelDispatch = useLabelDispatch();
   const [label, setLabel] = useState(initLabel);
   const [nameError, setNameError] = useState(false);
   const [colorError, setColorError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (edit && _id) {
+      const label = labelState[_id];
+      label &&
+        setLabel({
+          ...label,
+        });
+    }
+  }, []);
 
   const handleSubmit = () => {
     if (!label.title) {
@@ -84,14 +109,31 @@ function CreateLabel(props) {
       return;
     }
     setLoading(true);
-    createLabel(label)
-      .then((res) => {
-        const { _id, ...label } = res;
-        addLabel(labelDispatch, { _id, label });
-        setLabel(initLabel);
-        setLoading(false);
-      })
-      .catch((err) => setLoading(false));
+    if (edit && _id) {
+      updateLabelApi(label)
+        .then((res) => {
+          updateLabel(labelDispatch, {
+            _id: res._id,
+            updatedLabel: res,
+          });
+          setLabel(initLabel);
+          setLoading(false);
+          history.push('/manageLabels');
+        })
+        .catch((err) => {
+          setLoading(false);
+          err.message && setError(err);
+        });
+    } else {
+      createLabel(label)
+        .then((res) => {
+          const { _id, ...label } = res;
+          addLabel(labelDispatch, { _id, label });
+          setLabel(initLabel);
+          setLoading(false);
+        })
+        .catch((err) => setLoading(false));
+    }
   };
   return (
     <CreateLabelInnerWrapper>
@@ -198,7 +240,9 @@ function CreateLabel(props) {
             {loading ? (
               <CircularProgress size={24} color="primary" />
             ) : (
-              <Button onClick={handleSubmit}>Create Label</Button>
+              <Button onClick={handleSubmit}>
+                {edit ? 'Update' : 'Create'}
+              </Button>
             )}
           </ButtonsWrapper>
         </Grid>

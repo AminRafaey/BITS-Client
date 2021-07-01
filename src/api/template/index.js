@@ -30,3 +30,26 @@ export async function createTemplate(template) {
     throw '';
   }
 }
+
+export async function updateTemplate(_id, template) {
+  try {
+    const res = await axiosConfig(endPointApi, 'put', undefined, template);
+    toastActions.success('Template updated successfully');
+    return res.data.field.data;
+  } catch (ex) {
+    if (ex !== 'Error Handled') {
+      throw ex;
+    }
+  }
+}
+
+export async function removeTemplate(_id) {
+  try {
+    await axiosConfig(endPointApi, 'delete', { _id });
+  } catch (ex) {
+    if (ex !== 'Error Handled') {
+      toastActions.error(ex.message);
+    }
+    throw '';
+  }
+}

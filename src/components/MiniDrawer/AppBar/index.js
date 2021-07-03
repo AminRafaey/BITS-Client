@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { appBarList } from '../../constants/optionsList';
 import { ConnectIcon } from '../../../resources';
-import { ConnectionModal } from '../../../components';
+import { useUserDispatch, logout } from '../../../Context/User';
 import {
   useConnectStatusState,
   useConnectStatusDispatch,
@@ -69,9 +69,11 @@ const useStyles = makeStyles((theme) => ({
 export default function AppBar(props) {
   const { open, handleDrawerOpen, setOpenModal } = props;
   const classes = useStyles();
+  const history = useHistory();
 
   const connectStatusState = useConnectStatusState();
   const connectStatusDispatch = useConnectStatusDispatch();
+  const userDispatch = useUserDispatch();
 
   const handleConnectIconClick = () => {
     !connectStatusState && setOpenModal(true);
@@ -80,6 +82,10 @@ export default function AppBar(props) {
         status: false,
       });
     connectStatusState && setOpenModal(false);
+  };
+  const sessionOut = () => {
+    logout(userDispatch, {});
+    history.push('/signIn');
   };
   return (
     <MuiAppBar
@@ -111,7 +117,10 @@ export default function AppBar(props) {
                 color: 'rgba(0, 0, 0, 0.87)',
               }}
             >
-              <ListItem button>
+              <ListItem
+                button
+                {...(option.title === 'Logout' && { onClick: sessionOut })}
+              >
                 <OptionTyp>{option.title}</OptionTyp>
               </ListItem>
             </Link>

@@ -45,10 +45,10 @@ export const optionsList = [
     title: 'Label Management',
     icon: <LabelIcon style={{ color: '#FFFF' }} />,
     menuArr: [
-      { title: 'Manage', link: 'managelabels' },
+      { title: 'Manage', link: 'manageLabels' },
       { title: 'Add', link: 'addLabel' },
     ],
-    defaultPath: 'managelabels',
+    defaultPath: 'manageLabels',
     value: 'labelManagement',
   },
   {

@@ -135,35 +135,50 @@ export default function MiniDrawer() {
     setLoader(true);
 
     if (Object.entries(labelState).length < 1) {
-      requests.push(
-        getLabels().then((res) => {
-          loadLabels(labelDispatch, { labels: res });
-        })
-      );
+      user.user.type === 'Admin' ||
+        ((user.user.quickSend === 'allow' ||
+          user.user.contactManagement === 'allow' ||
+          user.user.labelManagement === 'allow' ||
+          user.user.inbox === 'allow') &&
+          requests.push(
+            getLabels().then((res) => {
+              loadLabels(labelDispatch, { labels: res });
+            })
+          ));
     }
 
     if (leadsState.length < 1) {
-      requests.push(
-        getLeads().then((res) => {
-          loadLeads(leadsDispatch, { leads: res });
-        })
-      );
+      user.user.type === 'Admin' ||
+        ((user.user.quickSend === 'allow' ||
+          user.user.contactManagement === 'allow' ||
+          user.user.inbox === 'allow') &&
+          requests.push(
+            getLeads().then((res) => {
+              loadLeads(leadsDispatch, { leads: res });
+            })
+          ));
     }
 
     if (companyState.length < 1) {
-      requests.push(
-        getCompanies().then((res) => {
-          res && loadCompanies(companyDispatch, { companies: res });
-        })
-      );
+      user.user.type === 'Admin' ||
+        ((user.user.quickSend === 'allow' ||
+          user.user.contactManagement === 'allow') &&
+          requests.push(
+            getCompanies().then((res) => {
+              res && loadCompanies(companyDispatch, { companies: res });
+            })
+          ));
     }
 
     if (leadSourceState.length < 1) {
-      requests.push(
-        getLeadSource().then((res) => {
-          res && loadLeadSource(leadSourceDispatch, { leadSource: res });
-        })
-      );
+      (user.user.type === 'Admin' ||
+        user.user.quickSend === 'allow' ||
+        user.user.contactManagement === 'allow') &&
+        requests.push(
+          getLeadSource().then((res) => {
+            res && loadLeadSource(leadSourceDispatch, { leadSource: res });
+          })
+        );
     }
 
     Promise.allSettled(requests).then((resArr) => {

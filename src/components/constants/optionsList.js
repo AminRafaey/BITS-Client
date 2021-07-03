@@ -14,7 +14,7 @@ export const optionsList = [
     menuArr: [
       { title: 'Send Sms', link: 'sendSms' },
       { title: 'Send from Address book', link: 'sendFromAddressBook' },
-      { title: 'Manage Schedule', link: 'manageSchedule' },
+      //{ title: 'Manage Schedule', link: 'manageSchedule' },
     ],
     defaultPath: 'sendSms',
     value: 'quickSend',
@@ -72,12 +72,12 @@ export const singleOptionList = [
     value: 'inbox',
   },
 
-  {
-    title: 'Logs',
-    icon: <ReportIcon style={{ color: '#FFFF' }} />,
-    menuArr: [],
-    defaultPath: 'logs',
-  },
+  // {
+  //   title: 'Logs',
+  //   icon: <ReportIcon style={{ color: '#FFFF' }} />,
+  //   menuArr: [],
+  //   defaultPath: 'logs',
+  // },
 ];
 
 export const appBarList = [

@@ -46,7 +46,7 @@ export const optionsList = [
     icon: <LabelIcon style={{ color: '#FFFF' }} />,
     menuArr: [
       { title: 'Manage', link: 'managelabels' },
-      { title: 'Add', link: 'addlabel' },
+      { title: 'Add', link: 'addLabel' },
     ],
     defaultPath: 'managelabels',
     value: 'labelManagement',

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, useLocation } from 'react-router-dom';
+import { Route, useLocation, Redirect } from 'react-router-dom';
 import { useUserState } from '../../../Context/User';
 import { Alert } from '../../HOC';
 import { styled, Box } from '@material-ui/core';
@@ -56,17 +56,20 @@ export default function VerifiedAccessRoute({ children, userType, ...rest }) {
     <Route
       {...rest}
       render={() =>
-        accessRules[path][Object.keys(accessRules[path])[0]] ===
+        accessRules[path] &&
+        (accessRules[path][Object.keys(accessRules[path])[0]] ===
           userState['user'][Object.keys(accessRules[path])[0]] ||
-        userState['user']['type'] === 'Admin' ? (
+          userState['user']['type'] === 'Admin') ? (
           children
-        ) : (
+        ) : accessRules[path] ? (
           <AlertWrapper>
             <Alert severity="warning">
               You are not authoried to visit this page, Please contact admin to
               know more about your access...
             </Alert>
           </AlertWrapper>
+        ) : (
+          <Redirect to={{ pathname: '/', state: { from: '/' } }} />
         )
       }
     />

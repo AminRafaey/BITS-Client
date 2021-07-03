@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useHistory } from 'react-router-dom';
-import {
-  Button,
-  TextField,
-  Chip,
-  SecondaryButton,
-  TextArea,
-} from '../../HOC';
+import { Button, TextField, Chip, SecondaryButton, TextArea } from '../../HOC';
 import { isColorCodeValid } from '../../Forms/BulkLabelOp/utility';
-import {
-  createLabel,
-  updateLabel as updateLabelApi,
-} from '../../../api/label';
+import { createLabel, updateLabel as updateLabelApi } from '../../../api/label';
 import {
   useLabelState,
   useLabelDispatch,

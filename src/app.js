@@ -37,7 +37,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <SocketProvider>
         <UserProvider>
-          <ConnectStatusProvider>
+          <ConnectStatusProvider connectStatus={true}>
             <TemplateProvider>
               <LeadsProvider>
                 <ChatProvider>

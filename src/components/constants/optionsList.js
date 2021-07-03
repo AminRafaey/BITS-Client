@@ -17,6 +17,7 @@ export const optionsList = [
       { title: 'Manage Schedule', link: 'manageSchedule' },
     ],
     defaultPath: 'sendSms',
+    value: 'quickSend',
   },
 
   {
@@ -27,6 +28,7 @@ export const optionsList = [
       { title: 'Add', link: 'addTemplate' },
     ],
     defaultPath: 'manageTemplate',
+    value: 'templateManagement',
   },
   {
     title: 'Contact Management',
@@ -36,6 +38,7 @@ export const optionsList = [
       { title: 'Add', link: 'addContacts' },
     ],
     defaultPath: 'manageContacts',
+    value: 'contactManagement',
   },
   ,
   {
@@ -46,6 +49,7 @@ export const optionsList = [
       { title: 'Add', link: 'addlabel' },
     ],
     defaultPath: 'managelabels',
+    value: 'labelManagement',
   },
   {
     title: 'Employee',
@@ -55,6 +59,7 @@ export const optionsList = [
       { title: 'Manage Access', link: 'manageEmployeeAccess' },
     ],
     defaultPath: 'employeesList',
+    value: 'employeeManagement',
   },
 ];
 
@@ -64,6 +69,7 @@ export const singleOptionList = [
     icon: <InboxIcon style={{ color: '#FFFF' }} />,
     menuArr: [],
     defaultPath: 'inbox',
+    value: 'inbox',
   },
 
   {

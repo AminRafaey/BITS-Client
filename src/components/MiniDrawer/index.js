@@ -42,6 +42,7 @@ import {
   ManageTemplates,
   ManageLabels,
 } from '../../components';
+import { VerifiedAccessRoute } from '../Assets';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 
@@ -196,65 +197,65 @@ export default function MiniDrawer() {
             </QuickSendWrapper>
           ) : (
             <Switch>
-              <Route path="/sendSms">
+              <VerifiedAccessRoute path="/sendSms">
                 <QuickSendWrapper>
                   <QuickSend {...commonProps} />
                 </QuickSendWrapper>
-              </Route>
-              <Route path="/sendFromAddressBook">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/sendFromAddressBook">
                 <AddressBookWrapper>
                   {' '}
                   <AddressBookTable {...commonProps} />
                 </AddressBookWrapper>
-              </Route>
-              <Route path="/inbox">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/inbox">
                 <InboxWrapper>
                   {' '}
                   <Inbox setOpen={setOpen} {...commonProps} />
                 </InboxWrapper>
-              </Route>
+              </VerifiedAccessRoute>
 
-              <Route path="/manageContacts">
+              <VerifiedAccessRoute path="/manageContacts">
                 <ContactWrapper>
                   <ManageContact {...commonProps} />
                 </ContactWrapper>
-              </Route>
-              <Route path="/addContacts">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/addContacts">
                 <ContactWrapper>
                   <AddContacts />
                 </ContactWrapper>
-              </Route>
-              <Route path="/addLabel">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/addLabel">
                 <QuickSendWrapper>
                   <CreateLabel />
                 </QuickSendWrapper>
-              </Route>
-              <Route path="/manageLabels">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/manageLabels">
                 <ManageTemplateWrapper>
                   <ManageLabels />
                 </ManageTemplateWrapper>
-              </Route>
+              </VerifiedAccessRoute>
 
-              <Route path="/addTemplate">
+              <VerifiedAccessRoute path="/addTemplate">
                 <QuickSendWrapper>
                   <CreateTemplate />
                 </QuickSendWrapper>
-              </Route>
-              <Route path="/manageTemplate">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/manageTemplate">
                 <ManageTemplateWrapper>
                   <ManageTemplates />
                 </ManageTemplateWrapper>
-              </Route>
-              <Route path="/employeesList">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/employeesList">
                 <ContactWrapper>
                   <ManageEmployee {...commonProps} />
                 </ContactWrapper>
-              </Route>
-              <Route path="/manageEmployeeAccess">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/manageEmployeeAccess">
                 <ContactWrapper>
                   <ManageEmployeeAccess {...commonProps} />
                 </ContactWrapper>
-              </Route>
+              </VerifiedAccessRoute>
 
               <Route path="/">
                 <HomePageWrapper>

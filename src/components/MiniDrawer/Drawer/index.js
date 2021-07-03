@@ -5,6 +5,7 @@ import { useLocation, Link } from 'react-router-dom';
 import { DrawerItem } from '../../../components';
 import SingleOptionItem from '../SingleOptionItem';
 import profilePlaceholder from '../../../public/images/profile-placeholder.png';
+import { useUserState } from '../../../Context/User';
 import { optionsList, singleOptionList } from '../../constants/optionsList';
 import {
   Box,
@@ -91,6 +92,7 @@ export default function Drawer(props) {
   const { open, handleDrawerOpen } = props;
   const classes = useStyles();
   const { pathname } = useLocation();
+  const userState = useUserState();
 
   useEffect(() => {
     if (!open) {
@@ -149,17 +151,29 @@ export default function Drawer(props) {
       )}
 
       <div>
-        {optionsList.map((option, index) => (
-          <DrawerItem option={option} key={index} open={open} />
-        ))}
+        {optionsList
+          .filter((o) =>
+            userState.user.type === 'Employee'
+              ? userState.user[o.value] === 'allow'
+              : true
+          )
+          .map((option, index) => (
+            <DrawerItem option={option} key={index} open={open} />
+          ))}
         <DividerWrapper>
           {' '}
           <StyledDivider />{' '}
         </DividerWrapper>
 
-        {singleOptionList.map((option, index) => (
-          <SingleOptionItem option={option} key={index} />
-        ))}
+        {singleOptionList
+          .filter((o) =>
+            userState.user.type === 'Employee'
+              ? userState.user[o.value] === 'allow'
+              : true
+          )
+          .map((option, index) => (
+            <SingleOptionItem option={option} key={index} />
+          ))}
       </div>
     </MuiDrawer>
   );

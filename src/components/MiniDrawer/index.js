@@ -118,10 +118,15 @@ export default function MiniDrawer() {
     setOpenModal: setOpenModal,
   };
   useEffect(() => {
-    socket.emit('join-room', {
-      mobileNumber: user.user.mobileNumber,
-      userName: 'Amin',
-    },{},(response)=>setJoinRoomLoader(false));
+    socket.emit(
+      'join-room',
+      {
+        mobileNumber: user.user.mobileNumber,
+        userName: 'Amin',
+      },
+      {},
+      (response) => setJoinRoomLoader(false)
+    );
     socket.on('room-updates', (res) => console.log(res));
     socket.on('room-users', (res) => console.log(res));
 
@@ -205,7 +210,7 @@ export default function MiniDrawer() {
         )}
         <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
-          {loader || joinRoomLoader? (
+          {loader || joinRoomLoader ? (
             <QuickSendWrapper>
               <LoaderWrapper>
                 <CircularProgress color="primary" />

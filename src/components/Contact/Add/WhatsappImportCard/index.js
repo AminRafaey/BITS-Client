@@ -85,10 +85,11 @@ function WhatsappImportCard(props) {
       {},
       (response) => {
         toastActions[response.status](response.message);
-        response.status === 'success' && setLoading(false);
-        loadLeads(leadsDispatch, {
-          leads: response.data,
-        });
+        setLoading(false);
+        response.status === 'success' &&
+          loadLeads(leadsDispatch, {
+            leads: response.data,
+          });
       }
     );
   };

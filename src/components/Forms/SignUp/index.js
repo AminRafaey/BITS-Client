@@ -21,6 +21,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import EmailIcon from '@material-ui/icons/Email';
 
+import config from '../../../config.json';
+
 import {
   HoverColor,
   HeadingColor,
@@ -31,7 +33,7 @@ import {
 const ImageWrapper = styled(Box)({
   minWidth: '100%',
   minHeight: '100vh',
-  backgroundImage: `url("https://icecube-eu-832.icedrive.io/thumbnail?p=EoL8Ll8BC1sSO5A4a4JtDlMmjU5N9M7%2Bc8x6IkCkDrynpwCHligxI3lEXXSCSLO9WKXagl%2BZ2g58fwjFzgfSaMP2zq2IdvA7sWmB3LGBe6pltkYcBTpMFYMDXY5%2BVMwe&w=1280&h=1280&m=cropped")`,
+  backgroundImage: `url(${config.baseUrl}images/Sign-Up-Page-BG.jpeg)`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',

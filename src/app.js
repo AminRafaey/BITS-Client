@@ -36,7 +36,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <UserProvider>
+        <UserProvider
+          token={
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRkZDQ1YjAyYzFlNDJjNjQzNjQzZjgiLCJ0eXBlIjoiQWRtaW4iLCJhZG1pbklkIjoiNjBkZGQ0NWIwMmMxZTQyYzY0MzY0M2Y3IiwibW9iaWxlTnVtYmVyIjoiKzkyMzQxNTUxMTY4OSIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMDRUMDg6MTc6MDEuMzU3WiIsImlhdCI6MTYyNTM4NjYyMX0.-dN5dL1bFokVdvVRNUHfNe_E5b0NjPtGFEwJodH5-04'
+          }
+        >
           <ConnectStatusProvider>
             <TemplateProvider>
               <LeadsProvider>

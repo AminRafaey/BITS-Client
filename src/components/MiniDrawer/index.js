@@ -102,6 +102,7 @@ export default function MiniDrawer() {
   const [open, setOpen] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [joinRoomLoader, setJoinRoomLoader] = useState(true);
   const labelState = useLabelState();
   const labelDispatch = useLabelDispatch();
   const leadsState = useLeadsState();
@@ -120,7 +121,7 @@ export default function MiniDrawer() {
     socket.emit('join-room', {
       mobileNumber: user.user.mobileNumber,
       userName: 'Amin',
-    });
+    },{},(response)=>setJoinRoomLoader(false));
     socket.on('room-updates', (res) => console.log(res));
     socket.on('room-users', (res) => console.log(res));
 
@@ -204,7 +205,7 @@ export default function MiniDrawer() {
         )}
         <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
-          {loader ? (
+          {loader || joinRoomLoader? (
             <QuickSendWrapper>
               <LoaderWrapper>
                 <CircularProgress color="primary" />
@@ -237,7 +238,7 @@ export default function MiniDrawer() {
               </VerifiedAccessRoute>
               <VerifiedAccessRoute path="/addContacts">
                 <ContactWrapper>
-                  <AddContacts />
+                  <AddContacts {...commonProps} />
                 </ContactWrapper>
               </VerifiedAccessRoute>
               <VerifiedAccessRoute path="/addLabel">

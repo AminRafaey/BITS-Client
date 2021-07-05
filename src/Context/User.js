@@ -22,8 +22,17 @@ function UserReducer(state, action) {
   }
 }
 
-function UserProvider({ children, user }) {
-  const [state, dispatch] = React.useReducer(UserReducer, {});
+function UserProvider({ children, token }) {
+  const user = token ? jwtDecode(token) : '';
+  const [state, dispatch] = React.useReducer(
+    UserReducer,
+    token
+      ? {
+          token: token,
+          user: user,
+        }
+      : {}
+  );
   return (
     <UserState.Provider value={state}>
       <UserDispatch.Provider value={dispatch}>{children}</UserDispatch.Provider>

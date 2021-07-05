@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import WhatsappImportCard from './WhatsappImportCard';
 import ImportCard from './ImportCard';
 import { Tab, Tabs, SelectedTab, Alert } from '../../HOC';
 import {
@@ -71,7 +72,8 @@ function a11yProps(index) {
   };
 }
 
-function AddContacts() {
+function AddContacts(props) {
+  const { setOpenModal } = props;
   const [value, setValue] = useState(0);
   const [error, setError] = useState('');
   const handleChange = (event, newValue) => {
@@ -101,12 +103,6 @@ function AddContacts() {
             ) : (
               <Tab label="Import From WhatsApp" {...a11yProps(1)} />
             )}
-
-            {value === 2 ? (
-              <SelectedTab label="Import From Others" {...a11yProps(2)} />
-            ) : (
-              <Tab label="Import From Others" {...a11yProps(2)} />
-            )}
           </Tabs>
         </StyledAppBar>
 
@@ -120,38 +116,20 @@ function AddContacts() {
                 type={'leads'}
               />
             </Grid>
-            <Grid item xs={6}>
-              <ImportCard
-                setError={setError}
-                heading={'Faster CSV Contacts Import'}
-                description={'Import upto 10,000 contacts from a CSV file'}
-                type={'labels'}
-              />
-            </Grid>
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Grid container spacing={0}>
-            {
-              // <Grid item xs={4}>
-              //   <ImportCard />
-              // </Grid>
-            }
-          </Grid>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Grid container spacing={0}>
-            {
-              // <Grid item xs={4}>
-              //   <ImportCard />
-              // </Grid>
-              // <Grid item xs={4}>
-              //   <ImportCard />
-              // </Grid>
-              // <Grid item xs={4}>
-              //   <ImportCard />
-              // </Grid>
-            }
+            <Grid item xs={6}>
+              <WhatsappImportCard
+                setError={setError}
+                heading={'WhatsApp Contacts Import'}
+                description={
+                  'Your all contacts synced with this current login Whatsapp account will get import and saved into the database with the names you saved on your phone.'
+                }
+                setOpenModal={setOpenModal}
+              />
+            </Grid>
           </Grid>
         </TabPanel>
       </AddContactWrapper>

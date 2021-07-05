@@ -1,18 +1,23 @@
 import React from 'react';
 import stateCloner from '../components/utility/StateCloner';
-import { labels } from '../Static/Label';
 
 const LabelState = React.createContext(null);
 const LabelDispatch = React.createContext(null);
 
 function LabelReducer(state, action) {
-  const { _id, label } = action.payload;
+  const { _id, label, selectedLabelId, updatedLabel } = action.payload;
   let cloneState = stateCloner(state);
   switch (action.type) {
     case 'LOAD_LABELS':
       return { ...stateCloner(action.payload.labels) };
     case 'ADD_LABEL':
       cloneState[_id] = { ...label, _id };
+      return { ...cloneState };
+    case 'REMOVE_LABEL':
+      delete cloneState[selectedLabelId];
+      return { ...cloneState };
+    case 'UPDATE_LABEL':
+      cloneState[_id] = { ...updatedLabel };
       return { ...cloneState };
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
@@ -50,7 +55,15 @@ function useLabelDispatch() {
   return context;
 }
 
-export { LabelProvider, useLabelState, useLabelDispatch, loadLabels, addLabel };
+export {
+  LabelProvider,
+  useLabelState,
+  useLabelDispatch,
+  loadLabels,
+  addLabel,
+  removeLabel,
+  updateLabel,
+};
 
 function loadLabels(dispatch, data) {
   dispatch({
@@ -62,6 +75,20 @@ function loadLabels(dispatch, data) {
 function addLabel(dispatch, data) {
   dispatch({
     type: 'ADD_LABEL',
+    payload: data,
+  });
+}
+
+function removeLabel(dispatch, data) {
+  dispatch({
+    type: 'REMOVE_LABEL',
+    payload: data,
+  });
+}
+
+function updateLabel(dispatch, data) {
+  dispatch({
+    type: 'UPDATE_LABEL',
     payload: data,
   });
 }

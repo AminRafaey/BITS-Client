@@ -18,7 +18,8 @@ import {
   loadLeadSource,
 } from '../../Context/LeadSource';
 import { useSocketState } from '../../Context/Socket';
-import { getLabels } from '../../api/Label';
+import { useUserState } from '../../Context/User';
+import { getLabels } from '../../api/label';
 import { getLeads, getCompanies, getLeadSource } from '../../api/Lead';
 import {
   Box,
@@ -38,6 +39,8 @@ import {
   CreateTemplate,
   ManageEmployee,
   ManageEmployeeAccess,
+  ManageTemplates,
+  ManageLabels,
 } from '../../components';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
@@ -66,6 +69,11 @@ const ContactWrapper = styled(Box)({
   padding: '75px 0px 0px 0px',
   background: '#E9EEF5',
   height: '100%',
+});
+const ManageTemplateWrapper = styled(Box)({
+  padding: '100px 50px 0px 50px',
+  background: '#E9EEF5',
+  minHeight: '100vh',
 });
 const LoaderWrapper = styled(Box)({
   display: 'flex',
@@ -102,13 +110,14 @@ export default function MiniDrawer() {
   const leadSourceState = useLeadSourceState();
   const leadSourceDispatch = useLeadSourceDispatch();
   const socket = useSocketState();
+  const user = useUserState();
 
   const commonProps = {
     setOpenModal: setOpenModal,
   };
   useEffect(() => {
     socket.emit('join-room', {
-      mobileNumber: '+923415511689',
+      mobileNumber: user.user.mobileNumber,
       userName: 'Amin',
     });
     socket.on('room-updates', (res) => console.log(res));
@@ -220,10 +229,21 @@ export default function MiniDrawer() {
                   <CreateLabel />
                 </QuickSendWrapper>
               </Route>
+              <Route path="/manageLabels">
+                <ManageTemplateWrapper>
+                  <ManageLabels />
+                </ManageTemplateWrapper>
+              </Route>
+
               <Route path="/addTemplate">
                 <QuickSendWrapper>
                   <CreateTemplate />
                 </QuickSendWrapper>
+              </Route>
+              <Route path="/manageTemplate">
+                <ManageTemplateWrapper>
+                  <ManageTemplates />
+                </ManageTemplateWrapper>
               </Route>
               <Route path="/employeesList">
                 <ContactWrapper>

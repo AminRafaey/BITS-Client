@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import LabelMultiSelect from '../../../Forms/Label';
+import LabelMultiSelect from '../../../Forms/BulkLabelOp';
 import { Checkbox } from '../../../HOC';
 import { useLabelState } from '../../../../Context/Label';
 import { Chip, Box, styled, Typography, withStyles } from '@material-ui/core';

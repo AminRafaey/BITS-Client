@@ -11,7 +11,13 @@ import {
   Select,
   FormControl,
   CircularProgress,
+  Typography,
+  styled,
 } from '@material-ui/core';
+const ItemTyp = styled(Typography)({
+  fontSize: 14,
+  display: 'flex',
+});
 const StyledFormControl = withStyles({
   root: {
     width: 110,
@@ -41,18 +47,26 @@ function StatusSelect(props) {
       {loading ? (
         <CircularProgress size={26} color="primary" />
       ) : (
-        <StyledFormControl>
-          <Select
-            value={row.status}
-            onChange={(e) => handleChange(e.target.value)}
-            variant="outlined"
-          >
-            <MenuItem value={row.status}>{row.status}</MenuItem>
-            <MenuItem value={row.status === 'Active' ? 'Blocked' : 'Active'}>
-              {row.status === 'Active' ? 'Blocked' : 'Active'}
-            </MenuItem>
-          </Select>
-        </StyledFormControl>
+        <>
+          {row.status === 'Not-Verified' ? (
+            <ItemTyp>{row.status}</ItemTyp>
+          ) : (
+            <StyledFormControl>
+              <Select
+                value={row.status}
+                onChange={(e) => handleChange(e.target.value)}
+                variant="outlined"
+              >
+                <MenuItem value={row.status}>{row.status}</MenuItem>
+                <MenuItem
+                  value={row.status === 'Active' ? 'Blocked' : 'Active'}
+                >
+                  {row.status === 'Active' ? 'Blocked' : 'Active'}
+                </MenuItem>
+              </Select>
+            </StyledFormControl>
+          )}
+        </>
       )}
     </>
   );

@@ -8,7 +8,7 @@ import {
   useLabelDispatch,
   loadLabels,
 } from '../../../../../../../Context/Label';
-import { getLabels } from '../../../../../../../api/Label';
+import { getLabels } from '../../../../../../../api/label';
 import {
   Box,
   styled,

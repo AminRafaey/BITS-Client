@@ -90,7 +90,7 @@ function ImportCard(props) {
           getLabels().then((innerResponse) => {
             loadLabels(labelDispatch, { labels: innerResponse });
             loadLeads(leadsDispatch, {
-              leads: res.data.leads,
+              leads: res.data,
             });
             message.current = res.message;
             setSelectedCSV(null);

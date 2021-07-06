@@ -127,7 +127,7 @@ export async function updateLeadsLabels(updatedLeads, prevState) {
 export async function sendCSV(file) {
   try {
     const res = await axios.post(`${endPointApi}/csvUpload`, file);
-    return res.data.field.message;
+    return res.data.field;
   } catch (ex) {
     if (!ex.response) {
       throw 'Please check your internet connection or close a file before uploading';

@@ -4,6 +4,9 @@ import { InfoAlert } from '../../../Assets';
 import { Button } from '../../../HOC';
 import { handleCSVChange } from '../../utility';
 import { sendCSV } from '../../../../api/Lead';
+import { getLabels } from '../../../../api/label';
+import { useLeadsDispatch, loadLeads } from '../../../../Context/Lead';
+import { useLabelDispatch, loadLabels } from '../../../../Context/Label';
 import {
   Card,
   CardActions,
@@ -67,6 +70,8 @@ const StyledCardContent = withStyles({
 
 function ImportCard(props) {
   const { setError, heading, description, type } = props;
+  const leadsDispatch = useLeadsDispatch();
+  const labelDispatch = useLabelDispatch();
   const [selectedCSV, setSelectedCSV] = useState(null);
   const [loading, setLoading] = useState(false);
   const [openInfoAlert, setOpenInfoAlert] = useState(false);
@@ -82,10 +87,16 @@ function ImportCard(props) {
       setLoading(true);
       sendCSV(data)
         .then((res) => {
-          message.current = res;
-          setSelectedCSV(null);
-          setLoading(false);
-          setOpenInfoAlert(true);
+          getLabels().then((innerResponse) => {
+            loadLabels(labelDispatch, { labels: innerResponse });
+            loadLeads(leadsDispatch, {
+              leads: res.data.leads,
+            });
+            message.current = res.message;
+            setSelectedCSV(null);
+            setLoading(false);
+            setOpenInfoAlert(true);
+          });
         })
         .catch((err) => {
           message.current = err;

@@ -59,7 +59,6 @@ function ChatArea(props) {
   useEffect(() => {
     setLoader(true);
     const messages = chatState.find((c) => c.jid === currentChatJid).messages;
-    console.log(messages ? messages.length < 1 : true);
     if (messages ? messages.length < 1 : true) {
       socket.on('get-contact-messages', (res) => {
         addMessages(chatDispatch, {

@@ -14,9 +14,10 @@ export const optionsList = [
     menuArr: [
       { title: 'Send Sms', link: 'sendSms' },
       { title: 'Send from Address book', link: 'sendFromAddressBook' },
-      { title: 'Manage Schedule', link: 'manageSchedule' },
+      //{ title: 'Manage Schedule', link: 'manageSchedule' },
     ],
     defaultPath: 'sendSms',
+    value: 'quickSend',
   },
 
   {
@@ -27,6 +28,7 @@ export const optionsList = [
       { title: 'Add', link: 'addTemplate' },
     ],
     defaultPath: 'manageTemplate',
+    value: 'templateManagement',
   },
   {
     title: 'Contact Management',
@@ -36,16 +38,18 @@ export const optionsList = [
       { title: 'Add', link: 'addContacts' },
     ],
     defaultPath: 'manageContacts',
+    value: 'contactManagement',
   },
   ,
   {
     title: 'Label Management',
     icon: <LabelIcon style={{ color: '#FFFF' }} />,
     menuArr: [
-      { title: 'Manage', link: 'managelabels' },
-      { title: 'Add', link: 'addlabel' },
+      { title: 'Manage', link: 'manageLabels' },
+      { title: 'Add', link: 'addLabel' },
     ],
-    defaultPath: 'managelabels',
+    defaultPath: 'manageLabels',
+    value: 'labelManagement',
   },
   {
     title: 'Employee',
@@ -55,6 +59,7 @@ export const optionsList = [
       { title: 'Manage Access', link: 'manageEmployeeAccess' },
     ],
     defaultPath: 'employeesList',
+    value: 'employeeManagement',
   },
 ];
 
@@ -64,14 +69,15 @@ export const singleOptionList = [
     icon: <InboxIcon style={{ color: '#FFFF' }} />,
     menuArr: [],
     defaultPath: 'inbox',
+    value: 'inbox',
   },
 
-  {
-    title: 'Logs',
-    icon: <ReportIcon style={{ color: '#FFFF' }} />,
-    menuArr: [],
-    defaultPath: 'logs',
-  },
+  // {
+  //   title: 'Logs',
+  //   icon: <ReportIcon style={{ color: '#FFFF' }} />,
+  //   menuArr: [],
+  //   defaultPath: 'logs',
+  // },
 ];
 
 export const appBarList = [

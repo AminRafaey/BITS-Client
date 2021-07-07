@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { InfoAlert } from '../../../Assets';
 import { Button } from '../../../HOC';
 import { handleCSVChange } from '../../utility';
-import { sendCSV } from '../../../../api/Lead';
+import { sendCSV, sendXLSX } from '../../../../api/Lead';
+import { getLabels } from '../../../../api/label';
+import { useLeadsDispatch, loadLeads } from '../../../../Context/Lead';
+import { useLabelDispatch, loadLabels } from '../../../../Context/Label';
 import {
   Card,
   CardActions,
@@ -66,7 +69,9 @@ const StyledCardContent = withStyles({
 })(CardContent);
 
 function ImportCard(props) {
-  const { setError, heading, description, type } = props;
+  const { setError, heading, description, acceptType } = props;
+  const leadsDispatch = useLeadsDispatch();
+  const labelDispatch = useLabelDispatch();
   const [selectedCSV, setSelectedCSV] = useState(null);
   const [loading, setLoading] = useState(false);
   const [openInfoAlert, setOpenInfoAlert] = useState(false);
@@ -78,14 +83,20 @@ function ImportCard(props) {
       setError('No CSV is selected. Please select one to continue');
       return undefined;
     }
-    if (type === 'leads') {
+    if (acceptType.replace('.', '') === 'csv') {
       setLoading(true);
       sendCSV(data)
         .then((res) => {
-          message.current = res;
-          setSelectedCSV(null);
-          setLoading(false);
-          setOpenInfoAlert(true);
+          getLabels().then((innerResponse) => {
+            loadLabels(labelDispatch, { labels: innerResponse });
+            loadLeads(leadsDispatch, {
+              leads: res.data,
+            });
+            message.current = res.message;
+            setSelectedCSV(null);
+            setLoading(false);
+            setOpenInfoAlert(true);
+          });
         })
         .catch((err) => {
           message.current = err;
@@ -93,10 +104,29 @@ function ImportCard(props) {
           setLoading(false);
           setOpenInfoAlert(true);
         });
-    } else if (type === 'labels') {
+    } else if (acceptType.replace('.', '') === 'xlsx') {
+      setLoading(true);
+      sendXLSX(data)
+        .then((res) => {
+          getLabels().then((innerResponse) => {
+            loadLabels(labelDispatch, { labels: innerResponse });
+            loadLeads(leadsDispatch, {
+              leads: res.data,
+            });
+            message.current = res.message;
+            setSelectedCSV(null);
+            setLoading(false);
+            setOpenInfoAlert(true);
+          });
+        })
+        .catch((err) => {
+          message.current = err;
+          setSelectedCSV(null);
+          setLoading(false);
+          setOpenInfoAlert(true);
+        });
     }
   };
-
   return (
     <Card style={{ maxWidth: '90%' }} variant="outlined">
       <StyledCardContent>
@@ -107,15 +137,24 @@ function ImportCard(props) {
           <input
             name="file"
             type="file"
-            id="csv"
+            id={acceptType}
             onChange={(e) =>
-              handleCSVChange(e, setSelectedCSV, setError, 'csv', 1000)
+              handleCSVChange(
+                e,
+                setSelectedCSV,
+                setError,
+                acceptType.replace('.', ''),
+                1000
+              )
             }
             onClick={(e) => (e.target.value = null)}
             style={{ display: 'none' }}
-            accept={'.csv'}
+            accept={acceptType}
           />
-          <label htmlFor="csv" style={{ color: 'white', cursor: 'pointer' }}>
+          <label
+            htmlFor={acceptType}
+            style={{ color: 'white', cursor: 'pointer' }}
+          >
             <Button
               size="small"
               variant="contained"
@@ -135,7 +174,11 @@ function ImportCard(props) {
         <CardActionsInnerWrapper {...(loading && { mr: 2 })}>
           <a
             href={
-              type === 'leads' ? `${config.baseUrl}lead/downloadSample` : ''
+              acceptType.replace('.', '') === 'csv'
+                ? `${config.baseUrl}lead/downloadCSVSample`
+                : acceptType.replace('.', '') === 'xlsx'
+                ? `${config.baseUrl}lead/downloadXLSXSample`
+                : ''
             }
             style={{ textDecoration: 'none' }}
           >
@@ -169,6 +212,6 @@ ImportCard.propTypes = {
   setError: PropTypes.func.isRequired,
   heading: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
+  acceptType: PropTypes.string.isRequired,
 };
 export default ImportCard;

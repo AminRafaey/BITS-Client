@@ -251,19 +251,28 @@ export default function ContactsTable(props) {
                                       color: '#ffff',
                                       background:
                                         colors[
-                                          `${row.firstName} ${
-                                            row.lastName ? row.lastName : ''
-                                          }`
-                                            .split(' ')
-                                            .map((char) => char.charCodeAt(0))
-                                            .join('') % colors.length
+                                          `${row.firstName.charCodeAt(0)}${
+                                            row.lastName
+                                              ? (row.lastName.charCodeAt(0) >=
+                                                  65 &&
+                                                  row.lastName.charCodeAt(0) <=
+                                                    90) ||
+                                                (row.lastName.charCodeAt(0) >=
+                                                  97 &&
+                                                  row.lastName.charCodeAt(0) <=
+                                                    122)
+                                                ? row.lastName.charCodeAt(0)
+                                                : ''
+                                              : ''
+                                          }` % colors.length
                                         ],
                                     }}
                                   >
-                                    {`${row.firstName} ${row.lastName || ''}`
-                                      .split(' ')
-                                      .map((c) => c.charAt(0))
-                                      .join('')}
+                                    {`${row.firstName.substr(0, 1)}${
+                                      (row.lastName &&
+                                        row.lastName.substr(0, 1)) ||
+                                      ''
+                                    }`}
                                   </Avatar>
                                   <BasicInfoContentWrapper>
                                     <TitleTyp>{`${row.firstName} ${
@@ -408,7 +417,7 @@ export default function ContactsTable(props) {
                 </AbsoluteScroll>
               </StyledTableContainer>
               <TablePagination
-                rowsPerPageOptions={[10, 20, 30]}
+                rowsPerPageOptions={[10, 20, 30, leadsState.length]}
                 component="div"
                 count={leadsState.length}
                 rowsPerPage={rowsPerPage}

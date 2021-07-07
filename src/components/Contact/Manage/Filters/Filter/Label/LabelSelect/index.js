@@ -45,7 +45,7 @@ function LabelSelect(props) {
   const [options, setOptions] = useState([]);
   const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState('');
-  const loading = true && options.length === 0;
+  const [loading, setLoading] = useState(true);
   const labelState = useLabelState();
   const labelDispatch = useLabelDispatch();
 
@@ -54,9 +54,12 @@ function LabelSelect(props) {
       return undefined;
     }
     if (Object.entries(labelState).length < 1) {
-      getLabels().then((res) =>
-        setTimeout(() => loadLabels(labelDispatch, { labels: res }), 2000)
-      );
+      getLabels().then((res) => {
+        loadLabels(labelDispatch, { labels: res });
+        setLoading(false);
+      });
+    } else {
+      setLoading(false);
     }
   }, [loading]);
 

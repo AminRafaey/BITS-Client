@@ -7,21 +7,32 @@ let UserStateRef;
 
 function UserReducer(state, action) {
   const { token } = action.payload;
-  const user = jwtDecode(token);
+  const user = token ? jwtDecode(token) : '';
   switch (action.type) {
     case 'LOAD_USER':
       return {
         token: token,
         user: user,
       };
+    case 'LOGOUT':
+      return {};
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
   }
 }
 
-function UserProvider({ children, user }) {
-  const [state, dispatch] = React.useReducer(UserReducer, { ...user });
+function UserProvider({ children, token }) {
+  const user = token ? jwtDecode(token) : '';
+  const [state, dispatch] = React.useReducer(
+    UserReducer,
+    token
+      ? {
+          token: token,
+          user: user,
+        }
+      : {}
+  );
   return (
     <UserState.Provider value={state}>
       <UserDispatch.Provider value={dispatch}>{children}</UserDispatch.Provider>
@@ -56,11 +67,19 @@ export {
   getUserStateRef,
   useUserDispatch,
   loadUser,
+  logout,
 };
 
 function loadUser(dispatch, data) {
   dispatch({
     type: 'LOAD_USER',
+    payload: data,
+  });
+}
+
+function logout(dispatch, data) {
+  dispatch({
+    type: 'LOGOUT',
     payload: data,
   });
 }

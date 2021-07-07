@@ -40,12 +40,17 @@ function Inbox(props) {
           </Grid>
           {currentChatJid ? (
             <React.Fragment>
-              <Grid item xs={7}>
+              <Grid
+                item
+                xs={currentChatJid.split('@')[1] === 's.whatsapp.net' ? 7 : 9}
+              >
                 <ChatArea currentChatJid={currentChatJid} />
               </Grid>
-              <Grid item xs={2}>
-                <Info currentChatJid={currentChatJid} />
-              </Grid>
+              {currentChatJid.split('@')[1] === 's.whatsapp.net' && (
+                <Grid item xs={2}>
+                  <Info currentChatJid={currentChatJid} />
+                </Grid>
+              )}
             </React.Fragment>
           ) : (
             <Grid item xs={9}>

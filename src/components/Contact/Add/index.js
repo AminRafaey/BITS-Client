@@ -113,7 +113,15 @@ function AddContacts(props) {
                 setError={setError}
                 heading={'Faster CSV Contacts Import'}
                 description={'Import upto 10,000 contacts from a CSV file'}
-                type={'leads'}
+                acceptType={'.csv'}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <ImportCard
+                setError={setError}
+                heading={'Faster Excel Contacts Import'}
+                description={'Import upto 10,000 contacts from a Excel file'}
+                acceptType={'.xlsx'}
               />
             </Grid>
           </Grid>

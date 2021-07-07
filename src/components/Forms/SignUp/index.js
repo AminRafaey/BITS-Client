@@ -156,10 +156,10 @@ function SignUp(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState({});
   const [isSubmitCicked, setIsSubmitClicked] = useState(false);
-  const [email, setEmail] = useState('aminrafaey543@gmail.com');
-  const [password, setPassword] = useState('1234');
-  const [userName, setUserName] = useState('amin');
-  const [fullName, setFullName] = useState('Amin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
+  const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [phoneDetails, setPhoneDetails] = useState({});
   const handleClickShowPassword = () => {

@@ -135,7 +135,7 @@ export default function Drawer(props) {
             />
           </ImageWrapper>
           <UserNameWrapper>
-            <OptionTyp>Muhammad Amin</OptionTyp>
+            <OptionTyp>{userState.user.name}</OptionTyp>
           </UserNameWrapper>
         </React.Fragment>
       ) : (

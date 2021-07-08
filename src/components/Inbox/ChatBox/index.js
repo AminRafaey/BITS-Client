@@ -53,7 +53,7 @@ function ChatBox(props) {
                 ? c.name.toLowerCase().includes(searchString.toLowerCase())
                 : false
               : true
-          )
+          ).sort((a,b)=>b.t-a.t)
           .map((c, index) => {
             return (
               <Chat

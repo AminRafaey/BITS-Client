@@ -33,7 +33,7 @@ export const iconList = [
   {
     title: 'Label Management',
     icon: <GroupIcon />,
-    defaultPath: '/addlabel',
+    defaultPath: '/addLabel',
   },
   ,
   {

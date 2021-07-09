@@ -8,6 +8,13 @@ import {
   removeLabel,
 } from '../../../../Context/Label';
 import {
+  useLeadsState,
+  useLeadsDispatch,
+  removeLabels as removeLabelsFromLeads,
+  addLabels as addLabelsfromLeads,
+} from '../../../../Context/Lead';
+
+import {
   Dialog,
   DialogActions,
   DialogContent,
@@ -19,6 +26,8 @@ function DeleteAlert(props) {
   const { open, setOpen, selectedLabel, selectedLabelId } = props;
 
   const labelDispatch = useLabelDispatch();
+  const leadsDispatch = useLeadsDispatch();
+  const leadsState = useLeadsState();
 
   const handleSubmit = () => {
     removeLabelFromApi(selectedLabel._id)
@@ -28,8 +37,16 @@ function DeleteAlert(props) {
           label: selectedLabel,
           _id: selectedLabel._id,
         });
+        addLabelsfromLeads(leadsDispatch, {
+          selectedLeads: leadsState.map((l, i) => ({ _id: l._id, index: i })),
+          labels: [selectedLabel],
+        });
       });
     removeLabel(labelDispatch, { selectedLabelId });
+    removeLabelsFromLeads(leadsDispatch, {
+      selectedLeads: leadsState.map((l, i) => ({ _id: l._id, index: i })),
+      labels: [selectedLabel],
+    });
     handleClose();
   };
 
@@ -47,7 +64,8 @@ function DeleteAlert(props) {
       <DialogTitle id="alert-dialog-title">{'Delete?'}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Deleted label can't be restore. Are you sure you want to delete?
+          The deleted label can't be restored and this label will be removed
+          from all of the contacts. Are you sure you want to delete it?
         </DialogContentText>
       </DialogContent>
       <DialogActions>

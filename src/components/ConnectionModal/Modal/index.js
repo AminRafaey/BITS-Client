@@ -127,8 +127,10 @@ export default function Modal(props) {
     //   console.log(res);
     // });
     socket.on('chats-received', (res) => {
-      res.length !== 0 && toastActions.success('Chats recieved successfully');
-      if (chatState.length < 1 && res.length !== 0) {
+      res &&
+        res.length !== 0 &&
+        toastActions.success('Chats recieved successfully');
+      if (chatState.length < 1 && res && res.length !== 0) {
         loadChats(chatDispatch, {
           chats: res,
         });

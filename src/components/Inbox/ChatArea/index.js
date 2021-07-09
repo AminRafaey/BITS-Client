@@ -13,6 +13,7 @@ import {
 } from '../../../Context/Chat';
 import { useSocketState } from '../../../Context/Socket';
 import { styled, Box, CircularProgress } from '@material-ui/core';
+import stateCloner from '../../utility/StateCloner';
 
 const ChatAreaWrapper = styled(Box)({
   display: 'flex',
@@ -64,21 +65,14 @@ function ChatArea(props) {
           jid: res.jid,
           messages:
             currentChatJid.split('@')[1] === 's.whatsapp.net'
-              ? res.messages.messages.reverse()
-              : res.messages.messages.reverse(),
+              ? res.messages.messages
+              : res.messages.messages,
         });
         setLoader(false);
       });
 
       socket.emit('get-contact-messages', currentChatJid);
     } else {
-      addMessages(chatDispatch, {
-        jid: currentChatJid,
-        messages:
-          currentChatJid.split('@')[1] === 's.whatsapp.net'
-            ? messages.reverse()
-            : messages.reverse(),
-      });
       setLoader(false);
     }
     return () => {
@@ -100,9 +94,11 @@ function ChatArea(props) {
   return (
     <ChatAreaWrapper>
       <ChatsWrapper id="scrollableDiv" className="Chat-Box-Styled-Scroll">
-        {chatState
-          .find((c) => c.jid === currentChatJid)
-          ['messages'].map((m, index) => {
+        {stateCloner(
+          chatState.find((c) => c.jid === currentChatJid)['messages']
+        )
+          .reverse()
+          .map((m, index) => {
             if (
               m.message &&
               (m.message.conversation ||

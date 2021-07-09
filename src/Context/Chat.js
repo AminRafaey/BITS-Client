@@ -17,11 +17,7 @@ function ChatReducer(state, action) {
     }
     case 'ADD_MESSAGE': {
       const index = cloneState.findIndex((c) => c.jid === jid);
-      index !== -1 &&
-        (cloneState[index]['messages'] = [
-          message,
-          ...cloneState[index]['messages'],
-        ]);
+      index !== -1 && cloneState[index]['messages'].push(message);
       return [...cloneState];
     }
     case 'MARK_AS_UNREAD': {

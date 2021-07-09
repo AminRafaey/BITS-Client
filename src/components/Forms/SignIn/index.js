@@ -19,6 +19,7 @@ import {
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import EmailIcon from '@material-ui/icons/Email';
+import config from '../../../config.json';
 
 import {
   HoverColor,
@@ -39,7 +40,7 @@ const SignInWrapper = styled(Box)({
 const ImageWrapper = styled(Box)({
   minWidth: '100%',
   minHeight: '80vh',
-  backgroundImage: `url("/src/public/images/login-new.png")`,
+  backgroundImage: `url(${config.baseUrl}images/login-new.png)`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',
@@ -138,8 +139,8 @@ function SignIn(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitCicked, setIsSubmitClicked] = useState(false);
-  const [email, setEmail] = useState('aminrafaey543@gmail.com');
-  const [password, setPassword] = useState('1234');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const userDispatch = useUserDispatch();
   const location = useLocation();

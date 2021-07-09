@@ -96,7 +96,7 @@ function LabelArea(props) {
     <LabelAreaWrapper>
       <LabelWrapper>
         <LabelTyp>Labels</LabelTyp>
-        <Link to={'addlabel'} style={{ textDecoration: 'none' }}>
+        <Link to={'addLabel'} style={{ textDecoration: 'none' }}>
           <ManageLabelTyp>Manage Labels</ManageLabelTyp>
         </Link>
       </LabelWrapper>{' '}

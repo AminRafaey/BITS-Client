@@ -126,8 +126,29 @@ export async function updateLeadsLabels(updatedLeads, prevState) {
 // Use header of multistream as it is sending a file
 export async function sendCSV(file) {
   try {
-    const res = await axios.post(`${endPointApi}/csvUpload`, file);
-    return res.data.field.message;
+    const res = await axios.post(`${endPointApi}/csvUpload`, file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return res.data.field;
+  } catch (ex) {
+    if (!ex.response) {
+      throw 'Please check your internet connection or close a file before uploading';
+    } else {
+      throw ex.response.data.field.message;
+    }
+  }
+}
+
+export async function sendXLSX(file) {
+  try {
+    const res = await axios.post(`${endPointApi}/xlsxUpload`, file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return res.data.field;
   } catch (ex) {
     if (!ex.response) {
       throw 'Please check your internet connection or close a file before uploading';

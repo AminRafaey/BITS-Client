@@ -42,6 +42,7 @@ import {
   ManageTemplates,
   ManageLabels,
 } from '../../components';
+import { VerifiedAccessRoute } from '../Assets';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 
@@ -101,6 +102,7 @@ export default function MiniDrawer() {
   const [open, setOpen] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [joinRoomLoader, setJoinRoomLoader] = useState(true);
   const labelState = useLabelState();
   const labelDispatch = useLabelDispatch();
   const leadsState = useLeadsState();
@@ -116,10 +118,15 @@ export default function MiniDrawer() {
     setOpenModal: setOpenModal,
   };
   useEffect(() => {
-    socket.emit('join-room', {
-      mobileNumber: user.user.mobileNumber,
-      userName: 'Amin',
-    });
+    socket.emit(
+      'join-room',
+      {
+        mobileNumber: user.user.mobileNumber,
+        userName: 'Amin',
+      },
+      {},
+      (response) => setJoinRoomLoader(false)
+    );
     socket.on('room-updates', (res) => console.log(res));
     socket.on('room-users', (res) => console.log(res));
 
@@ -134,35 +141,50 @@ export default function MiniDrawer() {
     setLoader(true);
 
     if (Object.entries(labelState).length < 1) {
-      requests.push(
-        getLabels().then((res) => {
-          loadLabels(labelDispatch, { labels: res });
-        })
-      );
+      (user.user.type === 'Admin' ||
+        user.user.quickSend === 'allow' ||
+        user.user.contactManagement === 'allow' ||
+        user.user.labelManagement === 'allow' ||
+        user.user.inbox === 'allow') &&
+        requests.push(
+          getLabels().then((res) => {
+            loadLabels(labelDispatch, { labels: res });
+          })
+        );
     }
 
     if (leadsState.length < 1) {
-      requests.push(
-        getLeads().then((res) => {
-          loadLeads(leadsDispatch, { leads: res });
-        })
-      );
+      (user.user.type === 'Admin' ||
+        user.user.quickSend === 'allow' ||
+        user.user.contactManagement === 'allow' ||
+        user.user.inbox === 'allow') &&
+        requests.push(
+          getLeads().then((res) => {
+            loadLeads(leadsDispatch, { leads: res });
+          })
+        );
     }
 
     if (companyState.length < 1) {
-      requests.push(
-        getCompanies().then((res) => {
-          res && loadCompanies(companyDispatch, { companies: res });
-        })
-      );
+      (user.user.type === 'Admin' ||
+        user.user.quickSend === 'allow' ||
+        user.user.contactManagement === 'allow') &&
+        requests.push(
+          getCompanies().then((res) => {
+            res && loadCompanies(companyDispatch, { companies: res });
+          })
+        );
     }
 
     if (leadSourceState.length < 1) {
-      requests.push(
-        getLeadSource().then((res) => {
-          res && loadLeadSource(leadSourceDispatch, { leadSource: res });
-        })
-      );
+      (user.user.type === 'Admin' ||
+        user.user.quickSend === 'allow' ||
+        user.user.contactManagement === 'allow') &&
+        requests.push(
+          getLeadSource().then((res) => {
+            res && loadLeadSource(leadSourceDispatch, { leadSource: res });
+          })
+        );
     }
 
     Promise.allSettled(requests).then((resArr) => {
@@ -188,7 +210,7 @@ export default function MiniDrawer() {
         )}
         <Drawer open={open} handleDrawerOpen={handleDrawerOpen} />
         <main className={classes.content}>
-          {loader ? (
+          {loader || joinRoomLoader ? (
             <QuickSendWrapper>
               <LoaderWrapper>
                 <CircularProgress color="primary" />
@@ -196,65 +218,65 @@ export default function MiniDrawer() {
             </QuickSendWrapper>
           ) : (
             <Switch>
-              <Route path="/sendSms">
+              <VerifiedAccessRoute path="/sendSms">
                 <QuickSendWrapper>
                   <QuickSend {...commonProps} />
                 </QuickSendWrapper>
-              </Route>
-              <Route path="/sendFromAddressBook">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/sendFromAddressBook">
                 <AddressBookWrapper>
                   {' '}
                   <AddressBookTable {...commonProps} />
                 </AddressBookWrapper>
-              </Route>
-              <Route path="/inbox">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/inbox">
                 <InboxWrapper>
                   {' '}
                   <Inbox setOpen={setOpen} {...commonProps} />
                 </InboxWrapper>
-              </Route>
+              </VerifiedAccessRoute>
 
-              <Route path="/manageContacts">
+              <VerifiedAccessRoute path="/manageContacts">
                 <ContactWrapper>
                   <ManageContact {...commonProps} />
                 </ContactWrapper>
-              </Route>
-              <Route path="/addContacts">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/addContacts">
                 <ContactWrapper>
-                  <AddContacts />
+                  <AddContacts {...commonProps} />
                 </ContactWrapper>
-              </Route>
-              <Route path="/addLabel">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/addLabel">
                 <QuickSendWrapper>
                   <CreateLabel />
                 </QuickSendWrapper>
-              </Route>
-              <Route path="/manageLabels">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/manageLabels">
                 <ManageTemplateWrapper>
                   <ManageLabels />
                 </ManageTemplateWrapper>
-              </Route>
+              </VerifiedAccessRoute>
 
-              <Route path="/addTemplate">
+              <VerifiedAccessRoute path="/addTemplate">
                 <QuickSendWrapper>
                   <CreateTemplate />
                 </QuickSendWrapper>
-              </Route>
-              <Route path="/manageTemplate">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/manageTemplate">
                 <ManageTemplateWrapper>
                   <ManageTemplates />
                 </ManageTemplateWrapper>
-              </Route>
-              <Route path="/employeesList">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/employeesList">
                 <ContactWrapper>
                   <ManageEmployee {...commonProps} />
                 </ContactWrapper>
-              </Route>
-              <Route path="/manageEmployeeAccess">
+              </VerifiedAccessRoute>
+              <VerifiedAccessRoute path="/manageEmployeeAccess">
                 <ContactWrapper>
                   <ManageEmployeeAccess {...commonProps} />
                 </ContactWrapper>
-              </Route>
+              </VerifiedAccessRoute>
 
               <Route path="/">
                 <HomePageWrapper>

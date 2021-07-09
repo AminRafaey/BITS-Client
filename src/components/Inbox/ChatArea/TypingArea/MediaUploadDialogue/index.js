@@ -20,7 +20,7 @@ const TitleTyp = styled(Typography)({
   fontFamily: 'medium',
 });
 
-export const FileWrapper = styled(Box)({
+const FileWrapper = styled(Box)({
   background: DarkBackgroundColor,
   height: '60px',
   display: 'flex',
@@ -28,8 +28,10 @@ export const FileWrapper = styled(Box)({
   marginTop: 15,
   marginLeft: 52,
 });
-
-export const ActionsWrapper = styled(Box)({
+const TextAreaWrapper = styled(Box)({
+  padding: 15,
+});
+const ActionsWrapper = styled(Box)({
   display: 'flex',
 });
 
@@ -112,11 +114,13 @@ export default function MediaUploadDialogue(props) {
         <FileWrapper>
           <FileNameTyp>{media ? media.name : 'No File Choosen'}</FileNameTyp>
         </FileWrapper>
-        <TextArea
-          placeholder="Description(Optional)"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+        <TextAreaWrapper>
+          <TextArea
+            placeholder="Description(Optional)"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </TextAreaWrapper>
       </DialogContent>
       <DialogActions>
         <ActionsWrapper>

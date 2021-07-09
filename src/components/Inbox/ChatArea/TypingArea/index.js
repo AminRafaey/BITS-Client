@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import { InfoAlert } from '../../../Assets';
-import MediaPopover from './MediaSendingPopover';
+import MediaSending from './MediaSending';
 import { useSocketState } from '../../../../Context/Socket';
 import { useChatDispatch, addMessage } from '../../../../Context/Chat';
 import { useLeadsState } from '../../../../Context/Lead';
@@ -161,7 +161,7 @@ function TypingArea(props) {
           />
         </TextAreaWrapper>
         <FotterWrapper>
-          <MediaPopover />
+          <MediaSending />
           <SendWrapper onClick={() => handleSend()}>
             <SendIcon style={{ height: 24, width: 24 }} />
           </SendWrapper>

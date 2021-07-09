@@ -36,11 +36,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <UserProvider>
-          <ConnectStatusProvider>
+        <UserProvider
+          token={
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGU1ZDQwMGU3ZDcwNjAwMjIwYjc4MWQiLCJ0eXBlIjoiQWRtaW4iLCJhZG1pbklkIjoiNjBlNWQ0MDBlN2Q3MDYwMDIyMGI3ODFjIiwibW9iaWxlTnVtYmVyIjoiKzkyMzQxNTUxMTY4OSIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMDlUMDg6NDI6MTcuODIzWiIsImlhdCI6MTYyNTgyMDEzN30.Ht9C3rwJwrFUTYXSca7sb8HexGxvZ74PrFtrcKPpbLU'
+          }
+        >
+          <ConnectStatusProvider connectStatus={true}>
             <TemplateProvider>
               <LeadsProvider>
-                <ChatProvider>
+                <ChatProvider chat={chat}>
                   <LabelProvider>
                     <CompanyProvider>
                       <LeadSourceProvider>

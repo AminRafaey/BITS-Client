@@ -61,3 +61,19 @@ export async function verifyEmail(email) {
     }
   }
 }
+
+export async function resetPassword(obj, token) {
+  try {
+    axios.defaults.headers.common['x-auth-token'] = token;
+    const res = await axios.post(endPointApi + '/resetPassword', {
+      ...obj,
+    });
+    return res.data.field;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+    } else {
+      throw ex.response.data.field;
+    }
+  }
+}

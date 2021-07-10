@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory, Link, useLocation } from 'react-router-dom';
 import { TextField, Alert } from '../../../HOC';
-import { createAdmin } from '../../../../api/Admin';
+import { resetPassword } from '../../../../api/Auth';
 import {
   Box,
   styled,
@@ -40,6 +40,9 @@ const ImageWrapper = styled(Box)({
 
 function SignUp(props) {
   const history = useHistory();
+  const search = useLocation().search;
+  const token = new URLSearchParams(search).get('token');
+
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState({});
   const [isSubmitCicked, setIsSubmitClicked] = useState(false);
@@ -58,16 +61,18 @@ function SignUp(props) {
   const handleSubmit = () => {
     !isSubmitCicked && setIsSubmitClicked(true);
     if (!password || !confirmPassword) return;
-
     setLoading(true);
 
-    createAdmin({
-      password,
-      confirmPassword,
-    })
+    resetPassword(
+      {
+        password,
+        confirmPassword,
+      },
+      token
+    )
       .then((res) => {
         setLoading(false);
-        history.push(`/`);
+        history.push(`/signIn`);
       })
       .catch((err) => {
         err && setError(err);

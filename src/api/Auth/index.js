@@ -46,3 +46,18 @@ export async function verifyEmployeeAccount(token, userName, password) {
     }
   }
 }
+
+export async function verifyEmail(email) {
+  try {
+    const res = await axios.post(endPointApi + '/forgotPassword', {
+      email,
+    });
+    return res.data.field;
+  } catch (ex) {
+    if (!ex.response) {
+      toastActions.error('Please check your internet connection');
+    } else {
+      throw ex.response.data.field;
+    }
+  }
+}

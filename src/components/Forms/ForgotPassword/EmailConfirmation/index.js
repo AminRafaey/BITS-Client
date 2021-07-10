@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { auth } from '../../../../api/Auth';
+import { Alert } from '../../../HOC';
+import { verifyEmail } from '../../../../api/Auth';
 import {
   Box,
   styled,
@@ -17,7 +18,6 @@ import config from '../../../../config.json';
 import {
   StyledButton,
   StyledEmailIcon,
-  ErrorTyp,
   SignInWrapper,
   SignInTyp,
   SignUpWrapper,
@@ -46,7 +46,7 @@ const RightWrapper = styled(Box)({
 });
 
 function EmailConfirmation(props) {
-  const [error, setError] = useState('');
+  const [apiRes, setApiRes] = useState('');
   const [isSubmitCicked, setIsSubmitClicked] = useState(false);
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -55,12 +55,13 @@ function EmailConfirmation(props) {
     !isSubmitCicked && setIsSubmitClicked(true);
     if (!isEmailValid(email)) return;
     setLoading(true);
-    auth(email, password)
+    verifyEmail(email)
       .then((res) => {
+        setApiRes(res);
         setLoading(false);
       })
       .catch((err) => {
-        setError(err);
+        setApiRes(err);
         setLoading(false);
       });
   };
@@ -74,7 +75,12 @@ function EmailConfirmation(props) {
         <Grid item xs={3}>
           <RightWrapper>
             <SignInTyp>Forgot Password?</SignInTyp>
-            {error && <ErrorTyp>{error}</ErrorTyp>}
+            {apiRes && (
+              <>
+                <Alert severity={apiRes.name}>{apiRes.message}</Alert>
+                <Box mb={1.75} />
+              </>
+            )}
             <TextField
               variant="outlined"
               size="small"

@@ -28,6 +28,7 @@ import {
   SignUp,
   AccountVerification,
   AdminAccountVerification,
+  EmailConfirmation,
 } from './components';
 import { PrivateRoute } from './components/Assets';
 import { EmailValidation } from './InfoPages';
@@ -72,7 +73,9 @@ function App() {
                                   <Route path="/adminAccount/verifyEmail">
                                     <AdminAccountVerification />
                                   </Route>
-
+                                  <Route path="/forgotPassword">
+                                    <EmailConfirmation />
+                                  </Route>
                                   <PrivateRoute userType={'Employee'}>
                                     <MiniDrawer />
                                   </PrivateRoute>

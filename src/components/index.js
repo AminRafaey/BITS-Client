@@ -24,3 +24,4 @@ export { default as SignUp } from './Forms/SignUp';
 export { default as AccountVerification } from './Forms/AccountVerification';
 export { default as AdminAccountVerification } from './Forms/SignUp/AdminAccountVerification';
 export { default as EmailConfirmation } from './Forms/ForgotPassword/EmailConfirmation';
+export { default as PasswordConfirmation } from './Forms/ForgotPassword/PasswordConfirmation';

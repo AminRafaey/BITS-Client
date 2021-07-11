@@ -15,11 +15,11 @@ export const initLeadData = {
 };
 
 export const initEmployeeData = {
-  firstName: 'Amin',
-  lastName: 'Rafaey',
-  email: 'amin@gmail.com',
+  firstName: '',
+  lastName: '',
+  email: '',
   phone: '',
-  designation: 'MERN Developer',
+  designation: '',
   joiningDate: new Date(),
 };
 

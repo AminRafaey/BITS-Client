@@ -54,6 +54,7 @@ export async function createLead(leadData) {
 
 export async function updateLead(updatedLead) {
   try {
+    delete updatedLead['selected'];
     const res = await axiosConfig(endPointApi, 'put', undefined, updatedLead);
 
     return res.data.field.data;

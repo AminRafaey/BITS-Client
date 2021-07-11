@@ -41,23 +41,25 @@ function SecondHeader(props) {
         onChange={handleSelectAllClick}
       />
       <SelectedLeadTyp>{selectedCount + ' Selected'}</SelectedLeadTyp>
-      <ButtonsWrapper>
-        <Box pl={1}>
-          <Button>Send Email</Button>
-        </Box>
-        <Box pl={1}>
-          <Link
-            to={'/sendFromAddressBook'}
-            style={{
-              textDecoration: 'none',
-              width: '100%',
-              color: 'rgba(0, 0, 0, 0.87)',
-            }}
-          >
-            <Button disabled={selectedCount === 0}>Send WhatsApp</Button>
-          </Link>
-        </Box>
-      </ButtonsWrapper>
+      {
+        // <ButtonsWrapper>
+        //   <Box pl={1}>
+        //     <Button>Send Email</Button>
+        //   </Box>
+        //   <Box pl={1}>
+        //     <Link
+        //       to={'/sendFromAddressBook'}
+        //       style={{
+        //         textDecoration: 'none',
+        //         width: '100%',
+        //         color: 'rgba(0, 0, 0, 0.87)',
+        //       }}
+        //     >
+        //       <Button disabled={selectedCount === 0}>Send WhatsApp</Button>
+        //     </Link>
+        //   </Box>
+        // </ButtonsWrapper>
+      }
     </SecondHeaderWrapper>
   );
 }

@@ -6,6 +6,7 @@ import {
   TemplateIcon,
   LogIcon,
   ContactIcon,
+  LabelIcon,
 } from '../../resources';
 
 export const iconList = [
@@ -22,7 +23,7 @@ export const iconList = [
   {
     title: 'Templates',
     icon: <TemplateIcon />,
-    defaultPath: '/addTemplate',
+    defaultPath: '/manageTemplate',
   },
   {
     title: 'Contact Management',
@@ -31,14 +32,14 @@ export const iconList = [
   },
   ,
   {
-    title: 'Label Management',
+    title: 'Employee Management',
     icon: <GroupIcon />,
-    defaultPath: '/addLabel',
+    defaultPath: '/employeesList',
   },
   ,
   {
-    title: 'Logs',
-    icon: <LogIcon />,
-    defaultPath: '/logs',
+    title: 'Label Management',
+    icon: <LabelIcon />,
+    defaultPath: '/manageLabels',
   },
 ];

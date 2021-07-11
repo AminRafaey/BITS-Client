@@ -63,19 +63,21 @@ function OptionSelection(props) {
                 }
                 label="List"
               />
-              <StyledFormControlLabel
-                value="File"
-                checked={SelectedOption === 'File'}
-                control={
-                  <Radio
-                    color="primary"
-                    onChange={(e) => {
-                      e.target.checked && setSelectedOption('File');
-                    }}
-                  />
-                }
-                label="File"
-              />
+              {
+                // <StyledFormControlLabel
+                //   value="File"
+                //   checked={SelectedOption === 'File'}
+                //   control={
+                //     <Radio
+                //       color="primary"
+                //       onChange={(e) => {
+                //         e.target.checked && setSelectedOption('File');
+                //       }}
+                //     />
+                //   }
+                //   label="File"
+                // />
+              }
             </RadioGroup>
           </FormControl>
         </RadioGroupWrapper>

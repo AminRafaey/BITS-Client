@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { TextArea, Button } from '../../../../HOC';
 import { useConnectStatusState } from '../../../../../Context/ConnectStatus';
 import { useSocketState } from '../../../../../Context/Socket';
@@ -94,14 +95,12 @@ const Dialog = withStyles(() => ({
     minWidth: '60%',
   },
 }))(MuiDialog);
-export default function MediaUploadDialogue(props) {
+function MediaUploadDialogue(props) {
   const { open, handleClose, currentChatJid } = props;
   const connectStatusState = useConnectStatusState();
   const socket = useSocketState();
   const [media, setMedia] = useState({});
   const [message, setMessage] = useState('');
-
-  console.log(media, message, ['+' + currentChatJid.split('@')[0]]);
 
   const handleSend = () => {
     if (!connectStatusState) {
@@ -166,3 +165,10 @@ export default function MediaUploadDialogue(props) {
     </Dialog>
   );
 }
+MediaUploadDialogue.propTypes = {
+  currentChatJid: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
+
+export default MediaUploadDialogue;

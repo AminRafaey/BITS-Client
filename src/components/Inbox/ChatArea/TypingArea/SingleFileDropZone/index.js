@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import { Button, Alert } from '../../../../HOC';
 import { Box } from '@material-ui/core';
@@ -18,8 +19,8 @@ const ImageUploadWrapper = styled(Box)({
   justifyContent: 'center',
 });
 
-export default function SingleFileDropZone(props) {
-  const { media, setMedia, handleClose } = props;
+function SingleFileDropZone(props) {
+  const { setMedia } = props;
   const [onDragEnterState, setOnDragEnterState] = useState(false);
   const [error, setError] = useState('');
   const {
@@ -76,3 +77,9 @@ export default function SingleFileDropZone(props) {
     </Box>
   );
 }
+
+SingleFileDropZone.propTypes = {
+  setMedia: PropTypes.func.isRequired,
+};
+
+export default SingleFileDropZone;

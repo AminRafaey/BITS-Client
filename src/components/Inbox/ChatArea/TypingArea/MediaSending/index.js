@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import MediaUploadDialogue from '../MediaUploadDialogue';
 import { Clip } from '../../../../../resources';
 import { styled, Box } from '@material-ui/core';
@@ -21,7 +22,7 @@ const SendWrapper = styled(Box)({
     background: primaryColor,
   },
 });
-export default function MediaSending(props) {
+function MediaSending(props) {
   const { currentChatJid } = props;
   const [open, setOpen] = useState(false);
 
@@ -49,4 +50,8 @@ export default function MediaSending(props) {
   );
 }
 
-MediaSending.propTypes = {};
+MediaSending.propTypes = {
+  currentChatJid: PropTypes.string.isRequired,
+};
+
+export default MediaSending;

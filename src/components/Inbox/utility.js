@@ -60,7 +60,6 @@ export const formatBytes = (a, b = 0) => {
 export const handleMediaChange = (files, setMedia, setMediaError, size) => {
   const errors = validateInboxFile(files, { limit: 1, size: size });
   if (!errors) {
-    console.log(getMimeType(files));
     setMedia({ file: files[0], type: getMimeType(files) });
     setMediaError('');
   } else {

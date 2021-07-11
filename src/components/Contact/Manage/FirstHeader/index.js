@@ -64,7 +64,7 @@ function FirstHeader(props) {
   const leadsState = useLeadsState();
   const userState = useUserState();
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
-  console.log(`${config.baseUrl}lead/exportLeads?token=${userState.token}`);
+
   return (
     <FirstHeaderWrapper>
       <ContactInfoWrapper>

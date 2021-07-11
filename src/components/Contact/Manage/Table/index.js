@@ -353,20 +353,22 @@ export default function ContactsTable(props) {
                                       <ItemTyp>Delete</ItemTyp>
                                     </MenuItem>
 
-                                    <MenuItem onClick={handleClose}>
-                                      <NoteAddIcon style={{ ...iconsStyle }} />
-                                      <ItemTyp>Add Note</ItemTyp>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                      <EventIcon style={{ ...iconsStyle }} />
-                                      <ItemTyp>Schedule an appointment</ItemTyp>
-                                    </MenuItem>
-                                    <MenuItem onClick={handleClose}>
-                                      <MonetizationOnIcon
-                                        style={{ ...iconsStyle }}
-                                      />
-                                      <ItemTyp>Add Deal</ItemTyp>
-                                    </MenuItem>
+                                    {
+                                      // <MenuItem onClick={handleClose}>
+                                      //   <NoteAddIcon style={{ ...iconsStyle }} />
+                                      //   <ItemTyp>Add Note</ItemTyp>
+                                      // </MenuItem>
+                                      // <MenuItem onClick={handleClose}>
+                                      //   <EventIcon style={{ ...iconsStyle }} />
+                                      //   <ItemTyp>Schedule an appointment</ItemTyp>
+                                      // </MenuItem>
+                                      // <MenuItem onClick={handleClose}>
+                                      //   <MonetizationOnIcon
+                                      //     style={{ ...iconsStyle }}
+                                      //   />
+                                      //   <ItemTyp>Add Deal</ItemTyp>
+                                      // </MenuItem>
+                                    }
                                   </Menu>
                                 </StickyRightTableCell>
                               )}

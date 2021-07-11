@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import phone from 'phone';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import PhoneNumber from '../PhoneNumber';
 import { isEmailValid } from '../Lead';
 import { TextField, Alert } from '../../HOC';
@@ -311,7 +311,15 @@ function SignUp(props) {
           )}
           <SignUpWrapper>
             <SignInHelperTyp>Already have an account?</SignInHelperTyp>
-            <SignUpTyp> Sign In</SignUpTyp>
+            <Link
+              to={'signIn'}
+              style={{
+                textDecoration: 'none',
+                color: 'rgba(0, 0, 0, 0.87)',
+              }}
+            >
+              <SignUpTyp> Sign In</SignUpTyp>
+            </Link>
           </SignUpWrapper>
         </FormWrapper>
       </FormParentWrapper>

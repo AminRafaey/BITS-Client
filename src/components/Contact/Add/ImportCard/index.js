@@ -162,7 +162,7 @@ function ImportCard(props) {
               startIcon={<CloudUploadIcon />}
               style={{ pointerEvents: 'none' }}
             >
-              Upload CSV File
+              Upload {acceptType.replace('.', '').toUpperCase()} File
             </Button>
           </label>
           <FileNameTyp>
@@ -201,7 +201,7 @@ function ImportCard(props) {
       <InfoAlert
         open={openInfoAlert}
         setOpen={setOpenInfoAlert}
-        title={'CSV Upload Status'}
+        title={`${acceptType.replace('.', '').toUpperCase()} Upload Status`}
         message={message.current}
       />
     </Card>

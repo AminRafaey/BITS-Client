@@ -61,9 +61,11 @@ function SecondHeader(props) {
             selectedCount={selectedCount}
           />
         </Box>
-        <Box pl={1}>
-          <Button>Send Email</Button>
-        </Box>
+        {
+          // <Box pl={1}>
+          //   <Button>Send Email</Button>
+          // </Box>
+        }
         <Box pl={1}>
           <Link
             to={'/sendFromAddressBook'}

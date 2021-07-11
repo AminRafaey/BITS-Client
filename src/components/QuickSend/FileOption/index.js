@@ -83,9 +83,11 @@ function FileOption() {
           <SendWrapper>
             <Button> {'Send'}</Button>
           </SendWrapper>
-          <ScheduleWrapper>
-            <Button> {'Schedule'}</Button>
-          </ScheduleWrapper>
+          {
+            // <ScheduleWrapper>
+            //   <Button> {'Schedule'}</Button>
+            // </ScheduleWrapper>
+          }
         </ButtonWrapper>
       </Grid>
     </Grid>

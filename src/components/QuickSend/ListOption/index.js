@@ -33,6 +33,7 @@ const FormatTyp = styled(Typography)({
 
 export const ButtonWrapper = styled(Box)({
   display: 'flex',
+  alignItems: 'center',
   paddingTop: 20,
 });
 export default function ListOption(props) {
@@ -101,9 +102,11 @@ export default function ListOption(props) {
             <SendWrapper>
               <Button onClick={() => handleSend()}> {'Send'}</Button>
             </SendWrapper>
-            <ScheduleWrapper>
-              <Button> {'Schedule'}</Button>
-            </ScheduleWrapper>
+            {
+              // <ScheduleWrapper>
+              //   <Button> {'Schedule'}</Button>
+              // </ScheduleWrapper>
+            }
           </ButtonWrapper>
         </Grid>
       </Grid>

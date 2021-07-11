@@ -39,7 +39,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <SocketProvider>
         <UserProvider token={localStorage.getItem('AUTH_TOKEN') || undefined}>
-          <ConnectStatusProvider connectStatus={true}>
+          <ConnectStatusProvider>
             <TemplateProvider>
               <LeadsProvider>
                 <ChatProvider>

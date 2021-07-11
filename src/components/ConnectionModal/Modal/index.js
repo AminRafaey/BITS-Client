@@ -4,6 +4,9 @@ import QrCode from '../QrCode';
 import InfoAlert from '../../Assets/InfoAlert';
 import { toastActions } from '../../Toast';
 import {
+  useUserState
+} from '../../../Context/User';
+import {
   useConnectStatusDispatch,
   updateStatus,
 } from '../../../Context/ConnectStatus';
@@ -90,11 +93,12 @@ export default function Modal(props) {
   const chatStateRef = useRef();
   const chatDispatch = useChatDispatch();
   const socket = useSocketState();
-
+  const userState = useUserState();
+console.log(userState.user.mobileNumber);
   useEffect(() => {
     if (openModal) {
       currentConnRef.current = new Date().toString();
-      socket.emit('get-qr', currentConnRef.current);
+      socket.emit('get-qr', {currentConnRef:currentConnRef.current, mobileNumber:userState.user.mobileNumber});
     }
   }, [openModal]);
   useEffect(() => {
@@ -112,6 +116,7 @@ export default function Modal(props) {
       currentConnRef.current == res.currentConnRef && setQrString(res.qr);
     });
     socket.on('connection-status', (res) => {
+      console.log(3);
       if (res.status === 'success') {
         toastActions.success('Connected to a WhatsApp successfully.');
         currentConnRef.current = res.currentConnRef;
@@ -123,10 +128,8 @@ export default function Modal(props) {
         toastActions.error('Connection timed out, Please try again.');
       }
     });
-    // socket.on('contacts-received', (res) => {
-    //   console.log(res);
-    // });
     socket.on('chats-received', (res) => {
+      console.log(2);
       res &&
         res.length !== 0 &&
         toastActions.success('Chats recieved successfully');
@@ -153,7 +156,6 @@ export default function Modal(props) {
       }
     });
     socket.on('get-contact-messages', getMessagesHandler);
-
     socket.on('chat-new', (res) => {
       addNewChat(chatDispatch, {
         chat: { ...res, messages: [] },
@@ -174,6 +176,20 @@ export default function Modal(props) {
           jid: res.key.remoteJid,
           unreadCount: 1,
         });
+      }
+    });
+    socket.on('wrong-mobile-number', (res) => {
+      if (res.currentConnRef == currentConnRef.current) {
+        
+        setOpen(false);
+        setQrString("");
+        setOpenModal(false);
+
+        setAlertMessage(
+          `The scanned account number didn't match to login account, please use the number that you provide during Sign up`
+        );
+        setOpenInfoAlert(true);
+        
       }
     });
     return () => {
@@ -213,6 +229,7 @@ export default function Modal(props) {
   };
 
   const handleAfterScan = (status) => {
+    console.log(1);
     handleClose();
     updateStatus(connectStatusDispatch, {
       status: status,

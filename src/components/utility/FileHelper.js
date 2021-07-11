@@ -20,6 +20,15 @@ export default function validateFile(files, options) {
   else return null;
 }
 
+export function validateInboxFile(files, options) {
+  const errors = { limit: '', type: '', size: '' };
+  maxSelectFile(files, options, errors);
+  checkFileSize(files, options, errors);
+
+  if (errors.limit || errors.type || errors.size) return errors;
+  else return null;
+}
+
 const maxSelectFile = (files, options, errors) => {
   if (!options.limit) return null;
 
@@ -88,4 +97,57 @@ const checkFileSize = (files, options, errors) => {
       break;
     }
   }
+};
+
+export const getMimeType = (files) => {
+  const imageTypes = [
+    'image/png',
+    'image/jpeg',
+    'image/jpg',
+    'image/bmp',
+    'image/tiff',
+    'image/gif',
+  ];
+
+  const videoTypes = [
+    'video/mpeg',
+    'video/mp4',
+    'video/quicktime',
+    'video/webm',
+    'video/3gpp',
+    'video/3gpp2',
+    'video/3gpp-tt',
+    'video/H261',
+    'video/H263',
+    'video/H263-1998',
+    'video/H263-2000',
+    'video/H264',
+  ];
+
+  const pdfTypes = ['application/pdf'];
+
+  const types = {
+    image: {
+      types: imageTypes,
+    },
+    video: {
+      types: videoTypes,
+    },
+    pdf: {
+      types: pdfTypes,
+    },
+  };
+
+  let type = null;
+  Object.keys(types).map((t) => {
+    if (!type) {
+      for (let i = 0; i < types[t]['types'].length; i++) {
+        if (types[t]['types'].find((type) => files[0].type === type)) {
+          type = t;
+          break;
+        }
+      }
+    }
+  });
+  return type;
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import TemplateMultiSelect from '../../../QuickSend/TemplateMultiSelect';
 import { InfoAlert } from '../../../Assets';
+import MediaSending from './MediaSending';
 import { useSocketState } from '../../../../Context/Socket';
 import { useChatDispatch, addMessage } from '../../../../Context/Chat';
 import { useLeadsState } from '../../../../Context/Lead';
@@ -50,7 +51,7 @@ const TemplateSelectWrapper = styled(Box)({
 
 const FotterWrapper = styled(Box)({
   display: 'flex',
-  justifyContent: 'flex-end',
+  justifyContent: 'space-between',
   alignItems: 'center',
   padding: '2px 10px',
   borderTop: `1px solid ${GrayColor}`,
@@ -160,7 +161,7 @@ function TypingArea(props) {
           />
         </TextAreaWrapper>
         <FotterWrapper>
-          {' '}
+          <MediaSending currentChatJid={currentChatJid} />
           <SendWrapper onClick={() => handleSend()}>
             <SendIcon style={{ height: 24, width: 24 }} />
           </SendWrapper>

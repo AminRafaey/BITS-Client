@@ -14,3 +14,4 @@ export { default as Document } from './Document';
 export { default as DefaultMedia } from './DefaultMedia';
 export { default as Location } from './Location';
 export { default as Audio } from './Audio';
+export { default as Clip } from './Clip';

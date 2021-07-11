@@ -161,7 +161,7 @@ function TypingArea(props) {
           />
         </TextAreaWrapper>
         <FotterWrapper>
-          <MediaSending />
+          <MediaSending currentChatJid={currentChatJid} />
           <SendWrapper onClick={() => handleSend()}>
             <SendIcon style={{ height: 24, width: 24 }} />
           </SendWrapper>

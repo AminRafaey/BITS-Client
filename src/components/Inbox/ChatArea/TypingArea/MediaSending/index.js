@@ -2,13 +2,27 @@ import React, { useState } from 'react';
 import MediaUploadDialogue from '../MediaUploadDialogue';
 import { Clip } from '../../../../../resources';
 import { styled, Box } from '@material-ui/core';
-
+import { DarkHoverColor, primaryColor } from '../../../../constants/theme';
 const MediaSendingWrapper = styled(Box)({});
 
 const MediaIconWrapper = styled(Box)({});
 
+const SendWrapper = styled(Box)({
+  height: 24,
+  cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  padding: '1px 2px',
+  '&:hover': {
+    background: DarkHoverColor,
+  },
+  '&:active': {
+    background: primaryColor,
+  },
+});
 export default function MediaSending(props) {
-  const {} = props;
+  const { currentChatJid } = props;
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -22,9 +36,15 @@ export default function MediaSending(props) {
   return (
     <MediaSendingWrapper>
       <MediaIconWrapper onClick={handleClickOpen}>
-        <Clip />
+        <SendWrapper>
+          <Clip style={{ height: 18, width: 18 }} />
+        </SendWrapper>
       </MediaIconWrapper>
-      <MediaUploadDialogue open={open} handleClose={handleClose} />
+      <MediaUploadDialogue
+        open={open}
+        handleClose={handleClose}
+        currentChatJid={currentChatJid}
+      />
     </MediaSendingWrapper>
   );
 }

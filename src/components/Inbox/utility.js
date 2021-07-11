@@ -1,3 +1,5 @@
+import { validateInboxFile, getMimeType } from '../utility/FileHelper';
+
 export const calculateTimeInFormat = (date) => {
   const convertedTimeInFormat = new Date(date * 1000)
     .toLocaleString()
@@ -53,4 +55,15 @@ export const formatBytes = (a, b = 0) => {
     ' ' +
     ['Bytes', 'KB', 'MB', 'GB'][d]
   );
+};
+
+export const handleMediaChange = (files, setMedia, setMediaError, size) => {
+  const errors = validateInboxFile(files, { limit: 1, size: size });
+  if (!errors) {
+    console.log(getMimeType(files));
+    setMedia({ file: files[0], type: getMimeType(files) });
+    setMediaError('');
+  } else {
+    setMediaError(errors.limit + errors.type + errors.size);
+  }
 };

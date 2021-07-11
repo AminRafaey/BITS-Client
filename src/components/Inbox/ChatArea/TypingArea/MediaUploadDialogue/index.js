@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { TextArea, Button } from '../../../../HOC';
+import { useConnectStatusState } from '../../../../../Context/ConnectStatus';
+import { useSocketState } from '../../../../../Context/Socket';
+import { toastActions } from '../../../../Toast';
+import { sendTextMesage, sendMedia } from '../../../../../api/send';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Dialog as MuiDialog,
   styled,
   Typography,
-  DialogActions,
   Box,
   DialogTitle as MuiDialogTitle,
   DialogContent as MuiDialogContent,
@@ -14,25 +17,25 @@ import {
 
 import CloseIcon from '@material-ui/icons/Close';
 import SingleFileDropZone from '../SingleFileDropZone';
-import { DarkBackgroundColor } from '../../../../constants/theme';
 const TitleTyp = styled(Typography)({
   fontSize: 16,
   fontFamily: 'medium',
 });
 
 const FileWrapper = styled(Box)({
-  background: DarkBackgroundColor,
   height: '60px',
   display: 'flex',
   alignItems: 'center',
-  marginTop: 15,
-  marginLeft: 52,
+  justifyContent: 'center',
+  margininline: 52,
 });
 const TextAreaWrapper = styled(Box)({
-  padding: 15,
-});
-const ActionsWrapper = styled(Box)({
+  paddingInline: 15,
   display: 'flex',
+  alignItems: 'center',
+});
+const ButtonWrapper = styled(Box)({
+  paddingLeft: 15,
 });
 
 export const FileNameTyp = styled(Typography)({
@@ -77,7 +80,7 @@ const DialogTitle = withStyles(styles)((props) => {
 
 const DialogContent = withStyles(() => ({
   root: {
-    paddingBlock: 100,
+    paddingBlock: 20,
     '&.MuiDialogContent-dividers': {
       paddingInline: 0,
     },
@@ -92,9 +95,40 @@ const Dialog = withStyles(() => ({
   },
 }))(MuiDialog);
 export default function MediaUploadDialogue(props) {
-  const { open, handleClose } = props;
+  const { open, handleClose, currentChatJid } = props;
+  const connectStatusState = useConnectStatusState();
+  const socket = useSocketState();
   const [media, setMedia] = useState({});
   const [message, setMessage] = useState('');
+
+  console.log(media, message, ['+' + currentChatJid.split('@')[0]]);
+
+  const handleSend = () => {
+    if (!connectStatusState) {
+      return;
+    }
+
+    if (media.file === undefined) {
+      if (!message) {
+        toastActions.warning('Type message to continue ...');
+        return;
+      }
+      sendTextMesage(['+' + currentChatJid.split('@')[0]], message, socket);
+    } else if (media.file) {
+      const formData = new FormData();
+      formData.append(
+        'mobileNumbers',
+        JSON.stringify(['+' + currentChatJid.split('@')[0]])
+      );
+      formData.append('message', message);
+      formData.append('file', media.file);
+      formData.append('mediaType', media.type);
+      sendMedia(formData, socket);
+    }
+    setMedia({});
+    setMessage('');
+  };
+
   return (
     <Dialog
       onClose={handleClose}
@@ -112,21 +146,23 @@ export default function MediaUploadDialogue(props) {
         />
 
         <FileWrapper>
-          <FileNameTyp>{media ? media.name : 'No File Choosen'}</FileNameTyp>
+          <FileNameTyp>
+            {Object.entries(media).length > 0
+              ? media.file.name
+              : 'No File Choosen'}
+          </FileNameTyp>
         </FileWrapper>
         <TextAreaWrapper>
           <TextArea
-            placeholder="Description(Optional)"
+            placeholder="Type a message..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
+          <ButtonWrapper>
+            <Button onClick={handleSend}>Send</Button>
+          </ButtonWrapper>
         </TextAreaWrapper>
       </DialogContent>
-      <DialogActions>
-        <ActionsWrapper>
-          <Button>Send</Button>
-        </ActionsWrapper>
-      </DialogActions>
     </Dialog>
   );
 }

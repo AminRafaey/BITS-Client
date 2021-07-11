@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import CreateLead from '../../../Forms/Lead/Create';
 import { Button } from '../../../HOC';
 import { useLeadsState } from '../../../../Context/Lead';
+import { useUserState } from '../../../../Context/User';
 import {
   styled,
   Box,
@@ -14,7 +15,9 @@ import {
   Select,
 } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { DelieverStatusColor, BackgroundColor } from '../../../constants/theme';
+import config from '../../../../config.json';
 
 const ContactInfoWrapper = styled(Box)({
   display: 'flex',
@@ -59,8 +62,9 @@ const StyledFormControl = withStyles({
 function FirstHeader(props) {
   const { sortType, setSortType } = props;
   const leadsState = useLeadsState();
+  const userState = useUserState();
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
-
+  console.log(`${config.baseUrl}lead/exportLeads?token=${userState.token}`);
   return (
     <FirstHeaderWrapper>
       <ContactInfoWrapper>
@@ -102,6 +106,15 @@ function FirstHeader(props) {
           >
             <Button>Import Contact</Button>
           </Link>
+        </Box>
+
+        <Box pl={1}>
+          <a
+            href={`${config.baseUrl}lead/exportLeads?token=${userState.token}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <Button startIcon={<CloudDownloadIcon />}>Export Contacts</Button>
+          </a>
         </Box>
       </Box>
     </FirstHeaderWrapper>

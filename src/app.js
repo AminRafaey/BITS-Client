@@ -28,6 +28,8 @@ import {
   SignUp,
   AccountVerification,
   AdminAccountVerification,
+  EmailConfirmation,
+  PasswordConfirmation,
 } from './components';
 import { PrivateRoute } from './components/Assets';
 import { EmailValidation } from './InfoPages';
@@ -36,8 +38,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <UserProvider>
-          <ConnectStatusProvider>
+        <UserProvider token={localStorage.getItem('AUTH_TOKEN') || undefined}>
+          <ConnectStatusProvider connectStatus={true}>
             <TemplateProvider>
               <LeadsProvider>
                 <ChatProvider>
@@ -71,6 +73,12 @@ function App() {
                                   </Route>
                                   <Route path="/adminAccount/verifyEmail">
                                     <AdminAccountVerification />
+                                  </Route>
+                                  <Route exact path="/forgotPassword">
+                                    <EmailConfirmation />
+                                  </Route>
+                                  <Route path="/forgotPassword/passwordConfirmation">
+                                    <PasswordConfirmation />
                                   </Route>
 
                                   <PrivateRoute userType={'Employee'}>

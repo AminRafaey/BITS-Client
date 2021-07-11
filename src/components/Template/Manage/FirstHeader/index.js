@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button } from '../../../HOC';
+import { useUserState } from '../../../../Context/User';
 import { useTemplateState } from '../../../../Context/Template';
 import {
   styled,
@@ -13,7 +14,9 @@ import {
   Select,
 } from '@material-ui/core';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { DelieverStatusColor, BackgroundColor } from '../../../constants/theme';
+import config from '../../../../config.json';
 
 const ContactInfoWrapper = styled(Box)({
   display: 'flex',
@@ -58,6 +61,7 @@ const StyledFormControl = withStyles({
 function FirstHeader(props) {
   const { sortType, setSortType } = props;
   const templateState = useTemplateState();
+  const userState = useUserState();
 
   return (
     <FirstHeaderWrapper>
@@ -83,12 +87,18 @@ function FirstHeader(props) {
       </ContactInfoWrapper>
 
       <Box display="inline-flex" alignItems="center">
-        <Link
-          to={'/addTemplate'}
-          style={{ textDecoration: 'none', width: '100%' }}
-        >
+        <Link to={'/addTemplate'} style={{ textDecoration: 'none' }}>
           <Button startIcon={<AddCircleIcon />}>Add Template</Button>
         </Link>
+
+        <Box pl={1}>
+          <a
+            href={`${config.baseUrl}template/exportTemplates?token=${userState.token}`}
+            style={{ textDecoration: 'none' }}
+          >
+            <Button startIcon={<CloudDownloadIcon />}>Export Templates</Button>
+          </a>
+        </Box>
       </Box>
     </FirstHeaderWrapper>
   );

@@ -42,15 +42,15 @@ const ImageWrapper = styled(Box)({
   backgroundColor: '#4A474A',
 });
 
-const FormParentWrapper = styled(Box)({
+export const FormParentWrapper = styled(Box)({
   display: 'flex',
   justifyContent: 'center',
   padding: '50px 50px 0px',
 });
-const FormWrapper = styled(Box)({
+export const FormWrapper = styled(Box)({
   width: 300,
 });
-const LogoTyp = styled(Typography)({
+export const LogoTyp = styled(Typography)({
   display: 'flex',
   justifyContent: 'center',
   fontSize: 28,
@@ -59,26 +59,29 @@ const LogoTyp = styled(Typography)({
   paddingTop: 25,
   paddingBottom: 20,
 });
-const FreeAccountTyp = styled(Typography)({
+export const FreeAccountTyp = styled(Typography)({
   display: 'flex',
   justifyContent: 'center',
   color: '#ffff',
   fontSize: 12,
   fontWeight: 'bolder',
 });
-const AgreeTyp = styled(Typography)({
+export const AgreeTyp = styled(Typography)({
   paddingTop: 15,
   display: 'flex',
   justifyContent: 'center',
   color: '#ffff',
   fontSize: 12,
 });
-const PolicyTyp = styled(Typography)({
+export const PolicyTyp = styled(Typography)({
   display: 'flex',
   justifyContent: 'center',
   color: LinkColor,
   fontSize: 12,
   paddingBottom: 20,
+  '&:hover': {
+    textDecoration: 'underline',
+  },
 });
 const MobileNumberTyp = styled(Typography)({
   paddingBlock: 12,
@@ -119,12 +122,12 @@ const StyledEmailIcon = withStyles({
   },
 })(EmailIcon);
 
-const TextFieldErrorTyp = styled(Typography)({
+export const TextFieldErrorTyp = styled(Typography)({
   color: '#f44336',
   margin: '4px 14px 0px',
   fontSize: '0.75rem',
 });
-const StyledButton = withStyles({
+export const StyledButton = withStyles({
   root: {
     width: '100%',
     background: HighlightColor,
@@ -145,7 +148,7 @@ const StyledButton = withStyles({
   },
 })(MuiButton);
 
-const StyledIconButton = withStyles({
+export const StyledIconButton = withStyles({
   root: {
     padding: 0,
   },

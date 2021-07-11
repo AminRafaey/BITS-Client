@@ -29,7 +29,7 @@ import {
   BackgroundColor,
 } from '../../constants/theme';
 
-const SignInWrapper = styled(Box)({
+export const SignInWrapper = styled(Box)({
   minWidth: '100vw',
   minHeight: '80vh',
   background: BackgroundColor,
@@ -57,7 +57,7 @@ const RightWrapper = styled(Box)({
   borderBottomRightRadius: 4,
 });
 
-const SignInTyp = styled(Typography)({
+export const SignInTyp = styled(Typography)({
   fontSize: 20,
   color: '#263238 !important',
   paddingTop: 50,
@@ -76,18 +76,18 @@ const ForgotTyp = styled(Typography)({
   },
 });
 
-const SignUpWrapper = styled(Box)({
+export const SignUpWrapper = styled(Box)({
   paddingTop: 20,
   display: 'flex',
   justifyContent: 'center',
 });
 
-const SignUpHelperTyp = styled(Typography)({
+export const SignUpHelperTyp = styled(Typography)({
   fontSize: 10,
   color: '#78909c',
 });
 
-const SignUpTyp = styled(Typography)({
+export const SignUpTyp = styled(Typography)({
   color: LinkColor,
   fontSize: 10,
   whiteSpace: 'pre',
@@ -96,19 +96,19 @@ const SignUpTyp = styled(Typography)({
     cursor: 'pointer',
   },
 });
-const ErrorTyp = styled(Typography)({
+export const ErrorTyp = styled(Typography)({
   color: '#EB4137',
   paddingBottom: 4,
   fontSize: 12,
 });
 
-const StyledEmailIcon = withStyles({
+export const StyledEmailIcon = withStyles({
   root: {
     fill: 'rgba(0, 0, 0, 0.54)',
   },
 })(EmailIcon);
 
-const StyledButton = withStyles({
+export const StyledButton = withStyles({
   root: {
     width: '100%',
     background: HighlightColor,
@@ -161,6 +161,7 @@ function SignIn(props) {
     setLoading(true);
     auth(email, password)
       .then((res) => {
+        localStorage.setItem('AUTH_TOKEN', res.token);
         loadUser(userDispatch, { token: res.token });
         setLoading(false);
         history.push(from.pathname);
@@ -230,7 +231,15 @@ function SignIn(props) {
               }}
             />
 
-            <ForgotTyp>Forgot Passowrd</ForgotTyp>
+            <Link
+              to={'forgotPassword'}
+              style={{
+                textDecoration: 'none',
+                color: 'rgba(0, 0, 0, 0.87)',
+              }}
+            >
+              <ForgotTyp>Forgot Passowrd</ForgotTyp>
+            </Link>
             {loading ? (
               <Box display="flex" justifyContent="center">
                 <CircularProgress color="primary" size={28} />

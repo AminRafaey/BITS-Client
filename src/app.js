@@ -28,6 +28,8 @@ import {
   SignUp,
   AccountVerification,
   AdminAccountVerification,
+  EmailConfirmation,
+  PasswordConfirmation,
 } from './components';
 import { PrivateRoute } from './components/Assets';
 import { EmailValidation } from './InfoPages';
@@ -36,12 +38,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <UserProvider
-          token={
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGU1ZDQwMGU3ZDcwNjAwMjIwYjc4MWQiLCJ0eXBlIjoiQWRtaW4iLCJhZG1pbklkIjoiNjBlNWQ0MDBlN2Q3MDYwMDIyMGI3ODFjIiwibW9iaWxlTnVtYmVyIjoiKzkyMzQxNTUxMTY4OSIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMDlUMDg6NDI6MTcuODIzWiIsImlhdCI6MTYyNTgyMDEzN30.Ht9C3rwJwrFUTYXSca7sb8HexGxvZ74PrFtrcKPpbLU'
-          }
-        >
-          <ConnectStatusProvider>
+        <UserProvider token={localStorage.getItem('AUTH_TOKEN') || undefined}>
+          <ConnectStatusProvider connectStatus={true}>
             <TemplateProvider>
               <LeadsProvider>
                 <ChatProvider>
@@ -75,6 +73,12 @@ function App() {
                                   </Route>
                                   <Route path="/adminAccount/verifyEmail">
                                     <AdminAccountVerification />
+                                  </Route>
+                                  <Route exact path="/forgotPassword">
+                                    <EmailConfirmation />
+                                  </Route>
+                                  <Route path="/forgotPassword/passwordConfirmation">
+                                    <PasswordConfirmation />
                                   </Route>
 
                                   <PrivateRoute userType={'Employee'}>

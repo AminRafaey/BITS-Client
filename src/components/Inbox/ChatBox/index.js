@@ -54,6 +54,7 @@ function ChatBox(props) {
                 : false
               : true
           )
+          .sort((a, b) => b.t - a.t)
           .map((c, index) => {
             return (
               <Chat

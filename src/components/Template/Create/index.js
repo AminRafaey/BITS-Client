@@ -44,7 +44,6 @@ const textFieldStyle = {
 const CreateTemplateWrapper = styled(Box)({
   width: '100%',
   minHeight: 100,
-  background: DarkBackgroundColor,
   display: 'flex',
   borderRadius: 16,
   padding: '8px 0px 24px 0px',
@@ -186,10 +185,11 @@ function CreateTemplate(props) {
                 <FieldLabelNameTyp>Template Name</FieldLabelNameTyp>
               </Box>
               <TextField
-                placeholder="Name(Required)"
+                label="Required *"
                 variant="outlined"
                 size="small"
                 value={template.title}
+                autoFocus={true}
                 style={{ ...textFieldStyle }}
                 onChange={(e) => {
                   error.message &&

@@ -83,6 +83,7 @@ function EmailConfirmation(props) {
             )}
             <TextField
               variant="outlined"
+              fullWidth={true}
               size="small"
               placeholder="Email"
               value={email}

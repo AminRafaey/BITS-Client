@@ -161,7 +161,6 @@ function SignIn(props) {
     setLoading(true);
     auth(email, password)
       .then((res) => {
-        localStorage.setItem('AUTH_TOKEN', res.token);
         loadUser(userDispatch, { token: res.token });
         setLoading(false);
         history.push(from.pathname);
@@ -184,6 +183,7 @@ function SignIn(props) {
             {error && <ErrorTyp>{error}</ErrorTyp>}
             <TextField
               variant="outlined"
+              fullWidth={true}
               size="small"
               placeholder="email or username"
               value={email}
@@ -206,6 +206,7 @@ function SignIn(props) {
 
             <TextField
               variant="outlined"
+              fullWidth={true}
               size="small"
               placeholder="Password"
               type={showPassword ? 'text' : 'password'}

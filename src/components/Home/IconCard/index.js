@@ -15,7 +15,7 @@ const TitleTyp = styled(Typography)({
 function IconCard(props) {
   const { item } = props;
   return (
-    <Grid item xs={4}>
+    <Grid item xs={12} md={6} lg={4}>
       <Link
         to={item.defaultPath}
         style={{

@@ -174,7 +174,7 @@ function SignIn(props) {
     <SignInWrapper>
       <Grid container>
         <Grid item xs={1} lg={2}></Grid>
-        <Grid item sm={0} md={6} lg={5}>
+        <Grid item sm={false} md={6} lg={5}>
           <ImageWrapper />
         </Grid>
         <Grid item xs={10} md={4} lg={3}>

@@ -42,7 +42,7 @@ import {
   ManageTemplates,
   ManageLabels,
 } from '../../components';
-import { VerifiedAccessRoute, useWidth } from '../Assets';
+import { VerifiedAccessRoute } from '../Assets';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 
@@ -113,8 +113,7 @@ export default function MiniDrawer() {
   const leadSourceDispatch = useLeadSourceDispatch();
   const socket = useSocketState();
   const user = useUserState();
-  const screenWidth = useWidth();
-  console.log(screenWidth);
+
   const commonProps = {
     setOpenModal: setOpenModal,
   };
@@ -192,11 +191,6 @@ export default function MiniDrawer() {
       setLoader(false);
     });
   }, []);
-
-  useEffect(() => {
-    console.log(screenWidth);
-    (screenWidth === 'xs' || screenWidth === 'sm') && setOpen(false);
-  }, [screenWidth]);
 
   const handleDrawerOpen = () => {
     setOpen(true);

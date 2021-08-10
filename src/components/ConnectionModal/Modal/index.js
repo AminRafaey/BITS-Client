@@ -123,9 +123,6 @@ export default function Modal(props) {
         toastActions.error('Connection timed out, Please try again.');
       }
     });
-    // socket.on('contacts-received', (res) => {
-    //   console.log(res);
-    // });
     socket.on('chats-received', (res) => {
       res &&
         res.length !== 0 &&
@@ -241,7 +238,7 @@ export default function Modal(props) {
         </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
           <Grid container id="scroll-dialog-description">
-            <Grid item xs={8}>
+            <Grid item sm={12} md={6} lg={8}>
               <ContentWrapper>
                 <ContentTyp>1- Open WhatsApp on your phone.</ContentTyp>
                 <ContentTyp>
@@ -252,7 +249,7 @@ export default function Modal(props) {
                 </ContentTyp>
               </ContentWrapper>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item sm={12} md={6} lg={4}>
               <QrCodeWrapper>
                 <QrCode qrString={qrString} />
               </QrCodeWrapper>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { InfoAlert } from '../../../Assets';
+import { InfoAlert, CircularProgressWithLabel } from '../../../Assets';
 import { Button } from '../../../HOC';
 import { useLeadsDispatch, loadLeads } from '../../../../Context/Lead';
 import { useSocketState } from '../../../../Context/Socket';
@@ -70,15 +70,21 @@ function WhatsappImportCard(props) {
   const user = useUserState();
   const leadsDispatch = useLeadsDispatch();
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [openInfoAlert, setOpenInfoAlert] = useState(false);
   const message = useRef('');
-
   useEffect(() => {
+    connectState && getProgress();
     !connectState && setOpenModal(true);
+    socket.on('import-start', (res) => {
+      toastActions['success'](res.message);
+      getProgress();
+    });
   }, [connectState]);
 
   const handleImportBtnClick = () => {
     setLoading(true);
+    getProgress();
     socket.emit(
       'import-contacts-from-whatsApp',
       { adminId: user.user.adminId },
@@ -94,6 +100,23 @@ function WhatsappImportCard(props) {
     );
   };
 
+  const getProgress = () => {
+    socket.emit('get-Import-Contacts-Status', {}, {}, (response) => {
+      if (response) {
+        if (response.status == 'complete') {
+          setProgress(
+            (response.data.savedContacts / response.data.totalContacts) * 100
+          );
+          !loading && setLoading(true);
+          setTimeout(() => getProgress(), 1000);
+        } else {
+          setProgress(100);
+          loading && setLoading(false);
+        }
+      }
+    });
+  };
+
   return (
     <Card style={{ maxWidth: '90%' }} variant="outlined">
       {connectState ? (
@@ -105,7 +128,7 @@ function WhatsappImportCard(props) {
           <CardActions>
             <CardActionsInnerWrapper {...(loading && { mr: 2 })}>
               {loading ? (
-                <CircularProgress size={26} color="primary" />
+                <CircularProgressWithLabel color="primary" value={progress} />
               ) : (
                 <Button
                   size="small"

@@ -9,11 +9,13 @@ import { default as AddressBookTableHead } from '../../../AddressBookTable/Table
 import CreateLead from '../../../Forms/Lead/Create';
 import DeleteAlert from '../DeleteAlert';
 import { colors } from '../../../constants/AvatarColor';
+import { rowsPerPageOptions } from '../../../constants/tablePagination';
 import {
   useLeadsState,
   useLeadsDispatch,
   handleSelectedStatus,
   handleMultipleSelectedStatus,
+  addLeads,
 } from '../../../../Context/Lead';
 import { useLabelState } from '../../../../Context/Label';
 import {
@@ -42,6 +44,8 @@ import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import EventIcon from '@material-ui/icons/Event';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 import { GrayColor, DelieverStatusColor } from '../../../constants/theme';
+import { getLeads } from '../../../../api/Lead';
+import { initLeadFilters } from '../../../constants/InitialValues';
 
 const iconsStyle = {
   height: 14,
@@ -125,14 +129,14 @@ const StickyRightTableCell = withStyles({
 })(TableCell);
 
 export default function ContactsTable(props) {
-  const { message, selectedMedia, sortType } = props;
+  const { message, selectedMedia, sortType, filters, setFilters } = props;
   const { pathname } = useLocation();
   const leadsState = useLeadsState();
   const leadsDispatch = useLeadsDispatch();
   const labelState = useLabelState();
   const [page, setPage] = useState(0);
   const [selectedCount, setSelectedCount] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(50);
   const [leadLoader, setLeadloader] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
@@ -143,6 +147,9 @@ export default function ContactsTable(props) {
   useEffect(() => {
     setSelectedCount(leadsState.filter((l) => l.selected).length);
   }, [leadsState]);
+  useEffect(() => {
+    getMoreLeads();
+  }, [page, rowsPerPage]);
 
   const handleIconClick = (event, row, index) => {
     setAnchorEl(event.currentTarget);
@@ -177,6 +184,22 @@ export default function ContactsTable(props) {
     setPage(0);
   };
 
+  const getMoreLeads = () => {
+    if (!leadsState[page * rowsPerPage]) {
+      setLeadloader(true);
+      if (JSON.stringify(filters) !== JSON.stringify(initLeadFilters)) {
+        getFilteredLeads(filters, page, rowsPerPage).then((res) => {
+          res && addLeads(leadsDispatch, { leads: res });
+          setLeadloader(false);
+        });
+      } else {
+        getLeads(page, rowsPerPage).then((res) => {
+          addLeads(leadsDispatch, { leads: res });
+          setLeadloader(false);
+        });
+      }
+    }
+  };
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, leadsState.length - page * rowsPerPage);
 
@@ -419,9 +442,13 @@ export default function ContactsTable(props) {
                 </AbsoluteScroll>
               </StyledTableContainer>
               <TablePagination
-                rowsPerPageOptions={[10, 20, 30, leadsState.length]}
+                rowsPerPageOptions={rowsPerPageOptions}
                 component="div"
-                count={leadsState.length}
+                count={
+                  localStorage.getItem('TOTAL_LEADS')
+                    ? localStorage.getItem('TOTAL_LEADS')
+                    : 0
+                }
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
@@ -439,4 +466,6 @@ ContactsTable.propTypes = {
   message: PropTypes.string,
   selectedMedia: PropTypes.object,
   sortType: PropTypes.number.isRequired,
+  filters: PropTypes.object,
+  setFilters: PropTypes.func,
 };

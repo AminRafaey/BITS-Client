@@ -5,6 +5,7 @@ import ContactsTable from './Table';
 import Filters from './Filters';
 import { useConnectStatusState } from '../../../Context/ConnectStatus';
 import { Grid, Box, styled, CircularProgress } from '@material-ui/core';
+import { initLeadFilters } from '../../constants/InitialValues';
 
 const LoadingWrapper = styled(Box)({
   width: '100%',
@@ -18,19 +19,25 @@ function ManageContact(props) {
   const { setOpenModal } = props;
   const connectState = useConnectStatusState();
   const [sortType, setSortType] = useState(2);
+  const [filters, setFilters] = useState(initLeadFilters);
 
   useEffect(() => {
     !connectState && setOpenModal(true);
   }, [connectState]);
+
+  const commonProps = {
+    filters,
+    setFilters,
+  };
   return (
     <React.Fragment>
       {connectState ? (
         <Box mb={6}>
           <FirstHeader sortType={sortType} setSortType={setSortType} />
           <Grid container>
-            <ContactsTable sortType={sortType} />
+            <ContactsTable sortType={sortType} {...commonProps} />
             <Grid item xs={3}>
-              <Filters />
+              <Filters {...commonProps} />
             </Grid>
           </Grid>
         </Box>

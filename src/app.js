@@ -38,8 +38,12 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <UserProvider token={undefined}>
-          <ConnectStatusProvider>
+        <UserProvider
+          token={
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTExOTIxMjBiMmU2YjJmMzg2MGY5NzIiLCJuYW1lIjoiQW1pbiIsInR5cGUiOiJBZG1pbiIsImFkbWluSWQiOiI2MTExOTIxMTBiMmU2YjJmMzg2MGY5NzEiLCJtb2JpbGVOdW1iZXIiOiIrOTIzMzY0NzczMDk5IiwiY3JlYXRlZEF0IjoiMjAyMS0wOC0xMVQyMDoyMDo1Ny44ODZaIiwiaWF0IjoxNjI4NzEzMjU3fQ.3dc_Gv8Uygx2QHVEP7eAPcwmRgup0Lw6smuU_GywBlg'
+          }
+        >
+          <ConnectStatusProvider connectStatus={true}>
             <TemplateProvider>
               <LeadsProvider>
                 <ChatProvider>

@@ -20,7 +20,7 @@ function SocketReducer(state, action) {
 function SocketProvider({ children, socket }) {
   const [state, dispatch] = React.useReducer(
     SocketReducer,
-    io.connect(Config.baseUrl)
+    io.connect(Config.baseUrl.split('api/')[0])
   );
   return (
     <SocketState.Provider value={state}>

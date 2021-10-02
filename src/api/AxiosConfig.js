@@ -18,7 +18,7 @@ export default async function axiosConfig(
       if (AUTH_TOKEN) {
         axios.defaults.headers.common['x-auth-token'] = AUTH_TOKEN;
       } else {
-        window.location.href = 'http://localhost:3000/signIn';
+        window.location.href = `${Config.baseUrl.split('api/')[0]}signIn`;
         return;
       }
     }

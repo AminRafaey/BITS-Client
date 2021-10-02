@@ -93,6 +93,7 @@ function SignUp(props) {
 
           <TextField
             variant="outlined"
+            fullWidth={true}
             size="medium"
             placeholder="Password"
             type={showPassword ? 'text' : 'password'}
@@ -119,6 +120,7 @@ function SignUp(props) {
 
           <Box p={0.75} />
           <TextField
+            fullWidth={true}
             variant="outlined"
             size="medium"
             placeholder="Confirm Password"

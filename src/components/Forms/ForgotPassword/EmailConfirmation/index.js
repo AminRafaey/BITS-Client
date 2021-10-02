@@ -68,11 +68,11 @@ function EmailConfirmation(props) {
   return (
     <SignInWrapper>
       <Grid container>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={5}>
+        <Grid item xs={1} lg={2}></Grid>
+        <Grid item sm={false} md={6} lg={5}>
           <ImageWrapper />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={10} md={4} lg={3}>
           <RightWrapper>
             <SignInTyp>Forgot Password?</SignInTyp>
             {apiRes && (
@@ -83,6 +83,7 @@ function EmailConfirmation(props) {
             )}
             <TextField
               variant="outlined"
+              fullWidth={true}
               size="small"
               placeholder="Email"
               value={email}
@@ -129,7 +130,7 @@ function EmailConfirmation(props) {
             </SignUpWrapper>
           </RightWrapper>
         </Grid>
-        <Grid item xs={2}></Grid>
+        <Grid item xs={1} lg={2}></Grid>
       </Grid>
     </SignInWrapper>
   );

@@ -123,9 +123,6 @@ export default function Modal(props) {
         toastActions.error('Connection timed out, Please try again.');
       }
     });
-    // socket.on('contacts-received', (res) => {
-    //   console.log(res);
-    // });
     socket.on('chats-received', (res) => {
       res &&
         res.length !== 0 &&
@@ -140,17 +137,15 @@ export default function Modal(props) {
       });
     });
     socket.on('disconnected', (res) => {
-      if (res.currentConnRef == currentConnRef.current) {
-        toastActions.warning(res.message);
-        updateStatus(connectStatusDispatch, {
-          status: false,
-        });
-        setAlertMessage(
-          'Disconnected from WhatsApp, please connect again to continue...'
-        );
-        setOpenInfoAlert(true);
-        setOpenModal(false);
-      }
+      toastActions.warning(res.message);
+      updateStatus(connectStatusDispatch, {
+        status: false,
+      });
+      setAlertMessage(
+        'Disconnected from WhatsApp, please connect again to continue...'
+      );
+      setOpenInfoAlert(true);
+      setOpenModal(false);
     });
     socket.on('get-contact-messages', getMessagesHandler);
 
@@ -194,6 +189,7 @@ export default function Modal(props) {
   };
 
   const handleCloseIconClick = () => {
+    currentConnRef.current = null;
     setOpenModal(false);
     setOpen(false);
     setQrString('');
@@ -241,7 +237,7 @@ export default function Modal(props) {
         </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
           <Grid container id="scroll-dialog-description">
-            <Grid item xs={8}>
+            <Grid item sm={12} md={6} lg={8}>
               <ContentWrapper>
                 <ContentTyp>1- Open WhatsApp on your phone.</ContentTyp>
                 <ContentTyp>
@@ -252,7 +248,7 @@ export default function Modal(props) {
                 </ContentTyp>
               </ContentWrapper>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item sm={12} md={6} lg={4}>
               <QrCodeWrapper>
                 <QrCode qrString={qrString} />
               </QrCodeWrapper>

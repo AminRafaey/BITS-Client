@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import CreateLead from '../../../Forms/Lead/Create';
 import { Button } from '../../../HOC';
-import { useLeadsState } from '../../../../Context/Lead';
 import { useUserState } from '../../../../Context/User';
 import {
   styled,
@@ -61,7 +60,6 @@ const StyledFormControl = withStyles({
 })(FormControl);
 function FirstHeader(props) {
   const { sortType, setSortType } = props;
-  const leadsState = useLeadsState();
   const userState = useUserState();
   const [openCreateLabelModal, setOpenCreateLabelModal] = useState(false);
 
@@ -69,7 +67,12 @@ function FirstHeader(props) {
     <FirstHeaderWrapper>
       <ContactInfoWrapper>
         <ContactTyp>Contacts</ContactTyp>
-        <ContactNumTyp>{leadsState.length} Total</ContactNumTyp>
+        <ContactNumTyp>
+          {localStorage.getItem('TOTAL_LEADS')
+            ? localStorage.getItem('TOTAL_LEADS')
+            : 0}{' '}
+          Total
+        </ContactNumTyp>
         <SortAreaWrapper>
           <ContactNumTyp>Sort by:</ContactNumTyp>
           <CreatedDateTyp>

@@ -38,11 +38,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SocketProvider>
-        <UserProvider
-          token={
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU0MmU5ZjlhMjA4OGUwMWM4OGFlYjYiLCJuYW1lIjoiTXVoYW1tYWQgQW1pbiIsInR5cGUiOiJBZG1pbiIsImFkbWluSWQiOiI2MTU0MmU5ZjlhMjA4OGUwMWM4OGFlYjUiLCJtb2JpbGVOdW1iZXIiOiIrOTIzMzY0NzczMDk5IiwiY3JlYXRlZEF0IjoiMjAyMS0wOS0yOVQxODoxNDo1Mi4xMjVaIiwiaWF0IjoxNjMyOTM5MjkyfQ.nSxtZDiFJROM8iaGKRQCeLda7ciQM4D51SZd22CxxXA'
-          }
-        >
+        <UserProvider token={localStorage.getItem('AUTH_TOKEN') || undefined}>
           <ConnectStatusProvider>
             <TemplateProvider>
               <LeadsProvider>

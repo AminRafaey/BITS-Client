@@ -183,7 +183,7 @@ export default function ContactsTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  console.log(page, rowsPerPage);
   const getMoreLeads = () => {
     if (!leadsState[page * rowsPerPage]) {
       setLeadloader(true);

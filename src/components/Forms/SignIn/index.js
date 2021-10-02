@@ -161,6 +161,7 @@ function SignIn(props) {
     setLoading(true);
     auth(email, password)
       .then((res) => {
+        localStorage.setItem('AUTH_TOKEN', res.token);
         loadUser(userDispatch, { token: res.token });
         setLoading(false);
         history.push(from.pathname);

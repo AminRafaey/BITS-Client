@@ -137,17 +137,15 @@ export default function Modal(props) {
       });
     });
     socket.on('disconnected', (res) => {
-      if (res.currentConnRef == currentConnRef.current) {
-        toastActions.warning(res.message);
-        updateStatus(connectStatusDispatch, {
-          status: false,
-        });
-        setAlertMessage(
-          'Disconnected from WhatsApp, please connect again to continue...'
-        );
-        setOpenInfoAlert(true);
-        setOpenModal(false);
-      }
+      toastActions.warning(res.message);
+      updateStatus(connectStatusDispatch, {
+        status: false,
+      });
+      setAlertMessage(
+        'Disconnected from WhatsApp, please connect again to continue...'
+      );
+      setOpenInfoAlert(true);
+      setOpenModal(false);
     });
     socket.on('get-contact-messages', getMessagesHandler);
 
@@ -191,6 +189,7 @@ export default function Modal(props) {
   };
 
   const handleCloseIconClick = () => {
+    currentConnRef.current = null;
     setOpenModal(false);
     setOpen(false);
     setQrString('');

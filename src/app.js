@@ -40,10 +40,10 @@ function App() {
       <SocketProvider>
         <UserProvider
           token={
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTExOTIxMjBiMmU2YjJmMzg2MGY5NzIiLCJuYW1lIjoiQW1pbiIsInR5cGUiOiJBZG1pbiIsImFkbWluSWQiOiI2MTExOTIxMTBiMmU2YjJmMzg2MGY5NzEiLCJtb2JpbGVOdW1iZXIiOiIrOTIzMzY0NzczMDk5IiwiY3JlYXRlZEF0IjoiMjAyMS0wOC0xMVQyMDoyMDo1Ny44ODZaIiwiaWF0IjoxNjI4NzEzMjU3fQ.3dc_Gv8Uygx2QHVEP7eAPcwmRgup0Lw6smuU_GywBlg'
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTU0MmU5ZjlhMjA4OGUwMWM4OGFlYjYiLCJuYW1lIjoiTXVoYW1tYWQgQW1pbiIsInR5cGUiOiJBZG1pbiIsImFkbWluSWQiOiI2MTU0MmU5ZjlhMjA4OGUwMWM4OGFlYjUiLCJtb2JpbGVOdW1iZXIiOiIrOTIzMzY0NzczMDk5IiwiY3JlYXRlZEF0IjoiMjAyMS0wOS0yOVQxODoxNDo1Mi4xMjVaIiwiaWF0IjoxNjMyOTM5MjkyfQ.nSxtZDiFJROM8iaGKRQCeLda7ciQM4D51SZd22CxxXA'
           }
         >
-          <ConnectStatusProvider connectStatus={true}>
+          <ConnectStatusProvider>
             <TemplateProvider>
               <LeadsProvider>
                 <ChatProvider>

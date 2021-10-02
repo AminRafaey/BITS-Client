@@ -40,7 +40,9 @@ export const SignInWrapper = styled(Box)({
 const ImageWrapper = styled(Box)({
   minWidth: '100%',
   minHeight: '80vh',
-  backgroundImage: `url(${config.baseUrl}images/login-new.png)`,
+  backgroundImage: `url(${
+    config.baseUrl.split('api/')[0]
+  }images/login-new.png)`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',

@@ -33,7 +33,9 @@ import {
 const ImageWrapper = styled(Box)({
   minWidth: '100%',
   minHeight: '100vh',
-  backgroundImage: `url(${config.baseUrl}images/Sign-Up-Page-BG.jpeg)`,
+  backgroundImage: `url(${
+    config.baseUrl.split('api/')[0]
+  }images/Sign-Up-Page-BG.jpeg)`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',

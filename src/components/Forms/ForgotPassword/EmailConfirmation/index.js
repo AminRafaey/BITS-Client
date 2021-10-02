@@ -28,7 +28,9 @@ import {
 const ImageWrapper = styled(Box)({
   minWidth: '100%',
   minHeight: '80vh',
-  backgroundImage: `url(${config.baseUrl}images/forgot-password-email-confirmation.jpg)`,
+  backgroundImage: `url(${
+    config.baseUrl.split('api/')[0]
+  }images/forgot-password-email-confirmation.jpg)`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',

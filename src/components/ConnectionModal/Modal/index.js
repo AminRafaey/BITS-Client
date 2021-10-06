@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import QrCode from '../QrCode';
 import InfoAlert from '../../Assets/InfoAlert';
 import { toastActions } from '../../Toast';
+import { useUserState } from '../../../Context/User';
 import {
   useConnectStatusDispatch,
   updateStatus,
@@ -90,11 +91,14 @@ export default function Modal(props) {
   const chatStateRef = useRef();
   const chatDispatch = useChatDispatch();
   const socket = useSocketState();
-
+  const userState = useUserState();
   useEffect(() => {
     if (openModal) {
       currentConnRef.current = new Date().toString();
-      socket.emit('get-qr', currentConnRef.current);
+      socket.emit('get-qr', {
+        currentConnRef: currentConnRef.current,
+        adminMobileNumber: userState.user.mobileNumber,
+      });
     }
   }, [openModal]);
   useEffect(() => {
@@ -148,7 +152,6 @@ export default function Modal(props) {
       setOpenModal(false);
     });
     socket.on('get-contact-messages', getMessagesHandler);
-
     socket.on('chat-new', (res) => {
       addNewChat(chatDispatch, {
         chat: { ...res, messages: [] },
@@ -169,6 +172,18 @@ export default function Modal(props) {
           jid: res.key.remoteJid,
           unreadCount: 1,
         });
+      }
+    });
+    socket.on('wrong-mobile-number', (res) => {
+      if (res.currentConnRef == currentConnRef.current) {
+        setOpen(false);
+        setQrString('');
+        setOpenModal(false);
+
+        setAlertMessage(
+          `The scanned account number didn't match to login account, please use the number that you provide during Sign up`
+        );
+        setOpenInfoAlert(true);
       }
     });
     return () => {

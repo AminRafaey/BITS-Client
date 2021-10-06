@@ -143,17 +143,15 @@ console.log(userState.user.mobileNumber);
       });
     });
     socket.on('disconnected', (res) => {
-      if (res.currentConnRef == currentConnRef.current) {
-        toastActions.warning(res.message);
-        updateStatus(connectStatusDispatch, {
-          status: false,
-        });
-        setAlertMessage(
-          'Disconnected from WhatsApp, please connect again to continue...'
-        );
-        setOpenInfoAlert(true);
-        setOpenModal(false);
-      }
+      toastActions.warning(res.message);
+      updateStatus(connectStatusDispatch, {
+        status: false,
+      });
+      setAlertMessage(
+        'Disconnected from WhatsApp, please connect again to continue...'
+      );
+      setOpenInfoAlert(true);
+      setOpenModal(false);
     });
     socket.on('get-contact-messages', getMessagesHandler);
     socket.on('chat-new', (res) => {
@@ -210,6 +208,7 @@ console.log(userState.user.mobileNumber);
   };
 
   const handleCloseIconClick = () => {
+    currentConnRef.current = null;
     setOpenModal(false);
     setOpen(false);
     setQrString('');
@@ -258,7 +257,7 @@ console.log(userState.user.mobileNumber);
         </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
           <Grid container id="scroll-dialog-description">
-            <Grid item xs={8}>
+            <Grid item sm={12} md={6} lg={8}>
               <ContentWrapper>
                 <ContentTyp>1- Open WhatsApp on your phone.</ContentTyp>
                 <ContentTyp>
@@ -269,7 +268,7 @@ console.log(userState.user.mobileNumber);
                 </ContentTyp>
               </ContentWrapper>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item sm={12} md={6} lg={4}>
               <QrCodeWrapper>
                 <QrCode qrString={qrString} />
               </QrCodeWrapper>

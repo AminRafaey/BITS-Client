@@ -40,7 +40,9 @@ export const SignInWrapper = styled(Box)({
 const ImageWrapper = styled(Box)({
   minWidth: '100%',
   minHeight: '80vh',
-  backgroundImage: `url(${config.baseUrl}images/login-new.png)`,
+  backgroundImage: `url(${
+    config.baseUrl.split('api/')[0]
+  }images/login-new.png)`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',
@@ -174,16 +176,17 @@ function SignIn(props) {
   return (
     <SignInWrapper>
       <Grid container>
-        <Grid item xs={2}></Grid>
-        <Grid item xs={5}>
+        <Grid item xs={1} lg={2}></Grid>
+        <Grid item sm={false} md={6} lg={5}>
           <ImageWrapper />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={10} md={4} lg={3}>
           <RightWrapper>
             <SignInTyp>Sign In</SignInTyp>
             {error && <ErrorTyp>{error}</ErrorTyp>}
             <TextField
               variant="outlined"
+              fullWidth={true}
               size="small"
               placeholder="email or username"
               value={email}
@@ -206,6 +209,7 @@ function SignIn(props) {
 
             <TextField
               variant="outlined"
+              fullWidth={true}
               size="small"
               placeholder="Password"
               type={showPassword ? 'text' : 'password'}
@@ -261,7 +265,7 @@ function SignIn(props) {
             </SignUpWrapper>
           </RightWrapper>
         </Grid>
-        <Grid item xs={2}></Grid>
+        <Grid item xs={1} lg={2}></Grid>
       </Grid>
     </SignInWrapper>
   );

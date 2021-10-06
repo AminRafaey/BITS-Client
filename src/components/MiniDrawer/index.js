@@ -43,6 +43,7 @@ import {
   ManageLabels,
 } from '../../components';
 import { VerifiedAccessRoute } from '../Assets';
+import { rowsPerPageOptions } from '../constants/tablePagination';
 import AppBar from './AppBar';
 import Drawer from './Drawer';
 
@@ -159,7 +160,7 @@ export default function MiniDrawer() {
         user.user.contactManagement === 'allow' ||
         user.user.inbox === 'allow') &&
         requests.push(
-          getLeads().then((res) => {
+          getLeads(0, rowsPerPageOptions[2]).then((res) => {
             loadLeads(leadsDispatch, { leads: res });
           })
         );

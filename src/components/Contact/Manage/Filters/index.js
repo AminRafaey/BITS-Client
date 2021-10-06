@@ -17,6 +17,7 @@ import { useLeadsDispatch, loadLeads } from '../../../../Context/Lead';
 import { styled, Box, Typography } from '@material-ui/core';
 import { LinkColor } from '../../../constants/theme';
 import { initLeadFilters } from '../../../constants/InitialValues';
+import { rowsPerPageOptions } from '../../../constants/tablePagination';
 
 const FiltersWrapper = styled(Box)({
   padding: '16px 28px 16px 28px',
@@ -40,13 +41,13 @@ const ClearTyp = styled(Typography)({
 });
 
 function Filters(props) {
-  const [filters, setFilters] = useState(initLeadFilters);
+  const { filters, setFilters } = props;
   const leadsDispatch = useLeadsDispatch();
   const prevFilters = useRef(JSON.stringify(filters));
 
   useEffect(() => {
     if (prevFilters.current !== JSON.stringify(filters)) {
-      getFilteredLeads(filters).then(
+      getFilteredLeads(filters, 0, rowsPerPageOptions[2]).then(
         (res) => res && loadLeads(leadsDispatch, { leads: res })
       );
       prevFilters.current = JSON.stringify(filters);
@@ -86,6 +87,9 @@ function Filters(props) {
     </FiltersWrapper>
   );
 }
-Filters.propTypes = {};
+Filters.propTypes = {
+  filters: PropTypes.object.isRequired,
+  setFilters: PropTypes.func.isRequired,
+};
 
 export default Filters;

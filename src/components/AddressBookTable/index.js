@@ -12,6 +12,7 @@ import {
   Grid,
   CircularProgress,
 } from '@material-ui/core';
+import { initLeadFilters } from '../../components/constants/InitialValues';
 import { LinkColor } from '../constants/theme';
 
 const IconWrapper = styled(Box)({
@@ -52,6 +53,7 @@ export default function AddressBookTable(props) {
   const [selectedTemplate, setSelectedTemplate] = useState({});
   const [selectedMedia, setSelectedMedia] = useState({});
   const connectState = useConnectStatusState();
+  const [filters, setFilters] = useState(initLeadFilters);
 
   useEffect(() => {
     Object.entries(selectedTemplate).length > 0 &&
@@ -105,7 +107,7 @@ export default function AddressBookTable(props) {
           <Grid container>
             <ContactsTable message={message} selectedMedia={selectedMedia} />
             <Grid item xs={12} md={3}>
-              <Filters />
+              <Filters filters={filters} setFilters={setFilters} />
             </Grid>
           </Grid>
         </React.Fragment>

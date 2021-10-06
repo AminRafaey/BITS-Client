@@ -5,10 +5,13 @@ import { updateLead as updateLeadInContext } from '../../Context/Lead';
 const endPointApi = `${config.baseUrl}lead`;
 import axiosConfig from '../AxiosConfig';
 
-export async function getLeads() {
+export async function getLeads(page, rowsPerPage) {
   try {
-    const res = await axiosConfig(endPointApi + '/all', 'get');
-
+    const res = await axiosConfig(
+      endPointApi + '/all/' + page + '/' + rowsPerPage,
+      'get'
+    );
+    page == 0 && localStorage.setItem('TOTAL_LEADS', res.data.field.totalLeads);
     return res.data.field.data;
   } catch (ex) {
     if (ex !== 'Error Handled') {
@@ -54,6 +57,7 @@ export async function createLead(leadData) {
 
 export async function updateLead(updatedLead) {
   try {
+    delete updatedLead['selected'];
     const res = await axiosConfig(endPointApi, 'put', undefined, updatedLead);
 
     return res.data.field.data;
@@ -186,9 +190,14 @@ export async function getLeadSource() {
   }
 }
 
-export async function getFilteredLeads(filters) {
+export async function getFilteredLeads(filters, page, rowsPerPage) {
   try {
-    const res = await axiosConfig(`${endPointApi}/filter`, 'get', filters);
+    const res = await axiosConfig(
+      `${endPointApi}/filter/` + page + '/' + rowsPerPage,
+      'get',
+      filters
+    );
+    page == 0 && localStorage.setItem('TOTAL_LEADS', res.data.field.totalLeads);
     return res.data.field.data;
   } catch (ex) {
     if (ex !== 'Error Handled') {

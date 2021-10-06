@@ -29,7 +29,9 @@ import {
 const ImageWrapper = styled(Box)({
   minWidth: '100%',
   minHeight: '100vh',
-  backgroundImage: `url(${config.baseUrl}images/forgot-password-password-confirmation.jpg)`,
+  backgroundImage: `url(${
+    config.baseUrl.split('api/')[0]
+  }images/forgot-password-password-confirmation.jpg)`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',
@@ -93,6 +95,7 @@ function SignUp(props) {
 
           <TextField
             variant="outlined"
+            fullWidth={true}
             size="medium"
             placeholder="Password"
             type={showPassword ? 'text' : 'password'}
@@ -119,6 +122,7 @@ function SignUp(props) {
 
           <Box p={0.75} />
           <TextField
+            fullWidth={true}
             variant="outlined"
             size="medium"
             placeholder="Confirm Password"

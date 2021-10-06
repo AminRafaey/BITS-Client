@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import phone from 'phone';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import PhoneNumber from '../PhoneNumber';
 import { isEmailValid } from '../Lead';
 import { TextField, Alert } from '../../HOC';
@@ -33,7 +33,9 @@ import {
 const ImageWrapper = styled(Box)({
   minWidth: '100%',
   minHeight: '100vh',
-  backgroundImage: `url(${config.baseUrl}images/Sign-Up-Page-BG.jpeg)`,
+  backgroundImage: `url(${
+    config.baseUrl.split('api/')[0]
+  }images/Sign-Up-Page-BG.jpeg)`,
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center center',
   backgroundSize: 'cover',
@@ -311,7 +313,15 @@ function SignUp(props) {
           )}
           <SignUpWrapper>
             <SignInHelperTyp>Already have an account?</SignInHelperTyp>
-            <SignUpTyp> Sign In</SignUpTyp>
+            <Link
+              to={'signIn'}
+              style={{
+                textDecoration: 'none',
+                color: 'rgba(0, 0, 0, 0.87)',
+              }}
+            >
+              <SignUpTyp> Sign In</SignUpTyp>
+            </Link>
           </SignUpWrapper>
         </FormWrapper>
       </FormParentWrapper>

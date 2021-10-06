@@ -48,7 +48,7 @@ const LoadingWrapper = styled(Box)({
 });
 const StyledCard = withStyles({
   root: {
-    maxWidth: '50%',
+    minWidth: '50%',
     height: 'fit-content',
     borderTop: 0,
     borderTopLeftRadius: 0,

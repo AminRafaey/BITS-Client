@@ -30,7 +30,7 @@ export async function resendVerificationEmail(userId) {
       endPointApi + '/resendVerificationEmail',
       'post',
       undefined,
-      userId,
+      { userId },
       false
     );
 
